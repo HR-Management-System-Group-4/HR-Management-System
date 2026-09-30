@@ -1,11 +1,100 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request a Meeting | Mysta</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../Colors.css">
+  <link rel="stylesheet" href="../../nav-bar/nav.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+  <!-- Shared navbar markup from nav-bar/nav.html. -->
+  <nav class="navbar navbar-expand-lg custom-navbar" aria-label="Main navigation">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center gap-3" href="../Homepage/index.html">
+        <span class="logo-box" aria-hidden="true"><span class="logo-bars"><span></span><span></span><span></span></span></span>
+        <span class="brand-name">Mysta</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <div class="nav-links-box mx-auto"><ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="../Homepage/index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="../Homepage/index.html#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Meetings</a></li>
+          <li class="nav-item"><a class="nav-link" href="../Homepage/index.html#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="../Homepage/index.html#contact">Contact</a></li>
+        </ul></div>
+        <div class="d-flex align-items-center gap-3 right-buttons">
+          <button class="theme-btn" id="themeButton" type="button" aria-label="Switch to dark mode"><i class="bi bi-moon" aria-hidden="true"></i></button>
+          <button class="signin-btn" type="button">Sign in <i class="bi bi-arrow-up-right" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="meeting-page">
+    <header class="page-heading">
+      <div class="step"><span></span> 05&nbsp; / &nbsp;06</div>
+      <h1>Request a meeting</h1>
+      <p>Send a meeting request to HR and choose your preferred timing.<br>We'll notify you once your request is reviewed.</p>
+    </header>
+    <div class="page-grid">
+      <section class="card meeting-form-card" aria-labelledby="formTitle">
+        <h2 id="formTitle">Meeting details</h2>
+        <p class="card-intro">Fill in the details below to request a meeting with HR.</p>
+        <form id="meetingForm">
+          <div class="field">
+            <label for="purpose">Meeting purpose</label>
+            <div class="input-wrap"><i class="bi bi-briefcase" aria-hidden="true"></i>
+              <select id="purpose" name="purpose" required>
+                <option value="" selected disabled>Select a purpose</option>
+                <option>General discussion</option><option>Career development</option><option>Work concern</option><option>Leave discussion</option><option>Other</option>
+              </select><i class="bi bi-chevron-down field-end" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div class="field">
+            <label for="message">Message to HR</label>
+            <div class="input-wrap textarea-wrap"><i class="bi bi-file-earmark-text" aria-hidden="true"></i><textarea id="message" name="message" maxlength="500" required placeholder="Tell us the reason for this meeting..."></textarea></div>
+            <div class="character-count"><span id="messageCount">0</span>/500</div>
+          </div>
+          <div class="field">
+            <label for="hrEmail">HR email</label>
+            <div class="input-wrap"><i class="bi bi-envelope" aria-hidden="true"></i><input id="hrEmail" type="email" value="hr@company.com" readonly></div>
+          </div>
+          <div class="date-time-grid">
+            <div class="field"><label for="meetingDate">Preferred date</label><div class="input-wrap date-wrap"><i class="bi bi-calendar3" aria-hidden="true"></i><input id="meetingDate" name="date" type="date" required></div></div>
+            <fieldset class="field time-field"><legend>Preferred time</legend><div class="time-options">
+              <label><input type="radio" name="time" value="10:00 AM" checked><span>10:00 AM</span></label>
+              <label><input type="radio" name="time" value="11:30 AM"><span>11:30 AM</span></label>
+              <label><input type="radio" name="time" value="1:00 PM"><span>1:00 PM</span></label>
+              <label><input type="radio" name="time" value="2:30 PM"><span>2:30 PM</span></label>
+            </div></fieldset>
+          </div>
+          <div class="form-actions"><button class="submit-button" type="submit">Send request <i class="bi bi-arrow-right" aria-hidden="true"></i></button><button class="cancel-button" type="reset">Cancel</button></div>
+          <p id="formFeedback" class="form-feedback" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+      <aside class="info-column" aria-label="Meeting information">
+        <section class="card upcoming-card" aria-labelledby="upcomingTitle">
+          <div class="card-topline"><h2 id="upcomingTitle">Upcoming meeting</h2><span>Sample</span></div>
+          <div class="scheduled-banner"><span class="orange-icon"><i class="bi bi-bell" aria-hidden="true"></i></span><div><strong>HR scheduled your meeting</strong><p>Today · 10:30 AM</p></div><span class="scheduled-pill">Scheduled by HR</span></div>
+          <h3>Meeting details</h3>
+          <dl class="details-list">
+            <div><dt><span class="detail-icon"><i class="bi bi-camera-video" aria-hidden="true"></i></span>Meeting type</dt><dd>One-on-one with HR</dd></div>
+            <div><dt><span class="detail-icon"><i class="bi bi-display" aria-hidden="true"></i></span>Channel</dt><dd>Zoom</dd></div>
+            <div><dt><span class="detail-icon"><i class="bi bi-file-earmark-text" aria-hidden="true"></i></span>Topic</dt><dd>General discussion</dd></div>
+            <div><dt><span class="detail-icon"><i class="bi bi-list" aria-hidden="true"></i></span>Note</dt><dd>HR will discuss your request and next steps.</dd></div>
+          </dl>
+        </section>
+        <section class="card status-card" aria-labelledby="statusTitle"><h2 id="statusTitle">Request status <small id="statusSample">· Sample</small></h2><div class="status-line"><span class="status-icon"><i class="bi bi-clock" aria-hidden="true"></i></span><div class="status-copy"><strong id="statusHeading">Your last request</strong><p id="statusDate">Sent on Apr 24, 2024</p></div><span class="status-pill" id="statusPill">Reviewed</span><i class="bi bi-chevron-right status-chevron" aria-hidden="true"></i></div></section>
+      </aside>
+    </div>
+    <section class="video-demo card" aria-labelledby="demoTitle"><div><h2 id="demoTitle">Video meeting demo</h2><p>The attached sample uses Jitsi. Try a separate video room here; a real Zoom invitation must come from HR.</p></div><button id="demoButton" type="button">Open Jitsi demo</button><div id="meet" hidden></div></section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
