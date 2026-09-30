@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Employee Leave Application</title>
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+    <!-- =========================
+         Navbar
+    ========================== -->
+
+    <iframe
+    src="../../nav-bar/nav.html"
+    width="100%"
+    height="90"
+    frameborder="0"
+    scrolling="no">
+</iframe>
+
+
+    <!-- =========================
+         Main Page
+    ========================== -->
+
+    <main class="page">
+
+        <!-- =========================
+             Page Header
+        ========================== -->
+
+        <div class="page-header">
+
+            <span class="subtitle">
+                EMPLOYEE SERVICES
+            </span>
+
+            <h1>
+                Leave Application
+            </h1>
+
+            <p>
+                Submit your leave request for HR review and approval.
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             Leave Form
+        ========================== -->
+
+        <div class="form-card">
+
+            <form id="leaveForm">
+
+                <!-- =========================
+                     Employee Information
+                ========================== -->
+
+                <div class="employee-box">
+
+                    <img
+                        src="images.jpg"
+                        alt="Employee"
+                        class="employee-image">
+
+                    <div class="employee-info">
+
+                        <h3>
+                            Adam Smith
+                        </h3>
+
+                        <p>
+                            Software Engineer • EMP001
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     Leave Type
+                ========================== -->
+
+                <div class="form-group">
+
+                    <label for="leaveType">
+                        Leave Type <span>*</span>
+                    </label>
+
+                    <select id="leaveType">
+
+                        <option value="">
+                            Select leave type...
+                        </option>
+
+                        <option value="Annual Leave">
+                            Annual Leave
+                        </option>
+
+                        <option value="Sick Leave">
+                            Sick Leave
+                        </option>
+
+                        <option value="Emergency Leave">
+                            Emergency Leave
+                        </option>
+
+                        <option value="Unpaid Leave">
+                            Unpaid Leave
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- =========================
+                     Dates
+                ========================== -->
+
+                <div class="date-row">
+
+                    <div class="form-group">
+
+                        <label for="startDate">
+                            Start Date <span>*</span>
+                        </label>
+
+                        <input
+                            type="date"
+                            id="startDate">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="endDate">
+                            End Date <span>*</span>
+                        </label>
+
+                        <input
+                            type="date"
+                            id="endDate">
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     Hours
+                ========================== -->
+
+                <div class="form-group">
+
+                    <label for="hours">
+                        Hours <span>*</span>
+                    </label>
+
+                    <input
+                        type="number"
+                        id="hours"
+                        placeholder="Enter number of hours"
+                        min="1">
+
+                </div>
+
+
+                <!-- =========================
+                     Reason
+                ========================== -->
+
+                <div class="form-group">
+
+                    <label for="reason">
+                        Reason for Leave <span>*</span>
+                    </label>
+
+                    <textarea
+                        id="reason"
+                        maxlength="500"
+                        placeholder="Please provide details about your leave request..."
+                    ></textarea>
+
+
+                    <div class="textarea-footer">
+
+                        <span>
+                            Minimum 10 characters required
+                        </span>
+
+                        <span id="charCount">
+                            0 chars
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     Buttons
+                ========================== -->
+
+                <div class="buttons">
+
+                    <button
+                        type="submit"
+                        class="submit-button">
+                        Submit Application
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="cancel-button"
+                        id="cancelButton">
+                        Cancel
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         Page JavaScript
+    ========================== -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
