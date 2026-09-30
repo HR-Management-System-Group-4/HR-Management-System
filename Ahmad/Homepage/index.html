@@ -1,11 +1,128 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f2f2ed">
+  <title>Mysta — HR, made clear</title>
+  <meta name="description" content="Mysta brings people, documents, tasks and meetings into one clear workspace.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../Colors.css">
+  <link rel="stylesheet" href="../../nav-bar/nav.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+  <!-- Markup and CSS from the shared nav-bar component. -->
+  <nav class="navbar navbar-expand-lg custom-navbar" aria-label="Main navigation">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center gap-3" href="#home">
+        <span class="logo-box" aria-hidden="true"><span class="logo-bars"><span></span><span></span><span></span></span></span>
+        <span class="brand-name">Mysta</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <div class="nav-links-box mx-auto"><ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#problems">What we solve</a></li>
+          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
+        </ul></div>
+        <div class="d-flex align-items-center gap-3 right-buttons">
+          <button class="theme-btn" id="themeButton" type="button" aria-label="Switch to dark mode"><i class="bi bi-moon" aria-hidden="true"></i></button>
+          <button class="signin-btn" type="button">Sign in <i class="bi bi-arrow-up-right" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero content, video, poster and layout adapted from the supplied ZIP. -->
+    <section class="hero" id="home" aria-labelledby="heroTitle">
+      <div class="hero-media" id="heroMedia" aria-hidden="true">
+        <div class="hero-poster"></div>
+        <div class="hero-video-frame">
+          <iframe id="heroVimeo" class="hero-vimeo" title="Mysta hero video" width="1920" height="1080" src="https://player.vimeo.com/video/1135824686?h=c146ff6059&background=1&autoplay=1&muted=1&loop=1&autopause=0&playsinline=1&title=0&byline=0&portrait=0&dnt=1" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="hero-video-status"><span></span><p>Vimeo background video</p></div>
+      </div>
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-copy">
+          <div class="hero-eyebrow">MYSTA / PEOPLE WORKSPACE</div>
+          <h1 id="heroTitle"><span>HR work,</span><span>finally in one place.</span></h1>
+          <p class="hero-lead">Mysta turns scattered spreadsheets, requests, documents and employee tasks into one clear digital workspace for HR teams and employees.</p>
+          <a class="down-cta" href="#about">Discover Mysta <span><i class="bi bi-arrow-down" aria-hidden="true"></i></span></a>
+        </div>
+        <div class="hero-side-note"><span>FROM CHAOS</span><i class="bi bi-arrow-right" aria-hidden="true"></i><strong>TO ONE WORKSPACE</strong></div>
+      </div>
+      <div class="impact-bar">
+        <div class="impact-intro"><span>THE MYSTA MODEL</span><strong>Built for everyday HR work.</strong></div>
+        <div class="impact-item"><strong>6</strong><span>core HR workflows</span></div>
+        <div class="impact-item"><strong>1</strong><span>unified workspace</span></div>
+        <div class="impact-item"><strong>24/7</strong><span>employee self-service</span></div>
+        <div class="impact-item"><strong>2</strong><span>employee + HR views</span></div>
+      </div>
+    </section>
+
+    <section class="about-section" id="about" aria-labelledby="aboutTitle">
+      <img class="section-art" src="assets/about-workspace.png" alt="Modern workspace with a laptop and floating project cards">
+      <div class="about-inner">
+        <div class="section-tag"><b>02</b><span>ABOUT US</span><i></i></div>
+        <h2 id="aboutTitle">We build simple digital<br>solutions for <em>modern<br>companies.</em></h2>
+        <p>Mysta creates websites, internal systems, and digital tools that help companies organize work, manage teams, and improve daily tasks. Our goal is to make work easier through technology.</p>
+        <a class="gradient-button" href="#team">Meet Our Team <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+      </div>
+      <div class="about-cards">
+        <a href="#services" class="mini-card"><span class="mini-icon blue"><i class="bi bi-window" aria-hidden="true"></i></span><span><strong>Web Solutions</strong><small>Modern websites that grow your business.</small></span><i class="bi bi-arrow-right mini-arrow" aria-hidden="true"></i></a>
+        <a href="#services" class="mini-card"><span class="mini-icon green"><i class="bi bi-database" aria-hidden="true"></i></span><span><strong>Internal Systems</strong><small>Custom systems to organize your work.</small></span><i class="bi bi-arrow-right mini-arrow" aria-hidden="true"></i></a>
+        <a href="#services" class="mini-card"><span class="mini-icon orange"><i class="bi bi-lightning-charge-fill" aria-hidden="true"></i></span><span><strong>Digital Tools</strong><small>Practical tools to boost team productivity.</small></span><i class="bi bi-arrow-right mini-arrow" aria-hidden="true"></i></a>
+      </div>
+    </section>
+
+    <section class="problems-section" id="problems" aria-labelledby="problemsTitle">
+      <img class="section-art" src="assets/problems-workspace.png" alt="A cluttered workspace transitioning into an organized digital workspace">
+      <div class="problems-content">
+        <div class="problems-kicker"><i class="bi bi-stars" aria-hidden="true"></i> ONE PLATFORM · PEOPLE · TASKS · DOCUMENTS · MEETINGS · MORE</div>
+        <h2 id="problemsTitle">From scattered work<br>to a <em>simpler day.</em></h2>
+        <p>Mysta helps companies, HR teams and employees organize people, documents, tasks, meetings and everyday work — all in one clear and modern platform.</p>
+        <div class="problems-actions"><a class="gradient-button" href="#services">Get Started <i class="bi bi-arrow-right" aria-hidden="true"></i></a><a class="outline-button" href="#home">Watch Video <i class="bi bi-play-circle" aria-hidden="true"></i></a></div>
+      </div>
+      <div class="problem-cards">
+        <a class="mini-card" href="#services" data-service="profile"><span class="mini-icon blue"><i class="bi bi-people-fill" aria-hidden="true"></i></span><span><strong>People</strong><small>Keep everyone connected and organized.</small></span><i class="bi bi-arrow-right mini-arrow" aria-hidden="true"></i></a>
+        <a class="mini-card" href="#services" data-service="policies"><span class="mini-icon violet"><i class="bi bi-folder-fill" aria-hidden="true"></i></span><span><strong>Documents</strong><small>Find what you need, instantly.</small></span><i class="bi bi-arrow-right mini-arrow" aria-hidden="true"></i></a>
+        <a class="mini-card" href="#services" data-service="meetings"><span class="mini-icon green"><i class="bi bi-calendar3" aria-hidden="true"></i></span><span><strong>Meetings</strong><small>Plan, request and stay in the loop.</small></span><i class="bi bi-arrow-right mini-arrow" aria-hidden="true"></i></a>
+        <a class="mini-card" href="#services" data-service="tasks"><span class="mini-icon orange"><i class="bi bi-lightning-charge-fill" aria-hidden="true"></i></span><span><strong>Tasks</strong><small>Turn plans into progress.</small></span><i class="bi bi-arrow-right mini-arrow" aria-hidden="true"></i></a>
+      </div>
+    </section>
+
+    <section class="services-section" id="services" aria-labelledby="servicesTitle">
+      <h2 id="servicesTitle" class="visually-hidden">Services</h2>
+      <div class="services-frame">
+        <nav class="services-list" aria-label="Services">
+          <button class="service-tab selected" type="button" data-service="profile"><small>01</small><i class="bi bi-person" aria-hidden="true"></i><span>Employee Profile</span></button>
+          <button class="service-tab" type="button" data-service="tasks"><small>02</small><i class="bi bi-check2-square" aria-hidden="true"></i><span>Task Management</span></button>
+          <button class="service-tab" type="button" data-service="leave"><small>03</small><i class="bi bi-calendar3" aria-hidden="true"></i><span>Leave Management</span></button>
+          <button class="service-tab" type="button" data-service="policies"><small>04</small><i class="bi bi-file-earmark-text" aria-hidden="true"></i><span>Company Policies</span></button>
+          <button class="service-tab" type="button" data-service="meetings"><small>05</small><i class="bi bi-camera-video" aria-hidden="true"></i><span>Meetings</span></button>
+          <button class="service-tab" type="button" data-service="feedback"><small>06</small><i class="bi bi-chat" aria-hidden="true"></i><span>Feedback</span></button>
+        </nav>
+        <div class="service-main">
+          <div class="service-copy"><div class="service-number"><span></span><b id="serviceNumber">01</b> / 06</div><h3 id="serviceTitle">Your details,<br>always in one place.</h3><p id="serviceDescription">Access and manage personal and employment information.</p><a class="learn-button" id="serviceLink" href="#servicePreview">Learn more <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a></div>
+          <div class="service-preview" id="servicePreview" aria-live="polite"><div class="preview-label"><span>PREVIEW / <b id="previewNumber">01</b></span><span id="previewTitle">EMPLOYEE PROFILE</span></div><div class="preview-pill" id="previewPill"><span></span> EMP-1042 · Active</div><ul id="previewList"><li>View your employment details</li><li>Keep contact information current</li><li>Store your emergency contact</li><li>View and download your CV</li></ul></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="team-section" id="team"><div class="section-tag"><b>04</b><span>OUR TEAM</span><i></i></div><h2>People behind Mysta.</h2><p>Our team brings the platform together for a simpler workday.</p></section>
+  </main>
+  <footer class="site-footer"><span>© 2026 Mysta</span><a href="#home">Back to top <i class="bi bi-arrow-up" aria-hidden="true"></i></a></footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
