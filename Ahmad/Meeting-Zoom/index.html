@@ -6,34 +6,13 @@
   <title>Request a Meeting | Mysta</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../../Colors.css">
+  <link rel="stylesheet" href="../../assets/Colors.css">
   <link rel="stylesheet" href="../../nav-bar/nav.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Shared navbar markup from nav-bar/nav.html. -->
-  <nav class="navbar navbar-expand-lg custom-navbar" aria-label="Main navigation">
-    <div class="container-fluid">
-      <a class="navbar-brand d-flex align-items-center gap-3" href="../Homepage/index.html">
-        <span class="logo-box" aria-hidden="true"><span class="logo-bars"><span></span><span></span><span></span></span></span>
-        <span class="brand-name">Mysta</span>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-      <div class="collapse navbar-collapse" id="navbarContent">
-        <div class="nav-links-box mx-auto"><ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" href="../Homepage/index.html">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="../Homepage/index.html#services">Services</a></li>
-          <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Meetings</a></li>
-          <li class="nav-item"><a class="nav-link" href="../Homepage/index.html#about">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="../Homepage/index.html#contact">Contact</a></li>
-        </ul></div>
-        <div class="d-flex align-items-center gap-3 right-buttons">
-          <button class="theme-btn" id="themeButton" type="button" aria-label="Switch to dark mode"><i class="bi bi-moon" aria-hidden="true"></i></button>
-          <button class="signin-btn" type="button">Sign in <i class="bi bi-arrow-up-right" aria-hidden="true"></i></button>
-        </div>
-      </div>
-    </div>
-  </nav>
+ <div id="navbar-layout"></div>
+
 
   <main class="meeting-page">
     <header class="page-heading">
@@ -95,6 +74,7 @@
     <section class="video-demo card" aria-labelledby="demoTitle"><div><h2 id="demoTitle">Video meeting demo</h2><p>The attached sample uses Jitsi. Try a separate video room here; a real Zoom invitation must come from HR.</p></div><button id="demoButton" type="button">Open Jitsi demo</button><div id="meet" hidden></div></section>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../../nav-bar/nav-loader.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
