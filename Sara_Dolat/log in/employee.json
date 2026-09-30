@@ -1,0 +1,137 @@
+[
+  {
+    "id": 1,
+    "name": "Sara Ahmad",
+    "email": "sara.ahmad@mysta.com",
+    "role": "HR",
+    "department": "Human Resources",
+    "position": "HR Manager",
+    "accountState": "Active"
+  },
+  {
+    "id": 2,
+    "name": "Omar Khaled",
+    "email": "omar.khaled@mysta.com",
+    "role": "Employee",
+    "department": "IT",
+    "position": "Software Developer",
+    "accountState": "Active"
+  },
+  {
+    "id": 3,
+    "name": "Lina Hassan",
+    "email": "lina.hassan@mysta.com",
+    "role": "Employee",
+    "department": "Marketing",
+    "position": "Marketing Specialist",
+    "accountState": "Active"
+  },
+  {
+    "id": 4,
+    "name": "Ahmad Saleh",
+    "email": "ahmad.saleh@mysta.com",
+    "role": "Employee",
+    "department": "Finance",
+    "position": "Financial Analyst",
+    "accountState": "Active"
+  },
+  {
+    "id": 5,
+    "name": "Maya Nasser",
+    "email": "maya.nasser@mysta.com",
+    "role": "Employee",
+    "department": "Design",
+    "position": "UI/UX Designer",
+    "accountState": "Active"
+  },
+  {
+    "id": 6,
+    "name": "Yousef Ali",
+    "email": "yousef.ali@mysta.com",
+    "role": "Employee",
+    "department": "IT",
+    "position": "Backend Developer",
+    "accountState": "Active"
+  },
+  {
+    "id": 7,
+    "name": "Dana Samir",
+    "email": "dana.samir@mysta.com",
+    "role": "Employee",
+    "department": "Sales",
+    "position": "Sales Representative",
+    "accountState": "Inactive"
+  },
+  {
+    "id": 8,
+    "name": "Khaled Ibrahim",
+    "email": "khaled.ibrahim@mysta.com",
+    "role": "Employee",
+    "department": "IT",
+    "position": "Frontend Developer",
+    "accountState": "Active"
+  },
+  {
+    "id": 9,
+    "name": "Rana Mahmoud",
+    "email": "rana.mahmoud@mysta.com",
+    "role": "Employee",
+    "department": "Human Resources",
+    "position": "HR Specialist",
+    "accountState": "Active"
+  },
+  {
+    "id": 10,
+    "name": "Tareq Abdullah",
+    "email": "tareq.abdullah@mysta.com",
+    "role": "Employee",
+    "department": "Operations",
+    "position": "Operations Coordinator",
+    "accountState": "Active"
+  },
+  {
+    "id": 11,
+    "name": "Noor Hamdan",
+    "email": "noor.hamdan@mysta.com",
+    "role": "Employee",
+    "department": "Marketing",
+    "position": "Content Specialist",
+    "accountState": "Active"
+  },
+  {
+    "id": 12,
+    "name": "Zaid Mustafa",
+    "email": "zaid.mustafa@mysta.com",
+    "role": "Employee",
+    "department": "Finance",
+    "position": "Accountant",
+    "accountState": "Inactive"
+  },
+  {
+    "id": 13,
+    "name": "Hala Yassin",
+    "email": "hala.yassin@mysta.com",
+    "role": "Employee",
+    "department": "Design",
+    "position": "Graphic Designer",
+    "accountState": "Active"
+  },
+  {
+    "id": 14,
+    "name": "Fadi Majed",
+    "email": "fadi.majed@mysta.com",
+    "role": "Employee",
+    "department": "Sales",
+    "position": "Sales Manager",
+    "accountState": "Active"
+  },
+  {
+    "id": 15,
+    "name": "Reem Adel",
+    "email": "reem.adel@mysta.com",
+    "role": "Employee",
+    "department": "Operations",
+    "position": "Project Coordinator",
+    "accountState": "Active"
+  }
+]
