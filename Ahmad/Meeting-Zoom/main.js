@@ -52,8 +52,9 @@ form.addEventListener('reset', () => {
   document.querySelector('#messageCount').textContent = '0';
 });
 
-const themeButton = document.querySelector('#themeButton');
-themeButton.addEventListener('click', () => {
+document.querySelector('#navbar-layout').addEventListener('click', (event) => {
+  const themeButton = event.target.closest('.theme-btn');
+  if (!themeButton) return;
   document.body.classList.toggle('dark-mode');
   const dark = document.body.classList.contains('dark-mode');
   themeButton.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');

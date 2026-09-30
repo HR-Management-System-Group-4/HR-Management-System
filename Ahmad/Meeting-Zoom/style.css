@@ -81,6 +81,9 @@ h1 { margin: 16px 0 8px; font-size: clamp(36px, 4.3vw, 58px); font-weight: 800; 
 #meet { flex-basis: 100%; min-height: 500px; margin-top: 10px; }
 #meet[hidden] { display: none; }
 body.dark-mode { --color-text-primary: #eef5f5; --color-text-secondary: #b7c6cd; --color-text-muted: #a8b7c1; --color-background: #15242b; --color-border: rgba(220,240,240,.16); background: #15242b; }
+.dark-mode h1, .dark-mode h2, .dark-mode h3 { color: var(--color-text-primary); }
+.dark-mode .navbar-toggler { border-color: var(--color-border); }
+.dark-mode .navbar-toggler-icon { filter: invert(1); }
 .dark-mode .card, .dark-mode .custom-navbar { background: #20343b; }
 .dark-mode .input-wrap, .dark-mode .cancel-button, .dark-mode .video-demo button, .dark-mode .theme-btn { background: #273e46; color: #eef5f5; }
 .dark-mode .scheduled-banner { background: #393126; }
