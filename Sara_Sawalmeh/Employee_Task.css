@@ -1,0 +1,25 @@
+.card{
+    display: flex;
+    flex-direction: row;
+}
+.priority{
+background-color: rgba(255, 255, 0, 0.342);
+border-radius: 100%;
+text-align: center;
+width: 80px;
+display: flex;
+flex-direction: row;
+}
+.state{
+background-color: rgba(255, 0, 0, 0.374);
+border-radius: 100%;
+text-align: center;
+width: 80px;
+display: flex;
+flex-direction: row;
+}
+a{
+    text-decoration: none;
+    float: right;
+    left: 0;
+}
