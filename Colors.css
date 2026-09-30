@@ -1,0 +1,34 @@
+:root {
+  /* Brand & interface colors */
+  --color-text-primary: #232743;
+  --color-text-secondary: #60657d;
+  --color-text-muted: #70758d;
+
+  --color-background: #f2f2ed;
+  --color-surface: #ffffff;
+  --color-border: rgba(70, 75, 113, 0.16);
+
+  --color-accent: #118ab2;
+  --color-accent-contrast: #23243b;
+
+  --color-surface-blue: #e6e8f1;
+  --color-surface-mint: #dff3ef;
+  --color-mint: #c4ebe4;
+  --color-mint-strong: #7cd5c7;
+
+  /* Typography */
+  --font-sans: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+
+  /* Layout */
+  --container-max: 1240px;
+  --app-content-max: 1180px;
+
+  /* ... */
+}
+
+/* ==========================================================================
+   15 — DARK MODE
+   --------------------------------------------------------------------------
+   Reserved for the team. No dark-mode overrides are defined yet.
+   ========================================================================== */
