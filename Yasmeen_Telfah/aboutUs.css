@@ -1,0 +1,596 @@
+body{
+    background-color: var(--color-surface-mint);
+}
+
+.sectionOne{
+    display: flex;
+    gap: 58px;
+
+    width: 85%;
+    max-width: 1240px;
+
+    margin: 55px auto;
+    align-items: flex-start;
+}
+
+/* prevents the carousel from forcing the column wider than available. */
+
+.visualColumn {
+    flex: 1;
+    min-width: 0;
+}
+.container{
+    flex: 1.08;
+
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.content-wrapper{
+    position: relative;
+    min-height: 410px;
+    width: 100%;
+}
+.titles > p {
+    color: var(--color-accent);
+    font-size: 12px;
+    margin-bottom: 23px;
+}
+
+.titles .subtitle {
+    margin-left: 12px;
+    letter-spacing: 2px;
+}
+
+.titles h3 {
+    font-size: 68px;
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -4px;
+    margin: 0;
+}
+
+.important-stuff {
+    color: var(--color-accent);
+}
+
+/* line-height controls the vertical distance between lines of text. */
+
+.description {
+    color: var(--color-text-secondary);
+
+    font-size: 15px;
+    line-height: 1.85;
+
+    max-width: 475px;
+    margin-top: 25px;
+}
+
+.ourMission, .ourVision, .ourStory{
+    position: absolute;
+}
+.ourMission, .ourVision{
+    display: none;
+}
+
+.carousel {
+
+
+    background-color: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+
+    padding: 8px;
+
+    overflow: hidden;
+}
+/* .carousel-inner = container holding all carousel slides
+.carousel-item = each individual slide */
+.carousel-inner {
+    height: 465px;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.carousel img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+.carousel img {
+    width: 100%;
+    height: 100%;
+    min-height: 600px;
+
+    object-fit: cover;
+}
+
+
+.carousel-control-prev,
+.carousel-control-next {
+    display: none;
+}
+
+
+.carouselToolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 15px 13px 7px;
+}
+
+.carousel-item {
+    height: 100%;
+    position: relative;
+}
+
+
+.slideCount {
+    font-size: 12px;
+    color: var(--color-text-primary);
+}
+
+.slideCount span {
+    font-size: 10px;
+    color: var(--color-text-secondary);
+}
+
+.dots {
+    display: flex;
+    gap: 8px;
+}
+
+.dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background-color: var(--color-border);
+    cursor: pointer;
+}
+
+.activeDot {
+    background-color: var(--color-accent);
+}
+
+.carouselArrows {
+    display: flex;
+    gap: 7px;
+}
+
+.carouselArrows button {
+    width: 36px;
+    height: 36px;
+
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+
+    background-color: var(--color-surface);
+
+    font-size: 20px;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.carouselArrows button:hover {
+    background-color: var(--color-text-primary);
+    color: var(--color-surface);
+}
+
+
+.carousel-item::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 55%;
+
+    background: linear-gradient(
+        transparent,
+        rgba(12, 24, 39, 0.85)
+    );
+}
+
+
+.imageCaption {
+    position: absolute;
+
+    left: 29px;
+    bottom: 28px;
+
+    z-index: 2;
+
+    color: white;
+}
+
+.imageCaption span {
+    display: block;
+
+    font-size: 9px;
+    letter-spacing: 2px;
+
+    color: var(--color-surface-mint);
+
+    margin-bottom: 12px;
+}
+
+.imageCaption h4 {
+    margin: 0;
+
+    font-size: 26px;
+    font-weight: 500;
+
+    line-height: 1.25;
+    letter-spacing: -1px;
+
+    color: white;
+}
+
+.meetTeam {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    margin: 21px 7px 0;
+}
+
+.miniAvatars {
+    display: flex;
+    padding-left: 5px;
+}
+
+.miniAvatars div {
+    width: 31px;
+    height: 31px;
+
+    margin-left: -5px;
+
+    border: 3px solid var(--color-surface-mint);
+    border-radius: 50%;
+
+    overflow: hidden;
+}
+
+.miniAvatars img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+.meetText p {
+    margin: 0;
+
+    font-size: 11px;
+    font-weight: bold;
+
+    color: var(--color-text-primary);
+}
+
+.meetText span {
+    display: block;
+
+    margin-top: 2px;
+
+    font-size: 10px;
+
+    color: var(--color-text-secondary);
+}
+
+.meetText p {
+    margin: 0;
+
+    font-size: 11px;
+    font-weight: bold;
+
+    color: var(--color-text-primary);
+}
+
+.meetText span {
+    display: block;
+
+    margin-top: 2px;
+
+    font-size: 10px;
+
+    color: var(--color-text-secondary);
+}
+
+.meetTeam a {
+    margin-left: auto;
+
+    font-size: 23px;
+
+    color: var(--color-text-primary);
+    text-decoration: none;
+
+    transition: 0.2s;
+}
+
+.meetTeam a:hover {
+    transform: translate(3px, 3px);
+}
+
+
+
+.boxes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 9px;
+    margin-top: 30px;
+}
+.boxes > div {
+    text-align: left;
+
+    padding: 15px 14px 17px;
+
+    background-color: transparent;
+
+    border: 1px solid var(--color-border);
+    border-radius: 15px;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+.boxes > div:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-accent);
+}
+
+.boxes .nu {
+    font-size: 10px;
+    color: var(--color-accent);
+
+    margin-bottom: 22px;
+}
+
+
+
+
+.boxes .subtitle {
+    display: block;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    color: var(--color-text-primary);
+
+    margin: 0;
+}
+
+.boxes > div p:last-child {
+    font-size: 10px;
+    color: var(--color-text-secondary);
+
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+.boxes > div.active {
+    background-color: var(--color-text-primary);
+    border-color: var(--color-text-primary);
+}
+.boxes > div.active .subtitle,
+.boxes > div.active p:last-child {
+    color: var(--color-surface);
+}
+
+.boxes > div.active .nu {
+    color: var(--color-accent);
+}
+
+.titles{
+    color: var(--color-text-primary);
+}
+.important-stuff{
+    color: var(--color-accent);
+}
+
+
+
+.principles {
+    width: 85%;
+    max-width: 1240px;
+
+    margin: 70px auto 0;
+    padding: 22px 0;
+
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+
+    align-items: center;
+
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.principlesTitle {
+    margin: 0;
+
+    font-size: 10px;
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    color: var(--color-accent);
+}
+
+.principle {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.principle span {
+    font-size: 9px;
+
+    color: var(--color-accent);
+}
+
+.principle p {
+    margin: 0;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    color: var(--color-text-primary);
+}
+
+
+
+.sectionTwo {
+    width: 85%;
+    max-width: 1240px;
+
+    margin: 85px auto;
+}
+
+.teamHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    margin-bottom: 45px;
+}
+
+.teamTitle > p {
+    margin-bottom: 15px;
+
+    font-size: 10px;
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    color: var(--color-accent);
+}
+
+.teamTitle h2 {
+    margin: 0;
+
+    font-size: 42px;
+    font-weight: 600;
+
+    line-height: 1.08;
+    letter-spacing: -2px;
+
+    color: var(--color-text-primary);
+}
+
+.teamIntro {
+    max-width: 310px;
+}
+
+.teamIntro p {
+    margin: 0;
+
+    font-size: 13px;
+    line-height: 1.7;
+
+    color: var(--color-text-secondary);
+}
+
+.teamMembers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.teamCard {
+    background-color: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: 18px;
+
+    padding: 18px;
+
+    min-height: 330px;
+
+    transition: 0.25s;
+}
+
+.teamCard:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-accent);
+}
+
+.memberTop {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 30px;
+
+    font-size: 9px;
+    letter-spacing: 1.5px;
+
+    color: var(--color-accent);
+}
+
+.teamCard .avatar {
+    width: 80px;
+    height: 80px;
+
+    margin-bottom: 25px;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+}
+
+.teamCard .avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.memberMain h3 {
+    margin: 0;
+
+    font-size: 20px;
+    font-weight: 600;
+
+    color: var(--color-text-primary);
+}
+
+.memberMain .role {
+    margin-top: 6px;
+
+    font-size: 9px;
+    letter-spacing: 1.5px;
+
+    color: var(--color-accent);
+}
+
+.memberBottom {
+    margin-top: 25px;
+    padding-top: 15px;
+
+    border-top: 1px solid var(--color-border);
+}
+
+.memberBottom p {
+    margin: 0;
+
+    font-size: 11px;
+    line-height: 1.6;
+
+    color: var(--color-text-secondary);
+}
