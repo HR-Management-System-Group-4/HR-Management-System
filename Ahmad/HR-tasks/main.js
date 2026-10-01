@@ -3,13 +3,13 @@ const THEME_KEY = 'mysta_hr_tasks_theme';
 
 // Mirrors active employees in the project's employee.json so this page also works offline.
 const employees = [
-  'Omar Khaled', 'Lina Hassan', 'Ahmad Saleh', 'Maya Nasser',
+  'Omar Khaled', 'Lina Hassan', 'Maya Nasser', 'Ahmad Saleh',
   'Yousef Ali', 'Khaled Ibrahim', 'Rana Mahmoud', 'Tareq Abdullah',
   'Noor Hamdan', 'Hala Yassin', 'Fadi Majed', 'Reem Adel'
 ];
 
 const sampleTasks = [
-  { id: 'sample-1', title: 'Q4 Performance Reviews', description: 'Complete performance evaluation forms and submit them to HR.', assignee: 'Omar Khaled', priority: 'High', dueDate: '2026-10-15', status: 'In Progress', solution: '', reviewNote: '' },
+  { id: 'sample-1', title: 'Q4 Performance Reviews', description: 'Complete performance evaluation forms and submit them to HR.', assignee: 'Omar Khaled', assignees: ['Omar Khaled', 'Lina Hassan'], priority: 'High', dueDate: '2026-10-15', status: 'In Progress', solution: '', reviewNote: '' },
   { id: 'sample-2', title: 'Update Employee Handbook', description: 'Review and update the employee handbook policies.', assignee: 'Rana Mahmoud', priority: 'Medium', dueDate: '2026-10-20', status: 'Pending', solution: '', reviewNote: '' },
   { id: 'sample-3', title: 'Website Accessibility Audit', description: 'Check the new employee portal and document accessibility issues.', assignee: 'Maya Nasser', priority: 'High', dueDate: '2026-10-24', status: 'Submitted', solution: 'I reviewed the portal, documented keyboard navigation and contrast issues, and attached the audit notes to the project workspace.', reviewNote: '' },
   { id: 'sample-4', title: 'October Onboarding Checklist', description: 'Prepare the checklist for new starters and confirm all required documents.', assignee: 'Lina Hassan', priority: 'Low', dueDate: '2026-10-28', status: 'Completed', solution: 'The checklist and document list are ready for the next onboarding cycle.', reviewNote: 'Approved. Thank you!' }
@@ -17,12 +17,13 @@ const sampleTasks = [
 
 const $ = (selector) => document.querySelector(selector);
 const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
+const assigneesFor = (task) => Array.isArray(task.assignees) && task.assignees.length ? task.assignees : task.assignee ? [task.assignee] : [];
 const readTasks = () => {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    return Array.isArray(saved) ? saved : structuredClone(sampleTasks);
+    return (Array.isArray(saved) ? saved : structuredClone(sampleTasks)).map((task) => ({ ...task, assignees: assigneesFor(task), notes: task.notes || '' }));
   } catch {
-    return structuredClone(sampleTasks);
+    return structuredClone(sampleTasks).map((task) => ({ ...task, assignees: assigneesFor(task), notes: '' }));
   }
 };
 
@@ -31,6 +32,7 @@ let activeFilter = 'All';
 let viewingId = null;
 let deletingId = null;
 let toastTimer;
+let selectedAssignees = new Set();
 
 function saveTasks() {
   try {
@@ -72,7 +74,7 @@ function render() {
   const query = $('#taskSearch').value.trim().toLowerCase();
   const visible = tasks.filter((task) =>
     (activeFilter === 'All' || task.status === activeFilter) &&
-    `${task.title} ${task.description} ${task.assignee}`.toLowerCase().includes(query)
+    `${task.title} ${task.description} ${assigneesFor(task).join(' ')}`.toLowerCase().includes(query)
   );
 
   $('#taskList').innerHTML = visible.length ? visible.map((task) => `
@@ -83,7 +85,7 @@ function render() {
           <h3>${escapeHtml(task.title)}</h3>
           <p class="task-description">${escapeHtml(task.description)}</p>
           <div class="chips"><span class="chip priority-${escapeHtml(task.priority.toLowerCase())}"><i class="bi bi-bar-chart-fill" aria-hidden="true"></i>${escapeHtml(task.priority)}</span><span class="chip status-${statusClass(task.status)}"><i class="bi ${task.status === 'Completed' ? 'bi-check2-circle' : task.status === 'Submitted' ? 'bi-inbox' : task.status === 'In Progress' ? 'bi-arrow-repeat' : 'bi-clock'}" aria-hidden="true"></i>${escapeHtml(task.status)}</span></div>
-          <div class="task-meta"><span><i class="bi bi-calendar3" aria-hidden="true"></i>${formatDate(task.dueDate)}</span><span class="divider" aria-hidden="true"></span><span><i class="bi bi-person" aria-hidden="true"></i>${escapeHtml(task.assignee)}</span></div>
+          <div class="task-meta"><span><i class="bi bi-calendar3" aria-hidden="true"></i>${formatDate(task.dueDate)}</span><span class="divider" aria-hidden="true"></span><span><i class="bi bi-people" aria-hidden="true"></i>${escapeHtml(assigneesFor(task).join(', '))}</span></div>
         </div>
       </div>
       ${task.status === 'Submitted' ? '<span class="review-cue">READY FOR REVIEW</span>' : ''}
@@ -95,22 +97,67 @@ function render() {
     </article>`).join('') : '<div class="empty-state"><i class="bi bi-inbox" aria-hidden="true"></i><h3>No tasks found</h3><p>Try another filter or create a new task.</p></div>';
 }
 
+function employeeInitials(name) {
+  return name.split(' ').map((part) => part[0]).join('').slice(0, 2).toUpperCase();
+}
+
+function renderSelectedEmployees() {
+  $('#selectedEmployees').innerHTML = selectedAssignees.size
+    ? [...selectedAssignees].map((name) => `<span class="employee-chip"><span class="employee-avatar avatar-${employees.indexOf(name) % 6}">${escapeHtml(employeeInitials(name))}</span><span>${escapeHtml(name)}</span><button type="button" data-remove-employee="${escapeHtml(name)}" aria-label="Remove ${escapeHtml(name)}"><i class="bi bi-x" aria-hidden="true"></i></button></span>`).join('')
+    : '<span class="assignee-placeholder">Select team members...</span>';
+  $('#assigneeTrigger').classList.toggle('has-selection', selectedAssignees.size > 0);
+  const invalid = selectedAssignees.size === 0 && !$('#assigneeError').hidden;
+  $('#assigneeTrigger').setAttribute('aria-invalid', String(invalid));
+  $('#assigneeToggle').setAttribute('aria-invalid', String(invalid));
+}
+
+function syncEmployeeChecks() {
+  document.querySelectorAll('#employeeOptions input[type="checkbox"]').forEach((checkbox) => {
+    checkbox.checked = selectedAssignees.has(checkbox.value);
+  });
+}
+
+function setAssigneeOpen(open, focusSearch = true) {
+  $('#assigneeDropdown').hidden = !open;
+  $('#assigneeToggle').setAttribute('aria-expanded', String(open));
+  $('#assigneeTrigger').classList.toggle('is-open', open);
+  $('#assigneeToggle i').className = `bi bi-chevron-${open ? 'up' : 'down'}`;
+  if (open && focusSearch) $('#employeeSearch').focus();
+}
+
+function updateFieldDecorations() {
+  $('.priority-select').dataset.value = $('#taskPriority').value;
+  $('.status-select').dataset.value = $('#taskStatus').value;
+  $('#dateField').classList.toggle('has-value', Boolean($('#taskDueDate').value));
+  $('#descriptionCount').textContent = `${$('#taskDescription').value.length}/1000`;
+}
+
 function openForm(task) {
   $('#taskForm').reset();
   $('#taskId').value = task?.id || '';
   $('#formTitle').textContent = task ? 'Edit task' : 'Add a task';
-  $('#saveTaskButton').textContent = task ? 'Save Changes' : 'Create Task';
+  $('#formSubtitle').textContent = task ? 'Update the task, team members and details.' : 'Create a new task, assign it to team members and set the details.';
+  $('#saveTaskButton span').textContent = task ? 'Save Changes' : 'Create Task';
+  $('#saveTaskButton i').className = `bi bi-${task ? 'check2' : 'plus-lg'}`;
+  selectedAssignees = new Set(task ? assigneesFor(task) : []);
+  $('#assigneeError').hidden = true;
+  $('#employeeSearch').value = '';
+  document.querySelectorAll('.employee-option').forEach((option) => { option.hidden = false; });
   if (task) {
     $('#taskTitle').value = task.title;
     $('#taskDescription').value = task.description;
-    $('#taskAssignee').value = task.assignee;
     $('#taskPriority').value = task.priority;
     $('#taskDueDate').value = task.dueDate;
     $('#taskStatus').value = task.status;
+    $('#taskNotes').value = task.notes || '';
   } else {
     $('#taskPriority').value = 'Medium';
     $('#taskStatus').value = 'Pending';
   }
+  syncEmployeeChecks();
+  renderSelectedEmployees();
+  updateFieldDecorations();
+  setAssigneeOpen(true, false);
   $('#taskDialog').showModal();
   $('#taskTitle').focus();
 }
@@ -120,12 +167,13 @@ function openView(task) {
   $('#viewTitle').textContent = task.title;
   $('#viewContent').innerHTML = `
     <div class="detail-grid">
-      <div class="detail-item"><b>Assigned to</b><span>${escapeHtml(task.assignee)}</span></div>
+      <div class="detail-item"><b>Assigned to</b><span>${escapeHtml(assigneesFor(task).join(', '))}</span></div>
       <div class="detail-item"><b>Due date</b><span>${formatDate(task.dueDate)}</span></div>
       <div class="detail-item"><b>Priority</b><span>${escapeHtml(task.priority)}</span></div>
       <div class="detail-item"><b>Status</b><span>${escapeHtml(task.status)}</span></div>
     </div>
     <div class="detail-block"><h3>Description</h3><p>${escapeHtml(task.description)}</p></div>
+    ${task.notes ? `<div class="detail-block"><h3>HR notes</h3><p>${escapeHtml(task.notes)}</p></div>` : ''}
     <div class="detail-block solution"><h3>Employee solution</h3><p>${task.solution ? escapeHtml(task.solution) : 'No solution has been submitted yet.'}</p></div>
     ${task.reviewNote ? `<div class="detail-block"><h3>HR feedback</h3><p>${escapeHtml(task.reviewNote)}</p></div>` : ''}`;
   $('#reviewFeedback').value = task.reviewNote || '';
@@ -155,7 +203,47 @@ function updateReview(status) {
   showToast(status === 'Completed' ? 'Solution approved. Task completed.' : 'Changes requested. Employee feedback saved.');
 }
 
-$('#taskAssignee').insertAdjacentHTML('beforeend', employees.map((name) => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`).join(''));
+$('#employeeOptions').innerHTML = employees.map((name, index) => `<label class="employee-option"><input type="checkbox" value="${escapeHtml(name)}"><span class="employee-avatar avatar-${index % 6}">${escapeHtml(employeeInitials(name))}</span><span>${escapeHtml(name)}</span></label>`).join('');
+$('#assigneeTrigger').addEventListener('click', (event) => {
+  if (event.target.closest('[data-remove-employee]')) return;
+  setAssigneeOpen($('#assigneeDropdown').hidden);
+});
+$('#selectedEmployees').addEventListener('click', (event) => {
+  const button = event.target.closest('[data-remove-employee]');
+  if (!button) return;
+  event.stopPropagation();
+  selectedAssignees.delete(button.dataset.removeEmployee);
+  syncEmployeeChecks();
+  renderSelectedEmployees();
+});
+$('#employeeOptions').addEventListener('change', (event) => {
+  if (event.target.type !== 'checkbox') return;
+  if (event.target.checked) selectedAssignees.add(event.target.value);
+  else selectedAssignees.delete(event.target.value);
+  $('#assigneeError').hidden = true;
+  renderSelectedEmployees();
+});
+$('#employeeSearch').addEventListener('input', (event) => {
+  const query = event.target.value.trim().toLowerCase();
+  document.querySelectorAll('.employee-option').forEach((option) => {
+    option.hidden = !option.textContent.toLowerCase().includes(query);
+  });
+});
+document.addEventListener('click', (event) => {
+  if ($('#taskDialog').open && event.target.closest('#taskDialog') && !event.target.closest('.assignee-picker')) setAssigneeOpen(false, false);
+});
+$('#taskDialog').addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && !$('#assigneeDropdown').hidden) {
+    event.preventDefault();
+    event.stopPropagation();
+    setAssigneeOpen(false, false);
+    $('#assigneeToggle').focus();
+  }
+});
+$('#taskDescription').addEventListener('input', updateFieldDecorations);
+$('#taskPriority').addEventListener('change', updateFieldDecorations);
+$('#taskStatus').addEventListener('change', updateFieldDecorations);
+$('#taskDueDate').addEventListener('change', updateFieldDecorations);
 $('#addTaskButton').addEventListener('click', () => openForm());
 $('#taskSearch').addEventListener('input', render);
 document.querySelectorAll('.filter').forEach((button) => button.addEventListener('click', () => {
@@ -199,16 +287,26 @@ $('#confirmDeleteButton').addEventListener('click', () => {
 
 $('#taskForm').addEventListener('submit', (event) => {
   event.preventDefault();
+  if (!selectedAssignees.size) {
+    $('#assigneeError').hidden = false;
+    renderSelectedEmployees();
+    setAssigneeOpen(true, false);
+    $('#assigneeToggle').focus();
+    return;
+  }
   const id = $('#taskId').value;
   const previous = tasks.find((item) => item.id === id);
+  const assignees = [...selectedAssignees];
   const data = {
     id: id || (crypto.randomUUID?.() || `task-${Date.now()}`),
     title: $('#taskTitle').value.trim(),
     description: $('#taskDescription').value.trim(),
-    assignee: $('#taskAssignee').value,
+    assignee: assignees[0],
+    assignees,
     priority: $('#taskPriority').value,
     dueDate: $('#taskDueDate').value,
     status: $('#taskStatus').value,
+    notes: $('#taskNotes').value.trim(),
     solution: previous?.solution || '',
     reviewNote: previous?.reviewNote || ''
   };

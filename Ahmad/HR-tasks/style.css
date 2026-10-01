@@ -13,3 +13,195 @@ body:not(.dark) .sign-in,body:not(.dark) .filter.active{background:var(--color-t
 body:not(.dark) .add-button,body:not(.dark) .primary-button{background:var(--color-accent);border-color:var(--color-accent)}
 .delete-dialog{width:min(440px,calc(100% - 30px))}.delete-message{color:var(--color-text-secondary);line-height:1.6}.danger-button{min-height:43px;padding:10px 18px;border:1px solid #d83745;border-radius:10px;background:#dc4350;color:#fff;font-weight:800;transition:transform .2s,box-shadow .2s}.danger-button:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(220,67,80,.22)}body.dark .delete-message{color:#b4c7da}
 @media(max-width:760px){.stats .stat-card:last-child{grid-column:1/-1;flex-direction:row;align-items:center}.stats .stat-card:last-child .stat-icon{width:48px;height:48px}}
+
+/* Task form — two-column layout with a searchable, multi-select employee list. */
+#taskDialog {
+  width: min(1140px, calc(100% - 32px));
+  max-height: calc(100vh - 40px);
+  border-radius: 28px;
+}
+#taskDialog .task-form-card { padding: 42px 44px 38px; }
+.task-modal-head {
+  display: grid;
+  grid-template-columns: 86px minmax(0, 1fr) 52px;
+  align-items: start;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+.task-modal-icon {
+  display: grid;
+  place-items: center;
+  width: 86px;
+  height: 86px;
+  border-radius: 18px;
+  background: #eaf6f8;
+  color: var(--color-accent);
+  font-size: 37px;
+}
+.task-modal-intro .section-kicker { font-size: 16px; letter-spacing: 3px; }
+.task-modal-intro h2 {
+  margin: 3px 0 0;
+  color: var(--color-text-primary);
+  font-size: clamp(32px, 4vw, 46px);
+  line-height: 1.1;
+  letter-spacing: -2px;
+}
+.task-modal-intro > p:last-child {
+  margin: 6px 0 0;
+  color: var(--color-text-secondary);
+  font-size: 18px;
+  line-height: 1.5;
+}
+#taskDialog .close-button { width: 52px; height: 52px; font-size: 22px; }
+.task-form-top { display: grid; gap: 20px; }
+.wide-field, .option-field { display: flex; flex-direction: column; gap: 10px; }
+.task-field-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 26px;
+  color: var(--color-text-primary);
+  font-size: 19px;
+  font-weight: 800;
+}
+.task-field-label i { width: 25px; color: #29446b; font-size: 21px; }
+.required-mark { margin-left: -8px; color: #e54b5e; }
+.optional-mark { margin-left: -8px; color: var(--color-text-muted); font-size: 16px; font-weight: 500; }
+.wide-field > input,
+.description-wrap,
+.assignee-trigger,
+.styled-select,
+.styled-date,
+.option-field > textarea {
+  width: 100%;
+  border: 1.5px solid #cbd9e8;
+  border-radius: 11px;
+  background: #fdfefe;
+  box-shadow: inset 0 1px 3px rgba(31, 66, 105, .025);
+}
+.wide-field > input {
+  height: 61px;
+  padding: 0 21px;
+  outline: none;
+  color: var(--color-text-primary);
+  font-size: 19px;
+}
+.wide-field > input::placeholder,
+.description-wrap textarea::placeholder,
+.option-field > textarea::placeholder,
+.employee-search input::placeholder { color: #7b89a4; }
+.wide-field > input:focus,
+.description-wrap:focus-within,
+.option-field > textarea:focus,
+.styled-select:focus-within,
+.styled-date:focus-within { border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(17, 138, 178, .12); }
+.description-wrap { position: relative; min-height: 130px; }
+.description-wrap textarea {
+  display: block;
+  width: 100%;
+  min-height: 128px;
+  padding: 17px 21px 38px;
+  border: 0;
+  background: transparent;
+  outline: none;
+  resize: vertical;
+  color: var(--color-text-primary);
+  font-size: 18px;
+  line-height: 1.5;
+}
+.description-wrap #descriptionCount { position: absolute; right: 22px; bottom: 15px; color: #77849f; font-size: 14px; }
+.task-form-columns { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 34px; margin-top: 26px; }
+.assignee-column { min-width: 0; }
+.assignee-picker { margin-top: 10px; }
+.assignee-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 62px;
+  padding: 9px 11px 9px 15px;
+  cursor: pointer;
+}
+.assignee-trigger.is-open { border-color: var(--color-accent); box-shadow: 0 0 0 2px rgba(17, 138, 178, .11); }
+.assignee-trigger[aria-invalid="true"] { border-color: #e54b5e; }
+.selected-employees { display: flex; flex-wrap: wrap; gap: 7px; min-width: 0; }
+.assignee-placeholder { padding: 7px 0; color: #7b89a4; font-size: 17px; }
+.assignee-toggle { flex: none; display: grid; place-items: center; width: 32px; height: 40px; border: 0; background: transparent; color: #29446b; font-size: 17px; }
+.employee-chip { display: inline-flex; align-items: center; gap: 7px; min-height: 37px; padding: 3px 7px 3px 4px; border-radius: 22px; background: #eff4f8; color: var(--color-text-primary); font-size: 14px; white-space: nowrap; }
+.employee-chip button { display: grid; place-items: center; width: 23px; height: 23px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: #4b6181; font-size: 18px; }
+.employee-chip button:hover { background: #dce8f0; }
+.employee-avatar { flex: none; display: inline-grid; place-items: center; width: 37px; height: 37px; border-radius: 50%; color: #1e4e9b; background: #d8e7ff; font-size: 13px; font-weight: 800; }
+.employee-chip .employee-avatar { width: 30px; height: 30px; }
+.avatar-1 { color: #17694a; background: #ccefe0; }
+.avatar-2 { color: #5e3da7; background: #e5d8fa; }
+.avatar-3 { color: #76501d; background: #f9e7ba; }
+.avatar-4 { color: #8a254d; background: #f7d7e4; }
+.avatar-5 { color: #3657aa; background: #dcdffd; }
+.assignee-dropdown { margin-top: 2px; padding: 14px 16px 15px; border: 1.5px solid #d1deea; border-radius: 0 0 15px 15px; background: var(--color-surface); box-shadow: 0 15px 25px rgba(38, 69, 105, .11); }
+.assignee-dropdown[hidden] { display: none; }
+.employee-search { display: flex; align-items: center; gap: 13px; height: 48px; padding: 0 16px; border: 1.5px solid #d3dfeb; border-radius: 10px; color: #385777; }
+.employee-search:focus-within { border-color: var(--color-accent); }
+.employee-search i { font-size: 21px; }
+.employee-search input { width: 100%; border: 0; outline: 0; background: transparent; color: var(--color-text-primary); font-size: 16px; }
+.employee-options { max-height: 365px; margin-top: 8px; overflow-y: auto; }
+.employee-option { display: flex; align-items: center; gap: 13px; min-height: 42px; padding: 3px 5px; border-radius: 9px; color: var(--color-text-primary); cursor: pointer; font-size: 16px; }
+.employee-option:hover { background: #f1f8fa; }
+.employee-option[hidden] { display: none; }
+.employee-option input { appearance: none; flex: none; position: relative; width: 24px; height: 24px; margin: 0 4px 0 0; border: 1.5px solid #c4d2e0; border-radius: 5px; background: #fff; cursor: pointer; }
+.employee-option input:checked { border-color: var(--color-accent); background: var(--color-accent); }
+.employee-option input:checked::after { content: ""; position: absolute; left: 7px; top: 3px; width: 6px; height: 12px; border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.employee-option input:focus-visible, .assignee-toggle:focus-visible { outline: 3px solid rgba(17, 138, 178, .32); outline-offset: 2px; }
+.field-error { margin: 7px 0 0; color: #c6354e; font-size: 13px; font-weight: 700; }
+.field-error[hidden] { display: none; }
+.task-options-column { display: grid; align-content: start; gap: 21px; }
+.styled-select, .styled-date { position: relative; display: flex; align-items: center; height: 61px; }
+.styled-select .select-indicator { position: absolute; left: 22px; width: 17px; height: 17px; border-radius: 50%; background: #efab38; pointer-events: none; }
+.priority-select[data-value="Low"] .select-indicator { background: #32b58b; }
+.priority-select[data-value="High"] .select-indicator { background: #e85e67; }
+.status-select .select-indicator { background: #3b98d1; }
+.status-select[data-value="In Progress"] .select-indicator { background: #227ec4; }
+.status-select[data-value="Submitted"] .select-indicator { background: #8671d2; }
+.status-select[data-value="Completed"] .select-indicator { background: #20ac7a; }
+.styled-select select { appearance: none; position: relative; z-index: 1; width: 100%; height: 100%; padding: 0 48px 0 55px; border: 0; outline: 0; background: transparent; color: var(--color-text-primary); font-size: 18px; cursor: pointer; }
+.styled-select > i, .styled-date > i:last-child { position: absolute; right: 19px; color: #244266; font-size: 17px; pointer-events: none; }
+.styled-date > i:first-child { position: absolute; left: 22px; color: #6e819d; font-size: 20px; pointer-events: none; }
+.styled-date input { position: relative; z-index: 1; width: 100%; height: 100%; padding: 0 48px 0 55px; border: 0; outline: 0; background: transparent; color: transparent; font-size: 18px; cursor: pointer; }
+.styled-date.has-value input { color: var(--color-text-primary); }
+.styled-date input::-webkit-calendar-picker-indicator { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.date-placeholder { position: absolute; left: 55px; color: #7b89a4; font-size: 18px; pointer-events: none; }
+.styled-date.has-value .date-placeholder { display: none; }
+.option-field > textarea { min-height: 95px; padding: 17px 20px; outline: 0; resize: vertical; color: var(--color-text-primary); font-size: 17px; line-height: 1.5; }
+.task-form-actions { display: flex; justify-content: flex-end; gap: 15px; margin-top: 14px; }
+.task-form-actions .primary-button, .task-form-actions .secondary-button { min-width: 150px; min-height: 62px; border-radius: 12px; font-size: 18px; }
+.task-form-actions .primary-button { min-width: 205px; }
+.task-form-actions .primary-button i { font-size: 22px; }
+body.dark #taskDialog .task-modal-intro h2, body.dark #taskDialog .task-field-label { color: #f0f8ff; }
+body.dark #taskDialog .task-modal-intro > p:last-child { color: #b4c7da; }
+body.dark #taskDialog .wide-field > input, body.dark #taskDialog .description-wrap, body.dark #taskDialog .assignee-trigger, body.dark #taskDialog .assignee-dropdown, body.dark #taskDialog .styled-select, body.dark #taskDialog .styled-date, body.dark #taskDialog .option-field > textarea, body.dark #taskDialog .employee-search { background: #203651; border-color: #3a5874; color: #e8f4ff; }
+body.dark #taskDialog input, body.dark #taskDialog textarea, body.dark #taskDialog select, body.dark #taskDialog .employee-option, body.dark #taskDialog .employee-chip { color: #e8f4ff; }
+body.dark #taskDialog .employee-chip { background: #2b4865; }
+body.dark #taskDialog .employee-option:hover { background: #28435f; }
+body.dark #taskDialog .styled-date:not(.has-value) input { color: transparent; }
+@media (max-width: 860px) {
+  #taskDialog .task-form-card { padding: 30px; }
+  .task-form-columns { grid-template-columns: 1fr; gap: 25px; }
+  .employee-options { max-height: 260px; }
+  .task-modal-head { grid-template-columns: 64px minmax(0, 1fr) 42px; gap: 15px; }
+  .task-modal-icon { width: 64px; height: 64px; font-size: 28px; }
+  #taskDialog .close-button { width: 42px; height: 42px; }
+}
+@media (max-width: 520px) {
+  #taskDialog { width: calc(100% - 16px); max-height: calc(100vh - 16px); }
+  #taskDialog .task-form-card { padding: 22px 18px; }
+  .task-modal-head { grid-template-columns: 48px minmax(0, 1fr) 34px; gap: 10px; }
+  .task-modal-icon { width: 48px; height: 48px; border-radius: 12px; font-size: 23px; }
+  .task-modal-intro .section-kicker { font-size: 10px; letter-spacing: 1.5px; }
+  .task-modal-intro h2 { font-size: 29px; letter-spacing: -1px; }
+  .task-modal-intro > p:last-child { font-size: 13px; }
+  #taskDialog .close-button { width: 34px; height: 34px; font-size: 16px; }
+  .task-field-label { font-size: 16px; }
+  .task-field-label i { font-size: 18px; }
+  .wide-field > input, .styled-select, .styled-date { height: 53px; }
+  .wide-field > input, .description-wrap textarea, .styled-select select, .styled-date input, .date-placeholder { font-size: 15px; }
+  .task-form-actions { gap: 9px; }
+  .task-form-actions .primary-button, .task-form-actions .secondary-button { min-width: 0; flex: 1; min-height: 52px; font-size: 14px; }
+}
