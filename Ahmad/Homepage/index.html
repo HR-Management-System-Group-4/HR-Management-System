@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../../layout/header.css">
   <link rel="stylesheet" href="../../layout/footer.css">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="sections.css?v=about-compact-2">
+  <link rel="stylesheet" href="sections.css?v=about-network-1">
 </head>
 <body>
   <div class="nav-bar"></div>
@@ -52,7 +52,6 @@
     </section>
 
     <section class="about-section" id="about" aria-labelledby="aboutTitle">
-      <div class="about-glow" aria-hidden="true"></div>
       <div class="about-inner">
         <div class="section-tag about-tag" data-reveal><b>02</b><i></i><span>ABOUT US</span></div>
         <h2 id="aboutTitle"><span class="title-line" data-reveal>We build</span><span class="title-line title-gradient" data-reveal>simple digital</span><span class="title-line" data-reveal>solutions.</span></h2>
@@ -60,22 +59,7 @@
         <a class="about-button" href="#team" data-reveal>Meet Our Team <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
       </div>
       <div class="about-visual" aria-hidden="true">
-        <div class="about-art">
-          <svg viewBox="0 0 900 700" role="presentation" focusable="false">
-            <defs>
-              <linearGradient id="ribbonGradient" x1=".08" x2=".93" y1=".02" y2=".98" objectBoundingBox="true"><stop offset="0" stop-color="#fff"/><stop offset=".22" stop-color="#cfddf9"/><stop offset=".5" stop-color="#6a9ec4"/><stop offset=".76" stop-color="#d8e8f1"/><stop offset="1" stop-color="#7dc8d8"/></linearGradient>
-              <linearGradient id="ribbonHighlight" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".44" stop-color="#fff" stop-opacity=".08"/><stop offset="1" stop-color="#fff" stop-opacity=".55"/></linearGradient>
-              <linearGradient id="orbitGradient" x1="0" x2="1"><stop offset="0" stop-color="#a3d6dd" stop-opacity=".05"/><stop offset=".48" stop-color="#74acc6" stop-opacity=".8"/><stop offset="1" stop-color="#91d9d2" stop-opacity=".08"/></linearGradient>
-              <filter id="ribbonShadow" x="-30%" y="-35%" width="160%" height="170%"><feGaussianBlur stdDeviation="27"/></filter>
-              <filter id="orbGlow"><feGaussianBlur stdDeviation="11"/></filter>
-            </defs>
-            <g class="orbit-group"><ellipse class="orbit-line" cx="466" cy="344" rx="393" ry="257" transform="rotate(-22 466 344)"/><ellipse class="orbit-line second" cx="467" cy="346" rx="314" ry="351" transform="rotate(33 467 346)"/><circle class="orbit-dot" cx="751" cy="116" r="8"/><circle class="orbit-dot small" cx="821" cy="381" r="5"/></g>
-            <path class="ribbon-blur" d="M170 580V155Q170 85 235 85Q276 85 310 128L551 481Q588 533 624 476L810 180Q829 150 850 158V590" fill="none" stroke="#6995ce" stroke-width="146" stroke-linecap="round" stroke-linejoin="round" filter="url(#ribbonShadow)"/>
-            <path class="ribbon-body" d="M170 580V155Q170 85 235 85Q276 85 310 128L551 481Q588 533 624 476L810 180Q829 150 850 158V590" fill="none" stroke="url(#ribbonGradient)" stroke-width="129" stroke-linecap="round" stroke-linejoin="round"/>
-            <path class="ribbon-sheen" d="M170 580V155Q170 85 235 85Q276 85 310 128L551 481Q588 533 624 476L810 180Q829 150 850 158V590" fill="none" stroke="url(#ribbonHighlight)" stroke-width="114" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle class="visual-orb-glow" cx="300" cy="495" r="108" fill="#8abde0" opacity=".3" filter="url(#orbGlow)"/><circle class="visual-orb" cx="300" cy="495" r="101" fill="url(#ribbonGradient)" stroke="#fff" stroke-width="2"/>
-          </svg>
-        </div>
+        <canvas class="about-network"></canvas>
       </div>
       <div class="about-features">
         <a href="#services" class="about-feature" data-reveal><span class="feature-icon"><i class="bi bi-window-desktop" aria-hidden="true"></i></span><span><strong>Web Solutions</strong><small>Modern websites that grow<br>your business.</small></span></a>
@@ -148,6 +132,7 @@
   <script src="../../layout/header.js"></script>
   <script src="../../layout/footer.js"></script>
   <script src="main.js"></script>
+  <script src="about-network.js"></script>
 
 </body>
 </html>

@@ -16,25 +16,6 @@ if (!reducedMotion && 'IntersectionObserver' in window) {
   document.querySelectorAll('[data-reveal], .problems-section').forEach((element) => revealObserver.observe(element));
 }
 
-if (!reducedMotion && window.matchMedia('(pointer: fine)').matches) {
-  const about = document.querySelector('.about-section');
-  const art = about.querySelector('.about-art');
-  let frame = 0;
-  about.addEventListener('pointermove', (event) => {
-    cancelAnimationFrame(frame);
-    frame = requestAnimationFrame(() => {
-      const rect = about.getBoundingClientRect();
-      art.style.setProperty('--about-x', `${((event.clientX - rect.left) / rect.width - .5) * 8}px`);
-      art.style.setProperty('--about-y', `${((event.clientY - rect.top) / rect.height - .5) * 8}px`);
-    });
-  });
-  about.addEventListener('pointerleave', () => {
-    cancelAnimationFrame(frame);
-    art.style.setProperty('--about-x', '0px');
-    art.style.setProperty('--about-y', '0px');
-  });
-}
-
 const services = {
   profile: {
     number: '01', name: 'EMPLOYEE PROFILE', title: 'Your details,<br>always in one place.',

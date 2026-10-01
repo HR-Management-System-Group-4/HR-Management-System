@@ -19,7 +19,8 @@
   padding: 50px 24px;
 }
 
-.mysta-footer .footer-brand { display: inline-block; color: white !important; font-size: 28px; font-weight: 800; }
+.mysta-footer .footer-brand { display: inline-block; }
+.mysta-footer .footer-logo { display: block; width: 108px; height: 108px; object-fit: contain; }
 .mysta-footer .footer-subtitle, .mysta-footer h2 { color: var(--color-mint-strong, #7cd5c7); }
 .mysta-footer .footer-subtitle { margin: 0 0 18px; font-size: 12px; font-weight: 800; letter-spacing: .18em; }
 .mysta-footer .footer-about > p:not(.footer-subtitle) { max-width: 520px; margin: 0 0 18px; line-height: 1.7; }
