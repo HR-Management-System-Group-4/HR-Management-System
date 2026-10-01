@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Tasks</title>
+
+
+<link rel="stylesheet" href="../../assets/Colors.css">
+<link rel="stylesheet" href="../../layout/header.css">
+<link rel="stylesheet" href="../../layout/footer.css">
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+</head>
+
+
+<body>
+
+ <div class="nav-bar"></div>
+<div class="container">
+
+
+<!-- =====================
+        TOP BAR
+===================== -->
+
+
+<div class="top-bar">
+
+
+<a class="back-link">
+← Back to Services
+</a>
+
+
+
+<button class="add-btn" id="openModal">
+
+<i class="fa-solid fa-plus"></i>
+
+Add Task
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- =====================
+        PAGE TITLE
+===================== -->
+
+
+<section class="page-title">
+
+
+<span>
+EMPLOYEE SERVICES
+</span>
+
+
+<h1>
+My Tasks
+</h1>
+
+
+<p>
+Track and manage your assigned tasks.
+</p>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- =====================
+        STATISTICS
+===================== -->
+
+
+<div class="stats">
+
+
+<div class="stat-card">
+
+
+<h2 id="total">
+0
+</h2>
+
+
+<p>
+Total
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="stat-card pending">
+
+
+<h2 id="pending">
+0
+</h2>
+
+
+<p>
+Pending
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="stat-card progress">
+
+
+<h2 id="progress">
+0
+</h2>
+
+
+<p>
+In Progress
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="stat-card completed">
+
+
+<h2 id="completed">
+0
+</h2>
+
+
+<p>
+Completed
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- =====================
+        FILTERS
+===================== -->
+
+
+<div class="filters">
+
+
+<button class="active" data-filter="All">
+
+All Tasks
+
+</button>
+
+
+
+<button data-filter="Pending">
+
+Pending
+
+</button>
+
+
+
+
+<button data-filter="In Progress">
+
+In Progress
+
+</button>
+
+
+
+
+<button data-filter="Completed">
+
+Completed
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- =====================
+        TASKS
+===================== -->
+
+
+<div id="tasksContainer">
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- =================================================
+        ADD / EDIT TASK MODAL
+================================================= -->
+
+
+<div class="modal" id="taskModal">
+
+
+<div class="modal-box">
+
+
+
+<div class="modal-header">
+
+
+<h2 id="modalTitle">
+Add New Task
+</h2>
+
+
+
+<button id="closeModal">
+
+<i class="fa-solid fa-xmark"></i>
+
+</button>
+
+
+</div>
+
+
+
+<div class="line"></div>
+
+
+
+
+
+
+
+<label>
+Task Title <span>*</span>
+</label>
+
+
+<input 
+id="titleInput"
+placeholder="Enter task title">
+
+
+
+
+
+
+
+<label>
+Description
+</label>
+
+
+<textarea 
+id="descInput"
+placeholder="Task description...">
+</textarea>
+
+
+
+
+
+
+
+<div class="two-fields">
+
+
+
+<div>
+
+
+<label>
+Due Date
+</label>
+
+
+<input 
+type="date"
+id="dateInput">
+
+
+</div>
+
+
+
+
+
+<div>
+
+
+<label>
+Priority
+</label>
+
+
+<select id="priorityInput">
+
+
+<option>
+High
+</option>
+
+
+<option selected>
+Medium
+</option>
+
+
+<option>
+Low
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- ASSIGN EMPLOYEES -->
+
+
+<div class="assign-box">
+
+
+<label>
+Assign To
+</label>
+
+
+
+<div class="employees-list" id="employeesList">
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="modal-buttons">
+
+
+<button 
+class="create-btn"
+id="saveTask">
+
+Create Task
+
+</button>
+
+
+
+<button 
+class="cancel-btn"
+id="cancelTask">
+
+Cancel
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- =================================================
+        REVIEW TASK MODAL
+================================================= -->
+
+
+<div class="modal" id="reviewModal">
+
+
+<div class="review-box">
+
+
+
+<div class="modal-header">
+
+
+<h2>
+Task Details
+</h2>
+
+
+
+<button id="closeReview">
+
+<i class="fa-solid fa-xmark"></i>
+
+</button>
+
+
+
+</div>
+
+
+
+
+<div class="line"></div>
+
+
+
+
+<div class="review-content">
+
+
+<h3 id="reviewTitle">
+
+</h3>
+
+
+<p id="reviewDescription">
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+<div class="review-footer">
+
+
+<button id="closeReviewBtn">
+
+Close
+
+</button>
+
+
+</div>
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="footer"></div>
+<script src="../../layout/header.js"></script>
+<script src="../../layout/footer.js"></script>
+<script src="script.js"></script>
+
+
+</body>
+
+
+</html>
