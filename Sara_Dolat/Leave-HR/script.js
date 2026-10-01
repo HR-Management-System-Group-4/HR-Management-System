@@ -1,108 +1,249 @@
-const sampleRequests = [
-  { id: 'sample-1', employee: 'Ahmad Saleh', leaveType: 'Annual Leave', startDate: '2026-10-12', endDate: '2026-10-16', reason: 'Family holiday planned in advance.', status: 'Pending' },
-  { id: 'sample-2', employee: 'Dana Rimawi', leaveType: 'Annual Leave', startDate: '2026-10-04', endDate: '2026-10-05', reason: 'Personal commitments.', status: 'Approved' },
-  { id: 'sample-3', employee: 'Tariq Hijazi', leaveType: 'Sick Leave', startDate: '2026-09-27', endDate: '2026-09-27', reason: 'Medical appointment.', status: 'Rejected' }
+let requests = JSON.parse(localStorage.getItem("requests")) || [
+  {
+    id: 1,
+    name: "Ahmad Saleh",
+    leaveType: "Annual Leave",
+    date: "12 - 16 Oct 2026",
+    reason: "Family holiday planned in advance.",
+    status: "Pending",
+  },
+
+  {
+    id: 2,
+    name: "Dana Rimawi",
+    leaveType: "Annual Leave",
+    date: "4 - 5 Oct 2026",
+    reason: "Personal commitments.",
+    status: "Approved",
+  },
+
+  {
+    id: 3,
+    name: "Tariq Hijazi",
+    leaveType: "Sick Leave",
+    date: "27 Sep 2026",
+    reason: "Medical appointment.",
+    status: "Rejected",
+  },
 ];
 
-try {
-  const decisions = JSON.parse(localStorage.getItem('sampleLeaveDecisions') || '{}');
-  sampleRequests.forEach(request => {
-    if (['Approved', 'Rejected'].includes(decisions[request.id])) request.status = decisions[request.id];
+let box = document.getElementById("requests");
+
+/* =========================
+   SAVE TO LOCAL STORAGE
+========================= */
+
+function saveRequests() {
+  localStorage.setItem("requests", JSON.stringify(requests));
+}
+
+/* =========================
+   UPDATE COUNTS
+========================= */
+
+function updateCounts() {
+  let total = requests.length;
+
+  let pending = requests.filter(function (request) {
+    return request.status == "Pending";
+  }).length;
+
+  let approved = requests.filter(function (request) {
+    return request.status == "Approved";
+  }).length;
+
+  let rejected = requests.filter(function (request) {
+    return request.status == "Rejected";
+  }).length;
+
+  document.getElementById("total").innerText = total;
+
+  document.getElementById("pendingCount").innerText = pending;
+
+  document.getElementById("approvedCount").innerText = approved;
+
+  document.getElementById("rejectedCount").innerText = rejected;
+}
+
+/* =========================
+   SHOW REQUESTS
+========================= */
+
+function show(data) {
+  box.innerHTML = "";
+
+  data.forEach(function (request) {
+    box.innerHTML += `
+
+        <div class="card">
+
+            <!-- Employee -->
+
+            <div class="name">
+
+                <div>
+
+                    <h3>
+                        ${request.name}
+                    </h3>
+
+                    <p class="details">
+                        ${request.leaveType}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Date + Reason -->
+
+            <div>
+
+                <p class="details">
+                    ▣ &nbsp; ${request.date}
+                </p>
+
+                <p class="reason">
+                    ▢ &nbsp; ${request.reason}
+                </p>
+
+            </div>
+
+
+            <!-- Status + Actions -->
+
+            <div>
+
+                <span class="status ${request.status.toLowerCase()}">
+
+                    ${
+                      request.status == "Pending"
+                        ? "◷ Pending"
+                        : request.status == "Approved"
+                          ? "✓ Approved"
+                          : "× Rejected"
+                    }
+
+                </span>
+
+
+                ${
+                  request.status == "Pending"
+                    ? `
+
+                    <div class="actions">
+
+                        <button
+                            class="approve"
+                            onclick="approve(${request.id})">
+
+                            ✓ &nbsp; Approve
+
+                        </button>
+
+
+                        <button
+                            class="reject"
+                            onclick="reject(${request.id})">
+
+                            × &nbsp; Reject
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="reviewed">
+                        Requested on 2 Oct 2026
+                    </div>
+
+                    `
+                    : request.status == "Approved"
+                      ? `
+
+                    <div class="reviewed">
+
+                        Approved on 1 Oct 2026
+                        <br>
+                        by HR Admin
+
+                    </div>
+
+                    `
+                      : `
+
+                    <div class="reviewed">
+
+                        Rejected on 26 Sep 2026
+                        <br>
+                        by HR Admin
+
+                    </div>
+
+                    `
+                }
+
+            </div>
+
+        </div>
+
+        `;
   });
-} catch (_) { /* Keep the sample requests available. */ }
-
-const box = document.getElementById('requests');
-let activeFilter = 'All';
-
-function savedRequests() {
-  try {
-    const stored = JSON.parse(localStorage.getItem('leaveApplications') || '[]');
-    return Array.isArray(stored) ? stored : [];
-  } catch (error) {
-    console.warn('Could not read saved leave requests.', error);
-    return [];
-  }
 }
 
-function requestCard(request, saved) {
-  const card = document.createElement('article');
-  card.className = 'card';
-  const heading = document.createElement('div');
-  heading.className = 'name';
-  const summary = document.createElement('div');
-  const name = document.createElement('h3');
-  name.textContent = request.employee || 'Employee';
-  const details = document.createElement('p');
-  details.className = 'details';
-  details.textContent = `${request.leaveType || 'Leave'} · ${request.startDate || ''}${request.endDate && request.endDate !== request.startDate ? ` – ${request.endDate}` : ''}`;
-  const status = document.createElement('span');
-  status.className = `status ${(request.status || 'Pending').toLowerCase()}`;
-  status.textContent = request.status || 'Pending';
-  summary.append(name, details);
-  heading.append(summary, status);
-  const reason = document.createElement('p');
-  reason.className = 'reason';
-  reason.textContent = request.reason || 'No reason provided.';
-  card.append(heading, reason);
+/* =========================
+   APPROVE
+========================= */
 
-  if (request.status === 'Pending') {
-    for (const [label, nextStatus, className] of [['Approve', 'Approved', 'approve'], ['Reject', 'Rejected', 'reject']]) {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = className;
-      button.textContent = label;
-      button.addEventListener('click', () => {
-        if (saved) {
-          const all = savedRequests();
-          const entry = all.find(item => String(item.id) === String(request.id));
-          if (entry) entry.status = nextStatus;
-          localStorage.setItem('leaveApplications', JSON.stringify(all));
-        } else {
-          request.status = nextStatus;
-          const decisions = JSON.parse(localStorage.getItem('sampleLeaveDecisions') || '{}');
-          decisions[request.id] = nextStatus;
-          localStorage.setItem('sampleLeaveDecisions', JSON.stringify(decisions));
-        }
-        renderRequests();
-      });
-      card.append(button);
-    }
-  }
-  return card;
+function approve(id) {
+  let request = requests.find(function (r) {
+    return r.id == id;
+  });
+
+  request.status = "Approved";
+
+  saveRequests();
+
+  updateCounts();
+
+  show(requests);
 }
 
-function updateCounts(items) {
-  const requests = items.map(({ request }) => request);
+/* =========================
+   REJECT
+========================= */
 
-  const total = requests.length;
-  const pending = requests.filter(request => (request.status || 'Pending') === 'Pending').length;
-  const approved = requests.filter(request => request.status === 'Approved').length;
-  const rejected = requests.filter(request => request.status === 'Rejected').length;
+function reject(id) {
+  let request = requests.find(function (r) {
+    return r.id == id;
+  });
 
-  document.getElementById('total').textContent = total;
-  document.getElementById('pendingCount').textContent = pending;
-  document.getElementById('approvedCount').textContent = approved;
-  document.getElementById('rejectedCount').textContent = rejected;
+  request.status = "Rejected";
+
+  saveRequests();
+
+  updateCounts();
+
+  show(requests);
 }
 
-function renderRequests() {
-  box.replaceChildren();
-  const all = [...savedRequests().map(request => ({ request, saved: true })), ...sampleRequests.map(request => ({ request, saved: false }))];
-  updateCounts(all);
-  const visible = all.filter(({ request }) => activeFilter === 'All' || request.status === activeFilter);
-  if (!visible.length) {
-    const empty = document.createElement('p');
-    empty.className = 'empty-state';
-    empty.textContent = 'No requests in this category.';
-    box.append(empty);
-  }
-  visible.forEach(({ request, saved }) => box.append(requestCard(request, saved)));
-  document.querySelectorAll('#filter button').forEach(button => button.classList.toggle('active', button.dataset.status === activeFilter));
-}
+/* =========================
+   FILTER
+========================= */
 
 function filterRequests(status) {
-  activeFilter = status;
-  renderRequests();
+  if (status == "All") {
+    show(requests);
+  } else {
+    let result = requests.filter(function (request) {
+      return request.status == status;
+    });
+
+    show(result);
+  }
 }
 
-renderRequests();
+updateCounts();
+
+show(requests);
