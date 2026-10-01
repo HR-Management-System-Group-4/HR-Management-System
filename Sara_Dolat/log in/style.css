@@ -26,35 +26,18 @@ body{
     gap:12px;
 }
 
-.logo-icon{
-    background:white;
-    padding:8px;
-    border-radius:7px;
-}
-
-.logo-icon span{
-    color:#16a6b6;
-    font-size:18px;
-}
-
-.logo b{
-    font-size:20px;
-}
-
-.portal{
-    margin-top:230px;
-    color:#aaa;
-    font-size:13px;
-    letter-spacing:2px;
-}
 
 .left h1{
     font-size:55px;
-    margin:200px 0 20px;
+    margin:120px 0 20px;
 }
-
+.left small{
+    margin:200px 0 20px;
+    font-size: 10px;
+    color: #60657d;
+}
 .description{
-    color:#aaa;
+    color:#60657d;
     font-size:17px;
 }
 
@@ -62,7 +45,7 @@ body{
     position:absolute;
     bottom:40px;
     color:#aaa;
-    font-size:11px;
+    font-size:9px;
 }
 
 
