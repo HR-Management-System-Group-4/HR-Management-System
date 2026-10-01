@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Tasks</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="Employee_Task.css">
+<link rel="stylesheet" href="open_task_employee.css">
+</head>
+<body>
+
+  
+
+  <div class="container my-tasks-container">
+    <iframe src="../../nav-bar/nav.html" width="100%" frameborder="0" scrolling="no"></iframe>
+
+    <a href="#" class="back-link"><i class="fa-solid fa-arrow-left-long"></i> Back to Services</a>
+    
+    <div class="header-section">
+      <span class="subtitle">Implement Login Page</span>
+      <h2>My Tasks</h2>
+      <p class="text-muted">Develop a responsive login page with email and password fields, validation, and error messages.</p>
+    </div>
+
+ 
+    <div class="row stats-row g-3 mb-4">
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <h3 id="PendingCount"></h3>
+          <p>Pending</p>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <h3 id="progressCount"></h3>
+          <p>In progress</p>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <h3 id="SubmittedCount"></h3>
+          <p>Submitted</p>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <h3 id="completedCount"></h3>
+          <p>Completed</p>
+        </div>
+      </div>
+    </div>
+
+   
+    <div class="filter-tabs mb-4">
+      <button class="filter-btn active" id="ALL">All</button>
+      <button class="filter-btn" id="filter_pending">Pending</button>
+      <button class="filter-btn" id="filter_progress">In progress</button>
+      <button class="filter-btn" id="filter_submition">Submitted</button>
+      <button class="filter-btn" id="filter_completed">Completed</button>
+    </div>
+
+  
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      
+      
+      <div class="col">
+        <div class="card task-card">
+          <div class="card-body d-flex flex-column justify-content-between">
+            <div>
+              <div class="card-meta d-flex justify-content-between align-items-center mb-2">
+                <span class="priority high">High</span>
+                <span class="state pending">Pending</span>
+              </div>
+              <h5 class="card-title">Implement Login Page</h5>
+              <p class="card-text">Develop a responsive login page with email and password fields, validation, and error messages.</p>
+            </div>
+            <div class="card-footer-info d-flex justify-content-between align-items-center mt-3">
+              <span class="due-date">Due 8 Oct</span>
+              <a href="#taskModal" class="open-link">Open</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="col">
+        <div class="card task-card">
+          <div class="card-body d-flex flex-column justify-content-between">
+            <div>
+              <div class="card-meta d-flex justify-content-between align-items-center mb-2">
+                <span class="priority medium">Medium</span>
+                <span class="state in-progress">In progress</span>
+              </div>
+              <h5 class="card-title">Fix Employee Dashboard UI</h5>
+              <p class="card-text">Fix layout issues in the employee dashboard and make sure the interface works properly on different screen sizes.</p>
+            </div>
+            <div class="card-footer-info d-flex justify-content-between align-items-center mt-3">
+              <span class="due-date">Due 12 Oct</span>
+              <a href="#taskModal" class="open-link">Open</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+   
+      <div class="col">
+        <div class="card task-card">
+          <div class="card-body d-flex flex-column justify-content-between">
+            <div>
+              <div class="card-meta d-flex justify-content-between align-items-center mb-2">
+                <span class="priority low">Low</span>
+                <span class="state pending">Pending</span>
+              </div>
+              <h5 class="card-title">Add Leave Request Feature</h5>
+              <p class="card-text">Implement a feature that allows employees to submit leave requests and view their request status.</p>
+            </div>
+            <div class="card-footer-info d-flex justify-content-between align-items-center mt-3">
+              <span class="due-date">Due 20 Oct</span>
+              <a href="#taskModal" class="open-link">Open</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+     
+      <div class="col">
+        <div class="card task-card">
+          <div class="card-body d-flex flex-column justify-content-between">
+            <div>
+              <div class="card-meta d-flex justify-content-between align-items-center mb-2">
+                <span class="priority medium">Medium</span>
+                <span class="state submitted">Submitted</span>
+              </div>
+              <h5 class="card-title">Create User Management Page</h5>
+              <p class="card-text">Develop a page for managing users, including adding, editing, deleting, and viewing user information.</p>
+            </div>
+            <div class="card-footer-info d-flex justify-content-between align-items-center mt-3">
+              <span class="due-date">Due 5 Oct</span>
+              <a href="#taskModal" class="open-link">Open</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="col">
+        <div class="card task-card">
+          <div class="card-body d-flex flex-column justify-content-between">
+            <div>
+              <div class="card-meta d-flex justify-content-between align-items-center mb-2">
+                <span class="priority high">High</span>
+                <span class="state completed">Completed</span>
+              </div>
+              <h5 class="card-title">Fix Attendance Calculation Bug</h5>
+              <p class="card-text">Investigate and fix the issue with calculating employee working hours and attendance records.</p>
+
+            </div>
+            <div class="card-footer-info d-flex justify-content-between align-items-center mt-3">
+              <span class="due-date">Due 28 Sep</span>
+              <a href="#taskModal" class="open-link">Open</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+   
+      <div class="col">
+        <div class="card task-card">
+          <div class="card-body d-flex flex-column justify-content-between">
+            <div>
+              <div class="card-meta d-flex justify-content-between align-items-center mb-2">
+                <span class="priority low">Low</span>
+                <span class="state completed">Completed</span>
+              </div>
+              <h5 class="card-title">Develop Employee Profile API</h5>
+              <p class="card-text">Create an API endpoint to retrieve and update employee profile information.</p>
+            </div>
+            <div class="card-footer-info d-flex justify-content-between align-items-center mt-3">
+              <span class="due-date">Due 15 Sep</span>
+              <a href="#taskModal" class="open-link">Open</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+       <!-- <--poupup-->
+  <div class="task-modal-overlay" id="taskModal" style="display: none;">
+    <div class="task-modal-content">
+      
+      
+      <div class="modal-header-section">
+        <div>
+          <h3 class="modal-title">Workshop slide template</h3>
+          <div class="badge-group">
+            <span class="priority low">Low priority</span>
+            <span class="state completed">Completed</span>
+          </div>
+        </div>
+        <button class="close-btn" id="closeModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      
+      <p class="modal-desc">Deliver a reusable slide template for internal workshops.</p>
+
+      
+      <div class="dates-grid">
+        <div class="date-item">
+          <span class="date-label">Assigned</span>
+          <span class="date-value">1 Oct 2026</span>
+        </div>
+        <div class="date-item">
+          <span class="date-label">Due</span>
+          <span class="date-value">15 Sep 2026</span>
+        </div>
+      </div>
+
+  
+      <div class="hr-notes-box">
+        <h6 class="notes-heading">HR notes</h6>
+        <p class="notes-text">Please follow the brand guidelines shared in the team folder.</p>
+      </div>
+
+    
+      <div class="solution-section" >
+        <label for="userSolution" class="solution-label">Your solution</label>
+        <textarea id="userSolution" class="solution-textarea" placeholder="Describe your work or paste a link"></textarea>
+      </div>
+      
+
+        <div id="errorMsg" style="display: none; color: red; font-size: 14px; margin-top: 5px;">
+         Please enter a valid GitHub, Google Drive, or website link.
+        </div>
+
+      <div class="modal-footer-action">
+        <button class="btn-submit-solution" id="btn-submit-solution">Submit solution</button>
+      </div>
+
+    </div>
+  </div>
+  <script src="open_task_employee.js"></script>
+</body>
+</html>
+
