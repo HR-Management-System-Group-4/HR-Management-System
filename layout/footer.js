@@ -13,6 +13,8 @@ if (footerContainer) {
       const footer = new DOMParser().parseFromString(html, 'text/html').querySelector('footer');
       if (!footer) throw new Error('Footer markup was not found.');
 
+      footer.querySelector('[data-brand-logo]').src = new URL('../assets/Logo-cropped.png', footerUrl).href;
+
       const isHomepage = window.location.pathname === homepageUrl.pathname;
       footer.querySelectorAll('[data-page-anchor]').forEach((link) => {
         const anchor = `#${link.dataset.pageAnchor}`;

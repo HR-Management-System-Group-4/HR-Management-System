@@ -20,6 +20,8 @@ if (navbarContainer) {
       const nav = new DOMParser().parseFromString(html, 'text/html').querySelector('nav');
       if (!nav) throw new Error('Navbar markup was not found.');
 
+      nav.querySelector('[data-brand-logo]').src = new URL('../assets/Logo-cropped.png', navbarUrl).href;
+
       nav.querySelectorAll('[data-page-anchor]').forEach((link) => {
         const anchor = `#${link.dataset.pageAnchor}`;
         link.href = isHomepage ? anchor : `${homepageUrl.href}${anchor}`;

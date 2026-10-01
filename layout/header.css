@@ -3,13 +3,7 @@
 .custom-navbar a { text-decoration: none; }
 .custom-navbar button { font: inherit; cursor: pointer; }
 .custom-navbar .navbar-brand { display: inline-flex; align-items: center; flex: none; gap: 12px; }
-.custom-navbar .logo-box { display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid #70758a; border-radius: 8px; background: white; }
-.custom-navbar .logo-bars { display: flex; align-items: end; gap: 4px; height: 23px; }
-.custom-navbar .logo-bars span { display: block; width: 5px; border-radius: 3px; }
-.custom-navbar .logo-bars span:nth-child(1) { height: 13px; background: #243e82; }
-.custom-navbar .logo-bars span:nth-child(2) { height: 22px; background: #25749d; }
-.custom-navbar .logo-bars span:nth-child(3) { height: 17px; background: #6bcfc3; }
-.custom-navbar .brand-name { color: #252a44; font-size: 22px; font-weight: 700; }
+.custom-navbar .brand-logo { display: block; width: 74px; height: 74px; flex: none; object-fit: contain; filter: drop-shadow(0 0 1px #252a44) drop-shadow(0 1px 1px rgba(17, 24, 39, .8)); }
 .custom-navbar .navbar-content { display: flex; align-items: center; justify-content: space-between; flex: 1; gap: 24px; }
 .custom-navbar .nav-links-box { display: flex; align-items: center; gap: 2px; margin: auto; padding: 4px 12px; border: 1px solid #dcdde3; border-radius: 40px; background: rgba(255, 255, 255, .55); }
 .custom-navbar .nav-link { display: block; padding: 10px 16px; color: #626981; font-weight: 600; white-space: nowrap; transition: color .2s; }
