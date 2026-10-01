@@ -15,7 +15,12 @@
       "emergencyContactPhone": "+962 78 234 5678",
       "employmentType": "Full-Time",
       "workLocation": "Amman Office",
-      "startDate": "2023-01-15"
+      "startDate": "2023-01-15",
+      "departmentId": "HR-001",
+      "reportingManager": "N/A",
+      "contractType": "Permanent",
+      "workSchedule": "Sunday - Thursday, 9:00 AM - 5:00 PM",
+      "contractEndDate": null
     },
     {
       "id": 2,
@@ -32,7 +37,12 @@
       "emergencyContactPhone": "+962 78 345 6789",
       "employmentType": "Full-Time",
       "workLocation": "Amman Office",
-      "startDate": "2024-02-01"
+      "startDate": "2024-02-01",
+      "departmentId": "IT-001",
+      "reportingManager": "Sara Ahmad",
+      "contractType": "Permanent",
+      "workSchedule": "Sunday - Thursday, 9:00 AM - 5:00 PM",
+      "contractEndDate": null
     },
     {
       "id": 3,
@@ -49,7 +59,12 @@
       "emergencyContactPhone": "+962 78 456 7890",
       "employmentType": "Full-Time",
       "workLocation": "Amman Office",
-      "startDate": "2024-03-10"
+      "startDate": "2024-03-10",
+      "departmentId": "MKT-001",
+      "reportingManager": "Sara Ahmad",
+      "contractType": "Permanent",
+      "workSchedule": "Sunday - Thursday, 9:00 AM - 5:00 PM",
+      "contractEndDate": null
     },
     {
       "id": 4,
@@ -66,7 +81,12 @@
       "emergencyContactPhone": "+962 78 567 8901",
       "employmentType": "Full-Time",
       "workLocation": "Amman Office",
-      "startDate": "2023-09-01"
+      "startDate": "2023-09-01",
+      "departmentId": "FIN-001",
+      "reportingManager": "Sara Ahmad",
+      "contractType": "Permanent",
+      "workSchedule": "Sunday - Thursday, 9:00 AM - 5:00 PM",
+      "contractEndDate": null
     },
     {
       "id": 5,
@@ -83,7 +103,12 @@
       "emergencyContactPhone": "+962 78 678 9012",
       "employmentType": "Full-Time",
       "workLocation": "Amman Office",
-      "startDate": "2024-01-20"
+      "startDate": "2024-01-20",
+      "departmentId": "DES-001",
+      "reportingManager": "Sara Ahmad",
+      "contractType": "Permanent",
+      "workSchedule": "Sunday - Thursday, 9:00 AM - 5:00 PM",
+      "contractEndDate": null
     },
     {
       "id": 6,
@@ -100,7 +125,12 @@
       "emergencyContactPhone": "+962 78 789 0123",
       "employmentType": "Full-Time",
       "workLocation": "Amman Office",
-      "startDate": "2024-04-05"
+      "startDate": "2024-04-05",
+      "departmentId": "IT-001",
+      "reportingManager": "Omar Khaled",
+      "contractType": "Permanent",
+      "workSchedule": "Sunday - Thursday, 9:00 AM - 5:00 PM",
+      "contractEndDate": null
     },
     {
       "id": 7,
@@ -117,7 +147,12 @@
       "emergencyContactPhone": "+962 78 890 1234",
       "employmentType": "Full-Time",
       "workLocation": "Amman Office",
-      "startDate": "2023-06-15"
+      "startDate": "2023-06-15",
+      "departmentId": "SAL-001",
+      "reportingManager": "Fadi Majed",
+      "contractType": "Permanent",
+      "workSchedule": "Sunday - Thursday, 9:00 AM - 5:00 PM",
+      "contractEndDate": null
     },
     {
       "id": 8,
@@ -134,7 +169,12 @@
       "emergencyContactPhone": "+962 78 901 2345",
       "employmentType": "Full-Time",
       "workLocation": "Amman Office",
-      "startDate": "2024-05-12"
+      "startDate": "2024-05-12",
+      "departmentId": "IT-001",
+      "reportingManager": "Omar Khaled",
+      "contractType": "Permanent",
+      "workSchedule": "Sunday - Thursday, 9:00 AM - 5:00 PM",
+      "contractEndDate": null
     },
     {
       "id": 9,
@@ -151,7 +191,12 @@
       "emergencyContactPhone": "+962 78 012 3456",
       "employmentType": "Full-Time",
       "workLocation": "Amman Office",
-      "startDate": "2023-11-01"
+      "startDate": "2023-11-01",
+      "departmentId": "HR-001",
+      "reportingManager": "Sara Ahmad",
+      "contractType": "Permanent",
+      "workSchedule": "Sunday - Thursday, 9:00 AM - 5:00 PM",
+      "contractEndDate": null
     },
     {
       "id": 10,
@@ -168,7 +213,12 @@
       "emergencyContactPhone": "+962 78 123 4567",
       "employmentType": "Full-Time",
       "workLocation": "Amman Office",
-      "startDate": "2024-06-01"
+      "startDate": "2024-06-01",
+      "departmentId": "OPS-001",
+      "reportingManager": "Sara Ahmad",
+      "contractType": "Permanent",
+      "workSchedule": "Sunday - Thursday, 9:00 AM - 5:00 PM",
+      "contractEndDate": null
     },
     {
       "id": 11,
@@ -185,7 +235,12 @@
       "emergencyContactPhone": "+962 78 234 6789",
       "employmentType": "Full-Time",
       "workLocation": "Amman Office",
-      "startDate": "2024-07-15"
+      "startDate": "2024-07-15",
+      "departmentId": "MKT-001",
+      "reportingManager": "Lina Hassan",
+      "contractType": "Permanent",
+      "workSchedule": "Sunday - Thursday, 9:00 AM - 5:00 PM",
+      "contractEndDate": null
     },
     {
       "id": 12,
@@ -202,7 +257,12 @@
       "emergencyContactPhone": "+962 78 345 7890",
       "employmentType": "Full-Time",
       "workLocation": "Amman Office",
-      "startDate": "2023-08-20"
+      "startDate": "2023-08-20",
+      "departmentId": "FIN-001",
+      "reportingManager": "Ahmad Saleh",
+      "contractType": "Permanent",
+      "workSchedule": "Sunday - Thursday, 9:00 AM - 5:00 PM",
+      "contractEndDate": null
     },
     {
       "id": 13,
@@ -219,7 +279,12 @@
       "emergencyContactPhone": "+962 78 456 8901",
       "employmentType": "Full-Time",
       "workLocation": "Amman Office",
-      "startDate": "2024-08-01"
+      "startDate": "2024-08-01",
+      "departmentId": "DES-001",
+      "reportingManager": "Maya Nasser",
+      "contractType": "Permanent",
+      "workSchedule": "Sunday - Thursday, 9:00 AM - 5:00 PM",
+      "contractEndDate": null
     },
     {
       "id": 14,
@@ -236,7 +301,12 @@
       "emergencyContactPhone": "+962 78 567 9012",
       "employmentType": "Full-Time",
       "workLocation": "Amman Office",
-      "startDate": "2022-10-10"
+      "startDate": "2022-10-10",
+      "departmentId": "SAL-001",
+      "reportingManager": "Sara Ahmad",
+      "contractType": "Permanent",
+      "workSchedule": "Sunday - Thursday, 9:00 AM - 5:00 PM",
+      "contractEndDate": null
     },
     {
       "id": 15,
@@ -253,10 +323,14 @@
       "emergencyContactPhone": "+962 78 678 0123",
       "employmentType": "Full-Time",
       "workLocation": "Amman Office",
-      "startDate": "2024-09-01"
+      "startDate": "2024-09-01",
+      "departmentId": "OPS-001",
+      "reportingManager": "Tareq Abdullah",
+      "contractType": "Permanent",
+      "workSchedule": "Sunday - Thursday, 9:00 AM - 5:00 PM",
+      "contractEndDate": null
     }
   ],
-
   "policies": [
     {
       "name": "Attendance Policy",
