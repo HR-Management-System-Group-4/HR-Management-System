@@ -1,0 +1,209 @@
+@import url('../../Colors.css');
+
+/* إعدادات عامة وتنسيق الخطوط */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    background-color: var(--color-background, #f8fafc);
+}
+
+/* تخصيص الـ iframe الخاص بالسايد بار ليكون ثابتاً ونظيفاً وبدون حدود */
+.sidebar-frame {
+    width: 260px;
+    height: 100vh;
+    border: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+/* المحتوى الرئيسي */
+.main-content {
+    margin-left: 260px;
+    padding: 30px;
+    width: calc(100% - 260px);
+}
+
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 25px;
+}
+
+.header-title h1 {
+    font-size: 24px;
+    color: #1e293b;
+    margin-bottom: 5px;
+}
+
+.header-title p {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.admin-profile {
+    text-align: right;
+}
+
+.admin-profile span {
+    display: block;
+    font-weight: bold;
+    color: #1e293b;
+}
+
+.admin-profile small {
+    color: #64748b;
+}
+
+/* البطاقات الإحصائية */
+.stats-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 130px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.stat-card h3 {
+    font-size: 22px;
+    color: #1e293b;
+    margin-bottom: 5px;
+}
+
+.stat-card span {
+    color: #64748b;
+    font-size: 13px;
+}
+
+/* أزرار الفلترة */
+.filter-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 8px 20px;
+    border: none;
+    background: #ffffff;
+    color: #64748b;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.tab-btn.active {
+    background: #0f172a;
+    color: #ffffff;
+}
+
+/* تنسيق الجدول والحاوية المتجاوبة (Responsive) */
+.table-container {
+    background: var(--color-surface, #ffffff);
+    border-radius: 12px;
+    border: 1px solid var(--color-border, #e2e8f0);
+    overflow-x: auto; /* يسمح بالتمرير الأفقي بسلاسة عند تصغير الشاشة */
+    width: 100%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    min-width: 700px; /* يمنع انكماش أعمدة الجدول بشكل مبالغ فيه */
+}
+
+th {
+    background: var(--color-surface-blue, #f8fafc);
+    color: var(--color-text-secondary, #64748b);
+    font-size: 12px;
+    padding: 15px;
+    border-bottom: 1px solid var(--color-border, #e2e8f0);
+    white-space: nowrap; /* يمنع التفاف النص في عناوين الأعمدة */
+}
+
+td {
+    padding: 15px;
+    font-size: 14px;
+    color: var(--color-text-primary, #334155);
+    border-bottom: 1px solid var(--color-border, #f1f5f9);
+}
+
+td strong {
+    color: var(--color-text-primary, #0f172a);
+}
+
+td small {
+    color: var(--color-text-muted, #64748b);
+    font-size: 12px;
+}
+
+/* شارات الحالة (Status Badges) */
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-badge.new {
+    background: #e0f2fe;
+    color: #0284c7;
+}
+
+.status-badge.reviewed {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+/* أيقونات الإجراءات */
+td i {
+    cursor: pointer;
+    color: #64748b;
+    margin-right: 12px;
+    transition: color 0.2s;
+}
+
+td i:hover {
+    color: #0ea5e9;
+}
+
+/* تعديلات للشاشات الصغيرة (الموبايل والأجهزة اللوحية) */
+@media screen and (max-width: 768px) {
+    /* إخفاء السايد بار في الشاشات الصغيرة مؤقتاً لتجنب التداخل (يمكن لاحقاً إظهاره بزر قائمة) */
+    .sidebar-frame {
+        display: none; 
+    }
+    
+    /* جعل المحتوى الرئيسي يملأ الشاشة بالكامل بدون أي إزاحة لليسار */
+    .main-content {
+        margin-left: 0; 
+        padding: 15px;
+        width: 100%;
+    }
+    
+    .stats-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .stat-card {
+        width: 100%;
+    }
+}

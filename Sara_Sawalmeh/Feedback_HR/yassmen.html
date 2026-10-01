@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../Colors.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../nav-bar/nav.css">
+    <link rel="stylesheet" href="feedback.css">
+    
+    <title>Employees Management</title>
+</head>
+<body>
+    <aside>
+        <div class="header">
+            <div class="logo">
+
+            </div>
+
+            <div>Mysta</div>
+            <div class="caption">HR 
+                CONTROL PANEL
+            </div>
+        </div>
+
+       <nav class="links">
+            <a class="overview" href="overview.html">
+                <span>Overview</span>
+            </a>
+
+            <a class="employees" href="employees.html" aria-current="page">
+                <span>Employees</span>
+            </a>
+
+            <a class="taskManagement" href="taskManagement.html">
+                <span>Task Management</span>
+            </a>
+
+            <a class="leaveRequests" href="leaveRequests.html">
+                <span>Leave Requests</span>
+            </a>
+
+            <a class="meetings" href="meetings.html">
+                <span>Meetings</span>
+            </a>
+
+            <a class="policies" href="policies.html">
+                <span>Policies</span>
+            </a>
+
+            <a class="feedbackInbox" href="feedbackInbox.html">
+                <span>Feedback Inbox</span>
+            </a>
+        </nav>
+
+           
+        <div class="logOut">
+
+            <button>Log Out</button>
+        </div>
+
+    </aside>
+
+
+
+    <div class="content-wrapper">
+    
+        <header>
+            <div>
+                <time id="currentTime"></time>
+            </div>
+
+            <div>
+                <button class="dlmode"></button>
+                <p class="positionTag"></p>
+                <p class="nameTag"></p>
+            </div>
+
+            
+        </header>
+
+
+        <main>
+            <div>
+                <p>HR WORKSPACE</p>
+                <h1>Feedback inbox</h1>
+                <p>Listen to your team and track what needs a response.</p>
+            </div>
+
+
+            <div class="feedbacks"></div>
+            
+
+        </main>
+    </div>
+    <script src="feedbackHR.js"></script>
+</body>
+</html>
