@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Leave Requests</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+     
+<div class="leave">
+
+    <iframe src="../../Side_Bar/Side_bar.html"></iframe>
+
+    <div class="page">
+
+        <header>
+            <p>NORTHWIND / HR CONTROL PANEL</p>
+            <h1>Leave requests</h1>
+            <span>Review time-off requests and keep decisions clear.</span>
+        </header>
+
+        <main>
+
+           <div id="filter">
+    <button onclick="filterRequests('All')">All</button>
+    <button onclick="filterRequests('Pending')">Pending</button>
+    <button onclick="filterRequests('Approved')">Approved</button>
+    <button onclick="filterRequests('Rejected')">Rejected</button>
+</div>
+
+            <div id="requests"></div>
+
+        </main>
+
+    </div>
+
+</div>
+    <script src="script.js"></script>
+    
+</body>
+</html>
