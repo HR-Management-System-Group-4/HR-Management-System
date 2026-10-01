@@ -1,0 +1,313 @@
+/* Global Styles & Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #333333;
+    min-height: 100vh;
+}
+
+/* تخطيط الصفحة الرئيسي لضمان صف السايد بار بجانب المحتوى */
+.dashboard-layout {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* تنسيق السايد بار والـ iframe بداخله */
+.sidebar {
+    width: 260px;
+    background-color: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    flex-shrink: 0;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+}
+
+.sidebar iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* حاوية المحتوى الرئيسي لتأخذ باقي المساحة */
+.app-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 40px;
+    max-width: none;
+    margin: 0;
+    overflow-x: hidden;
+    min-width: 0;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    border-bottom: 1px solid #eaeaea;
+    margin-bottom: 30px;
+}
+
+.time-display {
+    font-size: 12px;
+    color: #888888;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #555555;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.icon-btn:hover {
+    background: #eee;
+}
+
+.badge-pill {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+}
+
+.hr-admin {
+    background-color: #eef2ff;
+    color: #4f46e5;
+}
+
+.user-avatar-sm {
+    width: 32px;
+    height: 32px;
+    background-color: #0d9488;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.user-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333333;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding-bottom: 40px;
+}
+
+.workspace-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.workspace-breadcrumb {
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #777777;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.workspace-title-area h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #111111;
+    margin-bottom: 6px;
+}
+
+.subtitle {
+    font-size: 15px;
+    color: #666666;
+}
+
+.btn-primary {
+    background-color: #111111;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #333333;
+}
+
+/* Filter Section */
+.filter-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.search-box {
+    position: relative;
+    width: 320px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888888;
+    font-size: 14px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 12px 16px 12px 40px;
+    background-color: #f1f3f5;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.search-box input:focus {
+    background-color: #ffffff;
+    border-color: #d1d5db;
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+}
+
+.records-count {
+    font-size: 11px;
+    font-weight: 700;
+    color: #888888;
+    letter-spacing: 0.5px;
+}
+
+/* Policies Grid */
+.policies-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.policy-card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 180px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    transition: box-shadow 0.2s;
+}
+
+.policy-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.card-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.card-header-row h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111111;
+}
+
+.status-badge {
+    font-size: 10px;
+    font-weight: 700;
+    color: #059669;
+    letter-spacing: 0.5px;
+}
+
+.category-name {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.policy-desc {
+    font-size: 14px;
+    color: #4b5563;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.edit-link {
+    font-size: 14px;
+    color: #111111;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.edit-link:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard-layout {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        height: 60px;
+        position: relative;
+    }
+    .policies-grid {
+        grid-template-columns: 1fr;
+    }
+    .app-container {
+        padding: 0 16px;
+    }
+    .workspace-header {
+        flex-direction: column;
+        gap: 16px;
+    }
+}
