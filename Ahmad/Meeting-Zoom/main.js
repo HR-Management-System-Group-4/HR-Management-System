@@ -11,8 +11,8 @@ function showLastRequest() {
   document.querySelector('#statusHeading').textContent = lastRequest.purpose;
   document.querySelector('#statusDate').textContent = `Sent on ${new Date(lastRequest.sentAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
   const pill = document.querySelector('#statusPill');
-  pill.textContent = 'Pending';
-  pill.classList.add('pending');
+  pill.textContent = lastRequest.status || 'Pending';
+  pill.classList.toggle('pending', pill.textContent === 'Pending');
 }
 
 const today = new Date();
@@ -26,6 +26,7 @@ message.addEventListener('input', () => {
 form.addEventListener('submit', (event) => {
   event.preventDefault();
   const request = {
+    name: document.querySelector('#employeeName').value.trim(),
     purpose: document.querySelector('#purpose').value,
     message: message.value.trim(),
     date: document.querySelector('#meetingDate').value,

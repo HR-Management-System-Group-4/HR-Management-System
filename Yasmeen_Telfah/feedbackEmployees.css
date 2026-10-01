@@ -1,0 +1,27 @@
+* { box-sizing: border-box; }
+body { margin: 0; background: #f7f8fb; color: #172033; font: 16px/1.55 Arial, sans-serif; }
+.feedback-wrapper { max-width: 1160px; margin: 60px auto 100px; padding: 0 24px; display: grid; grid-template-columns: minmax(250px, .85fr) minmax(360px, 1.15fr); gap: 32px; }
+.contactDetails, .feedbackCard { background: #fff; border: 1px solid #e3e6ed; border-radius: 22px; box-shadow: 0 14px 40px #1720330d; padding: 32px; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { font-size: 30px; line-height: 1.2; }
+h2 { font-size: 25px; }
+h3 { font-size: 17px; }
+.caption, label { display: block; color: #657084; font-size: 12px; font-weight: 700; letter-spacing: .08em; }
+.contactInformation > div:not(:first-child) { margin-top: 24px; }
+.contactInformation a { color: #e96d2f; text-decoration: none; }
+.locationCard { margin-top: 36px; padding: 20px; border-radius: 16px; background: #f1f4fa; }
+.locationMap { height: 110px; border-radius: 10px; background: linear-gradient(135deg, #dce8f4, #f9e6d8); }
+.locationInfo { padding-top: 14px; }
+.locationInfo p { margin-bottom: 0; }
+.feedbackHeader p { color: #657084; }
+.feedbackCard form { display: grid; gap: 22px; }
+label { margin-bottom: 8px; }
+input, select, textarea { width: 100%; border: 1px solid #cfd5df; border-radius: 10px; padding: 12px 14px; background: #fff; color: #172033; font: inherit; }
+textarea { resize: vertical; }
+input:focus, select:focus, textarea:focus { outline: 2px solid #f19b68; border-color: #e96d2f; }
+.feedbackButtons { display: flex; gap: 12px; flex-wrap: wrap; }
+button { border: 0; border-radius: 10px; padding: 12px 20px; font: 700 14px Arial, sans-serif; cursor: pointer; }
+#submitFeedback { background: #e96d2f; color: #fff; }
+#clearFeedback { background: #edf0f5; color: #172033; }
+#feedbackResult { margin-top: 18px; color: #157347; font-weight: 700; }
+@media (max-width: 760px) { .feedback-wrapper { grid-template-columns: 1fr; margin-top: 28px; } }

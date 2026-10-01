@@ -13,13 +13,10 @@ submit.form.addEventListener("submit", function(event){
         message: feedback.value
     }
 
-    console.log(newFeedback);
-
     let feedbacks = JSON.parse(localStorage.getItem("feedbacks")) || [];
     feedbacks.push(newFeedback);
     localStorage.setItem("feedbacks", JSON.stringify(feedbacks));
-
-
+    document.querySelector("#feedbackResult").textContent = "Feedback submitted. HR can now see it in the inbox.";
+    event.target.reset();
 })
-
 

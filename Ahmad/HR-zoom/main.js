@@ -44,13 +44,33 @@ const seedActivity = [
 ];
 
 function loadState() {
+  let result;
   try {
     const stored = JSON.parse(localStorage.getItem(storageKey));
-    if (stored && Array.isArray(stored.requests) && Array.isArray(stored.meetings) && Array.isArray(stored.activity)) return stored;
+    if (stored && Array.isArray(stored.requests) && Array.isArray(stored.meetings) && Array.isArray(stored.activity)) result = stored;
   } catch (error) {
     console.warn('Saved meeting data could not be loaded.', error);
   }
-  return { requests: seedRequests, meetings: seedMeetings, activity: seedActivity };
+  result ||= { requests: seedRequests, meetings: seedMeetings, activity: seedActivity };
+  try {
+    const employeeRequests = JSON.parse(localStorage.getItem('ahmadMeetingRequests') || '[]');
+    for (const request of employeeRequests) {
+      if (!request.sentAt || result.requests.some((item) => item.sourceSentAt === request.sentAt)) continue;
+      const [clock, period] = (request.time || '10:00 AM').split(' ');
+      const [hour, minute] = clock.split(':').map(Number);
+      const time = `${String((hour % 12) + (period === 'PM' ? 12 : 0)).padStart(2, '0')}:${String(minute || 0).padStart(2, '0')}`;
+      result.requests.unshift({
+        id: Date.parse(request.sentAt), sourceSentAt: request.sentAt,
+        name: request.name || 'Employee', employeeId: 'EMP-DEMO', department: 'Employee',
+        purpose: request.purpose, date: request.date, time, message: request.message,
+        status: request.status || 'Pending', avatar: 'peach'
+      });
+    }
+    localStorage.setItem(storageKey, JSON.stringify(result));
+  } catch (error) {
+    console.warn('Employee meeting requests could not be loaded.', error);
+  }
+  return result;
 }
 
 const state = loadState();
@@ -67,7 +87,15 @@ const formatDate = (value) => new Date(`${value}T12:00:00`).toLocaleDateString('
 const formatTime = (value) => new Date(`2000-01-01T${value}:00`).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
 
 function saveState() {
-  try { localStorage.setItem(storageKey, JSON.stringify(state)); }
+  try {
+    localStorage.setItem(storageKey, JSON.stringify(state));
+    const employeeRequests = JSON.parse(localStorage.getItem('ahmadMeetingRequests') || '[]');
+    for (const request of employeeRequests) {
+      const match = state.requests.find((item) => item.sourceSentAt === request.sentAt);
+      if (match) request.status = match.status;
+    }
+    localStorage.setItem('ahmadMeetingRequests', JSON.stringify(employeeRequests));
+  }
   catch (error) { console.warn('Meeting data could not be saved on this device.', error); }
 }
 

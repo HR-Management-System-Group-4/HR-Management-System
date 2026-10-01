@@ -1,0 +1,38 @@
+* { box-sizing: border-box; }
+body { margin: 0; background: #f6f7fa; color: #172033; font: 15px/1.5 Arial, sans-serif; }
+body > aside { position: fixed; inset: 0 auto 0 0; width: 245px; overflow: auto; background: #172033; color: #fff; padding: 26px 16px; }
+aside .header { display: grid; gap: 4px; padding: 4px 12px 28px; font-size: 23px; font-weight: 800; }
+aside .header .logo { display: none; }
+aside .caption { font-size: 11px; letter-spacing: .16em; color: #adbbd2; }
+aside .links { display: grid; gap: 6px; }
+aside .links a { color: #dde5f0; text-decoration: none; padding: 11px 12px; border-radius: 9px; }
+aside .links a:hover, aside .links a[aria-current="page"] { color: #fff; background: #334159; }
+aside .logOut { margin-top: 40px; padding: 0 12px; }
+aside button { color: #fff; background: transparent; border: 0; cursor: pointer; }
+.content-wrapper { margin-left: 245px; min-height: 100vh; }
+.content-wrapper > header { display: flex; justify-content: space-between; align-items: center; min-height: 72px; padding: 12px 36px; background: #fff; border-bottom: 1px solid #e5e8ee; }
+.content-wrapper > header > div:last-child { display: flex; align-items: center; gap: 10px; }
+.content-wrapper > header p { margin: 0; }
+.content-wrapper > header .dlmode { display: none; }
+.content-wrapper main { max-width: 1240px; margin: auto; padding: 36px; }
+.content-wrapper main > div:first-child > p:first-child { color: #e96d2f; font-size: 11px; font-weight: 800; letter-spacing: .14em; }
+.content-wrapper main h1 { font-size: 32px; margin: 6px 0; }
+.content-wrapper main > div:first-child > p:last-child { color: #657084; }
+.addEmployee { margin: 30px 0 18px; }
+.addEmployee button, form button, .resolveFeedback { border: 0; border-radius: 8px; background: #e96d2f; color: #fff; padding: 10px 16px; font-weight: 700; cursor: pointer; }
+.employeesCard, .feedbacks > .feedbackCard { background: #fff; border: 1px solid #e5e8ee; border-radius: 14px; box-shadow: 0 8px 24px #1720330a; }
+.employeesCard { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 15px 18px; border-bottom: 1px solid #edf0f3; text-align: left; }
+th { color: #657084; font-size: 11px; letter-spacing: .08em; }
+.addEmployeeForm, .editEmployeeForm { max-width: 600px; margin: 20px 0; padding: 24px; background: #fff; border: 1px solid #e5e8ee; border-radius: 14px; }
+form label { display: block; margin: 12px 0 6px; font-size: 11px; font-weight: 700; letter-spacing: .06em; }
+form input, form select { width: 100%; padding: 10px 12px; border: 1px solid #cfd5df; border-radius: 8px; }
+form button { margin: 16px 8px 0 0; }
+.feedbacks { display: grid; gap: 16px; margin-top: 28px; }
+.feedbacks > .feedbackCard { padding: 22px; }
+.feedbackCategory { color: #e96d2f; font-size: 12px; font-weight: 800; text-transform: uppercase; }
+.feedbackSubject { font-size: 20px; font-weight: 700; }
+.feedbackMessage { color: #4f5969; }
+.feedbackStatus { display: inline-block; margin-right: 12px; color: #657084; }
+@media(max-width:800px) { body > aside { position: static; width: auto; } aside .links { grid-template-columns: repeat(auto-fit,minmax(130px,1fr)); } .content-wrapper { margin-left: 0; } .content-wrapper main { padding: 24px 16px 90px; } }

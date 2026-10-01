@@ -22,21 +22,21 @@ const services = {
     description: 'Access and manage personal and employment information.',
     pill: 'EMP-1042 · Active',
     items: ['View your employment details', 'Keep contact information current', 'Store your emergency contact', 'View and download your CV'],
-    link: '#servicePreview'
+    link: '../../Mohamad/Employee-profile/Profile.html'
   },
   tasks: {
     number: '02', name: 'TASK MANAGEMENT', title: 'Stay on top of<br>every task.',
     description: 'View assigned work, send solutions, and follow progress.',
     pill: '3 tasks · In progress',
     items: ['See tasks assigned to you', 'Check priorities and due dates', 'Submit your work to HR', 'Track review and completion'],
-    link: '#servicePreview'
+    link: '../../Sara_Sawalmeh/Employee_Task/Employee_Task.html'
   },
   leave: {
     number: '03', name: 'LEAVE MANAGEMENT', title: 'Time off,<br>made simple.',
     description: 'Request leave and see the status of each application.',
     pill: 'Leave · Employee view',
     items: ['Choose your leave type', 'Select start and end dates', 'Explain your request', 'Follow the approval status'],
-    link: '#servicePreview'
+    link: '../../Timaaa/Leave-application/Timaa.html'
   },
   policies: {
     number: '04', name: 'COMPANY POLICIES', title: 'Find the policy<br>you need.',
@@ -55,7 +55,7 @@ const services = {
     description: 'Share feedback with HR in one simple place.',
     pill: 'Feedback · Employee view',
     items: ['Write your feedback', 'Send it to HR', 'Keep communication organized', 'Help improve everyday work'],
-    link: '#servicePreview'
+    link: '../../Yasmeen_Telfah/feedbackEmployees.html'
   }
 };
 
