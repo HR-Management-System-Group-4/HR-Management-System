@@ -1,6 +1,6 @@
 
 // Temporary user ID until Login is ready
-localStorage.setItem("loggedInUserId", "3");
+
 
 const userId = Number(
     localStorage.getItem("loggedInUserId")
@@ -86,9 +86,16 @@ function displayProfile(employee) {
     setText("employmentStart", employee.startDate);
 
     // Profile image
-    const image = document.getElementById("profileImage");
+const image = document.getElementById("profileImage");
 
-    if (image && employee.profileImage) {
-        image.src = employee.profileImage;
+if (image && employee.profileImage) {
+
+    let imagePath = employee.profileImage;
+
+    if (imagePath.startsWith("Json-Images/")) {
+        imagePath = "/" + imagePath;
     }
+
+    image.src = imagePath;
+}
 }
