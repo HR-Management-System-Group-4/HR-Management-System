@@ -1,0 +1,227 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+
+body{
+    font-family: "Inter", Arial, sans-serif;
+    background:#f7f9fc;
+    color:#173b6d;
+}
+
+
+
+.services{
+
+    padding:80px 60px;
+}
+
+
+
+.section-header{
+
+    text-align:center;
+    margin-bottom:55px;
+
+}
+
+
+.section-header span{
+
+    font-size:12px;
+    letter-spacing:3px;
+    color:#0097a7;
+    font-weight:700;
+
+}
+
+
+
+.section-header h1{
+
+    margin-top:15px;
+    font-size:42px;
+    font-weight:800;
+
+}
+
+
+.section-header p{
+
+    margin-top:18px;
+    color:#7182a0;
+    font-size:17px;
+    line-height:1.6;
+
+}
+
+
+
+/* CARDS */
+
+.service-grid{
+
+    max-width:1200px;
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:28px;
+
+}
+
+
+
+.service-card{
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:30px;
+
+    height:260px;
+
+    border:1px solid #e5eaf2;
+
+    transition:.3s;
+
+    display:flex;
+    flex-direction:column;
+
+}
+
+
+
+.service-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 20px 40px rgba(0,0,0,.08);
+
+}
+
+
+
+
+.icon{
+
+    width:55px;
+    height:55px;
+
+    border-radius:15px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:white;
+
+    font-size:23px;
+
+    margin-bottom:25px;
+
+}
+
+
+.blue{
+    background:#2457c5;
+}
+
+
+.teal{
+    background:#0799a6;
+}
+
+
+.purple{
+    background:#9146e8;
+}
+
+
+.orange{
+    background:#ff9000;
+}
+
+
+.green{
+    background:#0ba383;
+}
+
+
+
+.service-card h3{
+
+    font-size:20px;
+    margin-bottom:15px;
+
+}
+
+
+.service-card p{
+
+    color:#7182a0;
+
+    line-height:1.6;
+
+    flex:1;
+
+}
+
+
+
+.service-card a{
+
+    text-decoration:none;
+
+    color:#0097a7;
+
+    font-weight:700;
+
+    display:flex;
+
+    gap:10px;
+
+    align-items:center;
+
+}
+
+
+
+/* BUTTON */
+
+
+.all-services{
+
+    display:block;
+
+    margin:45px auto 0;
+
+    background:#173f75;
+
+    color:white;
+
+    border:none;
+
+    padding:16px 35px;
+
+    border-radius:12px;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+}
+
+
+@media(max-width:900px){
+
+.service-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
