@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/Colors.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous">
+
+    <link rel="stylesheet" href="employeeManagement.css">
+    <title>Employees Management</title>
+</head>
+<body>
+    <aside>
+        <div class="header">
+            <div class="logo">
+
+            </div>
+
+            <div>Mysta</div>
+            <div class="caption">HR 
+                CONTROL PANEL
+            </div>
+        </div>
+
+       <nav class="links">
+            <a class="overview" href="overview.html">
+                <span>Overview</span>
+            </a>
+
+            <a class="employees" href="employees.html" aria-current="page">
+                <span>Employees</span>
+            </a>
+
+            <a class="taskManagement" href="taskManagement.html">
+                <span>Task Management</span>
+            </a>
+
+            <a class="leaveRequests" href="leaveRequests.html">
+                <span>Leave Requests</span>
+            </a>
+
+            <a class="meetings" href="meetings.html">
+                <span>Meetings</span>
+            </a>
+
+            <a class="policies" href="policies.html">
+                <span>Policies</span>
+            </a>
+
+            <a class="feedbackInbox" href="feedbackInbox.html">
+                <span>Feedback Inbox</span>
+            </a>
+        </nav>
+
+           
+        <div class="logOut">
+
+            <button>Log Out</button>
+        </div>
+
+    </aside>
+
+
+
+    <div class="content-wrapper">
+    
+        <header>
+            <div>
+                <time id="currentTime"></time>
+            </div>
+
+            <div>
+                <button class="dlmode"></button>
+                <p class="positionTag"></p>
+                <p class="nameTag"></p>
+            </div>
+
+            
+        </header>
+
+
+        <main>
+            <div>
+                <p>HR WORKSPACE</p>
+                <h1>Employees</h1>
+                <p>Manage employee records and account status</p>
+            </div>
+
+            <div class="addEmployee">
+                <button>Add Employee</button>
+            </div>
+
+            <div class="addEmployeeForm">
+                <form id="newEmployeeForm">
+                    <h2>New employee</h2>
+
+                    <label for="fullNameNew">FULL NAME</label>
+                    <input type="text" id="fullNameNew" name="name" required>
+
+                    <label for="workEmailNew">WORK EMAIL</label>
+                    <input type="email" id="workEmailNew" name="email" required>
+
+                    <label for="passwordNew">PASSWORD</label>
+                    <input
+                        type="password"
+                        id="passwordNew"
+                        name="password"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                    <label for="positionNew">POSITION</label>
+                    <input type="text" id="positionNew" name="position" required>
+
+                    <label for="departmentNew">DEPARTMENT</label>
+                    <select id="departmentNew" name="department" required>
+                        <option value="" disabled selected>Select a department</option>
+                        <option value="Human Resources">Human Resources</option>
+                        <option value="IT">IT</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Design">Design</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Operations">Operations</option>
+                    </select>
+
+                    <label for="accountStatusNew">ACCOUNT STATUS</label>
+                    <select id="accountStatusNew" name="accountState">
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                    </select>
+
+                    <button type="submit" id="saveNewEmployee">Save employee</button>
+                    <button type="button" id="cancelNewEmployee">Cancel</button>
+                </form>
+            </div>
+
+            <div class="employeesCard">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">EMPLOYEE</th>
+                            <th scope="col">DEPARTMENT</th>
+                            <th scope="col">STATUS</th>
+                            <th scope="col">ACTION</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="employeesBody">
+                        
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="editEmployeeForm">
+                <form>
+                    <label for="fullName">FULL NAME</label>
+                    <input type="text" id="fullName">
+
+                    <label for="workEmail">WORK EMAIL</label>
+                    <input type="text" id="workEmail">
+
+                    <label for="position">POSITION</label>
+                    <input type="text" id="position">
+
+                    <label for="department">DEPARTEMENT</label>
+                    <select id="department">
+                        <option value="Human Resources">Human Resources</option>
+                        <option value="IT">IT</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Design">Design</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Operations">Operations</option>
+                    </select>
+
+                    <label for="accountStatus">Account Status</label>
+                    <select id="accountStatus">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+
+                    <button id="saveEmployee">Save employee</button>
+                    <button id="cancel">Cancel</button>
+
+                </form>
+            </div>
+            
+
+        </main>
+    </div>
+    <script src="employeeManagement.js"></script>
+</body>
+</html>
