@@ -1,4 +1,4 @@
-let requests = [
+let requests = JSON.parse(localStorage.getItem("requests")) || [
     {
         id: 1,
         name: "Ahmad Saleh",
@@ -29,6 +29,15 @@ let requests = [
 
 
 let box = document.getElementById("requests");
+
+
+/* =========================
+   SAVE TO LOCAL STORAGE
+========================= */
+
+function saveRequests() {
+    localStorage.setItem("requests", JSON.stringify(requests));
+}
 
 
 /* =========================
@@ -78,6 +87,7 @@ function show(data) {
         <div class="card">
 
             <!-- Employee -->
+
             <div class="name">
 
                 <div>
@@ -96,6 +106,7 @@ function show(data) {
 
 
             <!-- Date + Reason -->
+
             <div>
 
                 <p class="details">
@@ -110,9 +121,11 @@ function show(data) {
 
 
             <!-- Status + Actions -->
+
             <div>
 
                 <span class="status ${request.status.toLowerCase()}">
+
                     ${
                         request.status == "Pending"
                         ? "◷ Pending"
@@ -120,6 +133,7 @@ function show(data) {
                         ? "✓ Approved"
                         : "× Rejected"
                     }
+
                 </span>
 
 
@@ -127,43 +141,59 @@ function show(data) {
                     request.status == "Pending"
                     ?
                     `
+
                     <div class="actions">
 
                         <button
                             class="approve"
                             onclick="approve(${request.id})">
+
                             ✓ &nbsp; Approve
+
                         </button>
+
 
                         <button
                             class="reject"
                             onclick="reject(${request.id})">
+
                             × &nbsp; Reject
+
                         </button>
 
                     </div>
 
+
                     <div class="reviewed">
                         Requested on 2 Oct 2026
                     </div>
+
                     `
                     :
                     request.status == "Approved"
                     ?
                     `
+
                     <div class="reviewed">
+
                         Approved on 1 Oct 2026
                         <br>
                         by HR Admin
+
                     </div>
+
                     `
                     :
                     `
+
                     <div class="reviewed">
+
                         Rejected on 26 Sep 2026
                         <br>
                         by HR Admin
+
                     </div>
+
                     `
                 }
 
@@ -189,6 +219,8 @@ function approve(id) {
 
     request.status = "Approved";
 
+    saveRequests();
+
     updateCounts();
 
     show(requests);
@@ -206,6 +238,8 @@ function reject(id) {
     });
 
     request.status = "Rejected";
+
+    saveRequests();
 
     updateCounts();
 
@@ -236,10 +270,6 @@ function filterRequests(status) {
 
 }
 
-
-/* =========================
-   START
-========================= */
 
 updateCounts();
 
