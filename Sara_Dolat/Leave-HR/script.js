@@ -71,9 +71,24 @@ function requestCard(request, saved) {
   return card;
 }
 
+function updateCounts(items) {
+  const requests = items.map(({ request }) => request);
+
+  const total = requests.length;
+  const pending = requests.filter(request => (request.status || 'Pending') === 'Pending').length;
+  const approved = requests.filter(request => request.status === 'Approved').length;
+  const rejected = requests.filter(request => request.status === 'Rejected').length;
+
+  document.getElementById('total').textContent = total;
+  document.getElementById('pendingCount').textContent = pending;
+  document.getElementById('approvedCount').textContent = approved;
+  document.getElementById('rejectedCount').textContent = rejected;
+}
+
 function renderRequests() {
   box.replaceChildren();
   const all = [...savedRequests().map(request => ({ request, saved: true })), ...sampleRequests.map(request => ({ request, saved: false }))];
+  updateCounts(all);
   const visible = all.filter(({ request }) => activeFilter === 'All' || request.status === activeFilter);
   if (!visible.length) {
     const empty = document.createElement('p');

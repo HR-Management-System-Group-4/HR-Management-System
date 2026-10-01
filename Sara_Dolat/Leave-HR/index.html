@@ -28,6 +28,40 @@
 
         <main>
 
+            <section class="summary" aria-label="Leave request summary">
+                <div class="summary-card">
+                    <div class="summary-icon blue">▤</div>
+                    <div>
+                        <h2 id="total">0</h2>
+                        <p>Total Requests</p>
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-icon yellow">◷</div>
+                    <div>
+                        <h2 id="pendingCount">0</h2>
+                        <p>Pending</p>
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-icon green">✓</div>
+                    <div>
+                        <h2 id="approvedCount">0</h2>
+                        <p>Approved</p>
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-icon red">×</div>
+                    <div>
+                        <h2 id="rejectedCount">0</h2>
+                        <p>Rejected</p>
+                    </div>
+                </div>
+            </section>
+
            <div id="filter">
     <button type="button" data-status="All" onclick="filterRequests('All')">All</button>
     <button type="button" data-status="Pending" onclick="filterRequests('Pending')">Pending</button>

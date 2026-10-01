@@ -204,3 +204,80 @@ button {
     main { padding:16px; }
     #filter { flex-wrap:wrap; }
 }
+
+/* SaraD integrated summary cards */
+.summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.summary-card {
+    background: #ffffff;
+    border: 1px solid #e1e7ed;
+    border-radius: 17px;
+    min-height: 120px;
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 5px 18px rgba(40, 60, 80, 0.04);
+}
+
+.summary-card h2 {
+    font-size: 30px;
+    color: #182746;
+    margin: 0 0 4px;
+}
+
+.summary-card p {
+    color: #65738a;
+    font-size: 14px;
+    margin: 0;
+}
+
+.summary-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.summary-icon.blue {
+    background: #e5f2ff;
+    color: #168de0;
+}
+
+.summary-icon.yellow {
+    background: #fff3d5;
+    color: #e5a51b;
+}
+
+.summary-icon.green {
+    background: #e0f6e9;
+    color: #20a45f;
+}
+
+.summary-icon.red {
+    background: #fde2e6;
+    color: #df4350;
+}
+
+@media (max-width: 1100px) {
+    .summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .summary {
+        grid-template-columns: 1fr;
+    }
+}
+
