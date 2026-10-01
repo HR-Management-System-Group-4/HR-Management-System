@@ -98,7 +98,7 @@ if (!userId) {
 
 } else {
 
-    fetch("../employees-updated.json")
+    fetch("/employee.json")
 
         .then(function(response) {
 
@@ -113,9 +113,9 @@ if (!userId) {
         .then(function(data) {
 
             // Find the logged-in employee
-            let employee = data.find(function(user) {
-                return user.id === userId;
-            });
+            let employee = data.employees.find(function(user) {
+                    return user.id === userId;
+                });
 
 
             // Check if employee exists

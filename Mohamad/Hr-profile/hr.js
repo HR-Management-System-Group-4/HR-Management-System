@@ -5,7 +5,7 @@
 localStorage.setItem("loggedInUserId", "1");
 
 const userId = Number(localStorage.getItem("loggedInUserId"));
-const jsonPath = "../employees-updated.json";
+const jsonPath = "/employee.json";
 const defaultImage = "../photo.jpg";
 
 const el = id => document.getElementById(id);
@@ -108,7 +108,7 @@ fetch(jsonPath)
     })
 
     .then(data => {
-        const employee = data.find(user => user.id === userId);
+        const employee = data.employees.find(user => user.id === userId);
 
         if (!employee || employee.role !== "HR") {
             throw new Error("HR employee not found");

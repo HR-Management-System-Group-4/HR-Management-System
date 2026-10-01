@@ -27,7 +27,7 @@ function getSavedProfiles() {
 }
 
 // Load employee data
-fetch("../employees-updated.json")
+fetch("/employee.json")
     .then(response => {
         if (!response.ok) {
             throw new Error("Failed to load employees");
@@ -37,8 +37,7 @@ fetch("../employees-updated.json")
     })
 
     .then(data => {
-        const employee = data.find(user => user.id === userId);
-
+       const employee = data.employees.find(user => user.id === userId);
         if (!employee) {
             throw new Error("Employee not found");
         }
