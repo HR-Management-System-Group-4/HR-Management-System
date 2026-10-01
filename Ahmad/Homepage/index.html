@@ -115,7 +115,28 @@
         </nav>
         <div class="service-main">
           <div class="service-copy"><div class="service-number"><span></span><b id="serviceNumber">01</b> / 06</div><h3 id="serviceTitle">Your details,<br>always in one place.</h3><p id="serviceDescription">Access and manage personal and employment information.</p><a class="learn-button" id="serviceLink" href="#servicePreview">Learn more <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a></div>
-          <div class="service-preview" id="servicePreview" aria-live="polite"><div class="preview-label"><span>PREVIEW / <b id="previewNumber">01</b></span><span id="previewTitle">EMPLOYEE PROFILE</span></div><div class="preview-pill" id="previewPill"><span></span> EMP-1042 · Active</div><ul id="previewList"><li>View your employment details</li><li>Keep contact information current</li><li>Store your emergency contact</li><li>View and download your CV</li></ul></div>
+          <div class="service-preview" id="servicePreview" aria-live="polite">
+            <div id="standardPreview">
+              <div class="preview-label"><span>PREVIEW / <b id="previewNumber">01</b></span><span id="previewTitle">EMPLOYEE PROFILE</span></div>
+              <div class="preview-pill" id="previewPill"><span></span> EMP-1042 · Active</div>
+              <ul id="previewList"><li>View your employment details</li><li>Keep contact information current</li><li>Store your emergency contact</li><li>View and download your CV</li></ul>
+            </div>
+            <div class="meeting-preview" id="meetingPreview" hidden>
+              <div class="meeting-preview-heading"><strong>NEXT MEETING</strong><span>MEETINGS</span></div>
+              <div class="meeting-notice" id="meetingNotice" hidden>
+                <span class="meeting-notice-icon"><i class="bi bi-bell" aria-hidden="true"></i></span>
+                <div class="meeting-notice-copy"><strong>HR scheduled your meeting</strong><span id="meetingWhen"></span></div>
+                <span class="meeting-notice-tag">Scheduled by HR</span>
+              </div>
+              <div class="meeting-empty" id="meetingEmpty"><i class="bi bi-calendar2-week" aria-hidden="true"></i><span>No upcoming meeting is scheduled yet.</span></div>
+              <ul class="meeting-feature-list">
+                <li><span class="meeting-feature-icon"><i class="bi bi-calendar3" aria-hidden="true"></i></span><span>View today and upcoming sessions</span><i class="bi bi-chevron-right" aria-hidden="true"></i></li>
+                <li><span class="meeting-feature-icon"><i class="bi bi-camera-video" aria-hidden="true"></i></span><span>Join Zoom sessions in one click</span><i class="bi bi-chevron-right" aria-hidden="true"></i></li>
+                <li><span class="meeting-feature-icon"><i class="bi bi-clock-history" aria-hidden="true"></i></span><span>Look back at previous meetings</span><i class="bi bi-chevron-right" aria-hidden="true"></i></li>
+                <li><span class="meeting-feature-icon"><i class="bi bi-file-earmark-text" aria-hidden="true"></i></span><span>See your meeting history</span><i class="bi bi-chevron-right" aria-hidden="true"></i></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </section>

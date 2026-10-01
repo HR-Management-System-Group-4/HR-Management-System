@@ -92,10 +92,8 @@ const services = {
     link: '#servicePreview'
   },
   meetings: {
-    number: '05', name: 'MEETINGS', title: 'Make space for<br>the conversation.',
-    description: 'Request a meeting with HR and choose a preferred time.',
-    pill: 'Meetings · Request',
-    items: ['Choose a meeting purpose', 'Send a message to HR', 'Pick a preferred date and time', 'Follow your request status'],
+    number: '05', name: 'MEETINGS', title: 'Never miss a<br>meeting.',
+    description: 'View upcoming company meetings and join scheduled Zoom sessions.',
     link: '../Meeting-Zoom/index.html'
   },
   feedback: {
@@ -107,26 +105,100 @@ const services = {
   }
 };
 
-function selectService(key) {
+const serviceCopy = document.querySelector('.service-copy');
+const servicePreview = document.querySelector('#servicePreview');
+const standardPreview = document.querySelector('#standardPreview');
+const meetingPreview = document.querySelector('#meetingPreview');
+let activeService = '';
+let transitionToken = 0;
+let serviceAnimations = [];
+
+function renderNextMeeting() {
+  let meetings = [];
+  try {
+    const saved = JSON.parse(localStorage.getItem('ahmadHrZoomDashboardV1') || 'null');
+    if (Array.isArray(saved?.meetings)) meetings = saved.meetings;
+  } catch (error) {
+    console.warn('Meeting data could not be loaded.', error);
+  }
+
+  // A saved Zoom link distinguishes a scheduled appointment from dashboard sample data.
+  const now = Date.now();
+  const nextMeeting = meetings
+    .filter(item => item?.status === 'Scheduled' && item.link && /^https?:\/\//i.test(item.link))
+    .map(item => ({ ...item, startsAt: new Date(`${item.date}T${item.time}`).getTime() }))
+    .filter(item => Number.isFinite(item.startsAt) && item.startsAt >= now)
+    .sort((a, b) => a.startsAt - b.startsAt)[0];
+
+  document.querySelector('#meetingNotice').hidden = !nextMeeting;
+  document.querySelector('#meetingEmpty').hidden = Boolean(nextMeeting);
+  if (!nextMeeting) return;
+
+  const date = new Date(nextMeeting.startsAt);
+  const today = new Date();
+  const sameDay = date.toDateString() === today.toDateString();
+  const dateLabel = sameDay ? 'Today' : date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const timeLabel = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  document.querySelector('#meetingWhen').textContent = `${dateLabel} · ${timeLabel}`;
+}
+
+function renderService(key) {
   const service = services[key];
-  if (!service) return;
-  document.querySelectorAll('.service-tab').forEach(button => {
-    const selected = button.dataset.service === key;
-    button.classList.toggle('selected', selected);
-    button.setAttribute('aria-pressed', String(selected));
-  });
+  activeService = key;
   document.querySelector('#serviceNumber').textContent = service.number;
-  document.querySelector('#previewNumber').textContent = service.number;
-  document.querySelector('#previewTitle').textContent = service.name;
   document.querySelector('#serviceTitle').innerHTML = service.title;
   document.querySelector('#serviceDescription').textContent = service.description;
+  const link = document.querySelector('#serviceLink');
+  link.href = service.link;
+  link.innerHTML = key === 'meetings'
+    ? 'Request a meeting <i class="bi bi-arrow-right" aria-hidden="true"></i>'
+    : 'Learn more <i class="bi bi-arrow-up-right" aria-hidden="true"></i>';
+
+  standardPreview.hidden = key === 'meetings';
+  meetingPreview.hidden = key !== 'meetings';
+  if (key === 'meetings') {
+    renderNextMeeting();
+    return;
+  }
+
+  document.querySelector('#previewNumber').textContent = service.number;
+  document.querySelector('#previewTitle').textContent = service.name;
   document.querySelector('#previewPill').innerHTML = `<span></span> ${service.pill}`;
   document.querySelector('#previewList').replaceChildren(...service.items.map(item => {
     const li = document.createElement('li');
     li.textContent = item;
     return li;
   }));
-  document.querySelector('#serviceLink').href = service.link;
+}
+
+async function selectService(key) {
+  if (!services[key] || key === activeService) return;
+  const token = ++transitionToken;
+  serviceAnimations.forEach(animation => animation.cancel());
+  serviceAnimations = [];
+  document.querySelectorAll('.service-tab').forEach(button => {
+    const selected = button.dataset.service === key;
+    button.classList.toggle('selected', selected);
+    button.setAttribute('aria-pressed', String(selected));
+  });
+
+  if (reducedMotion || !activeService || !Element.prototype.animate) {
+    renderService(key);
+    return;
+  }
+
+  serviceAnimations = [serviceCopy, servicePreview].map((element, index) => element.animate([
+    { opacity: 1, transform: 'translateY(0) scale(1)' },
+    { opacity: 0, transform: `translateY(${index ? '10px' : '-10px'}) scale(.985)` }
+  ], { duration: 150, easing: 'ease-in', fill: 'forwards' }));
+  await Promise.all(serviceAnimations.map(animation => animation.finished.catch(() => {})));
+  if (token !== transitionToken) return;
+  serviceAnimations.forEach(animation => animation.cancel());
+  renderService(key);
+  serviceAnimations = [serviceCopy, servicePreview].map((element, index) => element.animate([
+    { opacity: 0, transform: `translateY(${index ? '18px' : '12px'}) scale(.985)` },
+    { opacity: 1, transform: 'translateY(0) scale(1)' }
+  ], { duration: 390, delay: index * 55, easing: 'cubic-bezier(.2,.8,.2,1)' }));
 }
 
 document.querySelectorAll('[data-service]').forEach(element => {
@@ -134,3 +206,6 @@ document.querySelectorAll('[data-service]').forEach(element => {
 });
 
 selectService('profile');
+window.addEventListener('storage', (event) => {
+  if (event.key === 'ahmadHrZoomDashboardV1' && activeService === 'meetings') renderNextMeeting();
+});

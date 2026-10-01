@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f2f2ed">
+  <title>HR Tasks | Mysta</title>
+  <meta name="description" content="Create, assign, and review employee tasks in Mysta.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/Colors.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <div class="page-glow page-glow-left" aria-hidden="true"></div>
+  <div class="page-glow page-glow-right" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="../Homepage/index.html#home" aria-label="Mysta home">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>Mysta</span>
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="../Homepage/index.html#home">Home</a>
+      <a href="../Homepage/index.html#services" aria-current="page">Services</a>
+      <a href="../Homepage/index.html#team">Team</a>
+      <a href="../Homepage/index.html#about">About</a>
+    </nav>
+    <div class="header-actions">
+      <button class="theme-button" id="themeButton" type="button" aria-label="Switch to dark mode" title="Toggle dark mode"><i class="bi bi-moon" aria-hidden="true"></i></button>
+      <a class="sign-in" href="../Homepage/index.html#services">Explore <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
+    </div>
+  </header>
+
+  <main class="dashboard">
+    <div class="top-row">
+      <a class="back-link" href="../Homepage/index.html#services"><i class="bi bi-arrow-left" aria-hidden="true"></i> Back to Services</a>
+      <button class="add-button" id="addTaskButton" type="button"><i class="bi bi-plus-lg" aria-hidden="true"></i> Add Task</button>
+    </div>
+
+    <div class="intro">
+      <p class="eyebrow">HR WORKSPACE <span></span> TASK MANAGEMENT</p>
+      <h1>Team Tasks<span class="title-dot">.</span></h1>
+      <p>Create and assign tasks, follow progress, and review submitted work.</p>
+    </div>
+
+    <section class="stats" aria-label="Task summary">
+      <article class="stat-card stat-total"><div class="stat-icon"><i class="bi bi-collection" aria-hidden="true"></i></div><div><strong id="totalCount">0</strong><h2>Total</h2><p>All assigned tasks</p></div><span class="stat-bars" aria-hidden="true"><i></i><i></i><i></i></span></article>
+      <article class="stat-card stat-pending"><div class="stat-icon"><i class="bi bi-clock-history" aria-hidden="true"></i></div><div><strong id="pendingCount">0</strong><h2>Pending</h2><p>Awaiting action</p></div><span class="stat-bars" aria-hidden="true"><i></i><i></i><i></i></span></article>
+      <article class="stat-card stat-progress"><div class="stat-icon"><i class="bi bi-arrow-repeat" aria-hidden="true"></i></div><div><strong id="progressCount">0</strong><h2>In Progress</h2><p>Work underway</p></div><span class="stat-bars" aria-hidden="true"><i></i><i></i><i></i></span></article>
+      <article class="stat-card stat-submitted"><div class="stat-icon"><i class="bi bi-inbox" aria-hidden="true"></i></div><div><strong id="submittedCount">0</strong><h2>To Review</h2><p>Solutions submitted</p></div><span class="stat-bars" aria-hidden="true"><i></i><i></i><i></i></span></article>
+      <article class="stat-card stat-completed"><div class="stat-icon"><i class="bi bi-check-circle-fill" aria-hidden="true"></i></div><div><strong id="completedCount">0</strong><h2>Completed</h2><p>Approved work</p></div><span class="stat-bars" aria-hidden="true"><i></i><i></i><i></i></span></article>
+    </section>
+
+    <section class="task-section" aria-labelledby="taskListHeading">
+      <div class="section-heading"><div><p class="section-kicker">YOUR WORKSPACE</p><h2 id="taskListHeading">Tasks overview</h2></div><label class="search-field"><i class="bi bi-search" aria-hidden="true"></i><span class="sr-only">Search tasks</span><input id="taskSearch" type="search" placeholder="Search tasks or employees..."></label></div>
+      <div class="filters" role="group" aria-label="Filter tasks by status">
+        <button type="button" class="filter active" data-filter="All" aria-pressed="true"><i class="bi bi-grid-fill" aria-hidden="true"></i> All Tasks <span id="allBadge"></span></button>
+        <button type="button" class="filter" data-filter="Pending" aria-pressed="false"><i class="bi bi-clock" aria-hidden="true"></i> Pending</button>
+        <button type="button" class="filter" data-filter="In Progress" aria-pressed="false"><i class="bi bi-arrow-repeat" aria-hidden="true"></i> In Progress</button>
+        <button type="button" class="filter" data-filter="Submitted" aria-pressed="false"><i class="bi bi-inbox" aria-hidden="true"></i> To Review <span id="reviewBadge"></span></button>
+        <button type="button" class="filter" data-filter="Completed" aria-pressed="false"><i class="bi bi-check2" aria-hidden="true"></i> Completed</button>
+      </div>
+      <div id="taskList" class="task-list" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <dialog id="taskDialog" class="modal-dialog">
+    <form id="taskForm" class="modal-card">
+      <div class="modal-head"><div><p class="section-kicker">HR TASK MANAGEMENT</p><h2 id="formTitle">Add a task</h2></div><button class="close-button" type="button" data-close="taskDialog" aria-label="Close"><i class="bi bi-x-lg" aria-hidden="true"></i></button></div>
+      <input id="taskId" type="hidden">
+      <div class="form-grid">
+        <label class="field full">Task title <input id="taskTitle" name="title" type="text" maxlength="100" placeholder="e.g. Q4 performance reviews" required></label>
+        <label class="field full">Description <textarea id="taskDescription" name="description" rows="3" maxlength="600" placeholder="Describe the expected work..." required></textarea></label>
+        <label class="field">Assign to <select id="taskAssignee" name="assignee" required><option value="">Select an employee</option></select></label>
+        <label class="field">Priority <select id="taskPriority" name="priority" required><option>Low</option><option selected>Medium</option><option>High</option></select></label>
+        <label class="field">Due date <input id="taskDueDate" name="dueDate" type="date" required></label>
+        <label class="field">Status <select id="taskStatus" name="status" required><option>Pending</option><option>In Progress</option><option value="Submitted" disabled>Submitted by employee</option><option>Completed</option></select></label>
+      </div>
+      <p class="form-hint">Task changes are saved in this browser for now.</p>
+      <div class="modal-actions"><button type="button" class="secondary-button" data-close="taskDialog">Cancel</button><button type="submit" class="primary-button" id="saveTaskButton">Create Task</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="viewDialog" class="modal-dialog">
+    <div class="modal-card">
+      <div class="modal-head"><div><p class="section-kicker">TASK DETAILS</p><h2 id="viewTitle"></h2></div><button class="close-button" type="button" data-close="viewDialog" aria-label="Close"><i class="bi bi-x-lg" aria-hidden="true"></i></button></div>
+      <div id="viewContent"></div>
+      <div class="review-panel" id="reviewPanel" hidden>
+        <h3>Review submission</h3>
+        <label class="field">Feedback for employee <textarea id="reviewFeedback" rows="3" maxlength="600" placeholder="Add a note for the employee..."></textarea></label>
+        <p class="form-hint">A note is required when requesting changes.</p>
+        <div class="modal-actions"><button id="requestChangesButton" class="secondary-button" type="button">Request Changes</button><button id="approveButton" class="primary-button" type="button"><i class="bi bi-check2" aria-hidden="true"></i> Approve Solution</button></div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="deleteDialog" class="modal-dialog delete-dialog">
+    <div class="modal-card">
+      <div class="modal-head"><div><p class="section-kicker">DELETE TASK</p><h2>Remove this task?</h2></div><button class="close-button" type="button" data-close="deleteDialog" aria-label="Close"><i class="bi bi-x-lg" aria-hidden="true"></i></button></div>
+      <p id="deleteMessage" class="delete-message"></p>
+      <p class="form-hint">This action cannot be undone.</p>
+      <div class="modal-actions"><button type="button" class="secondary-button" data-close="deleteDialog">Cancel</button><button type="button" class="danger-button" id="confirmDeleteButton">Delete Task</button></div>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
