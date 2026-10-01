@@ -115,28 +115,6 @@
           </span>
         </div>
 
-        <!-- Pending -->
-
-        <div class="stat-card stat-pending">
-          <div class="stat-icon">
-            <i class="bi bi-clock-history"></i>
-          </div>
-
-          <div>
-            <strong id="pendingCount">0</strong>
-
-            <h2>Pending</h2>
-
-            <p>Awaiting action</p>
-          </div>
-
-          <span class="stat-bars">
-            <i></i>
-            <i></i>
-            <i></i>
-          </span>
-        </div>
-
         <!-- In Progress -->
 
         <div class="stat-card stat-progress">
@@ -242,12 +220,6 @@
             All Tasks
 
             <span id="allBadge"></span>
-          </button>
-
-          <button type="button" class="filter" data-filter="Pending">
-            <i class="bi bi-clock"></i>
-
-            Pending
           </button>
 
           <button type="button" class="filter" data-filter="In Progress">
@@ -454,9 +426,7 @@
                 <span class="select-indicator"></span>
 
                 <select id="taskStatus" required>
-                  <option value="Pending" selected>Pending</option>
-
-                  <option value="In Progress">In Progress</option>
+                  <option value="In Progress" selected>In Progress</option>
 
                   <option value="Submitted">Submitted</option>
 

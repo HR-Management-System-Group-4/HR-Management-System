@@ -3,13 +3,33 @@ let btn = document.getElementById("addTaskButton");
 let taskDialog = document.getElementById("taskDialog");
 let taskForm = document.getElementById("taskForm");
 let taskList = document.getElementById("taskList");
+let cancelTaskButton = document.getElementById("cancelDeleteButton");
+let closeViewButton = document.getElementById("closeViewButton");
+
+closeViewButton.onclick = function () {
+
+    document.getElementById("viewDialog").close();
+
+};
 
 //close the popup
 closeTaskButton.onclick = function () {
+  taskDialog.close();
+
+  // cancel
+  cancelTaskButton.onclick = function () {
     taskDialog.close();
+  };
 };
 // Get tasks from localStorage
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+// Keep previously saved tasks visible after removing the old status.
+if (tasks.some((task) => task.status === "Pending")) {
+  tasks = tasks.map((task) =>
+    task.status === "Pending" ? { ...task, status: "In Progress" } : task,
+  );
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 
 // Open popup
 btn.onclick = function () {
@@ -56,10 +76,6 @@ function displayTasks() {
 
   for (let i = 0; i < tasks.length; i++) {
     let statusClass = "";
-
-    if (tasks[i].status == "Pending") {
-      statusClass = "pending";
-    }
 
     if (tasks[i].status == "In Progress") {
       statusClass = "progress";
@@ -165,6 +181,7 @@ function displayTasks() {
                     <button
                         class="icon-action view"
                         type="button"
+                        onclick="viewTask(${tasks[i].id})
                     >
 
                         <i class="bi bi-eye-fill"></i>
@@ -175,6 +192,7 @@ function displayTasks() {
                     <button
                         class="icon-action edit"
                         type="button"
+                        onclick="editTask(${tasks[i].id})
                     >
 
                         <i class="bi bi-pencil-fill"></i>
@@ -185,6 +203,7 @@ function displayTasks() {
                     <button
                         class="icon-action delete"
                         type="button"
+                        onclick="deleteTask(${tasks[i].id})
                     >
 
                         <i class="bi bi-trash3-fill"></i>
@@ -218,6 +237,34 @@ function displayEmployees() {
       }
     });
 }
+
+function viewTask(id) {
+  let viewDialog = document.getElementById("viewDialog");
+
+  for (let i = 0; i < tasks.length; i++) {
+    if (tasks[i].id == id) {
+      document.getElementById("viewTitle").innerHTML = tasks.title;
+      document.getElementById("viewAssignee").innerHTML = tasks[i].assignTo;
+
+      document.getElementById("viewDueDate").innerHTML = tasks[i].dueDate;
+
+      document.getElementById("viewPriority").innerHTML = tasks[i].priority;
+
+      document.getElementById("viewStatus").innerHTML = tasks[i].status;
+
+      document.getElementById("viewDescription").innerHTML =
+        tasks[i].description;
+      document.getElementById("viewNotes").innerHTML =
+        tasks[i].notes || "No notes";
+
+      document.getElementById("viewSolution").innerHTML =
+        tasks[i].solution || "No solution has been submitted yet.";
+
+        viewDialog();
+    }
+  }
+}
+
 displayEmployees();
 
 // Display saved tasks when page opens
