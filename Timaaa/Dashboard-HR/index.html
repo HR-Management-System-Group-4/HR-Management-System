@@ -25,11 +25,10 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 <div class="dashboard">
 
-
-<!-- EMPTY SIDEBAR AREA -->
-
-<aside class="sidebar-space">
-
+<button class="sidebar-toggle" id="sidebarToggle" type="button" aria-controls="hrSidebar" aria-expanded="false" aria-label="Open HR menu"><i class="fa-solid fa-bars" aria-hidden="true"></i> HR menu</button>
+<button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="Close HR menu" hidden></button>
+<aside class="sidebar-space" id="hrSidebar" aria-label="HR navigation">
+<iframe class="sidebar-frame" src="../../Side_Bar/Side_bar.html" title="HR navigation"></iframe>
 </aside>
 
 
@@ -823,6 +822,7 @@ View policies
 </div>
 
 
+  <script src="sidebar.js"></script>
   <script src="../../demo/flow.js"></script>
 </body>
 

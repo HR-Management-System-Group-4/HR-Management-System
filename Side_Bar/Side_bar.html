@@ -60,13 +60,17 @@
             <a href="../Ahmad/Homepage/index.html" target="_top" class="nav-item home-btn">
                 <i class="fa-solid fa-house"></i> Home
             </a>
-            <a href="../Ahmad/Homepage/index.html" target="_top" class="nav-item logout-btn">
+            <a href="../Ahmad/Login/index.html" target="_top" class="nav-item logout-btn">
                 <i class="fa-solid fa-right-from-bracket"></i> Logout
             </a>
         </div>
     </div>
 
-    
-    
+    <script>
+      const currentPath = window.parent.location.pathname;
+      document.querySelectorAll('.sidebar-menu li').forEach((item) => {
+        item.classList.toggle('active', new URL(item.querySelector('a').href).pathname === currentPath);
+      });
+    </script>
 </body>
 </html>
