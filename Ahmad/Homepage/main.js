@@ -3,13 +3,64 @@ document.querySelector('#heroVimeo').addEventListener('load', () => {
   heroMedia.classList.add('video-ready');
 });
 
-const themeButton = document.querySelector('#themeButton');
-themeButton.addEventListener('click', () => {
+const navbarLayout = document.querySelector('#navbar-layout');
+fetch(new URL('../../nav-bar/nav.html', document.baseURI))
+  .then((response) => {
+    if (!response.ok) throw new Error(`Navbar request failed: ${response.status}`);
+    return response.text();
+  })
+  .then((html) => {
+    const nav = new DOMParser().parseFromString(html, 'text/html').querySelector('nav');
+    if (!nav) throw new Error('Navbar markup was not found.');
+    const anchors = { Home: '#home', Services: '#services', Team: '#team', About: '#about' };
+    nav.querySelectorAll('.nav-link').forEach((link) => {
+      const destination = anchors[link.textContent.trim()];
+      if (destination) link.href = destination;
+    });
+    navbarLayout.replaceChildren(nav);
+  })
+  .catch((error) => console.error('Navbar could not be loaded:', error));
+
+navbarLayout.addEventListener('click', (event) => {
+  const themeButton = event.target.closest('.theme-btn');
+  if (!themeButton) return;
   document.body.classList.toggle('dark-mode');
   const dark = document.body.classList.contains('dark-mode');
   themeButton.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
   themeButton.querySelector('i').className = dark ? 'bi bi-sun' : 'bi bi-moon';
 });
+
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!reducedMotion && 'IntersectionObserver' in window) {
+  document.documentElement.classList.add('motion-ready');
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
+  document.querySelectorAll('[data-reveal], .problems-section').forEach((element) => revealObserver.observe(element));
+}
+
+if (!reducedMotion && window.matchMedia('(pointer: fine)').matches) {
+  const about = document.querySelector('.about-section');
+  const art = about.querySelector('.about-art');
+  let frame = 0;
+  about.addEventListener('pointermove', (event) => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(() => {
+      const rect = about.getBoundingClientRect();
+      art.style.setProperty('--about-x', `${((event.clientX - rect.left) / rect.width - .5) * 22}px`);
+      art.style.setProperty('--about-y', `${((event.clientY - rect.top) / rect.height - .5) * 18}px`);
+    });
+  });
+  about.addEventListener('pointerleave', () => {
+    cancelAnimationFrame(frame);
+    art.style.setProperty('--about-x', '0px');
+    art.style.setProperty('--about-y', '0px');
+  });
+}
 
 const services = {
   profile: {

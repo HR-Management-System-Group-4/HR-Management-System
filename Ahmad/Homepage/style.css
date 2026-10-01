@@ -39,43 +39,6 @@ section { scroll-margin-top: 92px; }
 .impact-intro strong { display: block; margin-top: 7px; font-size: 13px; }
 .impact-item strong { display: block; margin-bottom: 8px; font-size: 27px; line-height: 1; letter-spacing: -.05em; }
 
-/* About and problems keep their text as accessible HTML over local artwork. */
-.about-section { position: relative; min-height: max(760px,56.3vw); padding: clamp(90px,8.4vw,140px) max(5%,calc((100% - 1500px)/2)) 160px; background: var(--color-background); overflow: hidden; }
-.section-art { position: absolute; inset: 0; z-index: 0; display: block; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
-.about-inner { position: relative; z-index: 1; max-width: 700px; }
-.section-tag { display: inline-flex; align-items: center; gap: 17px; padding: 10px 24px; border: 1px solid var(--color-border); border-radius: 40px; color: var(--color-text-secondary); background: var(--color-surface-blue); font-size: 14px; font-weight: 700; letter-spacing: .08em; }
-.section-tag b { color: var(--color-accent); font-size: 20px; letter-spacing: 0; }
-.section-tag i { width: 26px; height: 1px; background: var(--color-border); }
-.about-section h2, .problems-section h2 { margin: 42px 0 24px; color: var(--color-text-primary); font-size: clamp(42px,4.5vw,68px); line-height: 1.02; letter-spacing: -.055em; font-weight: 800; }
-.about-section h2 em, .problems-section h2 em { font-style: normal; background: linear-gradient(110deg,var(--color-accent),var(--color-accent-contrast)); background-clip: text; -webkit-text-fill-color: transparent; }
-.about-section p { max-width: 620px; margin: 0 0 24px; color: var(--color-text-secondary); font-size: clamp(16px,1.25vw,20px); line-height: 1.55; }
-.gradient-button { display: inline-flex; align-items: center; justify-content: center; gap: 28px; min-height: 56px; padding: 0 28px; border-radius: 40px; color: white; background: linear-gradient(105deg,var(--color-accent),var(--color-accent-contrast)); box-shadow: 0 16px 32px rgba(36,43,71,.17); font-weight: 700; }
-.gradient-button:hover { color: white; filter: brightness(1.06); }
-.about-cards, .problem-cards { position: absolute; z-index: 2; bottom: 50px; left: max(5%,calc((100% - 1500px)/2)); display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; width: min(920px,90%); }
-.mini-card { display: flex; align-items: center; gap: 15px; min-width: 0; min-height: 104px; padding: 17px; border: 1px solid var(--color-border); border-radius: 24px; color: var(--color-text-primary); background: var(--color-surface); box-shadow: 0 14px 35px rgba(36,43,71,.07); }
-.mini-card:hover { color: var(--color-text-primary); transform: translateY(-3px); }
-.mini-card > span:nth-child(2) { min-width: 0; }
-.mini-card strong, .mini-card small { display: block; }
-.mini-card strong { margin-bottom: 5px; font-size: 15px; }
-.mini-card small { color: var(--color-text-muted); font-size: 12px; line-height: 1.4; }
-.mini-icon { display: grid; flex: none; place-items: center; width: 58px; height: 58px; border-radius: 17px; font-size: 26px; }
-.mini-icon.blue { color: var(--color-accent); background: var(--color-surface-blue); }
-.mini-icon.green { color: var(--color-accent); background: var(--color-surface-mint); }
-.mini-icon.orange { color: var(--color-accent-contrast); background: var(--color-mint); }
-.mini-icon.violet { color: var(--color-accent-contrast); background: var(--color-surface-blue); }
-.mini-arrow { display: grid; flex: none; place-items: center; width: 30px; height: 30px; margin-left: auto; border-radius: 50%; color: var(--color-text-muted); background: var(--color-surface-blue); font-size: 13px; }
-
-.problems-section { position: relative; min-height: 780px; padding: 105px 5% 180px; text-align: center; background: var(--color-background); overflow: hidden; }
-.problems-content { position: relative; z-index: 1; max-width: 790px; margin: auto; }
-.problems-kicker { display: inline-flex; align-items: center; gap: 10px; padding: 11px 20px; border: 1px solid var(--color-border); border-radius: 35px; color: var(--color-text-secondary); background: var(--color-surface); font-size: 11px; font-weight: 700; letter-spacing: .06em; }
-.problems-kicker i { color: var(--color-accent); }
-.problems-section h2 { margin: 22px 0 22px; }
-.problems-section p { max-width: 700px; margin: auto; color: var(--color-text-secondary); font-size: clamp(16px,1.3vw,20px); line-height: 1.5; }
-.problems-actions { display: flex; justify-content: center; gap: 15px; margin-top: 28px; }
-.outline-button { display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 25px; border: 1px solid var(--color-border); border-radius: 40px; color: var(--color-text-primary); background: var(--color-surface); font-weight: 700; }
-.outline-button i { color: var(--color-accent); font-size: 22px; }
-.problem-cards { right: 5%; bottom: 48px; left: 5%; grid-template-columns: repeat(4,minmax(0,1fr)); width: auto; }
-
 /* The service preview follows the third reference image. */
 .services-section { padding: 85px 3%; background: var(--color-background); }
 .services-frame { display: grid; grid-template-columns: 360px minmax(0,1fr); min-height: 640px; max-width: 1570px; margin: auto; border: 1px solid var(--color-border); border-radius: 34px; overflow: hidden; background: radial-gradient(circle at 92% 20%,var(--color-surface-mint),transparent 35%),var(--color-surface); box-shadow: 0 30px 70px rgba(35,39,67,.08); }
@@ -110,11 +73,8 @@ section { scroll-margin-top: 92px; }
 .dark-mode .service-tab { color: #f1f4fa; }
 .dark-mode .service-tab.selected, .dark-mode .service-tab:hover { background: #35445b; }
 .dark-mode .preview-pill { color: #f1f4fa; }
-@media (min-width: 801px) {
-  .dark-mode .about-section:after, .dark-mode .problems-section:after { content: ""; position: absolute; inset: 0; z-index: 0; background: rgba(12,15,31,.63); pointer-events: none; }
-}
+.dark-mode .down-cta { color: #101827; }
 @media (max-width: 1100px) {
-  .about-inner { max-width: 600px; }
   .services-frame { grid-template-columns: 290px 1fr; }
   .service-main { grid-template-columns: 1fr; gap: 26px; }
   .service-preview { max-width: 600px; }
@@ -124,11 +84,6 @@ section { scroll-margin-top: 92px; }
   .hero-copy { width: 100%; }
   .impact-bar { grid-template-columns: repeat(4,1fr); }
   .impact-intro { grid-column: 1/-1; min-height: 50px; }
-  .about-section, .problems-section { display: flex; flex-direction: column; min-height: 0; padding: 72px 0 0; }
-  .about-inner, .problems-content { order: 1; width: min(700px,calc(100% - 40px)); max-width: none; margin: 0 auto; }
-  .section-art { position: relative; inset: auto; order: 2; height: auto; margin-top: 24px; }
-  .about-cards, .problem-cards { position: relative; right: auto; bottom: auto; left: auto; order: 3; width: min(920px,calc(100% - 40px)); margin: 20px auto 48px; }
-  .problem-cards { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .services-frame { grid-template-columns: 1fr; }
   .services-list { display: flex; gap: 8px; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--color-border); }
   .service-tab { min-width: 200px; margin: 0; }
@@ -144,18 +99,6 @@ section { scroll-margin-top: 92px; }
   .impact-intro { display: none; }
   .impact-item { min-height: 65px; padding: 10px 14px; }
   .impact-item strong { font-size: 20px; }
-  .about-section h2, .problems-section h2 { font-size: 43px; }
-  .about-section h2 br { display: none; }
-  .about-section p { font-size: 15px; }
-  .about-cards { grid-template-columns: 1fr; }
-  .mini-card { min-height: 83px; padding: 12px; }
-  .mini-icon { width: 48px; height: 48px; font-size: 21px; }
-  .problems-kicker { font-size: 9px; }
-  .problems-actions { flex-wrap: wrap; }
-  .problem-cards { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .problem-cards .mini-card { display: block; min-height: 160px; }
-  .problem-cards .mini-icon { margin-bottom: 9px; }
-  .problem-cards .mini-arrow { display: none; }
   .services-section { padding: 35px 3%; }
   .service-main { grid-template-columns: 1fr; padding: 35px 22px; }
   .service-preview { padding: 20px; }
