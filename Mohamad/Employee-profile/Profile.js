@@ -1,6 +1,9 @@
 
+// Temporary user ID until Login is ready
+localStorage.setItem("loggedInUserId", "3");
+
 const userId = Number(
-    localStorage.getItem("loggedInUserId") || "2"
+    localStorage.getItem("loggedInUserId")
 );
 
 console.log("User ID:", userId);
@@ -24,7 +27,7 @@ function getSavedProfiles() {
 }
 
 // Load employee data
-fetch("../employees-updated.json")
+fetch("../../employee.json")
     .then(response => {
         if (!response.ok) {
             throw new Error("Failed to load employees");
@@ -34,8 +37,7 @@ fetch("../employees-updated.json")
     })
 
     .then(data => {
-        const employee = data.find(user => user.id === userId);
-
+       const employee = (Array.isArray(data) ? data : data.employees).find(user => user.id === userId);
         if (!employee) {
             throw new Error("Employee not found");
         }

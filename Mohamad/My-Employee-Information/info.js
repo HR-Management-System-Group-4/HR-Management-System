@@ -1,6 +1,6 @@
 
 // 1. Get the logged-in employee ID
-const userId = Number(localStorage.getItem("loggedInUserId") || "2");
+const userId = Number(localStorage.getItem("loggedInUserId"));
 
 
 // 2. Function to display information
@@ -98,7 +98,7 @@ if (!userId) {
 
 } else {
 
-    fetch("../employees-updated.json")
+    fetch("../../employee.json")
 
         .then(function(response) {
 
@@ -113,9 +113,9 @@ if (!userId) {
         .then(function(data) {
 
             // Find the logged-in employee
-            let employee = data.find(function(user) {
-                return user.id === userId;
-            });
+            let employee = (Array.isArray(data) ? data : data.employees).find(function(user) {
+                    return user.id === userId;
+                });
 
 
             // Check if employee exists

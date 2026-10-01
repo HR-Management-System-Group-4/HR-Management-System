@@ -1,8 +1,11 @@
 
 // 1. Settings
 
-const userId = Number(localStorage.getItem("loggedInUserId") || "1");
-const jsonPath = "../employees-updated.json";
+// Temporary HR account for testing
+localStorage.setItem("loggedInUserId", "1");
+
+const userId = Number(localStorage.getItem("loggedInUserId"));
+const jsonPath = "../../employee.json";
 const defaultImage = "../photo.jpg";
 
 const el = id => document.getElementById(id);
@@ -105,7 +108,7 @@ fetch(jsonPath)
     })
 
     .then(data => {
-        const employee = data.find(user => user.id === userId);
+        const employee = (Array.isArray(data) ? data : data.employees).find(user => user.id === userId);
 
         if (!employee || employee.role !== "HR") {
             throw new Error("HR employee not found");
