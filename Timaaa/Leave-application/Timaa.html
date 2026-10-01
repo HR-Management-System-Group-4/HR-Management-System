@@ -12,6 +12,7 @@
 
     <!-- Page CSS -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../Footer/footer.css">
 
 </head>
 
@@ -242,12 +243,17 @@
 
     </main>
 
+<footer id="footer"></footer>
 
-    <!-- =========================
-         Page JavaScript
-    ========================== -->
 
-    <script src="script.js"></script>
+<script>
+fetch("../../Footer/footer.html")
+.then(response => response.text())
+.then(data => {
+    document.getElementById("footer").innerHTML = data;
+});
+</script>
+<script src="script.js"></script>
 
 </body>
 

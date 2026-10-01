@@ -1,0 +1,87 @@
+/* تنسيق السايد بار الأساسي */
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    background-color: #0e1b2a; /* اللون الكحلي الغامق الظاهر في الصورة */
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 15px;
+    font-family: Arial, sans-serif;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+/* تنسيق الشعار في الأعلى */
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-icon {
+   
+    color: white;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.brand-name {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* القائمة والروابط */
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar-menu li a, .sidebar-footer a {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 15px;
+    color: #94a3b8; /* لون رمادي فاتح للنصوص غير المحددة */
+    text-decoration: none;
+    font-size: 15px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+/* تنسيق العنصر النشط (Overview مثلاً) أو عند المرور بالماوس */
+.sidebar-menu li.active a, 
+.sidebar-menu li a:hover,
+.sidebar-footer a:hover {
+    background-color: #1e293b; /* لون خلفية أفتح عند التحديد */
+    color: #ffffff;
+}
+
+/* قسم الفوتر (زر الهوم وزر الخروج) */
+.sidebar-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+/* تنسيق خاص لزر الهوم ليكون متناسقاً تماماً مع باقي الأزرار */
+.home-btn {
+    color: #ffffff;
+}
