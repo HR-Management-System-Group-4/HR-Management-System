@@ -1,226 +1,35 @@
-body {
-    margin: 0;
-    background-color: #f7f7f4;
-}
-
-
-/* =========================
-   Navbar
-========================= */
-
-.custom-navbar {
-    width: 82%;
-
-    margin: 16px auto;
-
-    padding: 12px 18px;
-
-    background-color: #f7f7f4;
-
-    border: 1px solid #dcdde3;
-
-    border-radius: 28px;
-
-    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.08);
-}
-
-
-/* =========================
-   Logo
-========================= */
-
-.logo-box {
-    width: 42px;
-    height: 42px;
-
-    background-color: white;
-
-    border: 1px solid #70758a;
-
-    border-radius: 8px;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-}
-
-
-.logo-bars {
-    height: 23px;
-
-    display: flex;
-
-    align-items: end;
-
-    gap: 4px;
-}
-
-
-.logo-bars span {
-    width: 5px;
-
-    display: block;
-
-    border-radius: 3px;
-}
-
-
-.logo-bars span:nth-child(1) {
-    height: 13px;
-
-    background-color: #243e82;
-}
-
-
-.logo-bars span:nth-child(2) {
-    height: 22px;
-
-    background-color: #25749d;
-}
-
-
-.logo-bars span:nth-child(3) {
-    height: 17px;
-
-    background-color: #6bcfc3;
-}
-
-
-.brand-name {
-    color: #252a44;
-
-    font-size: 22px;
-
-    font-weight: 700;
-}
-
-
-/* =========================
-   Links Container
-========================= */
-
-.nav-links-box {
-    padding: 4px 12px;
-
-    background-color: rgba(255, 255, 255, 0.55);
-
-    border: 1px solid #dcdde3;
-
-    border-radius: 40px;
-}
-
-
-/* Links */
-
-.nav-links-box .nav-link {
-    padding: 12px 20px;
-
-    color: #626981;
-
-    font-weight: 600;
-
-    transition: 0.3s;
-}
-
-
-.nav-links-box .nav-link:hover {
-    color: #252a44;
-}
-
-
-/* =========================
-   Moon Button
-========================= */
-
-.theme-btn {
-    width: 52px;
-
-    height: 52px;
-
-    background-color: white;
-
-    color: #252a44;
-
-    border: 1px solid #dcdde3;
-
-    border-radius: 50%;
-
-    font-size: 20px;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    cursor: pointer;
-}
-
-
-/* =========================
-   Sign In Button
-========================= */
-
-.signin-btn {
-    padding: 13px 22px;
-
-    background-color: #4c527e;
-
-    color: white;
-
-    border: none;
-
-    border-radius: 30px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition: 0.3s;
-}
-
-
-.signin-btn:hover {
-    background-color: #3f456c;
-}
-
-
-.signin-btn i {
-    margin-left: 8px;
-}
-
-
-/* =========================
-   Responsive
-========================= */
-
-@media (max-width: 991px) {
-
-    .custom-navbar {
-        width: 95%;
-    }
-
-
-    .nav-links-box {
-        margin-top: 20px;
-
-        background-color: transparent;
-
-        border: none;
-    }
-
-
-    .nav-links-box .navbar-nav {
-        text-align: center;
-    }
-
-
-    .right-buttons {
-        margin-top: 15px;
-
-        justify-content: center;
-    }
-
+.custom-navbar, .custom-navbar * { box-sizing: border-box; }
+.custom-navbar { display: flex; align-items: center; gap: 24px; width: min(94%, 1240px); min-height: 78px; margin: 16px auto; padding: 12px 18px; border: 1px solid #dcdde3; border-radius: 28px; background: #f7f7f4; box-shadow: 0 18px 35px rgba(0, 0, 0, .08); font-family: var(--font-sans, Arial, sans-serif); }
+.custom-navbar a { text-decoration: none; }
+.custom-navbar button { font: inherit; cursor: pointer; }
+.custom-navbar .navbar-brand { display: inline-flex; align-items: center; flex: none; gap: 12px; }
+.custom-navbar .logo-box { display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid #70758a; border-radius: 8px; background: white; }
+.custom-navbar .logo-bars { display: flex; align-items: end; gap: 4px; height: 23px; }
+.custom-navbar .logo-bars span { display: block; width: 5px; border-radius: 3px; }
+.custom-navbar .logo-bars span:nth-child(1) { height: 13px; background: #243e82; }
+.custom-navbar .logo-bars span:nth-child(2) { height: 22px; background: #25749d; }
+.custom-navbar .logo-bars span:nth-child(3) { height: 17px; background: #6bcfc3; }
+.custom-navbar .brand-name { color: #252a44; font-size: 22px; font-weight: 700; }
+.custom-navbar .navbar-content { display: flex; align-items: center; justify-content: space-between; flex: 1; gap: 24px; }
+.custom-navbar .nav-links-box { display: flex; align-items: center; gap: 2px; margin: auto; padding: 4px 12px; border: 1px solid #dcdde3; border-radius: 40px; background: rgba(255, 255, 255, .55); }
+.custom-navbar .nav-link { display: block; padding: 10px 16px; color: #626981; font-weight: 600; white-space: nowrap; transition: color .2s; }
+.custom-navbar .nav-link:hover, .custom-navbar .nav-link:focus-visible, .custom-navbar .nav-link.active { color: #252a44; }
+.custom-navbar .right-buttons { display: flex; align-items: center; gap: 12px; }
+.custom-navbar .theme-btn { display: grid; place-items: center; width: 48px; height: 48px; flex: none; border: 1px solid #dcdde3; border-radius: 50%; background: white; color: #252a44; font-size: 20px; }
+.custom-navbar .signin-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 30px; background: #4c527e; color: white; font-weight: 600; white-space: nowrap; transition: background .2s; }
+.custom-navbar .signin-btn:hover { background: #3f456c; color: white; }
+.custom-navbar .navbar-toggler { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; margin-left: auto; padding: 10px; border: 1px solid #dcdde3; border-radius: 12px; background: white; }
+.custom-navbar .navbar-toggler span { display: block; height: 2px; border-radius: 2px; background: #252a44; }
+.custom-navbar a:focus-visible, .custom-navbar button:focus-visible { outline: 2px solid var(--color-accent, #118ab2); outline-offset: 3px; }
+.dark-mode .custom-navbar, .dark .custom-navbar { border-color: var(--color-border, #40536a); background: var(--color-surface, #20343b); }
+.dark-mode .custom-navbar .brand-name, .dark-mode .custom-navbar .nav-link, .dark .custom-navbar .brand-name, .dark .custom-navbar .nav-link { color: var(--color-text-primary, #f0f8ff); }
+.dark-mode .custom-navbar .nav-links-box, .dark .custom-navbar .nav-links-box { border-color: var(--color-border, #40536a); background: var(--color-surface-blue, #273e46); }
+.dark-mode .custom-navbar .theme-btn, .dark .custom-navbar .theme-btn { border-color: var(--color-border, #40536a); background: var(--color-surface, #273e46); color: var(--color-text-primary, #f0f8ff); }
+@media (max-width: 1000px) {
+  .custom-navbar { position: relative; flex-wrap: wrap; }
+  .custom-navbar .navbar-toggler { display: flex; }
+  .custom-navbar .navbar-content { display: none; flex-basis: 100%; flex-direction: column; align-items: stretch; gap: 16px; }
+  .custom-navbar .navbar-content.is-open { display: flex; }
+  .custom-navbar .nav-links-box { flex-direction: column; align-items: stretch; width: 100%; margin: 0; border-radius: 18px; text-align: center; }
+  .custom-navbar .right-buttons { justify-content: center; }
 }

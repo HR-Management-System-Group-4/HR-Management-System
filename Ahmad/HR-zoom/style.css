@@ -173,3 +173,15 @@ th:nth-child(1) { width: 14%; } th:nth-child(2) { width: 10%; } th:nth-child(3) 
 @media (max-width: 870px) { .app-shell { display: block; padding: 10px; } .sidebar { position: fixed; z-index: 8; top: 0; bottom: 0; left: 0; width: 250px; min-height: 100vh; border-radius: 0 18px 18px 0; box-shadow: 10px 0 35px rgba(20,70,110,.18); transform: translateX(-105%); transition: transform .22s ease; } .sidebar.open { transform: translateX(0); } .workspace { min-height: calc(100vh - 20px); padding: 10px; } .mobile-menu { display: grid; } .top-search { width: auto; flex: 1; } .page-intro { padding-top: 20px; } }
 @media (max-width: 620px) { .topbar { margin: 0 4px; gap: 8px; } .topbar-actions { gap: 6px; } .topbar-divider, .profile-button > span:not(.avatar), .profile-button > svg { display: none; } .profile-button { padding: 0; } .search-field input { font-size: 11px; } .page-intro { padding: 16px 7px 0; } .page-intro h1 { font-size: 27px; } .page-intro p { font-size: 13px; } .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 18px 0 12px; } .stat-card { min-height: 98px; } .requests-panel { padding: 15px 11px 0; } .section-heading { display: block; } .section-heading h2 { font-size: 20px; } .status-filter { width: 100%; margin-top: 12px; } .table-tools { display: grid; grid-template-columns: 1fr; } .table-search, .date-filter { width: 100%; } table { min-width: 845px; } .right-column { grid-template-columns: 1fr; } .schedule-panel { grid-row: auto; } .table-footer { gap: 8px; flex-wrap: wrap; padding: 10px 0; } }
 @media (prefers-reduced-motion: reduce) { .sidebar { transition: none; } }
+
+body.dark-mode { --ui-ink: #edf5fa; --ui-line: #40596a; --ui-muted: #adbdca; --ui-shadow: 0 12px 35px rgba(0, 0, 0, .14); --color-text-primary: #edf5fa; --color-surface: #1e3443; --color-surface-blue: #263e50; --color-border: #40596a; background: #142733; color: var(--ui-ink); }
+.dark-mode .sidebar, .dark-mode .workspace { border-color: #40596a; background: #1b3443; }
+.dark-mode .panel, .dark-mode .stat-card, .dark-mode .toast { border-color: #40596a; background: #223c4c; }
+.dark-mode .side-nav a:hover, .dark-mode .side-nav a.active, .dark-mode .icon-button { border-color: #40596a; background: #2c4858; }
+.dark-mode .search-field, .dark-mode .select-shell, .dark-mode .form-field input, .dark-mode .form-field select, .dark-mode .form-field textarea, .dark-mode .input-shell { border-color: #40596a; background: #193240; color: #edf5fa; }
+.dark-mode .search-field input, .dark-mode .select-shell select, .dark-mode .input-shell select { color: #edf5fa; }
+.dark-mode .sidebar-note { background: #264454; color: #c0d3dd; }
+.dark-mode .page-intro p, .dark-mode .section-heading p, .dark-mode .stat-card div > span, .dark-mode .upcoming-person small, .dark-mode .upcoming-time, .dark-mode .activity-item small { color: #b4c6d3; }
+.dark-mode thead { background: #2c4858; color: #dbe9f0; }
+.dark-mode td { border-color: #40596a; color: #e6f1f6; }
+.dark-mode .truncate, .dark-mode .employee-cell small { color: #b4c6d3; }

@@ -5,10 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HR Zoom Meetings | Mysta</title>
   <link rel="stylesheet" href="../../assets/Colors.css">
-  <link rel="stylesheet" href="style.css">
-  <script src="main.js" defer></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../nav-bar/nav.css">
+  <link rel="stylesheet" href="../../Footer/footer.css">
+  <link rel="stylesheet" href="style.css?v=shared-layout-1">
 </head>
 <body>
+  <div class="nav-bar"></div>
   <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.4"/><path d="m16 16 4.5 4.5"/></symbol>
     <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3.5"/><path d="M4.5 21v-2a7.5 7.5 0 0 1 15 0v2"/></symbol>
@@ -104,5 +107,9 @@
     </main>
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <div class="footer"></div>
+  <script src="../../nav-bar/nav-loader.js"></script>
+  <script src="../../Footer/footer.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
