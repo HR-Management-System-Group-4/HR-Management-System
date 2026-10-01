@@ -1,0 +1,663 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>HR Tasks | Mysta</title>
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../assets/Colors.css" />
+
+    <link rel="stylesheet" href="../../layout/header.css" />
+
+    <link rel="stylesheet" href="../../layout/footer.css" />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- =========================
+         Header
+    ========================== -->
+
+    <div class="nav-bar"></div>
+
+    <!-- Background Decorations -->
+
+    <div class="page-glow page-glow-left"></div>
+
+    <div class="page-glow page-glow-right"></div>
+
+    <!-- =========================
+         Main Page
+    ========================== -->
+
+    <div class="dashboard">
+      <!-- Top Row -->
+
+      <div class="top-row">
+        <a class="back-link" href="../Homepage/index.html#services">
+          <i class="bi bi-arrow-left"></i>
+
+          Back to Services
+        </a>
+
+        <button class="add-button" id="addTaskButton" type="button">
+          <i class="bi bi-plus-lg"></i>
+
+          Add Task
+        </button>
+      </div>
+
+      <!-- =========================
+             Intro
+        ========================== -->
+
+      <div class="intro">
+        <p class="eyebrow">
+          HR WORKSPACE
+
+          <span></span>
+
+          TASK MANAGEMENT
+        </p>
+
+        <h1>Team Tasks<span class="title-dot">.</span></h1>
+
+        <p>
+          Create and assign tasks, follow progress, and review submitted work.
+        </p>
+      </div>
+
+      <!-- =========================
+             Statistics
+        ========================== -->
+
+      <div class="stats">
+        <!-- Total -->
+
+        <div class="stat-card stat-total">
+          <div class="stat-icon">
+            <i class="bi bi-collection"></i>
+          </div>
+
+          <div>
+            <strong id="totalCount">0</strong>
+
+            <h2>Total</h2>
+
+            <p>All assigned tasks</p>
+          </div>
+
+          <span class="stat-bars">
+            <i></i>
+            <i></i>
+            <i></i>
+          </span>
+        </div>
+
+        <!-- Pending -->
+
+        <div class="stat-card stat-pending">
+          <div class="stat-icon">
+            <i class="bi bi-clock-history"></i>
+          </div>
+
+          <div>
+            <strong id="pendingCount">0</strong>
+
+            <h2>Pending</h2>
+
+            <p>Awaiting action</p>
+          </div>
+
+          <span class="stat-bars">
+            <i></i>
+            <i></i>
+            <i></i>
+          </span>
+        </div>
+
+        <!-- In Progress -->
+
+        <div class="stat-card stat-progress">
+          <div class="stat-icon">
+            <i class="bi bi-arrow-repeat"></i>
+          </div>
+
+          <div>
+            <strong id="progressCount">0</strong>
+
+            <h2>In Progress</h2>
+
+            <p>Work underway</p>
+          </div>
+
+          <span class="stat-bars">
+            <i></i>
+            <i></i>
+            <i></i>
+          </span>
+        </div>
+
+        <!-- Submitted -->
+
+        <div class="stat-card stat-submitted">
+          <div class="stat-icon">
+            <i class="bi bi-inbox"></i>
+          </div>
+
+          <div>
+            <strong id="submittedCount">0</strong>
+
+            <h2>To Review</h2>
+
+            <p>Solutions submitted</p>
+          </div>
+
+          <span class="stat-bars">
+            <i></i>
+            <i></i>
+            <i></i>
+          </span>
+        </div>
+
+        <!-- Completed -->
+
+        <div class="stat-card stat-completed">
+          <div class="stat-icon">
+            <i class="bi bi-check-circle-fill"></i>
+          </div>
+
+          <div>
+            <strong id="completedCount">0</strong>
+
+            <h2>Completed</h2>
+
+            <p>Approved work</p>
+          </div>
+
+          <span class="stat-bars">
+            <i></i>
+            <i></i>
+            <i></i>
+          </span>
+        </div>
+      </div>
+
+      <!-- =========================
+             Tasks
+        ========================== -->
+
+      <div class="task-section">
+        <!-- Section Heading -->
+
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">YOUR WORKSPACE</p>
+
+            <h2>Tasks overview</h2>
+          </div>
+
+          <!-- Search -->
+
+          <div class="search-field">
+            <i class="bi bi-search"></i>
+
+            <input
+              id="taskSearch"
+              type="search"
+              placeholder="Search tasks or employees..."
+            />
+          </div>
+        </div>
+
+        <!-- =========================
+                 Filters
+            ========================== -->
+
+        <div class="filters">
+          <button type="button" class="filter active" data-filter="All">
+            <i class="bi bi-grid-fill"></i>
+
+            All Tasks
+
+            <span id="allBadge"></span>
+          </button>
+
+          <button type="button" class="filter" data-filter="Pending">
+            <i class="bi bi-clock"></i>
+
+            Pending
+          </button>
+
+          <button type="button" class="filter" data-filter="In Progress">
+            <i class="bi bi-arrow-repeat"></i>
+
+            In Progress
+          </button>
+
+          <button type="button" class="filter" data-filter="Submitted">
+            <i class="bi bi-inbox"></i>
+
+            To Review
+
+            <span id="reviewBadge"></span>
+          </button>
+
+          <button type="button" class="filter" data-filter="Completed">
+            <i class="bi bi-check2"></i>
+
+            Completed
+          </button>
+        </div>
+
+        <!-- =========================
+                 Tasks will appear here
+            ========================== -->
+
+        <div id="taskList" class="task-list"></div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         ADD / EDIT TASK POPUP
+    =========================================== -->
+
+    <dialog id="taskDialog" class="modal-dialog">
+      <form id="taskForm" class="modal-card task-form-card">
+        <!-- Modal Header -->
+
+        <div class="task-modal-head">
+          <div class="task-modal-icon">
+            <i class="bi bi-people-fill"></i>
+          </div>
+
+          <div class="task-modal-intro">
+            <p class="section-kicker">HR TASK MANAGEMENT</p>
+
+            <h2 id="formTitle">Add a task</h2>
+
+            <p>
+              Create a new task, assign it to an employee and set the details.
+            </p>
+          </div>
+
+          <button id="closeTaskButton" class="close-button" type="button">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+
+        <!-- Used later when editing -->
+
+        <input id="taskId" type="hidden" />
+
+        <!-- ==================================
+                 Task Title + Description
+            =================================== -->
+
+        <div class="task-form-top">
+          <!-- Task Title -->
+
+          <div class="wide-field">
+            <label class="task-field-label" for="taskTitle">
+              <i class="bi bi-file-earmark-text"></i>
+
+              Task title
+
+              <span class="required-mark"> * </span>
+            </label>
+
+            <input
+              id="taskTitle"
+              type="text"
+              placeholder="e.g. Q4 performance reviews"
+              maxlength="100"
+              required
+            />
+          </div>
+
+          <!-- Description -->
+
+          <div class="wide-field">
+            <label class="task-field-label" for="taskDescription">
+              <i class="bi bi-text-left"></i>
+
+              Description
+            </label>
+
+            <div class="description-wrap">
+              <textarea
+                id="taskDescription"
+                rows="4"
+                maxlength="1000"
+                placeholder="Describe the expected work..."
+                required
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================================
+                 Form Columns
+            =================================== -->
+
+        <div class="task-form-columns">
+          <!-- =============================
+                     Left Column
+                ============================== -->
+
+          <div class="task-options-column">
+            <!-- Assign Employee -->
+
+            <div class="option-field">
+              <label class="task-field-label" for="assignTo">
+                <i class="bi bi-people-fill"></i>
+
+                Assign to
+              </label>
+
+              <div class="styled-select">
+                <span class="select-indicator"></span>
+
+                <select id="assignTo" required>
+                  <option value="">Select employee...</option>
+
+                  <!--
+                                    Employees from employee.json
+                                    will be added here using JavaScript
+                                -->
+                </select>
+
+                <i class="bi bi-chevron-down"></i>
+              </div>
+            </div>
+
+            <!-- Notes -->
+
+            <div class="option-field">
+              <label class="task-field-label" for="taskNotes">
+                <i class="bi bi-file-earmark-text"></i>
+
+                Notes
+
+                <span class="optional-mark"> (optional) </span>
+              </label>
+
+              <textarea
+                id="taskNotes"
+                rows="5"
+                maxlength="500"
+                placeholder="Add any additional notes..."
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- =============================
+                     Right Column
+                ============================== -->
+
+          <div class="task-options-column">
+            <!-- Priority -->
+
+            <div class="option-field">
+              <label class="task-field-label" for="taskPriority">
+                <i class="bi bi-bar-chart-fill"></i>
+
+                Priority
+              </label>
+
+              <div class="styled-select priority-select">
+                <span class="select-indicator"></span>
+
+                <select id="taskPriority" required>
+                  <option value="Low">Low</option>
+
+                  <option value="Medium" selected>Medium</option>
+
+                  <option value="High">High</option>
+                </select>
+
+                <i class="bi bi-chevron-down"></i>
+              </div>
+            </div>
+
+            <!-- Status -->
+
+            <div class="option-field">
+              <label class="task-field-label" for="taskStatus">
+                <i class="bi bi-record-circle"></i>
+
+                Status
+              </label>
+
+              <div class="styled-select status-select">
+                <span class="select-indicator"></span>
+
+                <select id="taskStatus" required>
+                  <option value="Pending" selected>Pending</option>
+
+                  <option value="In Progress">In Progress</option>
+
+                  <option value="Submitted">Submitted</option>
+
+                  <option value="Completed">Completed</option>
+                </select>
+
+                <i class="bi bi-chevron-down"></i>
+              </div>
+            </div>
+
+            <!-- Due Date -->
+
+            <div class="option-field">
+              <label class="task-field-label" for="taskDueDate">
+                <i class="bi bi-calendar3"></i>
+
+                Due date
+              </label>
+
+              <div class="styled-date" id="dateField">
+                <i class="bi bi-calendar3"></i>
+
+                <input id="taskDueDate" type="date" required />
+
+                <i class="bi bi-chevron-down"></i>
+              </div>
+            </div>
+
+            <!-- Buttons -->
+
+            <div class="task-form-actions">
+              <button
+                id="cancelTaskButton"
+                type="button"
+                class="secondary-button"
+              >
+                Cancel
+              </button>
+
+              <button id="saveTaskButton" type="submit" class="primary-button">
+                <i class="bi bi-plus-lg"></i>
+
+                Create Task
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- ==========================================
+         VIEW TASK POPUP
+         سنستخدمه لاحقاً
+    =========================================== -->
+
+    <dialog id="viewDialog" class="modal-dialog">
+      <div class="modal-card">
+        <div class="modal-head">
+          <div>
+            <p class="section-kicker">TASK DETAILS</p>
+
+            <h2 id="viewTitle">Task</h2>
+          </div>
+
+          <button id="closeViewButton" class="close-button" type="button">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+
+        <div class="detail-grid">
+          <div class="detail-item">
+            <b>Assigned to</b>
+
+            <span id="viewAssignee"></span>
+          </div>
+
+          <div class="detail-item">
+            <b>Due date</b>
+
+            <span id="viewDueDate"></span>
+          </div>
+
+          <div class="detail-item">
+            <b>Priority</b>
+
+            <span id="viewPriority"></span>
+          </div>
+
+          <div class="detail-item">
+            <b>Status</b>
+
+            <span id="viewStatus"></span>
+          </div>
+        </div>
+
+        <div class="detail-block">
+          <h3>Description</h3>
+
+          <p id="viewDescription"></p>
+        </div>
+
+        <div class="detail-block">
+          <h3>HR Notes</h3>
+
+          <p id="viewNotes"></p>
+        </div>
+
+        <div class="detail-block solution">
+          <h3>Employee Solution</h3>
+
+          <p id="viewSolution">No solution has been submitted yet.</p>
+        </div>
+
+        <!-- HR Review -->
+
+        <div class="review-panel" id="reviewPanel" hidden>
+          <h3>Review submission</h3>
+
+          <label class="field">
+            Feedback for employee
+
+            <textarea
+              id="reviewFeedback"
+              rows="3"
+              placeholder="Add feedback..."
+            ></textarea>
+          </label>
+
+          <div class="modal-actions">
+            <button
+              id="requestChangesButton"
+              class="secondary-button"
+              type="button"
+            >
+              Request Changes
+            </button>
+
+            <button id="approveButton" class="primary-button" type="button">
+              <i class="bi bi-check2"></i>
+
+              Approve Solution
+            </button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- ==========================================
+         DELETE TASK POPUP
+    =========================================== -->
+
+    <dialog id="deleteDialog" class="modal-dialog delete-dialog">
+      <div class="modal-card">
+        <div class="modal-head">
+          <div>
+            <p class="section-kicker">DELETE TASK</p>
+
+            <h2>Remove this task?</h2>
+          </div>
+
+          <button id="closeDeleteButton" class="close-button" type="button">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+
+        <p id="deleteMessage" class="delete-message">
+          Are you sure you want to delete this task?
+        </p>
+
+        <p class="form-hint">This action cannot be undone.</p>
+
+        <div class="modal-actions">
+          <button
+            id="cancelDeleteButton"
+            class="secondary-button"
+            type="button"
+          >
+            Cancel
+          </button>
+
+          <button id="confirmDeleteButton" class="danger-button" type="button">
+            Delete Task
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Message -->
+
+    <div id="toast" class="toast"></div>
+
+    <!-- Footer -->
+
+    <div class="footer"></div>
+
+    <!-- JavaScript -->
+
+    <script src="../../layout/header.js"></script>
+
+    <script src="../../layout/footer.js"></script>
+
+    <script src="main.js"></script>
+  </body>
+</html>
