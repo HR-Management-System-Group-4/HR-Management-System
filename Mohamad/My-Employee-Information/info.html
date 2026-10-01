@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Information | Mysta</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="info.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg custom-navbar">
+        <div class="container-fluid">
+
+            <a class="navbar-brand" href="#">
+                <img src="../logo.png" alt="Mysta Logo" class="site-logo">
+            </a>
+
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarContent"
+                    aria-controls="navbarContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+
+                <div class="nav-links-box mx-auto">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Team</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-actions d-flex gap-3">
+                    <button class="theme-btn" type="button">
+                        <i class="bi bi-moon"></i>
+                    </button>
+
+                    <button class="signin-btn" type="button">
+                        Sign in
+                        <i class="bi bi-arrow-up-right"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Main -->
+    <main class="page-container">
+
+        <!-- Page Title -->
+        <div class="page-title">
+            <div>
+                <h1>My Employee Information</h1>
+                <p>View your personal details and employment records.</p>
+            </div>
+
+            <span class="read-only">
+                <i class="bi bi-eye"></i> Read Only
+            </span>
+        </div>
+
+
+        <!-- Employee Header -->
+        <section class="profile-header">
+
+            <img id="employeeImage" src="../photo.jpg"
+                 alt="Employee Photo" class="profile-pic">
+
+            <div class="profile-info">
+                <h2 id="employeeName">Loading...</h2>
+                <p id="employeePosition">Loading...</p>
+
+                <div class="profile-badges">
+                    <span id="employeeCode">--</span>
+                    <span id="employeeStatus">--</span>
+                    <span id="employeeType">--</span>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- Information Cards -->
+        <div class="information-grid">
+
+            <!-- Personal Information -->
+            <section class="info-card">
+                <h2>
+                    <i class="bi bi-person-vcard"></i>
+                    Personal Information
+                </h2>
+
+                <div class="info-row">
+                    <span>Full Name</span>
+                    <strong id="fullName">--</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Employee ID</span>
+                    <strong id="employeeId">--</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Email Address</span>
+                    <strong id="email">--</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Phone Number</span>
+                    <strong id="phone">--</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Account Role</span>
+                    <strong id="role">--</strong>
+                </div>
+            </section>
+
+
+            <!-- Employment Information -->
+            <section class="info-card">
+                <h2>
+                    <i class="bi bi-briefcase"></i>
+                    Employment Information
+                </h2>
+
+                <div class="info-row">
+                    <span>Department</span>
+                    <strong id="department">--</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Position</span>
+                    <strong id="position">--</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Employment Type</span>
+                    <strong id="employmentType">--</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Work Location</span>
+                    <strong id="workLocation">--</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Account Status</span>
+                    <strong id="accountState">--</strong>
+                </div>
+            </section>
+
+
+            <!-- Additional Work Details -->
+            <section class="info-card">
+                <h2>
+                    <i class="bi bi-calendar-check"></i>
+                    Additional Work Details
+                </h2>
+
+                <div class="info-row">
+                    <span>Start Date</span>
+                    <strong id="startDate">--</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Years of Service</span>
+                    <strong id="yearsOfService">--</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Reporting Manager</span>
+                    <strong id="reportingManager">--</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Contract Type</span>
+                    <strong id="contractType">--</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Department ID</span>
+                    <strong id="departmentId">--</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Work Schedule</span>
+                    <strong id="workSchedule">--</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Contract End Date</span>
+                    <strong id="contractEndDate">--</strong>
+                </div>
+            </section>
+
+
+            <!-- Emergency Contact -->
+            <section class="info-card">
+                <h2>
+                    <i class="bi bi-telephone"></i>
+                    Emergency Contact
+                </h2>
+
+                <div class="info-row">
+                    <span>Contact Name</span>
+                    <strong id="emergencyContactName">--</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Contact Phone</span>
+                    <strong id="emergencyContactPhone">--</strong>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+
+            <div class="footer-about">
+                <h2>MYSTA</h2>
+                <span>IT COMPANY</span>
+
+                <p>
+                    Building modern software solutions and creating
+                    better digital experiences for businesses.
+                </p>
+
+                <p><i class="bi bi-envelope"></i> contact@mysta.com</p>
+                <p><i class="bi bi-telephone"></i> +962 7 9000 0000</p>
+            </div>
+
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Team</a>
+                <a href="#">Contact</a>
+            </div>
+
+            <div class="footer-location">
+                <h3>Our Location</h3>
+                <div class="location-box">
+                    <i class="bi bi-geo-alt-fill"></i>
+                    <p>Amman, Jordan</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 Mysta. All rights reserved.</p>
+            <a href="#">Privacy Policy</a>
+        </div>
+    </footer>
+
+    <script src= "info.js"></script>
+</body>
+</html>
