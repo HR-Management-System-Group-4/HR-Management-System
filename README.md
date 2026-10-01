@@ -16,4 +16,4 @@ Every implemented page includes the shared layout with just two placeholders:
 <div class="footer"></div>
 ```
 
-Include `nav-bar/nav.css` and `Footer/footer.css` in the page head, then `nav-bar/nav-loader.js` and `Footer/footer.js` before `</body>`. Adjust the relative paths for the page's directory. Serve the site through a local web server so the component HTML files can be fetched.
+Include `layout/header.css` and `layout/footer.css` in the page head, then `layout/header.js` and `layout/footer.js` before `</body>`. The shared markup lives in `layout/header.html` and `layout/footer.html`. Adjust the relative paths for the page's directory. Serve the site through a local web server so the component HTML files can be fetched.

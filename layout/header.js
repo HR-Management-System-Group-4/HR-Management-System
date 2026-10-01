@@ -1,7 +1,7 @@
 const navbarContainer = document.querySelector('.nav-bar');
 
 if (navbarContainer) {
-  const navbarUrl = new URL('nav.html', document.currentScript.src);
+  const navbarUrl = new URL('header.html', document.currentScript.src);
   const homepageUrl = new URL('../Ahmad/Homepage/index.html', navbarUrl);
   const isHomepage = window.location.pathname === homepageUrl.pathname;
   const themeClass = document.body.dataset.themeClass || 'dark-mode';
