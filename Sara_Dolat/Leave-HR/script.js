@@ -7,6 +7,7 @@ let requests = [
         reason: "Family holiday planned in advance.",
         status: "Pending"
     },
+
     {
         id: 2,
         name: "Dana Rimawi",
@@ -15,6 +16,7 @@ let requests = [
         reason: "Personal commitments.",
         status: "Approved"
     },
+
     {
         id: 3,
         name: "Tariq Hijazi",
@@ -29,6 +31,41 @@ let requests = [
 let box = document.getElementById("requests");
 
 
+/* =========================
+   UPDATE COUNTS
+========================= */
+
+function updateCounts() {
+
+    let total = requests.length;
+
+    let pending = requests.filter(function(request) {
+        return request.status == "Pending";
+    }).length;
+
+    let approved = requests.filter(function(request) {
+        return request.status == "Approved";
+    }).length;
+
+    let rejected = requests.filter(function(request) {
+        return request.status == "Rejected";
+    }).length;
+
+
+    document.getElementById("total").innerText = total;
+
+    document.getElementById("pendingCount").innerText = pending;
+
+    document.getElementById("approvedCount").innerText = approved;
+
+    document.getElementById("rejectedCount").innerText = rejected;
+}
+
+
+/* =========================
+   SHOW REQUESTS
+========================= */
+
 function show(data) {
 
     box.innerHTML = "";
@@ -40,74 +77,145 @@ function show(data) {
 
         <div class="card">
 
+            <!-- Employee -->
             <div class="name">
 
                 <div>
-                    <h3>${request.name}</h3>
+
+                    <h3>
+                        ${request.name}
+                    </h3>
 
                     <p class="details">
                         ${request.leaveType}
-                        · ${request.date}
-                        
                     </p>
-                </div>
 
-                <span class="status ${request.status.toLowerCase()}">
-                    ${request.status}
-                </span>
+                </div>
 
             </div>
 
-            <p class="reason">
-                ${request.reason}
-            </p>
 
-            ${
-                request.status == "Pending"
-                ?
-                `
-                <button
-                    class="approve"
-                    onclick="approve(${request.id})">
-                    Approve
-                </button>
+            <!-- Date + Reason -->
+            <div>
 
-                <button
-                    class="reject"
-                    onclick="reject(${request.id})">
-                    Reject
-                </button>
-                `
-                :
-                ""
-            }
+                <p class="details">
+                    ▣ &nbsp; ${request.date}
+                </p>
+
+                <p class="reason">
+                    ▢ &nbsp; ${request.reason}
+                </p>
+
+            </div>
+
+
+            <!-- Status + Actions -->
+            <div>
+
+                <span class="status ${request.status.toLowerCase()}">
+                    ${
+                        request.status == "Pending"
+                        ? "◷ Pending"
+                        : request.status == "Approved"
+                        ? "✓ Approved"
+                        : "× Rejected"
+                    }
+                </span>
+
+
+                ${
+                    request.status == "Pending"
+                    ?
+                    `
+                    <div class="actions">
+
+                        <button
+                            class="approve"
+                            onclick="approve(${request.id})">
+                            ✓ &nbsp; Approve
+                        </button>
+
+                        <button
+                            class="reject"
+                            onclick="reject(${request.id})">
+                            × &nbsp; Reject
+                        </button>
+
+                    </div>
+
+                    <div class="reviewed">
+                        Requested on 2 Oct 2026
+                    </div>
+                    `
+                    :
+                    request.status == "Approved"
+                    ?
+                    `
+                    <div class="reviewed">
+                        Approved on 1 Oct 2026
+                        <br>
+                        by HR Admin
+                    </div>
+                    `
+                    :
+                    `
+                    <div class="reviewed">
+                        Rejected on 26 Sep 2026
+                        <br>
+                        by HR Admin
+                    </div>
+                    `
+                }
+
+            </div>
 
         </div>
 
         `;
     });
+
 }
 
+
+/* =========================
+   APPROVE
+========================= */
 
 function approve(id) {
 
-    let request = requests.find(r => r.id == id);
+    let request = requests.find(function(r) {
+        return r.id == id;
+    });
 
     request.status = "Approved";
 
+    updateCounts();
+
     show(requests);
 }
 
+
+/* =========================
+   REJECT
+========================= */
 
 function reject(id) {
 
-    let request = requests.find(r => r.id == id);
+    let request = requests.find(function(r) {
+        return r.id == id;
+    });
 
     request.status = "Rejected";
+
+    updateCounts();
 
     show(requests);
 }
 
+
+/* =========================
+   FILTER
+========================= */
 
 function filterRequests(status) {
 
@@ -118,12 +226,21 @@ function filterRequests(status) {
     } else {
 
         let result = requests.filter(function(request) {
+
             return request.status == status;
+
         });
 
         show(result);
     }
+
 }
 
+
+/* =========================
+   START
+========================= */
+
+updateCounts();
 
 show(requests);

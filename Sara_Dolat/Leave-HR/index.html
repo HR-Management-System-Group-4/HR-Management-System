@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,28 +11,98 @@
 </head>
 
 <body>
-     
+
 <div class="leave">
 
+    <!-- Sidebar -->
     <iframe src="../../Side_Bar/Side_bar.html"></iframe>
 
     <div class="page">
 
+        <!-- Header -->
         <header>
             <p>NORTHWIND / HR CONTROL PANEL</p>
+
             <h1>Leave requests</h1>
-            <span>Review time-off requests and keep decisions clear.</span>
+
+            <span>
+                Review time-off requests and keep decisions clear.
+            </span>
         </header>
+
 
         <main>
 
-           <div id="filter">
-    <button onclick="filterRequests('All')">All</button>
-    <button onclick="filterRequests('Pending')">Pending</button>
-    <button onclick="filterRequests('Approved')">Approved</button>
-    <button onclick="filterRequests('Rejected')">Rejected</button>
-</div>
+            <!-- Summary -->
+            <div class="summary">
 
+                <div class="summary-card total-card">
+                    <div class="summary-icon blue">▤</div>
+
+                    <div>
+                        <h2 id="total">0</h2>
+                        <p>Total Requests</p>
+                    </div>
+                </div>
+
+
+                <div class="summary-card pending-card">
+                    <div class="summary-icon yellow">◷</div>
+
+                    <div>
+                        <h2 id="pendingCount">0</h2>
+                        <p>Pending</p>
+                    </div>
+                </div>
+
+
+                <div class="summary-card approved-card">
+                    <div class="summary-icon green">✓</div>
+
+                    <div>
+                        <h2 id="approvedCount">0</h2>
+                        <p>Approved</p>
+                    </div>
+                </div>
+
+
+                <div class="summary-card rejected-card">
+                    <div class="summary-icon red">×</div>
+
+                    <div>
+                        <h2 id="rejectedCount">0</h2>
+                        <p>Rejected</p>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Filter -->
+            <div id="filter">
+
+                <button
+                    class="active"
+                    onclick="filterRequests('All')">
+                    ▦ &nbsp; All
+                </button>
+
+                <button onclick="filterRequests('Pending')">
+                    ◷ &nbsp; Pending
+                </button>
+
+                <button onclick="filterRequests('Approved')">
+                    ✓ &nbsp; Approved
+                </button>
+
+                <button onclick="filterRequests('Rejected')">
+                    × &nbsp; Rejected
+                </button>
+
+            </div>
+
+
+            <!-- Requests -->
             <div id="requests"></div>
 
         </main>
@@ -39,7 +110,8 @@
     </div>
 
 </div>
-    <script src="script.js"></script>
-    
+
+<script src="script.js"></script>
+
 </body>
 </html>
