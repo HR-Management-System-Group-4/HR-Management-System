@@ -1,9 +1,6 @@
 
-// Temporary user ID until Login is ready
-localStorage.setItem("loggedInUserId", "3");
-
 const userId = Number(
-    localStorage.getItem("loggedInUserId")
+    localStorage.getItem("loggedInUserId") || "2"
 );
 
 console.log("User ID:", userId);

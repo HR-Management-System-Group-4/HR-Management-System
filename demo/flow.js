@@ -4,9 +4,10 @@
   const root = new URL('../', script.src);
   const pages = [
     ['Home', 'Ahmad/Homepage/index.html'],
-    ['HR login', 'Ahmad/Login/index.html'],
-    ['HR dashboard', 'Timaaa/Dashboard-HR/index.html'],
+    ['Log in', 'Sara_Dolat/log in/index.html'],
+    ['Employee services', 'Timaaa/services/index.html'],
     ['About the team', 'Yasmeen_Telfah/aboutUs.html'],
+    ['Employee information', 'Mohamad/My-Employee-Information/info.html'],
     ['Employee profile', 'Mohamad/Employee-profile/Profile.html'],
     ['Edit profile', 'Mohamad/Employee-edit-profile/edit-profile.html'],
     ['My tasks', 'Sara_Sawalmeh/Employee_Task/Employee_Task.html'],
@@ -14,7 +15,10 @@
     ['Leave request', 'Timaaa/Leave-application/Timaa.html'],
     ['Meeting request', 'Ahmad/Meeting-Zoom/index.html'],
     ['Send feedback', 'Yasmeen_Telfah/feedbackEmployees.html'],
+    ['HR dashboard', 'Timaaa/Dashboard-HR/index.html'],
     ['Employees', 'Yasmeen_Telfah/employeeManagement.html'],
+    ['HR leave requests', 'Sara_Dolat/Leave-HR/index.html'],
+    ['Company policies', 'Sara_Dolat/company policies/index.html'],
     ['HR tasks', 'Ahmad/HR-tasks/index.html'],
     ['HR meetings', 'Ahmad/HR-zoom/index.html'],
     ['Feedback inbox', 'Sara_Sawalmeh/Feedback_HR/Feedback_HR.html'],

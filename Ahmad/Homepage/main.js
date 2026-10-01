@@ -43,7 +43,7 @@ const services = {
     description: 'Keep important company guidance easy to find.',
     pill: 'Policies · Library',
     items: ['Browse published policies', 'Read current guidance', 'Find documents quickly', 'Stay informed about updates'],
-    link: '#servicePreview'
+    link: '../../Sara_Dolat/company policies/index.html'
   },
   meetings: {
     number: '05', name: 'MEETINGS', title: 'Never miss a<br>meeting.',

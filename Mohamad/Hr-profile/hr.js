@@ -1,10 +1,7 @@
 
 // 1. Settings
 
-// Temporary HR account for testing
-localStorage.setItem("loggedInUserId", "1");
-
-const userId = Number(localStorage.getItem("loggedInUserId"));
+const userId = Number(localStorage.getItem("loggedInUserId") || "1");
 const jsonPath = "../employees-updated.json";
 const defaultImage = "../photo.jpg";
 

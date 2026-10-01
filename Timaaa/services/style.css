@@ -218,6 +218,9 @@ body{
 
 @media(max-width:900px){
 
+.services { padding:60px 22px; }
+.section-header h1 { font-size:34px; }
+
 .service-grid{
 
 grid-template-columns:1fr;

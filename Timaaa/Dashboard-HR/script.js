@@ -50,48 +50,34 @@ department:"Engineering"
 
 
 const leaves = [
+  { employee: "Ahmad Saleh", type: "Annual Leave", date: "2026-10-12", status: "Pending" },
+  { employee: "Dana Rimawi", type: "Annual Leave", date: "2026-10-04", status: "Approved" },
+  { employee: "Tariq Hijazi", type: "Sick Leave", date: "2026-09-27", status: "Rejected" }
+];
 
-{
-employee:"Adam Smith",
-type:"Annual Leave",
-date:"2026-10-10",
-status:"Pending"
-},
-
-
-{
-employee:"Lina Ahmad",
-type:"Sick Leave",
-date:"2026-10-15",
-status:"Pending"
-},
+try {
+  const decisions = JSON.parse(localStorage.getItem('sampleLeaveDecisions') || '{}');
+  [['sample-1', 0], ['sample-2', 1], ['sample-3', 2]].forEach(([id, index]) => {
+    if (['Approved', 'Rejected'].includes(decisions[id])) leaves[index].status = decisions[id];
+  });
+} catch (_) { /* Use sample statuses. */ }
 
 
-{
-employee:"Sara Ahmed",
-type:"Annual Leave",
-date:"2026-09-20",
-status:"Approved"
-},
-
-
-{
-employee:"Omar Khalil",
-type:"Emergency Leave",
-date:"2026-09-22",
-status:"Rejected"
-},
-
-
-{
-employee:"Emma Brown",
-type:"Annual Leave",
-date:"2026-09-25",
-status:"Approved"
+try {
+  const saved = JSON.parse(localStorage.getItem('leaveApplications') || '[]');
+  if (Array.isArray(saved)) {
+    saved.forEach(item => leaves.push({
+      employee: item.employee || 'Employee',
+      type: item.leaveType || 'Leave',
+      date: item.startDate || '',
+      status: item.status || 'Pending'
+    }));
+  }
+} catch (error) {
+  console.warn('Saved leave requests could not be loaded.', error);
 }
 
-
-];
+const escapeDashboardText = value => String(value).replace(/[&<>"']/g, character => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[character]);
 
 
 
@@ -383,7 +369,7 @@ ${rejected}
 
 
 
-<a href="#">
+<a href="../../Sara_Dolat/Leave-HR/index.html">
 
 View All Requests →
 
@@ -443,12 +429,12 @@ container.innerHTML += `
 
 
 <h4>
-${leave.employee}
+${escapeDashboardText(leave.employee)}
 </h4>
 
 
 <p>
-${leave.type} • ${leave.date}
+${escapeDashboardText(leave.type)} • ${escapeDashboardText(leave.date)}
 </p>
 
 
@@ -506,7 +492,7 @@ activity.innerHTML="";
 let data=[
 
 {
-text:"Adam Smith submitted a leave request",
+text:"Ahmad Saleh submitted a leave request",
 time:"2 hours ago"
 },
 
@@ -629,6 +615,18 @@ loadPendingRequests();
 
 
 loadActivity();
+
+fetch('../../employee.json')
+  .then(response => response.json())
+  .then(data => {
+    const all = Array.isArray(data) ? data : data.employees;
+    if (Array.isArray(all)) {
+      employees.splice(0, employees.length, ...all);
+      updateStatistics();
+      loadDepartments();
+    }
+  })
+  .catch(error => console.warn('Employee count unavailable.', error));
 
 
 

@@ -1,174 +1,50 @@
+const roleButtons = document.querySelectorAll('.role button');
+const message = document.getElementById('message');
+let selectedRole = 'HR';
 
-let selectedRole = "";
+function selectRole(role) {
+  selectedRole = role;
+  roleButtons.forEach(button => button.classList.toggle('active', button.id.toLowerCase() === role.toLowerCase()));
+}
 
+document.getElementById('employee').addEventListener('click', () => selectRole('Employee'));
+document.getElementById('hr').addEventListener('click', () => selectRole('HR'));
+selectRole(selectedRole);
 
-// ================= EMPLOYEE =================
-document.getElementById("employee").onclick = function () {
+document.getElementById('loginForm').addEventListener('submit', async event => {
+  event.preventDefault();
+  const email = document.getElementById('email').value.trim().toLowerCase();
+  const password = document.getElementById('password').value;
+  message.textContent = '';
 
-    selectedRole = "Employee";
+  if (!email || !password) {
+    message.textContent = 'Please enter your email and password.';
+    return;
+  }
 
-    this.classList.add("active");
-
-    document.getElementById("hr").classList.remove("active");
-};
-
-
-// ================= HR =================
-document.getElementById("hr").onclick = function () {
-
-    selectedRole = "HR";
-
-    this.classList.add("active");
-
-    document.getElementById("employee").classList.remove("active");
-};
-
-
-// ================= LOGIN =================
-document.getElementById("login").onclick = function () {
-
-    let email = document.getElementById("email").value.trim();
-    let password = document.getElementById("password").value;
-
-    let message = document.getElementById("message");
-
-
-    // Check email and password
-    if (email === "" || password === "") {
-
-        message.innerText =
-            "Please enter email and password";
-
-        return;
+  try {
+    const response = await fetch('../../employee.json');
+    if (!response.ok) throw new Error('Employee data unavailable');
+    const data = await response.json();
+    const employees = Array.isArray(data) ? data : data.employees;
+    const user = employees.find(employee => employee.email.toLowerCase() === email && employee.role === selectedRole);
+    if (!user || user.password !== password) {
+      message.textContent = 'Incorrect email, password or role.';
+      return;
+    }
+    if (user.accountState !== 'Active') {
+      message.textContent = 'This account is inactive.';
+      return;
     }
 
-
-    // Check role
-    if (selectedRole === "") {
-
-        message.innerText =
-            "Please select Employee or HR";
-
-        return;
-    }
-
-
-    // Get password from Local Storage
-    let savedPassword =
-        localStorage.getItem("password_" + email);
-
-
-    // Get users from JSON
-    fetch("employee.json")
-
-        .then(response => response.json())
-
-        .then(data => {
-
-            // Find user
-            let user = data.find(user =>
-                user.email === email &&
-                user.role === selectedRole
-            );
-
-
-            // User not found
-            if (!user) {
-
-                message.innerText =
-                    "Invalid email or role";
-
-                return;
-            }
-
-
-            // Check account state
-            if (user.accountState !== "Active") {
-
-                message.innerText =
-                    "Your account is inactive";
-
-                return;
-            }
-
-
-            // ================= FIRST LOGIN =================
-
-            if (savedPassword === null) {
-
-                // Store password
-                localStorage.setItem(
-                    "password_" + email,
-                    password
-                );
-
-
-                // Store logged-in user
-                localStorage.setItem(
-                    "user",
-                    JSON.stringify(user)
-                );
-
-
-                // Redirect
-                if (user.role === "Employee") {
-
-                    window.location.href = "Employee.html";
-
-                }
-
-                else if (user.role === "HR") {
-
-                    window.location.href = "HR.html";
-
-                }
-
-                return;
-            }
-
-
-            // ================= NEXT LOGIN =================
-
-            if (savedPassword === password) {
-
-                // Store logged-in user
-                localStorage.setItem(
-                    "user",
-                    JSON.stringify(user)
-                );
-
-
-                // Redirect
-                if (user.role === "Employee") {
-
-                    window.location.href = "Employee.html";
-
-                }
-
-                else if (user.role === "HR") {
-
-                    window.location.href = "HR.html";
-
-                }
-
-            }
-
-            else {
-
-                message.innerText =
-                    "Invalid password";
-
-            }
-
-        })
-
-        .catch(error => {
-
-            console.error(error);
-
-            message.innerText =
-                "Error loading employee data";
-
-        });
-
-};
+    const { password: ignored, ...sessionUser } = user;
+    localStorage.setItem('user', JSON.stringify(sessionUser));
+    localStorage.setItem('loggedInUserId', String(user.id));
+    location.href = user.role === 'HR'
+      ? '../../Timaaa/Dashboard-HR/index.html'
+      : '../../Timaaa/services/index.html';
+  } catch (error) {
+    console.error(error);
+    message.textContent = 'Could not load account data. Open the site through the local server.';
+  }
+});

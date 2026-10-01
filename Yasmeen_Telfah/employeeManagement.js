@@ -1,6 +1,7 @@
 fetch("../employee.json")
     .then(response => response.json())
-    .then(employees => {
+    .then(data => {
+        let employees = Array.isArray(data) ? data : data.employees;
         console.log(employees);
 
 
@@ -8,7 +9,8 @@ fetch("../employee.json")
 
 const savedEmployees = localStorage.getItem("employees");
 if(savedEmployees != null){
-    employees = JSON.parse(savedEmployees);
+    const saved = JSON.parse(savedEmployees);
+    employees = Array.isArray(saved) ? saved : saved.employees;
 }
 else{
     localStorage.setItem("employees", JSON.stringify(employees));

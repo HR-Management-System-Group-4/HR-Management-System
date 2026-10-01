@@ -208,10 +208,11 @@ function displayEmployees() {
   fetch("../../employee.json")
     .then((response) => response.json())
     .then((data) => {
-      for (let i = 0; i < data.length; i++) {
+      const employees = Array.isArray(data) ? data : data.employees;
+      for (let i = 0; i < employees.length; i++) {
         assignTo.innerHTML += `
-                    <option value="${data[i].name}">
-                        ${data[i].name}
+                    <option value="${employees[i].name}">
+                        ${employees[i].name}
                     </option>
                 `;
       }

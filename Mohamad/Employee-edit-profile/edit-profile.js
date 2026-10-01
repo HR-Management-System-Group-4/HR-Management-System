@@ -64,7 +64,7 @@ if (!userId) {
         .then(function(data) {
 
             // Find the logged-in employee
-            let employee = data.find(function(user) {
+            let employee = (Array.isArray(data) ? data : data.employees).find(function(user) {
                 return user.id === userId;
             });
 
@@ -113,7 +113,7 @@ function loadEmployee(employee) {
     contactName.value = employee.emergencyContactName || "";
     contactPhone.value = employee.emergencyContactPhone || "";
 
-    if (employee.profileImage) {
+    if (employee.profileImage && !employee.profileImage.startsWith('images/')) {
         imagePreview.src = employee.profileImage;
     }
 }
@@ -130,7 +130,7 @@ imageInput.addEventListener("change", function() {
     if (!file) {
         selectedImage = null;
         imagePreview.src =
-            currentEmployee?.profileImage || "../photo.jpg";
+            (currentEmployee?.profileImage?.startsWith('images/') ? '' : currentEmployee?.profileImage) || "../photo.jpg";
         return;
     }
 

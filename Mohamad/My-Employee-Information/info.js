@@ -1,6 +1,6 @@
 
 // 1. Get the logged-in employee ID
-const userId = Number(localStorage.getItem("loggedInUserId"));
+const userId = Number(localStorage.getItem("loggedInUserId") || "2");
 
 
 // 2. Function to display information

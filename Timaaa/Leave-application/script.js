@@ -164,7 +164,7 @@ leaveForm.addEventListener("submit", function(event){
         status: "Pending",
 
 
-        employee: "Adam Smith",
+        employee: JSON.parse(localStorage.getItem("user") || "null")?.name || "Demo Employee",
 
 
         createdDate: new Date().toLocaleDateString()
@@ -208,6 +208,7 @@ leaveForm.addEventListener("submit", function(event){
         "leaveApplications",
         JSON.stringify(leaveApplications)
     );
+    renderMyRequests();
 
 
 
@@ -276,3 +277,42 @@ cancelButton.addEventListener("click", function(){
 
 
 });
+
+let currentUser = null;
+try { currentUser = JSON.parse(localStorage.getItem('user') || 'null'); } catch (_) { /* Demo mode. */ }
+if (currentUser) {
+    document.querySelector('.employee-info h3').textContent = currentUser.name;
+    document.querySelector('.employee-info p').textContent = `${currentUser.position || currentUser.role} • EMP${String(currentUser.id).padStart(3, '0')}`;
+}
+
+const requestHistory = document.createElement('section');
+requestHistory.className = 'request-history';
+requestHistory.innerHTML = '<h2>My leave requests</h2><div class="request-history-list"></div>';
+document.querySelector('main.page').append(requestHistory);
+
+function renderMyRequests() {
+    const list = requestHistory.querySelector('.request-history-list');
+    list.replaceChildren();
+    let saved = [];
+    try { saved = JSON.parse(localStorage.getItem('leaveApplications') || '[]'); } catch (_) { /* Start empty. */ }
+    if (!Array.isArray(saved)) saved = [];
+    const mine = saved.filter(item => !currentUser || item.employee === currentUser.name);
+    if (!mine.length) {
+        const empty = document.createElement('p');
+        empty.textContent = 'No leave requests submitted yet.';
+        list.append(empty);
+        return;
+    }
+    mine.slice().reverse().forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'request-history-item';
+        const summary = document.createElement('span');
+        summary.textContent = `${item.leaveType} · ${item.startDate} – ${item.endDate}`;
+        const status = document.createElement('strong');
+        status.textContent = item.status;
+        row.append(summary, status);
+        list.append(row);
+    });
+}
+
+renderMyRequests();

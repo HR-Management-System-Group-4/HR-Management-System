@@ -35,7 +35,7 @@
                 </a>
             </li>
             <li>
-                <a href="../Timaaa/Leave-application/Timaa.html" target="_top">
+                <a href="../Sara_Dolat/Leave-HR/index.html" target="_top">
                     <i class="fa-solid fa-calendar-days"></i> Leave requests
                 </a>
             </li>
@@ -45,7 +45,7 @@
                 </a>
             </li>
             <li>
-                <a href="../Ahmad/Homepage/index.html#services" target="_top">
+                <a href="../Sara_Dolat/company policies/index.html" target="_top">
                     <i class="fa-solid fa-file-lines"></i> Policies
                 </a>
             </li>
@@ -60,7 +60,7 @@
             <a href="../Ahmad/Homepage/index.html" target="_top" class="nav-item home-btn">
                 <i class="fa-solid fa-house"></i> Home
             </a>
-            <a href="../Ahmad/Login/index.html" target="_top" class="nav-item logout-btn">
+            <a href="../Sara_Dolat/log in/index.html" target="_top" class="nav-item logout-btn">
                 <i class="fa-solid fa-right-from-bracket"></i> Logout
             </a>
         </div>
@@ -70,6 +70,10 @@
       const currentPath = window.parent.location.pathname;
       document.querySelectorAll('.sidebar-menu li').forEach((item) => {
         item.classList.toggle('active', new URL(item.querySelector('a').href).pathname === currentPath);
+      });
+      document.querySelector('.logout-btn').addEventListener('click', () => {
+        localStorage.removeItem('user');
+        localStorage.removeItem('loggedInUserId');
       });
     </script>
 </body>

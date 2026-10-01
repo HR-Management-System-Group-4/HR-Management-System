@@ -26,7 +26,17 @@ if (navbarContainer) {
         const anchor = `#${link.dataset.pageAnchor}`;
         link.href = isHomepage ? anchor : `${homepageUrl.href}${anchor}`;
       });
-      nav.querySelector('[data-login-link]').href = new URL('../Ahmad/Login/index.html', navbarUrl).href;
+      const loginLink = nav.querySelector('[data-login-link]');
+      loginLink.href = new URL('../Sara_Dolat/log in/index.html', navbarUrl).href;
+      try {
+        if (JSON.parse(localStorage.getItem('user') || 'null')) {
+          loginLink.textContent = 'Sign out';
+          loginLink.addEventListener('click', () => {
+            localStorage.removeItem('user');
+            localStorage.removeItem('loggedInUserId');
+          });
+        }
+      } catch (_) { /* Keep the login link when demo storage is unavailable. */ }
 
       const themeButton = nav.querySelector('.theme-btn');
       const updateThemeButton = () => {

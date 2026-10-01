@@ -1,129 +1,93 @@
-let requests = [
-    {
-        id: 1,
-        name: "Ahmad Saleh",
-        leaveType: "Annual Leave",
-        date: "12 - 16 Oct 2026",
-        reason: "Family holiday planned in advance.",
-        status: "Pending"
-    },
-    {
-        id: 2,
-        name: "Dana Rimawi",
-        leaveType: "Annual Leave",
-        date: "4 - 5 Oct 2026",
-        reason: "Personal commitments.",
-        status: "Approved"
-    },
-    {
-        id: 3,
-        name: "Tariq Hijazi",
-        leaveType: "Sick Leave",
-        date: "27 Sep 2026",
-        reason: "Medical appointment.",
-        status: "Rejected"
-    }
+const sampleRequests = [
+  { id: 'sample-1', employee: 'Ahmad Saleh', leaveType: 'Annual Leave', startDate: '2026-10-12', endDate: '2026-10-16', reason: 'Family holiday planned in advance.', status: 'Pending' },
+  { id: 'sample-2', employee: 'Dana Rimawi', leaveType: 'Annual Leave', startDate: '2026-10-04', endDate: '2026-10-05', reason: 'Personal commitments.', status: 'Approved' },
+  { id: 'sample-3', employee: 'Tariq Hijazi', leaveType: 'Sick Leave', startDate: '2026-09-27', endDate: '2026-09-27', reason: 'Medical appointment.', status: 'Rejected' }
 ];
 
+try {
+  const decisions = JSON.parse(localStorage.getItem('sampleLeaveDecisions') || '{}');
+  sampleRequests.forEach(request => {
+    if (['Approved', 'Rejected'].includes(decisions[request.id])) request.status = decisions[request.id];
+  });
+} catch (_) { /* Keep the sample requests available. */ }
 
-let box = document.getElementById("requests");
+const box = document.getElementById('requests');
+let activeFilter = 'All';
 
-
-function show(data) {
-
-    box.innerHTML = "";
-
-
-    data.forEach(function(request) {
-
-        box.innerHTML += `
-
-        <div class="card">
-
-            <div class="name">
-
-                <div>
-                    <h3>${request.name}</h3>
-
-                    <p class="details">
-                        ${request.leaveType}
-                        · ${request.date}
-                        
-                    </p>
-                </div>
-
-                <span class="status ${request.status.toLowerCase()}">
-                    ${request.status}
-                </span>
-
-            </div>
-
-            <p class="reason">
-                ${request.reason}
-            </p>
-
-            ${
-                request.status == "Pending"
-                ?
-                `
-                <button
-                    class="approve"
-                    onclick="approve(${request.id})">
-                    Approve
-                </button>
-
-                <button
-                    class="reject"
-                    onclick="reject(${request.id})">
-                    Reject
-                </button>
-                `
-                :
-                ""
-            }
-
-        </div>
-
-        `;
-    });
+function savedRequests() {
+  try {
+    const stored = JSON.parse(localStorage.getItem('leaveApplications') || '[]');
+    return Array.isArray(stored) ? stored : [];
+  } catch (error) {
+    console.warn('Could not read saved leave requests.', error);
+    return [];
+  }
 }
 
+function requestCard(request, saved) {
+  const card = document.createElement('article');
+  card.className = 'card';
+  const heading = document.createElement('div');
+  heading.className = 'name';
+  const summary = document.createElement('div');
+  const name = document.createElement('h3');
+  name.textContent = request.employee || 'Employee';
+  const details = document.createElement('p');
+  details.className = 'details';
+  details.textContent = `${request.leaveType || 'Leave'} · ${request.startDate || ''}${request.endDate && request.endDate !== request.startDate ? ` – ${request.endDate}` : ''}`;
+  const status = document.createElement('span');
+  status.className = `status ${(request.status || 'Pending').toLowerCase()}`;
+  status.textContent = request.status || 'Pending';
+  summary.append(name, details);
+  heading.append(summary, status);
+  const reason = document.createElement('p');
+  reason.className = 'reason';
+  reason.textContent = request.reason || 'No reason provided.';
+  card.append(heading, reason);
 
-function approve(id) {
-
-    let request = requests.find(r => r.id == id);
-
-    request.status = "Approved";
-
-    show(requests);
+  if (request.status === 'Pending') {
+    for (const [label, nextStatus, className] of [['Approve', 'Approved', 'approve'], ['Reject', 'Rejected', 'reject']]) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = className;
+      button.textContent = label;
+      button.addEventListener('click', () => {
+        if (saved) {
+          const all = savedRequests();
+          const entry = all.find(item => String(item.id) === String(request.id));
+          if (entry) entry.status = nextStatus;
+          localStorage.setItem('leaveApplications', JSON.stringify(all));
+        } else {
+          request.status = nextStatus;
+          const decisions = JSON.parse(localStorage.getItem('sampleLeaveDecisions') || '{}');
+          decisions[request.id] = nextStatus;
+          localStorage.setItem('sampleLeaveDecisions', JSON.stringify(decisions));
+        }
+        renderRequests();
+      });
+      card.append(button);
+    }
+  }
+  return card;
 }
 
-
-function reject(id) {
-
-    let request = requests.find(r => r.id == id);
-
-    request.status = "Rejected";
-
-    show(requests);
+function renderRequests() {
+  box.replaceChildren();
+  const all = [...savedRequests().map(request => ({ request, saved: true })), ...sampleRequests.map(request => ({ request, saved: false }))];
+  const visible = all.filter(({ request }) => activeFilter === 'All' || request.status === activeFilter);
+  if (!visible.length) {
+    const empty = document.createElement('p');
+    empty.className = 'empty-state';
+    empty.textContent = 'No requests in this category.';
+    box.append(empty);
+  }
+  visible.forEach(({ request, saved }) => box.append(requestCard(request, saved)));
+  document.querySelectorAll('#filter button').forEach(button => button.classList.toggle('active', button.dataset.status === activeFilter));
 }
-
 
 function filterRequests(status) {
-
-    if (status == "All") {
-
-        show(requests);
-
-    } else {
-
-        let result = requests.filter(function(request) {
-            return request.status == status;
-        });
-
-        show(result);
-    }
+  activeFilter = status;
+  renderRequests();
 }
 
-
-show(requests);
+renderRequests();

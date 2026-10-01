@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Nexus HR Dashboard</title>
+<title>Mysta HR Dashboard</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -39,13 +39,13 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 <div>
 
-<h1>
-Welcome back, Rachel!
+<h1 id="dashboardWelcome">
+Welcome back, Sara!
 </h1>
 
 
 <p>
-Here's what's happening at Nexus HR today.
+Here's what's happening at Mysta HR today.
 </p>
 
 
@@ -64,8 +64,8 @@ Here's what's happening at Nexus HR today.
 
 <div>
 
-<h4>
-Rachel Carter
+<h4 id="dashboardName">
+Sara Ahmad
 </h4>
 
 
@@ -99,7 +99,7 @@ HR Admin
 TOTAL EMPLOYEES
 </span>
 
-<h2>
+<h2 id="totalEmployees">
 6
 </h2>
 
@@ -121,7 +121,7 @@ TOTAL EMPLOYEES
 PENDING LEAVES
 </span>
 
-<h2>
+<h2 id="pendingLeaves">
 2
 </h2>
 
@@ -143,7 +143,7 @@ Awaiting review
 ACTIVE TASKS
 </span>
 
-<h2>
+<h2 id="activeTasks">
 5
 </h2>
 
@@ -165,7 +165,7 @@ Across all teams
 COMPLETED
 </span>
 
-<h2>
+<h2 id="completedTasks">
 1
 </h2>
 
@@ -187,7 +187,7 @@ This quarter
 NEW FEEDBACK
 </span>
 
-<h2>
+<h2 id="feedback">
 3
 </h2>
 
@@ -229,7 +229,7 @@ Employees by Department
 
 
 
-<div class="department">
+<div class="department" id="department">
 
 
 <div>
@@ -313,7 +313,7 @@ Leave Overview
 
 
 
-<div class="leave">
+<div class="leave" id="leaveOverview">
 
 
 <p>
@@ -360,7 +360,7 @@ Rejected
 
 
 
-<a href="../Leave-application/Timaa.html"
+<a href="../../Sara_Dolat/Leave-HR/index.html"
 target="_blank">
 
 View All Requests →
@@ -407,6 +407,7 @@ Pending Leave Requests
 
 
 
+<div id="pendingRequests">
 <div class="request">
 
 
@@ -467,6 +468,7 @@ Pending
 
 
 </div>
+</div>
 
 
 
@@ -483,7 +485,7 @@ Recent Activity
 
 
 
-<ul class="activity">
+<ul class="activity" id="activity">
 
 
 <li>
@@ -570,7 +572,7 @@ Quick Actions
 
 
 
-<a href="../Leave-application/index.html"
+<a href="../../Sara_Dolat/Leave-HR/index.html"
 class="quick-card">
 
 
@@ -578,7 +580,7 @@ class="quick-card">
 
 
 <h4>
-Request Leave
+Review Leave Requests
 </h4>
 
 
@@ -642,6 +644,19 @@ Company Policies
 
 <script src="script.js"></script>
 <script src="sidebar.js"></script>
+<script>
+  try {
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    if (user?.role === 'HR') {
+      document.getElementById('dashboardWelcome').textContent = `Welcome back, ${user.name.split(' ')[0]}!`;
+      document.getElementById('dashboardName').textContent = user.name;
+    }
+  } catch (_) { /* Keep the demo dashboard visible. */ }
+  document.querySelector('.demo-signout').addEventListener('click', () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('loggedInUserId');
+  });
+</script>
 <script src="../../demo/flow.js"></script>
 </body>
 </html>
