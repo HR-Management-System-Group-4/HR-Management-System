@@ -1,6 +1,614 @@
-.editEmployeeForm{
-    display: none;
+
+
+body {
+    margin: 0;
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
 }
-.addEmployeeForm{
+
+aside {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 320px;
+    height: 100vh;
+    padding: 32px 20px;
+
+    background: linear-gradient(
+        180deg,
+        var(--color-surface-blue),
+        var(--color-surface-mint)
+    );
+
+    border-right: 1px solid var(--color-border);
+
+    display: flex;
+    flex-direction: column;
+}
+
+.header > div:nth-child(2) {
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.caption {
+    color: var(--color-text-muted);
+}
+
+.links a {
+    color: var(--color-text-secondary);
+}
+
+.links a:hover {
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+}
+
+.links .employees {
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+}
+
+.logOut button {
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border);
+}
+
+.content-wrapper > header {
+    background-color: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
+}
+.content-wrapper {
+    margin-left: 320px;
+    min-height: 100vh;
+}
+
+.content-wrapper > header {
+    height: 105px;
+    padding: 0 55px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* same as max-width: var(--app-content-max); */
+
+main {
+    max-width: var(--app-content-max);
+
+    margin: 0 auto;
+    padding: 50px 55px;
+}
+
+main > div:first-child > p:first-child {
+    margin: 0 0 12px;
+
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+
+    color: var(--color-text-muted);
+}
+
+main > div:first-child h1 {
+    margin: 0 0 10px;
+
+    font-size: 42px;
+    font-weight: 600;
+
+    color: var(--color-text-primary);
+}
+.addEmployee {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -55px;
+    margin-bottom: 50px;
+}
+
+.addEmployee button {
+    padding: 13px 20px;
+
+    background-color: var(--color-mint);
+
+    border: 1px solid var(--color-mint-strong);
+    border-radius: 10px;
+
+    color: var(--color-text-primary);
+
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.addEmployee button:hover {
+    background-color: var(--color-mint-strong);
+}
+
+.employeesCard {
+    margin-top: 20px;
+
+    background-color: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+
+    overflow: hidden;
+}
+
+/* border-collapse: collapse prevents weird gaps between the table cells. */
+
+.employeesCard table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.employeesCard th {
+    padding: 18px 24px;
+
+    text-align: left;
+
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+
+    color: var(--color-text-muted);
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.employeesCard td {
+    padding: 22px 24px;
+
+    color: var(--color-text-primary);
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+.employeesCard tbody tr:last-child td {
+    border-bottom: none;
+}
+.employeeInfo p {
+    margin: 0;
+}
+.employeeName {
+    margin-bottom: 4px !important;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    color: var(--color-text-primary);
+}
+.employeeEmail {
+    margin-bottom: 6px !important;
+
+    font-size: 13px;
+
+    color: var(--color-text-secondary);
+}
+.employeeDetails {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+
+    color: var(--color-text-muted);
+}
+.employeeStatus {
+    display: inline-block;
+
+    padding: 6px 12px;
+
+    background-color: var(--color-surface-mint);
+
+    border: 1px solid var(--color-mint);
+    border-radius: 20px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    color: var(--color-text-primary);
+}
+
+.edit {
+    padding: 8px 16px;
+
+    background-color: transparent;
+
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+
+    color: var(--color-text-secondary);
+
+    cursor: pointer;
+}
+
+.edit:hover {
+    background-color: var(--color-surface-blue);
+    color: var(--color-text-primary);
+}
+
+.addEmployeeForm {
     display: none;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    background-color: rgba(35, 39, 67, 0.35);
+
+    z-index: 100;
+}
+
+.addEmployeeForm form {
+    width: 500px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    padding: 35px;
+
+    background-color: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: 18px;
+
+    box-shadow: 0 20px 60px rgba(35, 39, 67, 0.15);
+}
+.addEmployeeForm h2 {
+    margin: 0 0 30px;
+
+    font-size: 26px;
+    font-weight: 600;
+
+    color: var(--color-text-primary);
+}
+
+.addEmployeeForm label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.2px;
+
+    color: var(--color-text-muted);
+}
+
+.addEmployeeForm input,
+.addEmployeeForm select {
+    width: 100%;
+
+    padding: 12px 14px;
+    margin-bottom: 18px;
+
+    background-color: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+
+    font-family: var(--font-sans);
+    font-size: 14px;
+
+    color: var(--color-text-primary);
+
+    outline: none;
+}
+
+.addEmployeeForm input:focus,
+.addEmployeeForm select:focus {
+    /* :focus means when the user clicks/selects that input. */
+    border-color: var(--color-mint-strong);
+}
+
+#saveNewEmployee {
+    padding: 12px 20px;
+
+    background-color: var(--color-mint);
+
+    border: 1px solid var(--color-mint-strong);
+    border-radius: 10px;
+
+    color: var(--color-text-primary);
+
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+#saveNewEmployee:hover {
+    background-color: var(--color-mint-strong);
+}
+
+#cancelNewEmployee {
+    padding: 12px 20px;
+    margin-left: 8px;
+
+    background-color: transparent;
+
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+
+    color: var(--color-text-secondary);
+
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+#cancelNewEmployee:hover {
+    background-color: var(--color-surface-blue);
+}
+
+.editEmployeeForm {
+    display: none;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    background-color: rgba(35, 39, 67, 0.35);
+
+    z-index: 100;
+}
+
+.editEmployeeForm form {
+    width: 500px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    padding: 35px;
+
+    background-color: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: 18px;
+
+    box-shadow: 0 20px 60px rgba(35, 39, 67, 0.15);
+}
+
+.editEmployeeForm label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1.2px;
+
+    color: var(--color-text-muted);
+}
+
+.editEmployeeForm input,
+.editEmployeeForm select {
+    width: 100%;
+
+    padding: 12px 14px;
+    margin-bottom: 18px;
+
+    background-color: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+
+    font-family: var(--font-sans);
+    font-size: 14px;
+
+    color: var(--color-text-primary);
+
+    outline: none;
+}
+
+.editEmployeeForm input:focus,
+.editEmployeeForm select:focus {
+    border-color: var(--color-mint-strong);
+}
+
+#saveEmployee {
+    padding: 12px 20px;
+
+    background-color: var(--color-mint);
+
+    border: 1px solid var(--color-mint-strong);
+    border-radius: 10px;
+
+    color: var(--color-text-primary);
+
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+#saveEmployee:hover {
+    background-color: var(--color-mint-strong);
+}
+
+#cancel {
+    padding: 12px 20px;
+    margin-left: 8px;
+
+    background-color: transparent;
+
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+
+    color: var(--color-text-secondary);
+
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+#cancel:hover {
+    background-color: var(--color-surface-blue);
+}
+
+.employeesCard th:nth-child(1),
+.employeesCard td:nth-child(1) {
+    width: 40%;
+}
+
+.employeesCard th:nth-child(2),
+.employeesCard td:nth-child(2) {
+    width: 25%;
+}
+
+.employeesCard th:nth-child(3),
+.employeesCard td:nth-child(3) {
+    width: 20%;
+}
+
+.employeesCard th:nth-child(4),
+.employeesCard td:nth-child(4) {
+    width: 15%;
+}
+
+.employeesCard tbody tr {
+    transition: background-color 0.2s;
+}
+
+
+
+.employeesCard td:nth-child(2) {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+}
+.links {
+    margin-top: 30px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+.links a {
+    padding: 15px 18px;
+
+    display: flex;
+    align-items: center;
+
+    text-decoration: none;
+
+    border-radius: 16px;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+.links .employees {
+    box-shadow: 0 8px 25px rgba(35, 39, 67, 0.07);
+}
+.links .employees::after {
+    content: "→";
+
+    margin-left: auto;
+
+    font-size: 17px;
+
+    color: var(--color-text-primary);
+}
+.header {
+    padding: 5px 15px;
+}
+.logo {
+    width: 40px;
+    height: 40px;
+
+    float: left;
+    margin-right: 12px;
+
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+
+    background-color: var(--color-surface);
+}
+.caption {
+
+    /* Because .logo uses float: left, clear: both tells the caption:
+Don't sit beside the floated logo. Start underneath it */
+
+    clear: both;
+
+    padding-top: 28px;
+
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 2px;
+    line-height: 1.6;
+
+    color: var(--color-text-muted);
+}
+
+/* auto takes all the unused vertical space and puts it above .logOut, pushing it downward. */
+
+.logOut {
+    margin-top: auto;
+}
+
+.logOut button {
+    width: 100%;
+
+    padding: 14px 18px;
+
+    background-color: transparent;
+
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+
+    color: var(--color-text-secondary);
+
+    cursor: pointer;
+}
+
+.logOut button:hover {
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+}
+
+.content-wrapper > header > div:last-child {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
