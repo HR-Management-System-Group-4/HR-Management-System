@@ -26,6 +26,7 @@ if (navbarContainer) {
         const anchor = `#${link.dataset.pageAnchor}`;
         link.href = isHomepage ? anchor : `${homepageUrl.href}${anchor}`;
       });
+      nav.querySelector('[data-login-link]').href = new URL('../Ahmad/Login/index.html', navbarUrl).href;
 
       const themeButton = nav.querySelector('.theme-btn');
       const updateThemeButton = () => {

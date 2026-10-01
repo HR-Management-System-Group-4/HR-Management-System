@@ -951,3 +951,5 @@ grid-template-columns:1fr;
 
 
 }
+.demo-signout { display: inline-block; margin-right: 12px; padding: 8px 12px; border: 1px solid #d7dce5; border-radius: 8px; color: #344054; background: #fff; text-decoration: none; font: 600 13px Arial, sans-serif; white-space: nowrap; }
+.demo-signout:hover { color: #e96d2f; border-color: #e96d2f; }

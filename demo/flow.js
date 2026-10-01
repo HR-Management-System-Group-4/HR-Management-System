@@ -4,6 +4,8 @@
   const root = new URL('../', script.src);
   const pages = [
     ['Home', 'Ahmad/Homepage/index.html'],
+    ['HR login', 'Ahmad/Login/index.html'],
+    ['HR dashboard', 'Timaaa/Dashboard-HR/index.html'],
     ['About the team', 'Yasmeen_Telfah/aboutUs.html'],
     ['Employee profile', 'Mohamad/Employee-profile/Profile.html'],
     ['Edit profile', 'Mohamad/Employee-edit-profile/edit-profile.html'],
@@ -12,7 +14,6 @@
     ['Leave request', 'Timaaa/Leave-application/Timaa.html'],
     ['Meeting request', 'Ahmad/Meeting-Zoom/index.html'],
     ['Send feedback', 'Yasmeen_Telfah/feedbackEmployees.html'],
-    ['HR dashboard', 'Timaaa/Dashboard-HR/index.html'],
     ['Employees', 'Yasmeen_Telfah/employeeManagement.html'],
     ['HR tasks', 'Ahmad/HR-tasks/index.html'],
     ['HR meetings', 'Ahmad/HR-zoom/index.html'],
