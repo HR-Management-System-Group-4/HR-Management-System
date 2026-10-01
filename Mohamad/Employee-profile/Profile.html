@@ -1,0 +1,534 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="Profile.css">
+
+    <title>My Profile</title>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar navbar-expand-lg custom-navbar sticky-top">
+
+        <div class="container-fluid">
+
+            <!-- Logo -->
+             <a class="navbar-brand" href="#">
+    <img src="../logo.png"
+         alt="Mysta Logo"
+         class="site-logo">
+</a>
+            <!-- Mobile Button -->
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarContent"
+                aria-controls="navbarContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+            <!-- Navbar Content -->
+            <div class="collapse navbar-collapse" id="navbarContent">
+
+                <!-- Links -->
+                <div class="nav-links-box mx-auto">
+
+                    <ul class="navbar-nav">
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Home</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Team</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Features</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contact</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <!-- Right Buttons -->
+                <div class="d-flex align-items-center gap-3 right-buttons">
+
+                    <button class="theme-btn" type="button">
+                        <i class="bi bi-moon"></i>
+                    </button>
+
+                    <button class="signin-btn" type="button">
+
+                        Sign in
+
+                        <i class="bi bi-arrow-up-right"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= PROFILE HEADER ================= -->
+
+    <div class="profile-header">
+
+        <!-- Profile Image -->
+        <img
+            src="/Mohamad/photo.jpg"
+            alt="Profile Image"
+            class="profile-pic"
+            id="profileImage">
+
+
+        <!-- Profile Information -->
+        <div class="profile-info">
+
+            <h2 id="employeeName">Loading...</h2>
+
+            <p id="employeePosition">Loading...</p>
+
+
+            <!-- Profile Badges -->
+            <div class="profile-badges">
+
+                <span class="badge" id="employeeIdBadge">
+                    --
+                </span>
+
+                <span class="badge active-badge" id="employeeStatusBadge">
+                    --
+                </span>
+
+                <span class="badge" id="employeeTypeBadge">
+                    --
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Edit Profile Button -->
+        <a
+            class="edit-profile"
+            href="/Mohamad/Employee-edit-profile/edit-profile.html">
+
+            <i class="fa-regular fa-pen-to-square edit-icon"></i>
+
+            Edit Profile
+
+        </a>
+
+    </div>
+
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <div class="main-content">
+
+
+        <!-- ================= LEFT SIDE ================= -->
+
+        <div class="left-side">
+
+
+            <!-- Personal Information -->
+            <div class="personal-information">
+
+                <h2>Personal Information</h2>
+
+
+                <!-- Email -->
+                <div class="info-row">
+
+                    <i class="bi bi-envelope"></i>
+
+                    <p>Email Address</p>
+
+                    <p id="profileEmail">--</p>
+
+                </div>
+
+
+                <!-- Phone -->
+                <div class="info-row">
+
+                    <i class="bi bi-telephone"></i>
+
+                    <p>Phone Number</p>
+
+                    <p id="profilePhone">--</p>
+
+                </div>
+
+
+                <!-- Employee ID -->
+                <div class="info-row">
+
+                    <i class="bi bi-person-vcard"></i>
+
+                    <p>Employee ID</p>
+
+                    <p id="profileId">--</p>
+
+                </div>
+
+
+                <!-- Position -->
+                <div class="info-row">
+
+                    <i class="bi bi-briefcase"></i>
+
+                    <p>Position</p>
+
+                    <p id="profilePosition">--</p>
+
+                </div>
+
+
+                <!-- Department -->
+                <div class="info-row">
+
+                    <i class="bi bi-building"></i>
+
+                    <p>Department</p>
+
+                    <p id="profileDepartment">--</p>
+
+                </div>
+
+
+                <!-- Emergency Contact -->
+                <div class="info-row">
+
+                    <i class="bi bi-heart"></i>
+
+                    <p>Emergency Contact</p>
+
+                    <p id="profileEmergency">--</p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= RIGHT SIDE ================= -->
+
+        <div class="right-section">
+
+
+            <!-- Employment Information -->
+            <div class="employment-information">
+
+                <h2>Employment</h2>
+
+
+                <!-- Employment Type -->
+                <div class="employment-row">
+
+                    <p>Type</p>
+
+                    <span id="employmentType">--</span>
+
+                </div>
+
+
+                <!-- Work Location -->
+                <div class="employment-row">
+
+                    <p>Location</p>
+
+                    <span id="employmentLocation">--</span>
+
+                </div>
+
+
+                <!-- Account Status -->
+                <div class="employment-row">
+
+                    <p>Status</p>
+
+                    <span id="employmentStatus">--</span>
+
+                </div>
+
+
+                <!-- Start Date -->
+                <div class="employment-row">
+
+                    <p>Start Date</p>
+
+                    <span id="employmentStart">--</span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ================= QUICK ACTIONS ================= -->
+
+            <div class="quick-actions">
+
+                <h2>Quick Actions</h2>
+
+
+                <!-- Apply for Leave -->
+                <div class="action-row">
+
+                    <i class="bi bi-calendar3"></i>
+
+                    <p>Apply for Leave</p>
+
+                </div>
+
+
+                <!-- View My Tasks -->
+                <div class="action-row">
+
+                    <i class="bi bi-check2-square"></i>
+
+                    <p>View My Tasks</p>
+
+                </div>
+
+
+                <!-- Company Policies -->
+                <div class="action-row">
+
+                    <i class="bi bi-file-earmark-text"></i>
+
+                    <p>Company Policies</p>
+
+                </div>
+
+
+                <!-- Submit Feedback -->
+                <div class="action-row">
+
+                    <i class="bi bi-chat-left"></i>
+
+                    <p>Submit Feedback</p>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        <div class="footer-content">
+
+
+            <!-- Left Section -->
+            <div class="footer-about">
+
+
+                <!-- Footer Logo -->
+                <div class="footer-logo">
+
+                    <div class="logo-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>MYSTA</h2>
+
+                        <p>IT COMPANY</p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Company Description -->
+                <p class="footer-description">
+
+                    Empowering organizations with modern HR solutions.
+                    Streamline your workforce management with Nexus HR -
+                    built for the future of work.
+
+                </p>
+
+
+
+                <!-- Contact Information -->
+                <div class="footer-contact">
+
+                    <p>
+                        <i class="fa-regular fa-envelope"></i>
+                        contact@nexushr.com
+                    </p>
+
+                    <p>
+                        <i class="fa-solid fa-phone"></i>
+                        +1 (800) 639-8754
+                    </p>
+
+                    <p>
+                        <i class="fa-solid fa-location-dot"></i>
+                        1200 Innovation Drive, San Francisco, CA 94105
+                    </p>
+
+                </div>
+
+
+
+                <!-- Social Icons -->
+                <div class="social-icons">
+
+                    <a href="#">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="fa-brands fa-x-twitter"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+
+                    <a href="#">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ================= QUICK LINKS ================= -->
+
+            <div class="footer-links">
+
+                <h3>QUICK LINKS</h3>
+
+                <a href="#">Home</a>
+
+                <a href="#">About Us</a>
+
+                <a href="#">Services</a>
+
+                <a href="#">Contact Us</a>
+
+            </div>
+
+
+
+            <!-- ================= LOCATION ================= -->
+
+            <div class="footer-location">
+
+                <h3>OUR LOCATION</h3>
+
+
+                <div class="location-card">
+
+                    <div class="location-icon">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                    </div>
+
+                    <p>San Francisco, CA</p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ================= BOTTOM BAR ================= -->
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 Nexus HR Management System.
+                All rights reserved.
+            </p>
+
+
+            <div class="footer-bottom-links">
+
+                <a href="#">Privacy Policy</a>
+
+                <a href="#">Terms of Service</a>
+
+                <a href="#">Cookie Policy</a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="Profile.js"></script>
+
+</body>
+
+</html>
