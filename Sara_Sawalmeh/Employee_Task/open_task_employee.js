@@ -1,7 +1,7 @@
-let loggedInUser =JSON.parse(localStorage.getItem("loggedInUser"));
+let loggedInUser =JSON.parse(localStorage.getItem("currentUser"));
 let tasks =JSON.parse(localStorage.getItem("tasks")) || [];
 let myTasks = tasks.filter(function(task) {
-    return task.employeeName === loggedInUser.name;
+    return task.assignedTo && task.assignedTo.includes(loggedInUser.name);
 });
 let tasksContainer =document.getElementById("tasksContainer");
 let taskModal =document.getElementById("taskModal");
@@ -87,9 +87,13 @@ function addOpenEvents() {
                 state[i].classList.remove("pending");
                 state[i].classList.add("in-progress");
 
-                let taskIndex =tasks.findIndex(function(task) {
-                     return task.employeeName === loggedInUser.name && task.title === currentTaskName;
-                    });
+               let taskIndex = tasks.findIndex(function(task) {
+    return (
+        (task.employeeName === loggedInUser.name ||
+        (task.assignedTo && task.assignedTo.includes(loggedInUser.name))) &&
+        task.title === currentTaskName
+    );
+});
 
                 if (taskIndex !== -1) {
                     tasks[taskIndex].status ="In progress";//غيرت الحاله وخزنتها لحتى يصلل لل HR
@@ -228,9 +232,14 @@ btn_submit_solution.addEventListener("click",function() {
                 state[i].style.color ="var(--color-accent)";
             }
         }
-        let taskIndex =tasks.findIndex(function(task) {
-                return task.employeeName === loggedInUser.name && task.title === currentTaskName;
-            });
+       let taskIndex = tasks.findIndex(function(task) {
+        return (
+        task.assignedTo &&
+        task.assignedTo.includes(loggedInUser.name) &&
+        task.title === currentTaskName
+        );
+
+         });
         if (taskIndex !== -1) {
             tasks[taskIndex].status ="Submitted";
             localStorage.setItem("tasks",JSON.stringify(tasks));
