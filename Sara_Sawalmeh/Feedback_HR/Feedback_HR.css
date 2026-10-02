@@ -174,10 +174,7 @@ td i:hover {
 
 @media screen and (max-width: 768px) {
    
-    
-     .sidebar-frame {
-        width: 70px;
-    }
+
 
     .main-content {
         margin-left: 70px;

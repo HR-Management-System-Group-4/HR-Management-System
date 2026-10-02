@@ -189,7 +189,7 @@
   color: var(--color-text-muted);
 }
 .btn-submit-solution {
-  background-color: var(--color-text-primary);
+  background-color: var(--color-accent);
   color: #ffffff;
   border: none;
   border-radius: 10px;
@@ -203,7 +203,7 @@
   opacity: 0.9;
 }
 .btn-Edite-solution {
-  background-color: var(--color-text-primary);
+  background-color: var(--color-accent);
   color: #ffffff;
   border: none;
   border-radius: 10px;
