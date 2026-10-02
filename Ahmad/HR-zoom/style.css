@@ -174,17 +174,6 @@ th:nth-child(1) { width: 14%; } th:nth-child(2) { width: 10%; } th:nth-child(3) 
 @media (max-width: 620px) { .topbar { margin: 0 4px; gap: 8px; } .topbar-actions { gap: 6px; } .topbar-divider, .profile-button > span:not(.avatar), .profile-button > svg { display: none; } .profile-button { padding: 0; } .search-field input { font-size: 11px; } .page-intro { padding: 16px 7px 0; } .page-intro h1 { font-size: 27px; } .page-intro p { font-size: 13px; } .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 18px 0 12px; } .stat-card { min-height: 98px; } .requests-panel { padding: 15px 11px 0; } .section-heading { display: block; } .section-heading h2 { font-size: 20px; } .status-filter { width: 100%; margin-top: 12px; } .table-tools { display: grid; grid-template-columns: 1fr; } .table-search, .date-filter { width: 100%; } table { min-width: 845px; } .right-column { grid-template-columns: 1fr; } .schedule-panel { grid-row: auto; } .table-footer { gap: 8px; flex-wrap: wrap; padding: 10px 0; } }
 @media (prefers-reduced-motion: reduce) { .sidebar { transition: none; } }
 
-body.dark-mode { --ui-ink: #edf5fa; --ui-line: #40596a; --ui-muted: #adbdca; --ui-shadow: 0 12px 35px rgba(0, 0, 0, .14); --color-text-primary: #edf5fa; --color-surface: #1e3443; --color-surface-blue: #263e50; --color-border: #40596a; background: #142733; color: var(--ui-ink); }
-.dark-mode .sidebar, .dark-mode .workspace { border-color: #40596a; background: #1b3443; }
-.dark-mode .panel, .dark-mode .stat-card, .dark-mode .toast { border-color: #40596a; background: #223c4c; }
-.dark-mode .side-nav a:hover, .dark-mode .side-nav a.active, .dark-mode .icon-button { border-color: #40596a; background: #2c4858; }
-.dark-mode .search-field, .dark-mode .select-shell, .dark-mode .form-field input, .dark-mode .form-field select, .dark-mode .form-field textarea, .dark-mode .input-shell { border-color: #40596a; background: #193240; color: #edf5fa; }
-.dark-mode .search-field input, .dark-mode .select-shell select, .dark-mode .input-shell select { color: #edf5fa; }
-.dark-mode .sidebar-note { background: #264454; color: #c0d3dd; }
-.dark-mode .page-intro p, .dark-mode .section-heading p, .dark-mode .stat-card div > span, .dark-mode .upcoming-person small, .dark-mode .upcoming-time, .dark-mode .activity-item small { color: #b4c6d3; }
-.dark-mode thead { background: #2c4858; color: #dbe9f0; }
-.dark-mode td { border-color: #40596a; color: #e6f1f6; }
-.dark-mode .truncate, .dark-mode .employee-cell small { color: #b4c6d3; }
 
 .upcoming-item { grid-template-columns: minmax(0, 1fr) 92px 76px; }
 .join-link { display: inline-flex; align-items: center; justify-content: center; min-height: 28px; padding: 4px 6px; border-radius: 6px; color: #fff; background: var(--ui-blue); font-size: 10px; font-weight: 700; text-decoration: none; white-space: nowrap; }
@@ -200,4 +189,40 @@ body.dark-mode { --ui-ink: #edf5fa; --ui-line: #40596a; --ui-muted: #adbdca; --u
 .meeting-dialog dd { margin: 0; }
 .meeting-dialog .join-link { min-height: 36px; padding: 6px 18px; font-size: 12px; }
 .meeting-dialog .join-link[hidden] { display: none; }
-.dark-mode .meeting-dialog { background: #223c4c; }
+
+/* Shared design tokens from assets/Colors.css. */
+:root { --ui-ink: var(--color-text-primary); --ui-blue: var(--color-accent); --ui-line: var(--color-border); --ui-muted: var(--color-text-muted); }
+body { color: var(--color-text-primary); background: var(--color-background); font-family: var(--font-sans); }
+body.hr-page { padding-left: 276px; }
+body.hr-page .app-shell { padding: 24px 40px; }
+.workspace, .panel, .stat-card, .toast, .meeting-dialog { border-color: var(--color-border); background: var(--color-surface); color: var(--color-text-primary); }
+.workspace { padding: 18px 22px 24px; }
+.topbar { justify-content: flex-end; }
+.profile-button, .profile-button strong, .page-intro h1, h2, .stat-card strong, .employee-cell strong { color: var(--color-text-primary); }
+.profile-button small, .page-intro p, .section-heading p, .stat-card div > span, .upcoming-person small, .upcoming-time, .activity-item small, .truncate, .employee-cell small { color: var(--color-text-secondary); }
+.page-intro { padding-bottom: 14px; }
+.requests-panel { padding-top: 22px; }
+.section-heading { margin-bottom: 25px; }
+.section-heading p { margin-top: 12px; line-height: 1.55; }
+.select-shell, .form-field input, .form-field select, .form-field textarea, .input-shell, .pagination button { border-color: var(--color-border); background: var(--color-surface); color: var(--color-text-primary); }
+.select-shell select, .input-shell select { color: var(--color-text-primary); }
+input::placeholder, textarea::placeholder { color: var(--color-text-muted); }
+thead { color: var(--color-text-secondary); background: var(--color-surface-blue); }
+td, .upcoming-item, .activity-item, .meeting-dialog dl > div { border-color: var(--color-border); color: var(--color-text-primary); }
+th:nth-child(1) { width: 17%; } th:nth-child(2) { width: 17%; } th:nth-child(3) { width: 12%; } th:nth-child(4) { width: 13%; } th:nth-child(5) { width: 18%; } th:nth-child(6) { width: 10%; } th:nth-child(7) { width: 13%; }
+td:nth-child(2) { overflow-wrap: anywhere; }
+.stat-icon.blue, .stat-icon.amber, .stat-icon.green, .stat-icon.violet, .small-icon, .activity-symbol, .avatar, .admin-avatar { color: var(--color-accent); background: var(--color-surface-blue); }
+.action-cell button, .status-pill, .sidebar-note { border-color: var(--color-border); color: var(--color-accent); background: var(--color-surface-blue); }
+.action-cell button.primary-action, .primary-button, .join-link, .pagination button.current { color: var(--color-surface); background: var(--color-accent); }
+.action-cell button.reject-action { border-color: var(--color-border); color: var(--color-text-secondary); background: var(--color-surface); }
+.status-pill.pending, .status-pill.approved, .status-pill.scheduled, .status-pill.rejected { color: var(--color-text-primary); background: var(--color-surface-mint); }
+.positive, .amber-text, .violet-text, .form-feedback { color: var(--color-accent); }
+.meeting-empty { display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 22px 14px; border: 1px dashed var(--color-border); border-radius: 12px; background: var(--color-surface-blue); text-align: center; }
+.meeting-empty-icon { font-size: 24px; }
+.meeting-empty strong { color: var(--color-text-primary); font-size: 13px; }
+.meeting-empty p { max-width: 210px; margin: 0; color: var(--color-text-secondary); font-size: 11px; line-height: 1.5; }
+.text-button[hidden] { display: none; }
+.dark-mode .workspace, .dark-mode .panel, .dark-mode .stat-card, .dark-mode .toast, .dark-mode .meeting-dialog { background: var(--color-surface); }
+.dark-mode .form-field input, .dark-mode .form-field select, .dark-mode .form-field textarea, .dark-mode .input-shell, .dark-mode .select-shell { background: var(--color-surface); color: var(--color-text-primary); }
+@media (max-width: 800px) { body.hr-page { padding-left: 0; } body.hr-page .app-shell { padding: 72px 14px 18px; } }
+@media (max-width: 620px) { .section-heading { margin-bottom: 18px; } .section-heading p { margin-top: 9px; } table { min-width: 760px; } }

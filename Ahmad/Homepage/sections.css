@@ -26,20 +26,16 @@
 .story-tag { padding: 0; border: 0; border-radius: 0; background: transparent; font: 700 14px var(--font-mono); letter-spacing: .16em; }
 .story-tag b { font-size: 19px; }
 .story-tag i { width: 70px; background: currentColor; opacity: .35; }
-.problems-tag { margin-bottom: 28px; color: #26374a; }
 
-.problems-section { position: relative; min-height: clamp(660px, 49vw, 820px); padding: 40px 5% 80px; isolation: isolate; overflow: hidden; color: var(--color-text-primary); background: var(--color-background); text-align: center; }
+.problems-section { position: relative; min-height: clamp(620px, 46vw, 780px); padding: 40px 5% 80px; isolation: isolate; overflow: hidden; color: #151827; background: #e9f3f7; text-align: center; }
 .problems-background, .problems-light { position: absolute; inset: 0; pointer-events: none; }
-.problems-background { z-index: -3; background: url("assets/problems-workspace.png") center center / contain no-repeat; }
+.problems-background { z-index: -3; background: url("assets/problems-we-solve.png") center center / contain no-repeat; }
 .problems-light { z-index: -2; background: linear-gradient(90deg, rgba(255,255,255,.02) 17%, rgba(255,255,255,.28) 37%, rgba(255,255,255,.4) 56%, rgba(255,255,255,.03) 79%), linear-gradient(180deg, rgba(255,255,255,.15), transparent 58%, rgba(255,255,255,.28)); }
 .problems-energy { position: absolute; z-index: -1; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
 .problems-energy path { fill: none; stroke: var(--color-accent); stroke-width: 1.8; opacity: .32; stroke-dasharray: 1900; stroke-dashoffset: 1900; filter: drop-shadow(0 0 9px rgba(124,213,199,.85)); }
 .problems-energy path:nth-child(2) { stroke: var(--color-mint-strong); stroke-width: 2.4; opacity: .55; }
 .problems-content { position: relative; z-index: 2; max-width: 980px; margin: auto; }
-.problems-kicker { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: clamp(8px, 1vw, 16px); color: #242c42; font: 700 12px Georgia, serif; letter-spacing: .09em; }
-.problems-kicker i { margin-right: 7px; color: var(--color-accent); font-size: 16px; }
-.problems-kicker b { color: var(--color-accent); font-weight: 400; }
-.problems-section h2 { margin: clamp(44px, 5vw, 76px) 0 20px; color: #111621; font: 500 clamp(64px, 5.4vw, 91px)/1.04 Georgia, "Times New Roman", serif; letter-spacing: -.055em; }
+.problems-section h2 { margin: clamp(75px, 7vw, 115px) 0 20px; color: #111621; font: 500 clamp(64px, 5.4vw, 91px)/1.04 Georgia, "Times New Roman", serif; letter-spacing: -.055em; }
 .problems-section h2 span { display: block; }
 .problems-section h2 em { color: var(--color-accent); font-weight: 400; }
 .problems-section p { max-width: 700px; margin: 0 auto; color: #303b4b; font: 400 clamp(17px, 1.2vw, 21px)/1.42 Georgia, "Times New Roman", serif; }
@@ -63,9 +59,8 @@
 
 @keyframes energyTrace { from { stroke-dashoffset: 1900; } to { stroke-dashoffset: 0; } }
 
-.dark-mode .problems-tag { color: #eaf5f8; }
 .dark-mode .problems-light { background: rgba(12, 19, 33, .71); }
-.dark-mode .problems-section h2, .dark-mode .problems-section p, .dark-mode .problems-kicker, .dark-mode .problems-video { color: #f0f5f6; }
+.dark-mode .problems-section h2, .dark-mode .problems-section p, .dark-mode .problems-video { color: #f0f5f6; }
 
 @media (max-width: 1200px) {
   .about-section { min-height: 590px; }
@@ -78,7 +73,7 @@
   .about-visual { position: relative; width: 100%; height: 315px; margin-top: 6px; }
   .problems-section { min-height: 0; padding: 38px 5% 50px; }
   .problems-section h2 { margin-top: 82px; font-size: clamp(55px, 7.4vw, 76px); }
-  .problems-background { position: relative; z-index: 0; inset: auto; width: 100%; aspect-ratio: 1983 / 793; margin-top: 30px; background-size: contain; }
+  .problems-background { position: relative; z-index: 0; inset: auto; width: 100%; aspect-ratio: 2022 / 778; margin-top: 30px; }
 }
 @media (max-width: 600px) {
   .about-section { padding: 52px 6% 38px; }
@@ -94,9 +89,7 @@
   .story-tag b { font-size: 16px; }
   .story-tag i { width: 42px; }
   .problems-section { padding: 28px 5% 35px; }
-  .problems-kicker { gap: 7px; font-size: 9px; }
-  .problems-kicker span:nth-of-type(n+5), .problems-kicker b:nth-of-type(n+5) { display: none; }
-  .problems-section h2 { margin: 54px 0 19px; font-size: clamp(43px, 10vw, 58px); }
+  .problems-section h2 { margin: 74px 0 19px; font-size: clamp(43px, 10vw, 58px); }
   .problems-section p { font-size: 16px; }
   .problems-actions { gap: 14px; flex-wrap: wrap; margin-top: 28px; }
   .problems-primary, .problems-video { min-height: 50px; padding: 0 22px; font-size: 14px; }

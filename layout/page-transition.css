@@ -1,26 +1,19 @@
-@view-transition { navigation: auto; }
-
-::view-transition-old(root) { animation: mystaPageOut .55s cubic-bezier(.7, 0, .2, 1) both; }
-::view-transition-new(root) { animation: mystaPageIn .7s cubic-bezier(.2, .8, .2, 1) both; }
-
-@keyframes mystaPageOut {
-  to { opacity: 0; transform: translateY(-22px) scale(.985); filter: blur(5px); }
-}
-@keyframes mystaPageIn {
-  from { opacity: 0; transform: translateY(26px) scale(1.015); filter: blur(7px); }
+/* A quiet fade keeps page changes clear without covering the destination. */
+html.page-leaving body {
+  opacity: 0;
+  transition: opacity 180ms ease-in;
 }
 
-.page-arriving body { animation: mystaPageIn .75s cubic-bezier(.2, .8, .2, 1) both; }
-.page-transition { position: fixed; z-index: 99999; inset: 0; display: grid; place-items: center; overflow: hidden; pointer-events: none; color: #fff; background: radial-gradient(circle at 72% 28%, #2365bd 0, transparent 36%), linear-gradient(125deg, #101c39, #162f60 60%, #0b7898); clip-path: inset(0 100% 0 0); }
-.page-transition::before { content: ""; position: absolute; inset: 0; opacity: .3; background: repeating-linear-gradient(115deg, transparent 0 69px, rgba(255,255,255,.14) 70px, transparent 71px); transform: translateX(-8%); }
-.page-transition::after { content: ""; position: absolute; width: min(58vw, 720px); aspect-ratio: 1; border: 1px solid rgba(141,240,241,.4); border-radius: 50%; box-shadow: 0 0 0 80px rgba(102,214,232,.04), 0 0 0 170px rgba(102,214,232,.035); transform: scale(.7); transition: transform .8s cubic-bezier(.2,.8,.2,1); }
-.page-transition strong { position: relative; z-index: 1; font: 800 clamp(32px, 5vw, 70px)/1 var(--font-sans, Manrope, sans-serif); letter-spacing: -.07em; opacity: 0; transform: translateY(18px); transition: opacity .4s ease .15s, transform .55s ease .15s; }
-.page-transition strong::after { content: ""; display: block; width: 36%; height: 3px; margin: 16px auto 0; border-radius: 4px; background: #82e1d2; }
-.page-transition.is-active { clip-path: inset(0 0 0 0); pointer-events: auto; transition: clip-path .76s cubic-bezier(.7, 0, .16, 1); }
-.page-transition.is-active::after { transform: scale(1); }
-.page-transition.is-active strong { opacity: 1; transform: translateY(0); }
+html.page-arriving body {
+  animation: mystaPageArrive 220ms ease-out both;
+}
+
+@keyframes mystaPageArrive {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
 @media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(root), ::view-transition-new(root), .page-arriving body { animation: none; }
-  .page-transition { display: none; }
+  html.page-leaving body { opacity: 1; transition: none; }
+  html.page-arriving body { animation: none; }
 }

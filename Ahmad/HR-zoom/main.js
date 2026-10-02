@@ -1,4 +1,6 @@
 const storageKey = 'ahmadHrZoomDashboardV1';
+try { document.body.classList.toggle('dark-mode', localStorage.getItem('mysta_theme') === 'dark'); }
+catch (error) { console.warn('Theme preference could not be loaded.', error); }
 const pageSize = 6;
 const today = new Date();
 const localToday = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
@@ -16,13 +18,10 @@ function loadState() {
     const employeeRequests = JSON.parse(localStorage.getItem('ahmadMeetingRequests') || '[]');
     for (const request of employeeRequests) {
       if (!request.sentAt || result.requests.some((item) => item.sourceSentAt === request.sentAt)) continue;
-      const [clock, period] = (request.time || '10:00 AM').split(' ');
-      const [hour, minute] = clock.split(':').map(Number);
-      const time = `${String((hour % 12) + (period === 'PM' ? 12 : 0)).padStart(2, '0')}:${String(minute || 0).padStart(2, '0')}`;
       result.requests.unshift({
         id: request.id || request.sentAt, sourceSentAt: request.sentAt,
         name: request.name || 'Employee', employeeId: 'Employee request', department: 'Employee',
-        purpose: request.purpose, date: request.date, time, message: request.message,
+        email: request.email || '', purpose: request.purpose, message: request.message, sentAt: request.sentAt,
         status: request.status || 'Pending', avatar: 'peach'
       });
     }
@@ -75,8 +74,8 @@ function showToast(message) {
 function showDetails(request) {
   const meeting = state.meetings.find((entry) => entry.requestId === request.id);
   const rows = [
-    ['Employee', request.name], ['Purpose', request.purpose], ['Message', request.message],
-    ['Status', request.status], ['Preferred time', `${formatDate(request.date)}, ${formatTime(request.time)}`]
+    ['Employee', request.name], ['Email', request.email || 'Not provided'],
+    ['Purpose', request.purpose], ['Message', request.message], ['Status', request.status]
   ];
   if (meeting) rows.push(['Scheduled time', `${formatDate(meeting.date)}, ${formatTime(meeting.time)}`], ['Topic', meeting.topic], ['Duration', `${meeting.duration} minutes`], ['HR notes', meeting.notes || 'None']);
   document.querySelector('#detailsList').innerHTML = rows.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value || '')}</dd></div>`).join('');
@@ -94,14 +93,9 @@ function renderStats() {
 }
 
 function filteredRequests() {
-  const query = document.querySelector('#tableSearch').value.trim().toLowerCase();
   const status = document.querySelector('#statusFilter').value;
-  const sort = document.querySelector('#dateSort').value;
-  const filtered = state.requests.filter((item) => {
-    const matchesText = `${item.name} ${item.department} ${item.purpose}`.toLowerCase().includes(query);
-    return matchesText && (status === 'all' || item.status === status);
-  });
-  filtered.sort((a, b) => sort === 'desc' ? b.date.localeCompare(a.date) : a.date.localeCompare(b.date));
+  const filtered = state.requests.filter((item) => status === 'all' || item.status === status);
+  filtered.sort((a, b) => (b.sentAt || b.sourceSentAt || '').localeCompare(a.sentAt || a.sourceSentAt || ''));
   return filtered;
 }
 
@@ -117,8 +111,8 @@ function renderRequests() {
     if (item.status === 'Pending') actions = `<button class="primary-action" data-action="accept" data-id="${escapeHtml(item.id)}">Accept</button><button class="reject-action" data-action="reject" data-id="${escapeHtml(item.id)}">Reject</button>`;
     else if (item.status === 'Approved') actions = `<button data-action="schedule" data-id="${escapeHtml(item.id)}">Schedule</button>`;
     else actions = `<button data-action="view" data-id="${escapeHtml(item.id)}">View</button>`;
-    return `<tr><td><div class="employee-cell">${avatar(item.name, item.avatar)}<span><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.employeeId)}</small></span></div></td><td>${escapeHtml(item.department)}</td><td>${escapeHtml(item.purpose)}</td><td>${formatDate(item.date)}</td><td>${formatTime(item.time)}</td><td><span class="truncate" title="${escapeHtml(item.message)}">${escapeHtml(item.message)}</span></td><td><span class="status-pill ${item.status.toLowerCase()}">${escapeHtml(item.status)}</span></td><td class="action-cell">${actions}<button class="more-action" data-action="view" data-id="${escapeHtml(item.id)}" aria-label="View ${escapeHtml(item.name)} request">${icon('more')}</button></td></tr>`;
-  }).join('') : '<tr><td class="empty-row" colspan="8">No meeting requests match your search.</td></tr>';
+    return `<tr><td><div class="employee-cell">${avatar(item.name, item.avatar)}<span><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.employeeId)}</small></span></div></td><td>${escapeHtml(item.email || 'Not provided')}</td><td>${escapeHtml(item.department)}</td><td>${escapeHtml(item.purpose)}</td><td><span class="truncate" title="${escapeHtml(item.message)}">${escapeHtml(item.message)}</span></td><td><span class="status-pill ${item.status.toLowerCase()}">${escapeHtml(item.status)}</span></td><td class="action-cell">${actions}<button class="more-action" data-action="view" data-id="${escapeHtml(item.id)}" aria-label="View ${escapeHtml(item.name)} request">${icon('more')}</button></td></tr>`;
+  }).join('') : '<tr><td class="empty-row" colspan="7">No meeting requests to show.</td></tr>';
   const start = requests.length ? first + 1 : 0;
   const end = Math.min(first + pageSize, requests.length);
   document.querySelector('#paginationSummary').textContent = `Showing ${start}–${end} of ${requests.length} requests`;
@@ -137,7 +131,8 @@ function renderMeetings() {
   const list = document.querySelector('#upcomingList');
   const meetings = [...state.meetings].sort((a, b) => `${a.date}T${a.time}`.localeCompare(`${b.date}T${b.time}`));
   const shown = showAllMeetings ? meetings : meetings.slice(0, 3);
-  list.innerHTML = shown.length ? shown.map((item) => `<div class="upcoming-item"><div class="upcoming-person">${avatar(item.name, item.avatar)}<span><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.topic)}</small></span></div><div class="upcoming-time"><span>${item.date === localToday ? 'Today' : formatDate(item.date)}, ${formatTime(item.time)}</span><span>${icon('clock')} ${escapeHtml(item.duration)} min</span></div>${zoomUrl(item.link) ? `<a class="join-link" href="${escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer">Join now</a>` : '<span class="status-pill pending">No link</span>'}</div>`).join('') : '<p class="empty-mini">No upcoming meetings yet.</p>';
+  list.innerHTML = shown.length ? shown.map((item) => `<div class="upcoming-item"><div class="upcoming-person">${avatar(item.name, item.avatar)}<span><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.topic)}</small></span></div><div class="upcoming-time"><span>${item.date === localToday ? 'Today' : formatDate(item.date)}, ${formatTime(item.time)}</span><span>${icon('clock')} ${escapeHtml(item.duration)} min</span></div>${zoomUrl(item.link) ? `<a class="join-link" href="${escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer">Join now</a>` : '<span class="status-pill pending">No link</span>'}</div>`).join('') : '<div class="meeting-empty"><span class="meeting-empty-icon">📹</span><strong>No meeting right now</strong><p>Scheduled Zoom meetings and the Join now link will appear here.</p></div>';
+  document.querySelector('#viewAllMeetings').hidden = meetings.length <= 3;
   document.querySelector('#viewAllMeetings').textContent = showAllMeetings ? 'Show Less' : 'View All';
 }
 
@@ -174,8 +169,8 @@ document.querySelector('#requestsBody').addEventListener('click', (event) => {
   if (action === 'schedule') {
     document.querySelector('#employeeSelect').value = String(item.id);
     document.querySelector('#meetingTopic').value = item.purpose;
-    document.querySelector('#meetingDate').value = item.date;
-    document.querySelector('#meetingTime').value = item.time;
+    document.querySelector('#meetingDate').value = '';
+    document.querySelector('#meetingTime').value = '';
     document.querySelector('#scheduleForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
     document.querySelector('#meetingTopic').focus();
     return;
@@ -192,15 +187,7 @@ document.querySelector('#pagination').addEventListener('click', (event) => {
   renderRequests();
 });
 
-for (const id of ['tableSearch', 'statusFilter', 'dateSort']) {
-  document.getElementById(id).addEventListener(id === 'tableSearch' ? 'input' : 'change', () => { currentPage = 1; renderRequests(); });
-}
-
-document.querySelector('#globalSearch').addEventListener('input', (event) => {
-  document.querySelector('#tableSearch').value = event.target.value;
-  currentPage = 1;
-  renderRequests();
-});
+document.querySelector('#statusFilter').addEventListener('change', () => { currentPage = 1; renderRequests(); });
 
 document.querySelector('#scheduleForm').addEventListener('submit', (event) => {
   event.preventDefault();
@@ -232,9 +219,9 @@ document.querySelector('#viewAllMeetings').addEventListener('click', () => { sho
 document.querySelector('#closeDetails').addEventListener('click', () => document.querySelector('#meetingDetails').close());
 window.addEventListener('storage', (event) => {
   if (event.key === 'ahmadMeetingRequests') { Object.assign(state, loadState()); renderAll(); }
+  if (event.key === 'mysta_theme') document.body.classList.toggle('dark-mode', event.newValue === 'dark');
 });
 document.querySelector('#viewAllActivity').addEventListener('click', () => { showAllActivity = !showAllActivity; renderActivity(); });
-document.querySelector('.notification-button').addEventListener('click', () => showToast('No new notifications.'));
 document.querySelector('.profile-button').addEventListener('click', () => showToast('HR Admin'));
 document.querySelectorAll('[data-placeholder]').forEach((link) => link.addEventListener('click', (event) => { event.preventDefault(); showToast('This section is coming soon.'); }));
 

@@ -4,14 +4,16 @@
   let navigating = false;
 
   try {
-    if (sessionStorage.getItem(key) === '1' && !reducedMotion.matches) {
+    const arrival = JSON.parse(sessionStorage.getItem(key) || 'null');
+    sessionStorage.removeItem(key);
+    if (!reducedMotion.matches && arrival?.path === location.pathname + location.search &&
+        Date.now() - arrival.at < 5000) {
       document.documentElement.classList.add('page-arriving');
-      sessionStorage.removeItem(key);
       addEventListener('DOMContentLoaded', () => {
-        setTimeout(() => document.documentElement.classList.remove('page-arriving'), 850);
+        setTimeout(() => document.documentElement.classList.remove('page-arriving'), 300);
       }, { once: true });
     }
-  } catch (_) { /* Navigation still works when storage is unavailable. */ }
+  } catch (_) { /* Navigation works when storage is unavailable. */ }
 
   document.addEventListener('click', (event) => {
     const link = event.target.closest?.('a[href]');
@@ -27,21 +29,15 @@
 
     event.preventDefault();
     navigating = true;
-    const overlay = document.createElement('div');
-    overlay.className = 'page-transition';
-    overlay.setAttribute('aria-hidden', 'true');
-    overlay.innerHTML = '<strong>Mysta<span aria-hidden="true">.</span></strong>';
-    document.body.append(overlay);
-    requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('is-active')));
-
-    setTimeout(() => {
-      try { sessionStorage.setItem(key, '1'); } catch (_) { /* Optional enhancement. */ }
-      location.assign(destination.href);
-    }, 800);
+    document.documentElement.classList.add('page-leaving');
+    try {
+      sessionStorage.setItem(key, JSON.stringify({ path: destination.pathname + destination.search, at: Date.now() }));
+    } catch (_) { /* Arrival animation is optional. */ }
+    setTimeout(() => location.assign(destination.href), 190);
   }, true);
 
   addEventListener('pageshow', () => {
     navigating = false;
-    document.querySelector('.page-transition')?.remove();
+    document.documentElement.classList.remove('page-leaving');
   });
 })();
