@@ -12,6 +12,19 @@ function showValue(id, value) {
 }
 
 
+function getImagePath(path) {
+    if (!path) {
+        return "../../Json-Images/images.jpg";
+    }
+
+    if (path.startsWith("data:")) {
+        return path;
+    }
+
+    return "../../" + path;
+}
+
+
 // 3. Calculate years of service
 function calculateService(startDate) {
 
@@ -50,12 +63,16 @@ function displayEmployee(employee) {
     showValue("employeePosition", employee.position);
     showValue("employeeCode", "EMP" + employee.id);
     showValue("employeeStatus", employee.accountState);
+    const status = document.getElementById("employeeStatus");
+
+    status.classList.toggle(
+    "active",
+    status.textContent.trim().toLowerCase() === "active"
+    );
     showValue("employeeType", employee.employmentType);
 
-    if (employee.profileImage) {
-        document.getElementById("employeeImage").src =
-            employee.profileImage;
-    }
+    document.getElementById("employeeImage").src =
+    getImagePath(employee.profileImage);
 
 
     // Personal Information

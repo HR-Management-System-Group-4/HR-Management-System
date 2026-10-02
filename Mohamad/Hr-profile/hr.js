@@ -1,22 +1,27 @@
 
+// ==========================
 // 1. Settings
-
-// Temporary HR account for testing
-localStorage.setItem("loggedInUserId", "1");
+// ==========================
 
 const userId = Number(localStorage.getItem("loggedInUserId"));
 const jsonPath = "../../employee.json";
-const defaultImage = "../photo.jpg";
 
 const el = id => document.getElementById(id);
 
 const fields = [
-    "name", "email", "phone", "position", "department",
-    "contactName", "contactPhone", "startDate"
+    "name",
+    "phone",
+    "position",
+    "department",
+    "contactName",
+    "contactPhone",
+    "startDate"
 ];
 
 const selects = [
-    "employmentType", "workLocation", "accountState"
+    "employmentType",
+    "workLocation",
+    "accountState"
 ];
 
 let profile = null;
@@ -24,38 +29,118 @@ let newImage = null;
 let imageLoading = false;
 
 
-// 2. Local Storage
+// ==========================
+// 2. Unified Messages
+// ==========================
+
+function showMessage(type, title, message) {
+    return Swal.fire({
+        icon: type,
+        title: title,
+        text: message,
+        confirmButtonText: "OK",
+        buttonsStyling: false,
+        customClass: {
+            popup: "mysta-popup",
+            confirmButton: "mysta-confirm"
+        }
+    });
+}
+
+
+// ==========================
+// 3. Helper Functions
+// ==========================
 
 function getSavedProfiles() {
     try {
-        return JSON.parse(localStorage.getItem("profileEdits")) || {};
+        return JSON.parse(
+            localStorage.getItem("profileEdits")
+        ) || {};
     } catch {
         return {};
     }
 }
 
+function getImagePath(path) {
+    if (!path) {
+        return "../../Json-Images/images.jpg";
+    }
 
-// 3. Display Profile
+    if (
+        path.startsWith("data:") ||
+        path.startsWith("blob:") ||
+        path.startsWith("http")
+    ) {
+        return path;
+    }
+
+    return "../../" + path;
+}
+
+function setSelectValue(id, value) {
+    const select = el(id);
+    const selectedValue = value || "";
+
+    if (
+        selectedValue &&
+        !Array.from(select.options).some(
+            option => option.value === selectedValue
+        )
+    ) {
+        select.add(
+            new Option(selectedValue, selectedValue)
+        );
+    }
+
+    select.value = selectedValue;
+}
+
+
+// ==========================
+// 4. Display HR Profile
+// ==========================
 
 function displayProfile() {
+    if (!profile) return;
+
     const id = "HR" + String(profile.id).padStart(3, "0");
-    const image = profile.profileImage || defaultImage;
+    const image = getImagePath(profile.profileImage);
 
-    el("headerName").textContent = profile.name;
-    el("topName").textContent = profile.name;
-
+    // Header
+    el("headerName").textContent = profile.name || "";
     el("headerJob").textContent =
-        `${profile.position} • ${profile.department}`;
+        `${profile.position || ""} • ${profile.department || ""}`;
 
     el("headerId").textContent = id;
-    el("headerStatus").textContent = profile.accountState;
+
+    const status = profile.accountState || "Not provided";
+    const statusBadge = el("headerStatus");
+
+    statusBadge.textContent = status;
+    statusBadge.classList.toggle(
+        "is-active",
+        status.toLowerCase() === "active"
+    );
+
     el("employeeId").textContent = id;
-    el("displayDate").textContent = profile.startDate || "Not provided";
 
+    el("displayDate").textContent =
+        profile.startDate || "Not provided";
+
+    // Profile image
     el("profileImage").src = image;
-    el("topImage").src = image;
 
-    // Fill the fields
+    // Optional elements kept for compatibility
+    if (el("topName")) {
+        el("topName").textContent = profile.name || "";
+    }
+
+    if (el("topImage")) {
+        el("topImage").src = image;
+    }
+
+    // Input values
     const values = {
         name: profile.name,
         email: profile.email,
@@ -64,24 +149,30 @@ function displayProfile() {
         department: profile.department,
         contactName: profile.emergencyContactName,
         contactPhone: profile.emergencyContactPhone,
-        startDate: profile.startDate,
-        employmentType: profile.employmentType,
-        workLocation: profile.workLocation,
-        accountState: profile.accountState
+        startDate: profile.startDate
     };
 
     Object.entries(values).forEach(([id, value]) => {
-        el(id).value = value || "";
+        el(id).value = value ?? "";
+    });
+
+    selects.forEach(id => {
+        setSelectValue(id, profile[id]);
     });
 }
 
 
-// 4. Edit Mode
+// ==========================
+// 5. Edit Mode
+// ==========================
 
 function editMode(editing) {
     fields.forEach(id => {
         el(id).readOnly = !editing;
     });
+
+    // Email always stays read-only
+    el("email").readOnly = true;
 
     selects.forEach(id => {
         el(id).disabled = !editing;
@@ -92,43 +183,87 @@ function editMode(editing) {
     el("cancelBtn").hidden = !editing;
     el("photoBtn").hidden = !editing;
 
-    el("hrForm").classList.toggle("editing", editing);
+    el("hrForm").classList.toggle(
+        "editing",
+        editing
+    );
 }
 
-// Start in view mode
 editMode(false);
 
 
-// 5. Fetch JSON
+// ==========================
+// 6. Load Logged-in HR
+// ==========================
 
-fetch(jsonPath)
-    .then(response => {
-        if (!response.ok) throw new Error("JSON not found");
-        return response.json();
-    })
+async function loadProfile() {
+    if (!userId) {
+        await showMessage(
+            "warning",
+            "Login Required",
+            "Please log in first."
+        );
 
-    .then(data => {
-        const employee = (Array.isArray(data) ? data : data.employees).find(user => user.id === userId);
+        el("editBtn").disabled = true;
+        return;
+    }
 
-        if (!employee || employee.role !== "HR") {
-            throw new Error("HR employee not found");
+    try {
+        const response = await fetch(jsonPath);
+
+        if (!response.ok) {
+            throw new Error(
+                "Failed to load employee data"
+            );
         }
+
+        const data = await response.json();
+
+        const employees = Array.isArray(data)
+            ? data
+            : data.employees;
+
+        const employee = employees.find(
+            user => user.id === userId && user.role === "HR"
+        );
+
+        if (!employee) {
+            throw new Error(
+                "HR account not found"
+            );
+        }
+
+        const saved = getSavedProfiles()[userId] || {};
 
         profile = {
             ...employee,
-            ...getSavedProfiles()[userId]
+            ...saved,
+            email: employee.email,
+            id: employee.id,
+            role: employee.role
         };
 
         displayProfile();
-    })
 
-    .catch(error => {
+    } catch (error) {
         console.error(error);
-        alert("Unable to load HR profile.");
-    });
+
+        await showMessage(
+            "error",
+            "Loading Failed",
+            "Unable to load HR profile."
+        );
+
+        el("editBtn").disabled = true;
+    }
+}
+
+loadProfile();
 
 
-// 6. Edit Button
+// ==========================
+// 7. Edit & Cancel
+// ==========================
 
 el("editBtn").addEventListener("click", () => {
     if (!profile) return;
@@ -139,10 +274,9 @@ el("editBtn").addEventListener("click", () => {
     editMode(true);
 });
 
-
-// 7. Cancel Button
-
 el("cancelBtn").addEventListener("click", () => {
+    if (imageLoading) return;
+
     newImage = null;
     el("imageInput").value = "";
 
@@ -151,114 +285,258 @@ el("cancelBtn").addEventListener("click", () => {
 });
 
 
-// 8. Change Profile Image
+// ==========================
+// 8. Upload Image
+// ==========================
 
-el("imageInput").addEventListener("change", function() {
-    const file = this.files[0];
-    if (!file) return;
+el("imageInput").addEventListener(
+    "change",
+    async function () {
 
-    if (!["image/jpeg", "image/png"].includes(file.type) ||
-        file.size > 1024 * 1024) {
+        const file = this.files[0];
 
-        alert("Choose a JPG or PNG image under 1MB.");
-        this.value = "";
-        return;
+        if (!file) return;
+
+        const allowedTypes = [
+            "image/jpeg",
+            "image/png"
+        ];
+
+        if (!allowedTypes.includes(file.type)) {
+            this.value = "";
+            newImage = null;
+
+            el("profileImage").src =
+                getImagePath(profile.profileImage);
+
+            await showMessage(
+                "error",
+                "Invalid Image",
+                "Please choose a JPG or PNG image."
+            );
+
+            return;
+        }
+
+        if (file.size > 1024 * 1024) {
+            this.value = "";
+            newImage = null;
+
+            el("profileImage").src =
+                getImagePath(profile.profileImage);
+
+            await showMessage(
+                "error",
+                "Image Too Large",
+                "Maximum image size is 1MB."
+            );
+
+            return;
+        }
+
+        const reader = new FileReader();
+
+        imageLoading = true;
+        el("saveBtn").disabled = true;
+        el("cancelBtn").disabled = true;
+        el("imageInput").disabled = true;
+
+        reader.onload = () => {
+            newImage = reader.result;
+            el("profileImage").src = newImage;
+
+            imageLoading = false;
+            el("saveBtn").disabled = false;
+            el("cancelBtn").disabled = false;
+            el("imageInput").disabled = false;
+        };
+
+        reader.onerror = async () => {
+            newImage = null;
+            this.value = "";
+
+            el("profileImage").src =
+                getImagePath(profile.profileImage);
+
+            imageLoading = false;
+            el("saveBtn").disabled = false;
+            el("cancelBtn").disabled = false;
+            el("imageInput").disabled = false;
+
+            await showMessage(
+                "error",
+                "Upload Failed",
+                "Unable to read the selected image."
+            );
+        };
+
+        reader.readAsDataURL(file);
     }
-
-    const reader = new FileReader();
-
-    imageLoading = true;
-    el("saveBtn").disabled = true;
-
-    reader.onload = () => {
-        newImage = reader.result;
-        el("profileImage").src = newImage;
-
-        imageLoading = false;
-        el("saveBtn").disabled = false;
-    };
-
-    reader.onerror = () => {
-        alert("Unable to read image.");
-        imageLoading = false;
-        el("saveBtn").disabled = false;
-    };
-
-    reader.readAsDataURL(file);
-});
+);
 
 
-// 9. Save Changes
+// ==========================
+// 9. Form Validation
+// ==========================
 
-el("hrForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    if (!profile || imageLoading) return;
-
+async function validateForm() {
     const value = id => el(id).value.trim();
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const requiredFields = [
+        ["name", "Full Name"],
+        ["position", "Position"],
+        ["department", "Department"],
+        ["startDate", "Join Date"]
+    ];
+
+    for (const [id, label] of requiredFields) {
+        if (!value(id)) {
+            await showMessage(
+                "error",
+                `${label} Required`,
+                `Please enter ${label.toLowerCase()}.`
+            );
+
+            el(id).focus();
+            return false;
+        }
+    }
+
+    // Accepts optional +, digits, spaces and hyphens
     const phoneRegex = /^\+?[\d\s-]{9,20}$/;
 
-    if (!value("name") || !value("position") ||
-        !value("department")) {
+    const phoneFields = [
+        ["phone", "Phone Number"],
+        ["contactPhone", "Emergency Contact Number"]
+    ];
 
-        alert("Please fill all required fields.");
-        return;
+    for (const [id, label] of phoneFields) {
+        if (value(id) && !phoneRegex.test(value(id))) {
+            await showMessage(
+                "error",
+                `Invalid ${label}`,
+                `Please enter a valid ${label.toLowerCase()}.`
+            );
+
+            el(id).focus();
+            return false;
+        }
     }
 
-    if (!emailRegex.test(value("email"))) {
-        alert("Invalid email address.");
-        return;
+    return true;
+}
+
+
+// ==========================
+// 10. Save Changes
+// ==========================
+
+el("hrForm").addEventListener(
+    "submit",
+    async function (event) {
+
+        event.preventDefault();
+
+        if (!profile || imageLoading) return;
+
+        const saveBtn = el("saveBtn");
+        saveBtn.disabled = true;
+
+        try {
+            const valid = await validateForm();
+
+            if (!valid) return;
+
+            const value = id => el(id).value.trim();
+
+            const updated = {
+                name: value("name"),
+                phone: value("phone"),
+                position: value("position"),
+                department: value("department"),
+                emergencyContactName: value("contactName"),
+                emergencyContactPhone: value("contactPhone"),
+                startDate: value("startDate"),
+                employmentType: value("employmentType"),
+                workLocation: value("workLocation"),
+                accountState: value("accountState")
+            };
+
+            if (newImage) {
+                updated.profileImage = newImage;
+            }
+
+            // Save only edited information
+            const saved = getSavedProfiles();
+
+            const previous = saved[userId] || {};
+
+            saved[userId] = {
+                ...previous,
+                ...updated
+            };
+
+            // Login email must remain unchanged
+            delete saved[userId].email;
+
+            localStorage.setItem(
+                "profileEdits",
+                JSON.stringify(saved)
+            );
+
+            // Update current session if available
+            try {
+                const session = JSON.parse(
+                    localStorage.getItem("user") || "null"
+                );
+
+                if (
+                    session &&
+                    Number(session.id) === userId
+                ) {
+                    localStorage.setItem(
+                        "user",
+                        JSON.stringify({
+                            ...session,
+                            ...updated
+                        })
+                    );
+                }
+            } catch (sessionError) {
+                console.error(
+                    "Session update failed:",
+                    sessionError
+                );
+            }
+
+            profile = {
+                ...profile,
+                ...updated
+            };
+
+            newImage = null;
+            el("imageInput").value = "";
+
+            displayProfile();
+            editMode(false);
+
+            await showMessage(
+                "success",
+                "Changes Saved!",
+                "Your HR profile has been updated successfully."
+            );
+
+        } catch (error) {
+            console.error(error);
+
+            await showMessage(
+                "error",
+                "Save Failed",
+                "Unable to save changes. Try a smaller image."
+            );
+
+        } finally {
+            saveBtn.disabled = false;
+        }
     }
-
-    if ([value("phone"), value("contactPhone")].some(
-        phone => phone && !phoneRegex.test(phone)
-    )) {
-        alert("Invalid phone number.");
-        return;
-    }
-
-    if (!value("startDate")) {
-        alert("Please select a start date.");
-        return;
-    }
-
-    const updated = {
-        ...profile,
-        name: value("name"),
-        email: value("email"),
-        phone: value("phone"),
-        position: value("position"),
-        department: value("department"),
-        emergencyContactName: value("contactName"),
-        emergencyContactPhone: value("contactPhone"),
-        startDate: value("startDate"),
-        employmentType: value("employmentType"),
-        workLocation: value("workLocation"),
-        accountState: value("accountState"),
-        profileImage: newImage || profile.profileImage || ""
-    };
-
-    const saved = getSavedProfiles();
-    saved[userId] = updated;
-
-    try {
-        localStorage.setItem(
-            "profileEdits",
-            JSON.stringify(saved)
-        );
-
-        profile = updated;
-        newImage = null;
-
-        displayProfile();
-        editMode(false);
-
-        alert("Profile updated successfully!");
-
-    } catch (error) {
-        console.error(error);
-        alert("Unable to save changes.");
-    }
-});
+);

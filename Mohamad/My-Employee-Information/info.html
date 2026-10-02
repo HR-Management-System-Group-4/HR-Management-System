@@ -8,6 +8,8 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../../layout/header.css">
+    <link rel="stylesheet" href="../../layout/footer.css">
     <link rel="stylesheet" href="info.css">
     <link rel="stylesheet" href="../../layout/page-transition.css">
     <script src="../../layout/page-transition.js"></script>
@@ -15,75 +17,24 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg custom-navbar">
-        <div class="container-fluid">
-
-            <a class="navbar-brand" href="../../Ahmad/Homepage/index.html">
-                <img src="../logo.png" alt="Mysta Logo" class="site-logo">
-            </a>
-
-            <button class="navbar-toggler" type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarContent"
-                    aria-controls="navbarContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarContent">
-
-                <div class="nav-links-box mx-auto">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="../../Ahmad/Homepage/index.html">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../../Ahmad/Homepage/index.html#about">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../../Yasmeen_Telfah/aboutUs.html">Team</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../../Timaaa/services/index.html">Services</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../../Ahmad/Homepage/index.html#contact">Contact</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="nav-actions d-flex gap-3">
-                    <button class="theme-btn" type="button">
-                        <i class="bi bi-moon"></i>
-                    </button>
-
-                    <button class="signin-btn" type="button" onclick="location.href='../../Sara_Dolat/log in/index.html'">
-                        Sign in
-                        <i class="bi bi-arrow-up-right"></i>
-                    </button>
-                </div>
-
-            </div>
-        </div>
-    </nav>
-
-
+    <div class="nav-bar"></div> 
     <!-- Main -->
     <main class="page-container">
 
         <!-- Page Title -->
         <div class="page-title">
-            <div>
-                <h1>My Employee Information</h1>
-                <p>View your personal details and employment records.</p>
-            </div>
-
+    <div class="title-info">
+        <h1>
+            My Employee Information
             <span class="read-only">
-                <i class="bi bi-eye"></i> Read Only
+                <i class="bi bi-eye"></i>
+                Read Only
             </span>
-        </div>
+        </h1>
 
+        <p>View your personal details and employment records.</p>
+    </div>
+</div>
 
         <!-- Employee Header -->
         <section class="profile-header">
@@ -92,7 +43,11 @@
                  alt="Employee Photo" class="profile-pic">
 
             <div class="profile-info">
-                <h2 id="employeeName">Loading...</h2>
+                <div class="profile-name">
+    <h2 id="employeeName">Loading...</h2>
+
+    
+</div>
                 <p id="employeePosition">Loading...</p>
 
                 <div class="profile-badges">
@@ -244,46 +199,9 @@
 
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-
-            <div class="footer-about">
-                <h2>MYSTA</h2>
-                <span>IT COMPANY</span>
-
-                <p>
-                    Building modern software solutions and creating
-                    better digital experiences for businesses.
-                </p>
-
-                <p><i class="bi bi-envelope"></i> contact@mysta.com</p>
-                <p><i class="bi bi-telephone"></i> +962 7 9000 0000</p>
-            </div>
-
-            <div class="footer-links">
-                <h3>Quick Links</h3>
-                <a href="../../Ahmad/Homepage/index.html">Home</a>
-                <a href="../../Ahmad/Homepage/index.html#about">About</a>
-                <a href="../../Yasmeen_Telfah/aboutUs.html">Team</a>
-                <a href="../../Ahmad/Homepage/index.html#contact">Contact</a>
-            </div>
-
-            <div class="footer-location">
-                <h3>Our Location</h3>
-                <div class="location-box">
-                    <i class="bi bi-geo-alt-fill"></i>
-                    <p>Amman, Jordan</p>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="footer-bottom">
-            <p>© 2026 Mysta. All rights reserved.</p>
-            <a href="#">Privacy Policy</a>
-        </div>
-    </footer>
-
+    <div class="footer"></div>
+    <script src="../../layout/header.js"></script>
+    <script src="../../layout/footer.js"></script>
     <script src= "info.js"></script>
     <script src="../../demo/flow.js"></script>
 </body>
