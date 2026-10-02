@@ -29,13 +29,17 @@ document.getElementById('loginForm').onsubmit = function(e) {
         .then(response => response.json())
         .then(data => {
 
-            const user = data.employees.find(user =>
+            let user = data.employees.find(user =>
                 user.email === email &&
                 user.password === password &&
                 user.role === selectedRole
             );
 
             if (user) {
+                localStorage.setItem(
+                  'currentUser',
+                 JSON.stringify(user)
+                   );
 
                 localStorage.setItem('email', email);
                 localStorage.setItem('password', password);

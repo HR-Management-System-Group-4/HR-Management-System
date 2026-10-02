@@ -1,4 +1,4 @@
-let requests = JSON.parse(localStorage.getItem("requests")) || [
+let requests = JSON.parse(localStorage.getItem("leaveApplications")) || [
   { id: 1, name: "Ahmad Saleh", leaveType: "Annual Leave", date: "12 - 16 Oct 2026", reason: "Family holiday planned in advance.", status: "Pending" },
   { id: 2, name: "Dana Rimawi", leaveType: "Annual Leave", date: "4 - 5 Oct 2026", reason: "Personal commitments.", status: "Approved" },
   { id: 3, name: "Tariq Hijazi", leaveType: "Sick Leave", date: "27 Sep 2026", reason: "Medical appointment.", status: "Rejected" }
@@ -7,7 +7,7 @@ let requests = JSON.parse(localStorage.getItem("requests")) || [
 let box = document.getElementById("requests");
 
 function save() {
-  localStorage.setItem("requests", JSON.stringify(requests));
+  localStorage.setItem("leaveApplications", JSON.stringify(requests));
 }
 
 function updateCounts() {
@@ -26,44 +26,54 @@ function show(data) {
 
         <div class="name">
           <div>
-            <h3>${r.name}</h3>
+            <h3>${r.employee}</h3>
             <p class="details">${r.leaveType}</p>
           </div>
         </div>
 
         <div>
-          <p class="details">▣ &nbsp; ${r.date}</p>
-          <p class="reason">▢ &nbsp; ${r.reason}</p>
+          <p class="details">
+            ▣ &nbsp; ${r.startDate} - ${r.endDate}
+          </p>
+
+          <p class="reason">
+            ▢ &nbsp; ${r.reason}
+          </p>
         </div>
 
         <div>
+
           <span class="status ${r.status.toLowerCase()}">
-            ${r.status == "Pending" ? " Pending" :
-              r.status == "Approved" ? "Approved" : "Rejected"}
+            ${r.status}
           </span>
 
           ${
             r.status == "Pending"
             ? `
               <div class="actions">
+
                 <button class="approve" onclick="approve(${r.id})">
-                 Approve
+                  Approve
                 </button>
 
                 <button class="reject" onclick="reject(${r.id})">
-                   Reject
+                  Reject
                 </button>
+
               </div>
 
-              <div class="reviewed">Requested on 2 Oct 2026</div>
+              <div class="reviewed">
+                Requested on ${r.createdDate}
+              </div>
             `
             : `
               <div class="reviewed">
-                ${r.status == "Approved" ? "Approved on 1 Oct 2026" : "Rejected on 26 Sep 2026"}
+                ${r.status}
                 <br>by HR Admin
               </div>
             `
           }
+
         </div>
 
       </div>
