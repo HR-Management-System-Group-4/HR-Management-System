@@ -1,9 +1,14 @@
 :root {
   /* Brand & interface colors */
+  /*h1*/
   --color-text-primary: #232743;
+  /*p1*/
   --color-text-secondary: #60657d;
+  /*hidden text*/
   --color-text-muted: #70758d;
 
+
+  /*body-background*/
   --color-background: #f2f2ed;
   --color-surface: #ffffff;
   --color-border: rgba(70, 75, 113, 0.16);
@@ -27,8 +32,18 @@
   /* ... */
 }
 
-/* ==========================================================================
-   15 — DARK MODE
-   --------------------------------------------------------------------------
-   Reserved for the team. No dark-mode overrides are defined yet.
-   ========================================================================== */
+/* Shared dark palette for pages that opt in with .dark-mode. */
+.dark-mode {
+  --color-text-primary: #f2f2ed;
+  --color-text-secondary: #c5c8db;
+  --color-text-muted: #a9aec5;
+  --color-background: #141728;
+  --color-surface: #1c2038;
+  --color-surface-blue: #262b4a;
+  --color-surface-mint: #143033;
+  --color-mint: #17404a;
+  --color-mint-strong: #7cd5c7;
+  --color-accent: #4cc3ea;
+  --color-accent-contrast: #8a91d1;
+  --color-border: rgba(255,255,255,.12);
+}

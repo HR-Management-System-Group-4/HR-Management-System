@@ -4,6 +4,8 @@ document.querySelector('#heroVimeo').addEventListener('load', () => {
 });
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const loginUrl = new URL('../../Sara_Dolat/log in/index.html', document.baseURI).href;
+const serviceRouting = window.MystaServiceRouting;
 if (!reducedMotion && 'IntersectionObserver' in window) {
   document.documentElement.classList.add('motion-ready');
   const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -14,6 +16,37 @@ if (!reducedMotion && 'IntersectionObserver' in window) {
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
   document.querySelectorAll('[data-reveal], .problems-section').forEach((element) => revealObserver.observe(element));
+
+  const impactSection = document.querySelector('.impact-section');
+  const impactObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      if (entry.target !== impactSection) animateImpactValue(entry.target.querySelector('.impact-value'));
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.28, rootMargin: '0px 0px -5% 0px' });
+  impactObserver.observe(impactSection);
+  impactSection.querySelectorAll('.impact-item').forEach((item) => impactObserver.observe(item));
+}
+
+function animateImpactValue(element) {
+  const target = element.dataset.count;
+  const parts = target.split('/').map(Number);
+  const duration = 1500;
+  let startTime;
+  element.textContent = parts.map(() => '0').join('/');
+
+  function frame(now) {
+    if (startTime === undefined) startTime = now;
+    const progress = Math.min((now - startTime) / duration, 1);
+    const eased = 1 - (1 - progress) ** 4;
+    element.textContent = parts.map(value => Math.round(value * eased)).join('/');
+    if (progress < 1) requestAnimationFrame(frame);
+    else element.textContent = target;
+  }
+
+  requestAnimationFrame(frame);
 }
 
 const services = {
@@ -22,40 +55,40 @@ const services = {
     description: 'Access and manage personal and employment information.',
     pill: 'EMP-1042 · Active',
     items: ['View your employment details', 'Keep contact information current', 'Store your emergency contact', 'View and download your CV'],
-    link: '../../Mohamad/Employee-profile/Profile.html'
+    action: 'Open your profile', hrAction: 'Open your HR profile'
   },
   tasks: {
     number: '02', name: 'TASK MANAGEMENT', title: 'Stay on top of<br>every task.',
     description: 'View assigned work, send solutions, and follow progress.',
     pill: '3 tasks · In progress',
     items: ['See tasks assigned to you', 'Check priorities and due dates', 'Submit your work to HR', 'Track review and completion'],
-    link: '../../Sara_Sawalmeh/Employee_Task/Employee_Task.html'
+    action: 'View your tasks', hrAction: 'Manage tasks'
   },
   leave: {
     number: '03', name: 'LEAVE MANAGEMENT', title: 'Time off,<br>made simple.',
     description: 'Request leave and see the status of each application.',
     pill: 'Leave · Employee view',
     items: ['Choose your leave type', 'Select start and end dates', 'Explain your request', 'Follow the approval status'],
-    link: '../../Timaaa/Leave-application/Timaa.html'
+    action: 'Request time off', hrAction: 'Review leave requests'
   },
   policies: {
     number: '04', name: 'COMPANY POLICIES', title: 'Find the policy<br>you need.',
     description: 'Keep important company guidance easy to find.',
     pill: 'Policies · Library',
     items: ['Browse published policies', 'Read current guidance', 'Find documents quickly', 'Stay informed about updates'],
-    link: '../../Sara_Dolat/company policies/index.html'
+    action: 'Browse policies', hrAction: 'Manage policies'
   },
   meetings: {
     number: '05', name: 'MEETINGS', title: 'Never miss a<br>meeting.',
     description: 'View upcoming company meetings and join scheduled Zoom sessions.',
-    link: '../Meeting-Zoom/index.html'
+    action: 'Request a meeting', hrAction: 'Manage meetings'
   },
   feedback: {
     number: '06', name: 'FEEDBACK', title: 'Your voice,<br>heard clearly.',
     description: 'Share feedback with HR in one simple place.',
     pill: 'Feedback · Employee view',
     items: ['Write your feedback', 'Send it to HR', 'Keep communication organized', 'Help improve everyday work'],
-    link: '../../Yasmeen_Telfah/feedbackEmployees.html'
+    action: 'Share your feedback', hrAction: 'View feedback'
   }
 };
 
@@ -71,7 +104,12 @@ function renderNextMeeting() {
   let meetings = [];
   try {
     const saved = JSON.parse(localStorage.getItem('ahmadHrZoomDashboardV1') || 'null');
-    if (Array.isArray(saved?.meetings)) meetings = saved.meetings;
+    const requests = JSON.parse(localStorage.getItem('ahmadMeetingRequests') || '[]');
+    const activeId = localStorage.getItem('ahmadActiveMeetingRequest');
+    const activeRequest = requests.find(item => (item.id || item.sentAt) === activeId) || requests.at(-1);
+    if (Array.isArray(saved?.meetings) && activeRequest) {
+      meetings = saved.meetings.filter(item => item.requestId === (activeRequest.id || activeRequest.sentAt));
+    }
   } catch (error) {
     console.warn('Meeting data could not be loaded.', error);
   }
@@ -79,7 +117,7 @@ function renderNextMeeting() {
   // A saved Zoom link distinguishes a scheduled appointment from dashboard sample data.
   const now = Date.now();
   const nextMeeting = meetings
-    .filter(item => item?.status === 'Scheduled' && item.link && /^https?:\/\//i.test(item.link))
+    .filter(item => item?.status === 'Scheduled' && item.link && (() => { try { const url = new URL(item.link); return url.protocol === 'https:' && (url.hostname === 'zoom.us' || url.hostname.endsWith('.zoom.us')); } catch { return false; } })())
     .map(item => ({ ...item, startsAt: new Date(`${item.date}T${item.time}`).getTime() }))
     .filter(item => Number.isFinite(item.startsAt) && item.startsAt >= now)
     .sort((a, b) => a.startsAt - b.startsAt)[0];
@@ -103,10 +141,16 @@ function renderService(key) {
   document.querySelector('#serviceTitle').innerHTML = service.title;
   document.querySelector('#serviceDescription').textContent = service.description;
   const link = document.querySelector('#serviceLink');
-  link.href = service.link;
-  link.innerHTML = key === 'meetings'
-    ? 'Request a meeting <i class="bi bi-arrow-right" aria-hidden="true"></i>'
-    : 'Learn more <i class="bi bi-arrow-up-right" aria-hidden="true"></i>';
+  const role = serviceRouting?.getRole();
+  link.href = serviceRouting?.pageUrl(key) || loginUrl;
+  link.innerHTML = `${role ? (role === 'HR' ? service.hrAction : service.action) : `Log in to ${service.action.toLowerCase()}`} <i class="bi bi-arrow-right" aria-hidden="true"></i>`;
+  document.querySelector('#serviceAccessNote').hidden = Boolean(role);
+  const getStarted = document.querySelector('#getStartedLink');
+  getStarted.href = serviceRouting?.pageUrl() || loginUrl;
+  getStarted.setAttribute('aria-label', role ? 'Get started with Mysta services' : 'Log in to get started with Mysta services');
+  document.querySelectorAll('.problem-card[data-service]').forEach((card) => {
+    card.href = serviceRouting?.pageUrl(card.dataset.service) || loginUrl;
+  });
 
   standardPreview.hidden = key === 'meetings';
   meetingPreview.hidden = key !== 'meetings';
@@ -155,11 +199,13 @@ async function selectService(key) {
   ], { duration: 390, delay: index * 55, easing: 'cubic-bezier(.2,.8,.2,1)' }));
 }
 
-document.querySelectorAll('[data-service]').forEach(element => {
+document.querySelectorAll('.service-tab[data-service]').forEach(element => {
   element.addEventListener('click', () => selectService(element.dataset.service));
 });
 
 selectService('profile');
 window.addEventListener('storage', (event) => {
   if (event.key === 'ahmadHrZoomDashboardV1' && activeService === 'meetings') renderNextMeeting();
+  if (event.key === 'currentUser' || event.key === 'user') renderService(activeService);
 });
+window.addEventListener('pageshow', () => renderService(activeService));

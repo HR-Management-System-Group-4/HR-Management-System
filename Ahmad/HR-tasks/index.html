@@ -32,14 +32,35 @@
     <link rel="stylesheet" href="../../layout/footer.css" />
 
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../../Side_Bar/embed.css" />
   </head>
 
-  <body>
+  <body class="hr-page">
+    <button
+      class="hr-nav-toggle"
+      type="button"
+      aria-controls="hrNavigation"
+      aria-expanded="false"
+      aria-label="Open HR menu"
+    >
+      ☰ HR menu
+    </button>
+    <button
+      class="hr-nav-backdrop"
+      type="button"
+      aria-label="Close HR menu"
+      hidden
+    ></button>
+    <iframe
+      id="hrNavigation"
+      class="hr-navigation"
+      src="../../Side_Bar/Side_bar.html"
+      title="HR navigation"
+    ></iframe>
     <!-- =========================
          Header
     ========================== -->
 
-    <div class="nav-bar"></div>
 
     <!-- Background Decorations -->
 
@@ -60,12 +81,6 @@
 
           Back to Services
         </a>
-
-        <button class="add-button" id="addTaskButton" type="button">
-          <i class="bi bi-plus-lg"></i>
-
-          Add Task
-        </button>
       </div>
 
       <!-- =========================
@@ -106,28 +121,6 @@
             <h2>Total</h2>
 
             <p>All assigned tasks</p>
-          </div>
-
-          <span class="stat-bars">
-            <i></i>
-            <i></i>
-            <i></i>
-          </span>
-        </div>
-
-        <!-- Pending -->
-
-        <div class="stat-card stat-pending">
-          <div class="stat-icon">
-            <i class="bi bi-clock-history"></i>
-          </div>
-
-          <div>
-            <strong id="pendingCount">0</strong>
-
-            <h2>Pending</h2>
-
-            <p>Awaiting action</p>
           </div>
 
           <span class="stat-bars">
@@ -212,23 +205,31 @@
         <!-- Section Heading -->
 
         <div class="section-heading">
-          <div>
-            <p class="section-kicker">YOUR WORKSPACE</p>
+          <div class="section-title-tools">
+            <div>
+              <p class="section-kicker">YOUR WORKSPACE</p>
 
-            <h2>Tasks overview</h2>
+              <h2>Tasks overview</h2>
+            </div>
+
+            <!-- Search -->
+
+            <div class="search-field">
+              <i class="bi bi-search"></i>
+
+              <input
+                id="taskSearch"
+                type="search"
+                placeholder="Search tasks or employees..."
+              />
+            </div>
           </div>
 
-          <!-- Search -->
+          <button class="add-button" id="addTaskButton" type="button">
+            <i class="bi bi-plus-lg"></i>
 
-          <div class="search-field">
-            <i class="bi bi-search"></i>
-
-            <input
-              id="taskSearch"
-              type="search"
-              placeholder="Search tasks or employees..."
-            />
-          </div>
+            Add Task
+          </button>
         </div>
 
         <!-- =========================
@@ -242,12 +243,6 @@
             All Tasks
 
             <span id="allBadge"></span>
-          </button>
-
-          <button type="button" class="filter" data-filter="Pending">
-            <i class="bi bi-clock"></i>
-
-            Pending
           </button>
 
           <button type="button" class="filter" data-filter="In Progress">
@@ -369,26 +364,51 @@
           <div class="task-options-column">
             <!-- Assign Employee -->
 
-            <div class="option-field">
-              <label class="task-field-label" for="assignTo">
+            <div class="assignee-column">
+              <div class="task-field-label">
                 <i class="bi bi-people-fill"></i>
 
                 Assign to
-              </label>
+              </div>
 
-              <div class="styled-select">
-                <span class="select-indicator"></span>
+              <div class="assignee-picker">
+                <!-- Selected employees -->
 
-                <select id="assignTo" required>
-                  <option value="">Select employee...</option>
+                <div class="assignee-trigger" id="assigneeTrigger">
+                  <div class="selected-employees" id="selectedEmployees">
+                    <span class="assignee-placeholder">
+                      Select team members...
+                    </span>
+                  </div>
 
-                  <!--
-                                    Employees from employee.json
-                                    will be added here using JavaScript
-                                -->
-                </select>
+                  <button
+                    id="assigneeToggle"
+                    class="assignee-toggle"
+                    type="button"
+                  >
+                    <i class="bi bi-chevron-down"></i>
+                  </button>
+                </div>
 
-                <i class="bi bi-chevron-down"></i>
+                <!-- Dropdown -->
+
+                <div class="assignee-dropdown" id="assigneeDropdown" hidden>
+                  <!-- Search -->
+
+                  <div class="employee-search">
+                    <i class="bi bi-search"></i>
+
+                    <input
+                      id="employeeSearch"
+                      type="search"
+                      placeholder="Search employees..."
+                    />
+                  </div>
+
+                  <!-- Employees from JSON -->
+
+                  <div class="employee-options" id="employeeOptions"></div>
+                </div>
               </div>
             </div>
 
@@ -454,9 +474,7 @@
                 <span class="select-indicator"></span>
 
                 <select id="taskStatus" required>
-                  <option value="Pending" selected>Pending</option>
-
-                  <option value="In Progress">In Progress</option>
+                  <option value="In Progress" selected>In Progress</option>
 
                   <option value="Submitted">Submitted</option>
 
@@ -646,7 +664,7 @@
 
     <!-- Message -->
 
-    <div id="toast" class="toast"></div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
     <!-- Footer -->
 
@@ -656,9 +674,8 @@
 
     <script src="../../layout/header.js"></script>
 
-    <script src="../../layout/footer.js"></script>
-
     <script src="main.js"></script>
+    <script src="../../Side_Bar/embed.js"></script>
     <script src="../../demo/flow.js"></script>
-</body>
+  </body>
 </html>
