@@ -1,116 +1,135 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Feedback | Mysta</title>
-    <link rel="stylesheet" href="../assets/Colors.css">
-    <link rel="stylesheet" href="feedbackEmployees.css">
-  <link rel="stylesheet" href="../layout/page-transition.css">
-  <script src="../layout/page-transition.js"></script>
-</head>
-<body>
-    <div class="feedback-wrapper">
-        <div class="contactDetails">
-            <div class="contactInformation">
-                <h2>Contact Information</h2>
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Employee Feedback | Mysta</title> 
 
-                <div class="address">
-                    <p class="caption">ADDRESS</p>
-                    <p>1200 Innovation Drive, Suite 400</p>
-                    <p>San Francisco, CA 94105</p>
-                </div>
+    <link rel="stylesheet" href="../assets/Colors.css"> 
 
-                <div class="phone">
-                    <p class="caption">PHONE</p>
-                    <a href="tel:+18006398754">+1 (800) 639-8754</a>
-                </div>
+    <link rel="stylesheet" href="../layout/header.css">
+    <link rel="stylesheet" href="../layout/footer.css">
 
-                <div class="email">
-                    <p class="caption">EMAIL</p>
-                    <a href="mailto:contact@nexushr.com">
-                        contact@nexushr.com
-                    </a>
-                </div>
+    <link rel="stylesheet" href="feedbackEmployees.css"> 
 
-                <div class="workingHours">
-                    <p class="caption">WORKING HOURS</p>
-                    <p>Mon - Fri: 9:00 AM - 6:00 PM</p>
-                    <p>Saturday: 10:00 AM - 2:00 PM</p>
-                </div>
+    <link rel="stylesheet" href="../layout/page-transition.css">
+    <script src="../layout/page-transition.js"></script>
+</head> 
 
-                <div class="socialLinks">
-                    <p class="caption">FOLLOW US</p>
-                    <!-- Add your company's social links here. -->
-                </div>
-            </div>
+<body> 
 
-            <div class="locationCard">
-                <div class="locationMap">
-                    <!-- Add your map image or embedded map here. -->
-                </div>
+    <div class="nav-bar"></div>
 
-                <div class="locationInfo">
-                    <h3>Nexus HR Headquarters</h3>
-                    <p>1200 Innovation Drive, SF, CA 94105</p>
-                </div>
-            </div>
-        </div>
+    <div class="feedback-wrapper"> 
+        <div class="contactDetails"> 
+            <div class="contactInformation"> 
+                <h2>Contact Information</h2> 
+ 
+                <div class="address"> 
+                    <p class="caption">ADDRESS</p> 
+                    <p>1200 Innovation Drive, Suite 400</p> 
+                    <p>San Francisco, CA 94105</p> 
+                </div> 
+ 
+                <div class="phone"> 
+                    <p class="caption">PHONE</p> 
+                    <a href="tel:+18006398754">+1 (800) 639-8754</a> 
+                </div> 
+ 
+                <div class="email"> 
+                    <p class="caption">EMAIL</p> 
+                    <a href="mailto:contact@nexushr.com"> 
+                        contact@nexushr.com 
+                    </a> 
+                </div> 
+ 
+                <div class="workingHours"> 
+                    <p class="caption">WORKING HOURS</p> 
+                    <p>Mon - Fri: 9:00 AM - 6:00 PM</p> 
+                    <p>Saturday: 10:00 AM - 2:00 PM</p> 
+                </div> 
+ 
+                <div class="socialLinks"> 
+                    <p class="caption">FOLLOW US</p> 
+                    <!-- Add your company's social links here. --> 
+                </div> 
+            </div> 
+ 
+            <div class="locationCard"> 
+                <div class="locationMap"> 
+                    <!-- Add your map image or embedded map here. --> 
+                </div> 
+ 
+                <div class="locationInfo"> 
+                    <h3>Nexus HR Headquarters</h3> 
+                    <p>1200 Innovation Drive, SF, CA 94105</p> 
+                </div> 
+            </div> 
+        </div> 
+ 
+        <div class="feedbackCard"> 
+            <div class="feedbackHeader"> 
+                <h1>Send Us a Message</h1> 
+                <p> 
+                    Fill out the form below and we will get back 
+                    to you within 24 hours. 
+                </p> 
+            </div> 
+ 
+            <form id="feedbackForm"> 
+                <div class="categoryField"> 
+                    <label for="feedbackCategory">CATEGORY</label> 
+                    <select id="feedbackCategory" required> 
+                        <option value="Workplace">Workplace</option> 
+                        <option value="Benefits">Benefits</option> 
+                        <option value="Suggestion">Suggestion</option> 
+                        <option value="Concern">Concern</option> 
+                        <option value="other">Other</option> 
+                    </select> 
+                </div> 
+ 
+                <div class="subjectField"> 
+                    <label for="feedbackSubject">SUBJECT</label> 
+                    <input 
+                        type="text" 
+                        id="feedbackSubject" 
+                        placeholder="Short summary" 
+                        required 
+                    > 
+                </div> 
+ 
+                <div class="messageField"> 
+                    <label for="feedbackMessage">MESSAGE</label> 
+                    <textarea 
+                        id="feedbackMessage" 
+                        rows="7" 
+                        placeholder="What would you like HR to know?" 
+                        required 
+                    ></textarea> 
+                </div> 
+ 
+                <div class="feedbackButtons"> 
+                    <button type="submit" id="submitFeedback"> 
+                        Submit Feedback 
+                    </button> 
+ 
+                    <button type="reset" id="clearFeedback"> 
+                        Clear 
+                    </button> 
+                </div> 
+            </form> 
 
-        <div class="feedbackCard">
-            <div class="feedbackHeader">
-                <h1>Send Us a Message</h1>
-                <p>
-                    Fill out the form below and we will get back
-                    to you within 24 hours.
-                </p>
-            </div>
+            <p id="feedbackResult" role="status" aria-live="polite"></p> 
+        </div> 
+    </div>
 
-            <form id="feedbackForm">
-                <div class="categoryField">
-                    <label for="feedbackCategory">CATEGORY</label>
-                    <select id="feedbackCategory" required>
-                        <option value="Workplace">Workplace</option>
-                        <option value="Benefits">Benefits</option>
-                        <option value="Suggestion">Suggestion</option>
-                        <option value="Concern">Concern</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
+    <div class="footer"></div>
 
-                <div class="subjectField">
-                    <label for="feedbackSubject">SUBJECT</label>
-                    <input
-                        type="text"
-                        id="feedbackSubject"
-                        placeholder="Short summary"
-                        required
-                    >
-                </div>
+    <script src="../layout/header.js"></script>
+    <script src="../layout/footer.js"></script>
 
-                <div class="messageField">
-                    <label for="feedbackMessage">MESSAGE</label>
-                    <textarea
-                        id="feedbackMessage"
-                        rows="7"
-                        placeholder="What would you like HR to know?"
-                        required
-                    ></textarea>
-                </div>
+    <script src="feedbackEmployees.js"></script> 
+    <script src="../demo/flow.js"></script> 
 
-                <div class="feedbackButtons">
-                    <button type="submit" id="submitFeedback">
-                        Submit Feedback
-                    </button>
-
-                    <button type="reset" id="clearFeedback">
-                        Clear
-                    </button>
-                </div>
-            </form>
-            <p id="feedbackResult" role="status" aria-live="polite"></p>
-        </div>
-        <script src="feedbackEmployees.js"></script>
-  <script src="../demo/flow.js"></script>
-</body>
+</body> 
 </html>

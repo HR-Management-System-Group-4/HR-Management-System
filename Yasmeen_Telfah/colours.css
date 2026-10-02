@@ -1,0 +1,117 @@
+:root {
+    /* =========================================================
+       LIGHT MODE - DEFAULT
+       ========================================================= */
+
+    /* Text */
+    --color-text-primary: #232743;
+    --color-text-secondary: #60657d;
+    --color-text-muted: #7a8098;
+
+    /* Main backgrounds */
+    --color-background: #f5f5f0;
+    --color-surface: #ffffff;
+    --color-surface-soft: #f7f7f4;
+
+    /* Borders */
+    --color-border: rgba(70, 75, 113, 0.16);
+    --color-border-strong: #cfd2dc;
+
+    /* Purple / Navy */
+    --color-primary: #4b507f;
+    --color-primary-dark: #292d50;
+    --color-primary-soft: #e8e9f4;
+
+    /* Accent blue */
+    --color-accent: #149bc3;
+    --color-accent-soft: #e1f3f7;
+
+    /* Sidebar */
+    --color-sidebar-top: #e9ebf4;
+    --color-sidebar-bottom: #e0f2ef;
+
+    /* Mint */
+    --color-mint: #c4ebe4;
+    --color-mint-strong: #7cd5c7;
+    --color-surface-mint: #dff3ef;
+
+    /* Status */
+    --color-success: #168f70;
+    --color-success-bg: #def3eb;
+
+    --color-danger: #b84d5d;
+    --color-danger-bg: #f8e4e7;
+
+    /* Shadows */
+    --shadow-soft: 0 8px 25px rgba(35, 39, 67, 0.07);
+    --shadow-card: 0 15px 40px rgba(35, 39, 67, 0.08);
+
+
+    /* =========================================================
+       TYPOGRAPHY
+       ========================================================= */
+
+    --font-sans: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+    --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+
+
+    /* =========================================================
+       LAYOUT
+       ========================================================= */
+
+    --container-max: 1240px;
+    --app-content-max: 1180px;
+}
+
+
+/* =============================================================
+   DARK MODE
+   Add class="dark" to <body>
+   ============================================================= */
+
+body.dark {
+
+    /* Text */
+    --color-text-primary: #f4f3ee;
+    --color-text-secondary: #b8bbcf;
+    --color-text-muted: #8f95b2;
+
+    /* Main backgrounds */
+    --color-background: #111625;
+    --color-surface: #1c223b;
+    --color-surface-soft: #171c31;
+
+    /* Borders */
+    --color-border: rgba(166, 171, 210, 0.18);
+    --color-border-strong: #353c5d;
+
+    /* Purple */
+    --color-primary: #8e98df;
+    --color-primary-dark: #737dc5;
+    --color-primary-soft: #292f50;
+
+    /* Accent blue */
+    --color-accent: #36b9df;
+    --color-accent-soft: #173a4b;
+
+    /* Sidebar */
+    --color-sidebar-top: #1d233d;
+    --color-sidebar-bottom: #112d34;
+
+    /* Mint */
+    --color-mint: #27564f;
+    --color-mint-strong: #55cdb8;
+    --color-surface-mint: #203f3d;
+
+    /* Status */
+    --color-success: #55d6b2;
+    --color-success-bg: #20433f;
+
+    --color-danger: #ef8b99;
+    --color-danger-bg: #4c2934;
+
+    /* Shadows */
+    --shadow-soft: 0 8px 25px rgba(0, 0, 0, 0.18);
+    --shadow-card: 0 15px 45px rgba(0, 0, 0, 0.22);
+}
