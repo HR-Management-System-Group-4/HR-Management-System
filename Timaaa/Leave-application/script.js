@@ -136,7 +136,7 @@ if(image && currentUser.profileImage){
 
 
 image.src =
-"../../Json-Imges/" +
+"../../Json-Images/" +
 currentUser.profileImage.split("/").pop();
 
 

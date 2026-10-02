@@ -967,7 +967,7 @@ if(user.profileImage){
     let imageName = user.profileImage.split("/").pop();
 
     document.getElementById("profileImage").src =
-    "../../Json-Imges/" + imageName;
+    "../../Json-Images/" + imageName;
 
 }
 
