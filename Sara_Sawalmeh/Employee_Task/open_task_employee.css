@@ -1,22 +1,19 @@
 @import url('../../assets/Colors.css');
 
-/* Modal Backdrop / Overlay with Glassmorphism effect */
 .task-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(35, 39, 67, 0.4); /* تأثير التعتيم للخلفية */
-  backdrop-filter: blur(4px);              /* تأثير الزجاج المغبش خلف النافذة */
+  background-color: rgba(35, 39, 67, 0.4);
+  backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 1000;/*بتحدد مين فوق مين يعني بحكيلي هاي الصفحه فوق الباقي */
   padding: 20px;
 }
-
-/* Modal Box Container */
 .task-modal-content {
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -28,28 +25,38 @@
   position: relative;
   font-family: var(--font-sans);
 }
-
-/* Header Section inside Modal */
 .modal-header-section {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 12px;
 }
-
 .modal-title {
   font-size: 1.4rem;
   font-weight: 700;
   color: var(--color-text-primary);
   margin: 0 0 8px 0;
 }
-
 .badge-group {
   display: flex;
   gap: 8px;
 }
-
-/* Badges styling */
+.priority.high {
+  background-color: #fde2e2;
+  color: #b42318;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+.priority.medium {
+  background-color: #fff3cd;
+  color: #856404;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
 .priority.low {
   background-color: var(--color-surface-blue);
   color: var(--color-text-secondary);
@@ -58,7 +65,30 @@
   padding: 4px 10px;
   border-radius: 20px;
 }
-
+.state.pending {
+  background-color: #fff3cd;
+  color: #856404;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+.state.in-progress {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+.state.submitted {
+  background-color: #ede9fe;
+  color: #6d28d9;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
 .state.completed {
   background-color: var(--color-surface-mint);
   color: var(--color-text-primary);
@@ -67,8 +97,6 @@
   padding: 4px 10px;
   border-radius: 20px;
 }
-
-/* Close Button */
 .close-btn {
   background: transparent;
   border: none;
@@ -78,43 +106,34 @@
   padding: 5px;
   transition: color 0.2s;
 }
-
 .close-btn:hover {
   color: var(--color-text-primary);
 }
 
-/* Description */
 .modal-desc {
   color: var(--color-text-secondary);
   font-size: 0.95rem;
   margin-bottom: 24px;
 }
-
-/* Dates Grid */
 .dates-grid {
   display: flex;
   gap: 40px;
   margin-bottom: 24px;
 }
-
 .date-item {
   display: flex;
   flex-direction: column;
 }
-
 .date-label {
   font-size: 0.8rem;
   color: var(--color-text-muted);
   margin-bottom: 4px;
 }
-
 .date-value {
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--color-text-primary);
 }
-
-/* HR Notes Box */
 .hr-notes-box {
   background-color: var(--color-surface-mint);
   border-radius: 12px;
@@ -122,25 +141,26 @@
   margin-bottom: 24px;
   border: 1px dashed var(--color-mint-strong);
 }
-
 .notes-heading {
   font-size: 0.85rem;
   font-weight: 700;
   color: var(--color-text-primary);
   margin: 0 0 6px 0;
 }
-
 .notes-text {
   font-size: 0.9rem;
   color: var(--color-text-secondary);
   margin: 0;
 }
-
-/* Solution Section */
+.deadline-msg {
+  color: #d9534f;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
 .solution-section {
   margin-bottom: 24px;
 }
-
 .solution-label {
   display: block;
   font-size: 0.9rem;
@@ -148,7 +168,6 @@
   color: var(--color-text-primary);
   margin-bottom: 8px;
 }
-
 .solution-textarea {
   width: 100%;
   height: 90px;
@@ -163,18 +182,14 @@
   outline: none;
   box-sizing: border-box;
 }
-
 .solution-textarea:focus {
   border-color: var(--color-accent);
 }
-
 .solution-textarea::placeholder {
   color: var(--color-text-muted);
 }
-
-/* Submit Button */
 .btn-submit-solution {
-  background-color: var(--color-accent);
+  background-color: var(--color-text-primary);
   color: #ffffff;
   border: none;
   border-radius: 10px;
@@ -184,7 +199,20 @@
   cursor: pointer;
   transition: opacity 0.2s;
 }
-
 .btn-submit-solution:hover {
+  opacity: 0.9;
+}
+.btn-Edite-solution {
+  background-color: var(--color-text-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.btn-Edite-solution:hover {
   opacity: 0.9;
 }

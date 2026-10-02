@@ -1,101 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Company Policies - HR Workspace</title>
+
     <link rel="stylesheet" href="Policies_HR.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-   
     <div class="dashboard-layout">
-        
-   
         <aside class="sidebar">
-           <iframe src="../../Side_Bar/Side_bar.html" frameborder="0"></iframe>
+            <iframe src="../../Side_Bar/Side_bar.html" frameborder="0"></iframe>
         </aside>
-
-      
         <div class="app-container">
-            <br>
-            <br>
             <main class="main-content">
                 <div class="workspace-header">
                     <div class="workspace-title-area">
                         <span class="workspace-breadcrumb">HR WORKSPACE</span>
-                        <h1>Company policies</h1>
+                        <h1>Company Policies</h1>
                         <p class="subtitle">Create and update your workplace guidance.</p>
                     </div>
-                    <button class="btn-primary">+ New policy</button>
+                    <button class="btn-primary" id="newPolicyBtn"><i class="fa-solid fa-plus"></i>New Policy</button>
                 </div>
-
-                <!-- Search and Records Filter -->
-                <div class="filter-section">
-                    <div class="search-box">
-                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                        <input type="text" placeholder="Search company policies...">
-                    </div>
-                    <div class="records-count">7 RECORDS</div>
-                </div>
-
-                <!-- Policies Grid -->
-                <div class="policies-grid">
-                    <!-- Card 1 -->
-                    <div class="policy-card">
-                        <div class="card-header-row">
-                            <h3>Working hours</h3>
-                            <span class="status-badge published">PUBLISHED</span>
-                        </div>
-                        <span class="category-name">Time & attendance</span>
-                        <p class="policy-desc">Core hours are 9:00–15:00, Sunday to Thursday. Flexible start times between 8:00 and 10:00 are allowed with manager approval.</p>
-                        <div class="card-footer">
-                            <a href="#" class="edit-link">Edit</a>
-                        </div>
-                    </div>
-
-                    <!-- Card 2 -->
-                    <div class="policy-card">
-                        <div class="card-header-row">
-                            <h3>Attendance</h3>
-                            <span class="status-badge published">PUBLISHED</span>
-                        </div>
-                        <span class="category-name">Time & attendance</span>
-                        <p class="policy-desc">Log attendance daily. Unplanned absences must be reported to your manager before 9:30.</p>
-                        <div class="card-footer">
-                            <a href="#" class="edit-link">Edit</a>
-                        </div>
-                    </div>
-
-                    <!-- Card 3 -->
-                    <div class="policy-card">
-                        <div class="card-header-row">
-                            <h3>Leave policy</h3>
-                            <span class="status-badge published">PUBLISHED</span>
-                        </div>
-                        <span class="category-name">Time & attendance</span>
-                        <p class="policy-desc">Full-time employees receive 21 days of annual leave. Submit requests at least five working days ahead.</p>
-                        <div class="card-footer">
-                            <a href="#" class="edit-link">Edit</a>
-                        </div>
-                    </div>
-
-                    <!-- Card 4 -->
-                    <div class="policy-card">
-                        <div class="card-header-row">
-                            <h3>Remote work</h3>
-                            <span class="status-badge published">PUBLISHED</span>
-                        </div>
-                        <span class="category-name">Time & attendance</span>
-                        <p class="policy-desc">Up to two remote days per week, agreed with your manager and recorded in the portal.</p>
-                        <div class="card-footer">
-                            <a href="#" class="edit-link">Edit</a>
-                        </div>
-                    </div>
-                </div>
+                <!-- Cards -->
+                <div class="policies-grid" id="policiesGrid"></div>
             </main>
         </div>
-
     </div>
+
+    <div class="modal" id="policyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">New Policy</h2>
+                <!-- زر اغلاق -->
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <div class="form-group">
+                <label for="policyTitle">Policy Title</label>
+                <input type="text" id="policyTitle" placeholder="Enter policy title">
+            </div>
+            <div class="form-group">
+                <label for="policyCategory">Category</label>
+                <input type="text" id="policyCategory" placeholder="Example: Time & attendance" >
+            </div>
+            <div class="form-group">
+                <label for="policyStatus">Status</label>
+                <select id="policyStatus">
+                    <option value="PUBLISHED">PUBLISHED </option>
+                    <option value="DRAFT">DRAFT</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="policyDescription">Description</label>
+                <textarea id="policyDescription" rows="5" placeholder="Write the policy description..." ></textarea>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="cancel-btn" id="cancelBtn"> Cancel </button>
+                <button type="button" class="save-btn" id="saveBtn"> Save Policy </button>
+            </div>
+        </div>
+    </div>
+    <script src="Policies_HR.js"></script>
 </body>
 </html>

@@ -1,6 +1,5 @@
 @import url('../../assets/Colors.css');
 
-/* إعدادات عامة وتنسيق الخطوط */
 * {
     margin: 0;
     padding: 0;
@@ -14,7 +13,6 @@ body {
     background-color: var(--color-background, #f8fafc);
 }
 
-/* تخصيص الـ iframe الخاص بالسايد بار ليكون ثابتاً ونظيفاً وبدون حدود */
 .sidebar-frame {
     width: 260px;
     height: 100vh;
@@ -24,7 +22,6 @@ body {
     left: 0;
 }
 
-/* المحتوى الرئيسي */
 .main-content {
     margin-left: 260px;
     padding: 30px;
@@ -49,21 +46,7 @@ body {
     font-size: 14px;
 }
 
-.admin-profile {
-    text-align: right;
-}
 
-.admin-profile span {
-    display: block;
-    font-weight: bold;
-    color: #1e293b;
-}
-
-.admin-profile small {
-    color: #64748b;
-}
-
-/* البطاقات الإحصائية */
 .stats-container {
     display: flex;
     gap: 20px;
@@ -112,12 +95,12 @@ body {
     color: #ffffff;
 }
 
-/* تنسيق الجدول والحاوية المتجاوبة (Responsive) */
+
 .table-container {
     background: var(--color-surface, #ffffff);
     border-radius: 12px;
     border: 1px solid var(--color-border, #e2e8f0);
-    overflow-x: auto; /* يسمح بالتمرير الأفقي بسلاسة عند تصغير الشاشة */
+    overflow-x: auto; 
     width: 100%;
     box-shadow: 0 1px 3px rgba(0,0,0,0.02);
 }
@@ -126,7 +109,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
-    min-width: 700px; /* يمنع انكماش أعمدة الجدول بشكل مبالغ فيه */
+    min-width: 700px; /
 }
 
 th {
@@ -135,7 +118,7 @@ th {
     font-size: 12px;
     padding: 15px;
     border-bottom: 1px solid var(--color-border, #e2e8f0);
-    white-space: nowrap; /* يمنع التفاف النص في عناوين الأعمدة */
+    white-space: nowrap; 
 }
 
 td {
@@ -153,8 +136,13 @@ td small {
     color: var(--color-text-muted, #64748b);
     font-size: 12px;
 }
-
-/* شارات الحالة (Status Badges) */
+.resolveFeedback {
+    background: none;
+    border: none;
+    color: #198754;
+    cursor: pointer;
+    font-weight: 600;
+}
 .status-badge {
     padding: 4px 12px;
     border-radius: 12px;
@@ -172,7 +160,6 @@ td small {
     color: #16a34a;
 }
 
-/* أيقونات الإجراءات */
 td i {
     cursor: pointer;
     color: #64748b;
@@ -184,26 +171,17 @@ td i:hover {
     color: #0ea5e9;
 }
 
-/* تعديلات للشاشات الصغيرة (الموبايل والأجهزة اللوحية) */
+
 @media screen and (max-width: 768px) {
-    /* إخفاء السايد بار في الشاشات الصغيرة مؤقتاً لتجنب التداخل (يمكن لاحقاً إظهاره بزر قائمة) */
-    .sidebar-frame {
-        display: none; 
-    }
+   
     
-    /* جعل المحتوى الرئيسي يملأ الشاشة بالكامل بدون أي إزاحة لليسار */
+     .sidebar-frame {
+        width: 70px;
+    }
+
     .main-content {
-        margin-left: 0; 
-        padding: 15px;
-        width: 100%;
-    }
-    
-    .stats-container {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .stat-card {
-        width: 100%;
+        margin-left: 70px;
+        width: calc(100% - 70px);
+        padding: 20px;
     }
 }
