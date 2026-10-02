@@ -63,6 +63,12 @@ function displayEmployee(employee) {
     showValue("employeePosition", employee.position);
     showValue("employeeCode", "EMP" + employee.id);
     showValue("employeeStatus", employee.accountState);
+    const status = document.getElementById("employeeStatus");
+
+    status.classList.toggle(
+    "active",
+    status.textContent.trim().toLowerCase() === "active"
+    );
     showValue("employeeType", employee.employmentType);
 
     document.getElementById("employeeImage").src =
