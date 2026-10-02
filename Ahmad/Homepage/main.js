@@ -148,10 +148,6 @@ function renderService(key) {
   const getStarted = document.querySelector('#getStartedLink');
   getStarted.href = serviceRouting?.pageUrl() || loginUrl;
   getStarted.setAttribute('aria-label', role ? 'Get started with Mysta services' : 'Log in to get started with Mysta services');
-  document.querySelectorAll('.problem-card[data-service]').forEach((card) => {
-    card.href = serviceRouting?.pageUrl(card.dataset.service) || loginUrl;
-  });
-
   standardPreview.hidden = key === 'meetings';
   meetingPreview.hidden = key !== 'meetings';
   if (key === 'meetings') {

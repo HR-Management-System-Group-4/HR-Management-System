@@ -21,7 +21,7 @@
     <header class="page-heading">
       <div class="step"><span></span> 05&nbsp; / &nbsp;06</div>
       <h1>Request a meeting</h1>
-      <p>Send a meeting request to HR and choose your preferred timing.<br>Return to this page to check its status and join when scheduled.</p>
+      <p>Send a meeting request to HR.<br>Return to this page to check its status and join when scheduled.</p>
     </header>
     <div class="page-grid">
       <section class="card meeting-form-card" aria-labelledby="formTitle">
@@ -47,17 +47,8 @@
             <div class="character-count"><span id="messageCount">0</span>/500</div>
           </div>
           <div class="field">
-            <label for="hrEmail">HR email</label>
-            <div class="input-wrap"><i class="bi bi-envelope" aria-hidden="true"></i><input id="hrEmail" type="email" value="hr@company.com" readonly></div>
-          </div>
-          <div class="date-time-grid">
-            <div class="field"><label for="meetingDate">Preferred date</label><div class="input-wrap date-wrap"><i class="bi bi-calendar3" aria-hidden="true"></i><input id="meetingDate" name="date" type="date" required></div></div>
-            <fieldset class="field time-field"><legend>Preferred time</legend><div class="time-options">
-              <label><input type="radio" name="time" value="10:00 AM" checked><span>10:00 AM</span></label>
-              <label><input type="radio" name="time" value="11:30 AM"><span>11:30 AM</span></label>
-              <label><input type="radio" name="time" value="1:00 PM"><span>1:00 PM</span></label>
-              <label><input type="radio" name="time" value="2:30 PM"><span>2:30 PM</span></label>
-            </div></fieldset>
+            <label for="employeeEmail">Your email</label>
+            <div class="input-wrap"><i class="bi bi-envelope" aria-hidden="true"></i><input id="employeeEmail" name="employeeEmail" type="email" required autocomplete="email" placeholder="Enter your email address"></div>
           </div>
           <div class="form-actions"><button class="submit-button" type="submit">Send request <i class="bi bi-arrow-right" aria-hidden="true"></i></button><button class="cancel-button" type="reset">Cancel</button></div>
           <p id="formFeedback" class="form-feedback" role="status" aria-live="polite"></p>
@@ -66,7 +57,7 @@
       <aside class="info-column" aria-label="Meeting information">
         <section class="card upcoming-card" aria-labelledby="upcomingTitle">
           <div class="card-topline"><h2 id="upcomingTitle">Upcoming meeting</h2></div>
-          <p id="meetingEmpty">No meeting has been scheduled for your latest request yet.</p>
+          <div id="meetingEmpty" class="meeting-empty"><i class="bi bi-camera-video" aria-hidden="true"></i><strong>No meeting right now</strong><p>When HR schedules a meeting, its details and Join now link will appear here.</p></div>
           <div id="scheduledMeeting" hidden>
           <div class="scheduled-banner"><span class="orange-icon"><i class="bi bi-bell" aria-hidden="true"></i></span><div><strong>HR scheduled your meeting</strong><p id="meetingWhen"></p></div><span class="scheduled-pill">Scheduled by HR</span></div>
           <h3>Meeting details</h3>

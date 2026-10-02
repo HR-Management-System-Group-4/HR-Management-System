@@ -49,10 +49,6 @@ function showLastRequest() {
   document.querySelector('#employeeJoinLink').href = meeting.link;
 }
 
-const today = new Date();
-const localToday = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
-document.querySelector('#meetingDate').min = localToday;
-
 message.addEventListener('input', () => {
   document.querySelector('#messageCount').textContent = message.value.length;
 });
@@ -62,10 +58,9 @@ form.addEventListener('submit', (event) => {
   const request = {
     id: crypto.randomUUID(),
     name: document.querySelector('#employeeName').value.trim(),
+    email: document.querySelector('#employeeEmail').value.trim(),
     purpose: document.querySelector('#purpose').value,
     message: message.value.trim(),
-    date: document.querySelector('#meetingDate').value,
-    time: form.querySelector('input[name="time"]:checked').value,
     sentAt: new Date().toISOString(),
     status: 'Pending'
   };
