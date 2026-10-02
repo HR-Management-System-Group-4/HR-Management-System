@@ -1,4 +1,3 @@
-
 let boxes = document.querySelectorAll(".boxes > div");
 let content = document.querySelectorAll(".content-wrapper > div");
 
@@ -7,24 +6,23 @@ boxes.forEach((box, index) => {
 
     box.addEventListener("click", function () {
 
-       
         content.forEach(element => {
             element.style.display = "none";
         });
 
-
         content[index].style.display = "block";
 
 
-       
         boxes.forEach(element => {
             element.classList.remove("active");
         });
+
         box.classList.add("active");
 
     });
 
 });
+
 
 let carouselElement = document.querySelector("#carouselExampleControls");
 
@@ -34,22 +32,25 @@ let carousel = bootstrap.Carousel.getOrCreateInstance(carouselElement);
 let previousButton = document.querySelector(".previous");
 let nextButton = document.querySelector(".next");
 
+
 nextButton.addEventListener("click", function () {
     carousel.next();
 });
+
 
 previousButton.addEventListener("click", function () {
     carousel.prev();
 });
 
+
 let slideCount = document.querySelector(".slideCount");
 let dots = document.querySelectorAll(".dot");
 
 
-// slid.bs.carousel It happens after the carousel finishes moving to another slide.
-
+// slid.bs.carousel happens after the carousel finishes moving to another slide.
 carouselElement.addEventListener("slid.bs.carousel", function (event) {
-// event.to gives the index of the slide that the carousel moved to
+
+    // event.to gives the index of the slide that the carousel moved to
     let index = event.to;
 
     slideCount.innerHTML =
@@ -63,6 +64,7 @@ carouselElement.addEventListener("slid.bs.carousel", function (event) {
     dots[index].classList.add("activeDot");
 
 });
+
 
 dots.forEach((dot, index) => {
 

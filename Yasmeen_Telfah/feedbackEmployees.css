@@ -1,27 +1,629 @@
-* { box-sizing: border-box; }
-body { margin: 0; background: #f7f8fb; color: #172033; font: 16px/1.55 Arial, sans-serif; }
-.feedback-wrapper { max-width: 1160px; margin: 60px auto 100px; padding: 0 24px; display: grid; grid-template-columns: minmax(250px, .85fr) minmax(360px, 1.15fr); gap: 32px; }
-.contactDetails, .feedbackCard { background: #fff; border: 1px solid #e3e6ed; border-radius: 22px; box-shadow: 0 14px 40px #1720330d; padding: 32px; }
-h1, h2, h3, p { margin-top: 0; }
-h1 { font-size: 30px; line-height: 1.2; }
-h2 { font-size: 25px; }
-h3 { font-size: 17px; }
-.caption, label { display: block; color: #657084; font-size: 12px; font-weight: 700; letter-spacing: .08em; }
-.contactInformation > div:not(:first-child) { margin-top: 24px; }
-.contactInformation a { color: #e96d2f; text-decoration: none; }
-.locationCard { margin-top: 36px; padding: 20px; border-radius: 16px; background: #f1f4fa; }
-.locationMap { height: 110px; border-radius: 10px; background: linear-gradient(135deg, #dce8f4, #f9e6d8); }
-.locationInfo { padding-top: 14px; }
-.locationInfo p { margin-bottom: 0; }
-.feedbackHeader p { color: #657084; }
-.feedbackCard form { display: grid; gap: 22px; }
-label { margin-bottom: 8px; }
-input, select, textarea { width: 100%; border: 1px solid #cfd5df; border-radius: 10px; padding: 12px 14px; background: #fff; color: #172033; font: inherit; }
-textarea { resize: vertical; }
-input:focus, select:focus, textarea:focus { outline: 2px solid #f19b68; border-color: #e96d2f; }
-.feedbackButtons { display: flex; gap: 12px; flex-wrap: wrap; }
-button { border: 0; border-radius: 10px; padding: 12px 20px; font: 700 14px Arial, sans-serif; cursor: pointer; }
-#submitFeedback { background: #e96d2f; color: #fff; }
-#clearFeedback { background: #edf0f5; color: #172033; }
-#feedbackResult { margin-top: 18px; color: #157347; font-weight: 700; }
-@media (max-width: 760px) { .feedback-wrapper { grid-template-columns: 1fr; margin-top: 28px; } }
+@import url("../assets/Colors.css");
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+
+    background:
+        radial-gradient(
+            circle at 85% 15%,
+            var(--color-surface-mint),
+            transparent 28%
+        ),
+        var(--color-background);
+
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.feedback-wrapper {
+    width: 88%;
+    max-width: 1200px;
+
+    margin: 65px auto 90px;
+
+    display: grid;
+    grid-template-columns: 1.65fr 0.75fr;
+    gap: 24px;
+
+    align-items: start;
+}
+
+
+/* =========================
+   MAIN FORM CARD
+========================= */
+
+.feedbackCard {
+    grid-column: 1;
+    grid-row: 1;
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+
+    padding: 38px 42px;
+
+    box-shadow: 0 18px 45px rgba(35, 39, 67, 0.07);
+}
+
+
+/* =========================
+   FORM HEADER
+========================= */
+
+.feedbackHeader {
+    margin-bottom: 30px;
+}
+
+.feedbackHeader::before {
+    content: "FEEDBACK";
+
+    display: block;
+
+    margin-bottom: 14px;
+
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+
+    letter-spacing: 2px;
+
+    color: var(--color-accent);
+}
+
+.feedbackHeader h1 {
+    margin: 0 0 8px;
+
+    font-size: 42px;
+    font-weight: 700;
+
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+
+    color: var(--color-text-primary);
+}
+
+.feedbackHeader p {
+    margin: 0;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    color: var(--color-text-secondary);
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+#feedbackForm {
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+.categoryField,
+.subjectField,
+.messageField {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+/* =========================
+   LABELS
+========================= */
+
+#feedbackForm label {
+    font-family: var(--font-mono);
+
+    font-size: 10px;
+    font-weight: 600;
+
+    letter-spacing: 1.4px;
+
+    color: var(--color-text-muted);
+}
+
+
+/* =========================
+   INPUTS
+========================= */
+
+.feedbackCard #feedbackForm input,
+.feedbackCard #feedbackForm select,
+.feedbackCard #feedbackForm textarea {
+    display: block !important;
+
+    width: 100% !important;
+
+    background-color: var(--color-surface-soft) !important;
+
+    border: 1.5px solid #aeb3c2 !important;
+    border-radius: 12px !important;
+
+    color: var(--color-text-primary) !important;
+
+    font-family: var(--font-sans) !important;
+    font-size: 14px !important;
+
+    outline: none !important;
+    box-shadow: none !important;
+
+    transition:
+        border-color 0.2s,
+        background-color 0.2s,
+        box-shadow 0.2s !important;
+}
+
+
+/* =========================
+   INPUT + SELECT
+========================= */
+
+.feedbackCard #feedbackForm input,
+.feedbackCard #feedbackForm select {
+    height: 52px !important;
+
+    padding: 0 16px !important;
+}
+
+
+/* =========================
+   TEXTAREA
+========================= */
+
+.feedbackCard #feedbackForm textarea {
+    min-height: 155px !important;
+
+    padding: 15px 16px !important;
+
+    line-height: 1.6 !important;
+
+    resize: vertical !important;
+}
+
+
+/* =========================
+   PLACEHOLDERS
+========================= */
+
+.feedbackCard #feedbackForm input::placeholder,
+.feedbackCard #feedbackForm textarea::placeholder {
+    color: var(--color-text-muted) !important;
+
+    opacity: 0.8;
+}
+
+
+/* =========================
+   HOVER
+========================= */
+
+.feedbackCard #feedbackForm input:hover,
+.feedbackCard #feedbackForm select:hover,
+.feedbackCard #feedbackForm textarea:hover {
+    border-color: var(--color-text-muted) !important;
+}
+
+
+/* =========================
+   FOCUS
+========================= */
+
+.feedbackCard #feedbackForm input:focus,
+.feedbackCard #feedbackForm select:focus,
+.feedbackCard #feedbackForm textarea:focus {
+    background-color: var(--color-surface) !important;
+
+    border-color: var(--color-accent) !important;
+
+    box-shadow:
+        0 0 0 3px var(--color-accent-soft) !important;
+}
+
+
+/* =========================
+   BUTTON CONTAINER
+========================= */
+
+.feedbackButtons {
+    display: flex !important;
+
+    flex-direction: row !important;
+
+    align-items: center !important;
+    justify-content: flex-start !important;
+
+    gap: 12px !important;
+
+    width: 100% !important;
+
+    margin-top: 8px !important;
+}
+
+
+/* =========================
+   BOTH BUTTONS
+========================= */
+
+.feedbackCard #feedbackForm #submitFeedback,
+.feedbackCard #feedbackForm #clearFeedback {
+    display: inline-flex !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: auto !important;
+    min-width: 120px !important;
+
+    height: 46px !important;
+
+    margin: 0 !important;
+    padding: 0 22px !important;
+
+    border-radius: 12px !important;
+
+    font-family: var(--font-sans) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+
+    cursor: pointer !important;
+
+    transition:
+        background-color 0.2s,
+        border-color 0.2s,
+        color 0.2s,
+        transform 0.2s !important;
+}
+
+
+/* =========================
+   SUBMIT
+========================= */
+
+.feedbackCard #feedbackForm #submitFeedback {
+    background-color: var(--color-primary) !important;
+
+    border: 1px solid var(--color-primary) !important;
+
+    color: white !important;
+}
+
+.feedbackCard #feedbackForm #submitFeedback:hover {
+    background-color: var(--color-primary-dark) !important;
+
+    border-color: var(--color-primary-dark) !important;
+
+    color: white !important;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   CLEAR
+========================= */
+
+.feedbackCard #feedbackForm #clearFeedback {
+    background-color: var(--color-surface) !important;
+
+    border: 1px solid #aeb3c2 !important;
+
+    color: var(--color-text-secondary) !important;
+}
+
+.feedbackCard #feedbackForm #clearFeedback:hover {
+    background-color: var(--color-surface-soft) !important;
+
+    border-color: var(--color-text-muted) !important;
+
+    color: var(--color-text-primary) !important;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   RESULT
+========================= */
+
+#feedbackResult {
+    margin: 15px 0 0;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    color: var(--color-success);
+}
+
+
+/* =========================
+   RIGHT COLUMN
+========================= */
+
+.contactDetails {
+    grid-column: 2;
+    grid-row: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+
+    min-width: 0;
+}
+
+
+/* =========================
+   CONTACT CARD
+========================= */
+
+.contactInformation {
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 26px;
+
+    background: var(--color-surface-mint);
+
+    border: 1px solid var(--color-border);
+    border-radius: 22px;
+}
+
+.contactInformation::before {
+    content: "";
+
+    position: absolute;
+
+    width: 140px;
+    height: 140px;
+
+    right: -65px;
+    top: -65px;
+
+    border-radius: 50%;
+
+    background: var(--color-mint);
+
+    opacity: 0.5;
+}
+
+.contactInformation h2 {
+    position: relative;
+
+    margin: 0 0 23px;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    color: var(--color-text-primary);
+}
+
+
+/* =========================
+   CONTACT ITEMS
+========================= */
+
+.address,
+.phone,
+.email,
+.workingHours,
+.socialLinks {
+    position: relative;
+
+    padding: 13px 0;
+
+    border-top: 1px solid var(--color-border);
+}
+
+.address {
+    padding-top: 0;
+
+    border-top: none;
+}
+
+.contactInformation .caption {
+    margin: 0 0 6px;
+
+    font-family: var(--font-mono);
+
+    font-size: 9px;
+    font-weight: 600;
+
+    letter-spacing: 1.5px;
+
+    color: var(--color-accent);
+}
+
+.contactInformation p:not(.caption) {
+    margin: 2px 0;
+
+    font-size: 12px;
+    line-height: 1.5;
+
+    color: var(--color-text-secondary);
+}
+
+.contactInformation a {
+    font-size: 12px;
+    font-weight: 600;
+
+    color: var(--color-text-primary);
+
+    text-decoration: none;
+}
+
+.contactInformation a:hover {
+    color: var(--color-accent);
+}
+
+
+/* =========================
+   LOCATION CARD
+========================= */
+
+.locationCard {
+    overflow: hidden;
+
+    background: var(--color-primary-soft);
+
+    border: 1px solid var(--color-border);
+    border-radius: 22px;
+}
+
+.locationMap {
+    position: relative;
+
+    height: 110px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--color-primary-soft),
+            var(--color-surface-mint)
+        );
+}
+
+.locationMap::before {
+    content: "MYSTA";
+
+    position: absolute;
+
+    left: 20px;
+    bottom: 17px;
+
+    font-family: var(--font-mono);
+
+    font-size: 9px;
+    font-weight: 600;
+
+    letter-spacing: 2px;
+
+    color: var(--color-primary);
+}
+
+.locationMap::after {
+    content: "⌖";
+
+    position: absolute;
+
+    top: 18px;
+    right: 18px;
+
+    width: 38px;
+    height: 38px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background: var(--color-surface);
+
+    color: var(--color-accent);
+
+    font-size: 18px;
+}
+
+
+/* =========================
+   LOCATION INFO
+========================= */
+
+.locationInfo {
+    padding: 18px 20px;
+}
+
+.locationInfo h3 {
+    margin: 0 0 5px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    color: var(--color-text-primary);
+}
+
+.locationInfo p {
+    margin: 0;
+
+    font-size: 11px;
+
+    color: var(--color-text-secondary);
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 950px) {
+
+    .feedback-wrapper {
+        width: 90%;
+
+        grid-template-columns: 1fr;
+    }
+
+    .feedbackCard {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .contactDetails {
+        grid-column: 1;
+        grid-row: 2;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .feedback-wrapper {
+        width: calc(100% - 30px);
+
+        margin-top: 35px;
+    }
+
+    .feedbackCard {
+        padding: 28px 22px;
+    }
+
+    .feedbackHeader h1 {
+        font-size: 32px;
+    }
+
+    .contactDetails {
+        display: flex;
+    }
+
+    .feedbackButtons {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+
+    .feedbackCard #feedbackForm #submitFeedback,
+    .feedbackCard #feedbackForm #clearFeedback {
+        width: 100% !important;
+    }
+
+}
