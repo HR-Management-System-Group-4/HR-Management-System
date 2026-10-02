@@ -1,25 +1,34 @@
-let closeTaskButton = document.getElementById("closeTaskButton");
 let btn = document.getElementById("addTaskButton");
 let taskDialog = document.getElementById("taskDialog");
 let taskForm = document.getElementById("taskForm");
 let taskList = document.getElementById("taskList");
-let cancelTaskButton = document.getElementById("cancelDeleteButton");
+let toast = document.getElementById("toast");
+let toastTimer;
+
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 3500);
+}
+
+let closeTaskButton = document.getElementById("closeTaskButton");
+let cancelTaskButton = document.getElementById("cancelTaskButton");
+
 let closeViewButton = document.getElementById("closeViewButton");
 
-closeViewButton.onclick = function () {
-
-    document.getElementById("viewDialog").close();
-
-};
-
-//close the popup
+// Close Add/Edit popup
 closeTaskButton.onclick = function () {
   taskDialog.close();
+};
 
-  // cancel
-  cancelTaskButton.onclick = function () {
-    taskDialog.close();
-  };
+cancelTaskButton.onclick = function () {
+  taskDialog.close();
+};
+
+// Close View popup
+closeViewButton.onclick = function () {
+  document.getElementById("viewDialog").close();
 };
 // Get tasks from localStorage
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
@@ -68,6 +77,7 @@ taskForm.onsubmit = function (event) {
   taskForm.reset();
 
   taskDialog.close();
+  showToast("Task added successfully.");
 };
 
 // Display tasks
@@ -181,7 +191,7 @@ function displayTasks() {
                     <button
                         class="icon-action view"
                         type="button"
-                        onclick="viewTask(${tasks[i].id})
+                        onclick="viewTask(${tasks[i].id})"
                     >
 
                         <i class="bi bi-eye-fill"></i>
@@ -192,7 +202,7 @@ function displayTasks() {
                     <button
                         class="icon-action edit"
                         type="button"
-                        onclick="editTask(${tasks[i].id})
+                        onclick="editTask(${tasks[i].id})"
                     >
 
                         <i class="bi bi-pencil-fill"></i>
@@ -203,7 +213,7 @@ function displayTasks() {
                     <button
                         class="icon-action delete"
                         type="button"
-                        onclick="deleteTask(${tasks[i].id})
+                        onclick="deleteTask(${tasks[i].id})"
                     >
 
                         <i class="bi bi-trash3-fill"></i>
@@ -239,30 +249,45 @@ function displayEmployees() {
 }
 
 function viewTask(id) {
-  let viewDialog = document.getElementById("viewDialog");
 
-  for (let i = 0; i < tasks.length; i++) {
-    if (tasks[i].id == id) {
-      document.getElementById("viewTitle").innerHTML = tasks.title;
-      document.getElementById("viewAssignee").innerHTML = tasks[i].assignTo;
+    let viewDialog = document.getElementById("viewDialog");
 
-      document.getElementById("viewDueDate").innerHTML = tasks[i].dueDate;
 
-      document.getElementById("viewPriority").innerHTML = tasks[i].priority;
+    for (let i = 0; i < tasks.length; i++) {
 
-      document.getElementById("viewStatus").innerHTML = tasks[i].status;
+        if (tasks[i].id == id) {
 
-      document.getElementById("viewDescription").innerHTML =
-        tasks[i].description;
-      document.getElementById("viewNotes").innerHTML =
-        tasks[i].notes || "No notes";
+            document.getElementById("viewTitle").innerHTML =
+                tasks[i].title;
 
-      document.getElementById("viewSolution").innerHTML =
-        tasks[i].solution || "No solution has been submitted yet.";
+            document.getElementById("viewAssignee").innerHTML =
+                tasks[i].assignTo;
 
-        viewDialog();
+            document.getElementById("viewDueDate").innerHTML =
+                tasks[i].dueDate;
+
+            document.getElementById("viewPriority").innerHTML =
+                tasks[i].priority;
+
+            document.getElementById("viewStatus").innerHTML =
+                tasks[i].status;
+
+            document.getElementById("viewDescription").innerHTML =
+                tasks[i].description;
+
+            document.getElementById("viewNotes").innerHTML =
+                tasks[i].notes || "No notes";
+
+            document.getElementById("viewSolution").innerHTML =
+                tasks[i].solution || "No solution has been submitted yet.";
+
+
+            viewDialog.showModal();
+
+        }
+
     }
-  }
+
 }
 
 displayEmployees();
