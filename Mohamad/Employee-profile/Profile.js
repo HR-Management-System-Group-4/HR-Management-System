@@ -1,14 +1,18 @@
 
-// Temporary user ID until Login is ready
-localStorage.setItem("loggedInUserId", "3");
+// ==========================
+// 1. Get Logged-in User
+// ==========================
 
 const userId = Number(
     localStorage.getItem("loggedInUserId")
 );
 
-console.log("User ID:", userId);
 
-// Display data in HTML
+// ==========================
+// 2. Helper Functions
+// ==========================
+
+// Display text inside HTML elements
 function setText(id, value) {
     const element = document.getElementById(id);
 
@@ -17,47 +21,42 @@ function setText(id, value) {
     }
 }
 
-// Get saved changes
+// Get saved profile changes
 function getSavedProfiles() {
     try {
-        return JSON.parse(localStorage.getItem("profileEdits")) || {};
+        return JSON.parse(
+            localStorage.getItem("profileEdits")
+        ) || {};
     } catch {
         return {};
     }
 }
 
-// Load employee data
-fetch("../../employee.json")
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Failed to load employees");
-        }
+// Get correct image path
+function getImagePath(path) {
+    if (!path) {
+        return "../../Json-Imges/images.jpg";
+    }
 
-        return response.json();
-    })
+    if (path.startsWith("data:")) {
+        return path;
+    }
 
-    .then(data => {
-       const employee = (Array.isArray(data) ? data : data.employees).find(user => user.id === userId);
-        if (!employee) {
-            throw new Error("Employee not found");
-        }
-
-        const saved = getSavedProfiles()[userId] || {};
-        const profile = { ...employee, ...saved };
-
-        displayProfile(profile);
-    })
-
-    .catch(error => {
-        console.error(error);
-        alert("Unable to load profile");
-    });
+    return "../../" + path.replace(
+        "Json-Images/",
+        "Json-Imges/"
+    );
+}
 
 
-// Display employee profile
+// ==========================
+// 3. Display Employee Profile
+// ==========================
+
 function displayProfile(employee) {
 
-    const employeeId = "EMP" + String(employee.id).padStart(3, "0");
+    const employeeId =
+        "EMP" + String(employee.id).padStart(3, "0");
 
     const emergencyContact = [
         employee.emergencyContactName,
@@ -85,10 +84,88 @@ function displayProfile(employee) {
     setText("employmentStatus", employee.accountState);
     setText("employmentStart", employee.startDate);
 
-    // Profile image
-    const image = document.getElementById("profileImage");
+    // Employee image from JSON
+    const imagePath = getImagePath(employee.profileImage);
 
-    if (image && employee.profileImage) {
-        image.src = employee.profileImage;
+    const profileImage =
+        document.getElementById("profileImage");
+
+    const navImage =
+        document.getElementById("navUserImage");
+
+    if (profileImage) {
+    profileImage.src = imagePath;
+
+    profileImage.onerror = function () {
+        console.error("Image failed:", this.src);
+    };
+}
+
+    if (navImage) {
+        navImage.src = imagePath;
+    }
+
+    // Navbar employee name
+    setText("navUserName", employee.name);
+}
+
+
+// ==========================
+// 4. Load Employee Data
+// ==========================
+
+async function loadProfile() {
+
+    if (!userId) {
+        console.error("No logged-in employee found");
+        return;
+    }
+
+    try {
+
+        const response = await fetch("../../employee.json");
+
+        if (!response.ok) {
+            throw new Error("Failed to load employees");
+        }
+
+        const data = await response.json();
+
+        const employees = Array.isArray(data)
+            ? data
+            : data.employees;
+
+        // Find logged-in employee
+        const employee = employees.find(
+            user => user.id === userId
+        );
+
+        if (!employee) {
+            throw new Error("Employee not found");
+        }
+
+        // Get previously saved changes
+        const saved = getSavedProfiles()[userId] || {};
+
+        // Merge employee information
+        const profile = {
+    ...employee,
+    ...saved,
+    profileImage: saved.profileImage || employee.profileImage
+};
+
+        displayProfile(profile);
+
+    } catch (error) {
+
+        console.error(error);
+        alert("Unable to load profile");
     }
 }
+document.querySelectorAll("[data-pending]").forEach(link => {
+    link.addEventListener("click", event => {
+        event.preventDefault();
+    });
+});
+
+loadProfile();

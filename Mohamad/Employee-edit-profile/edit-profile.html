@@ -10,6 +10,8 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+          <link rel="stylesheet" href="../../layout/header.css">
+
     <link rel="stylesheet" href="edit-profile.css">
 
     <title>Edit Profile</title>
@@ -17,40 +19,7 @@
 
 <body>
 
-<!-- Navbar -->
-<nav class="navbar">
-
-    <a href="#" class="brand">
-        <div class="logo-bars">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-
-        <strong>Mysta</strong>
-    </a>
-
-    <div class="nav-links">
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Team</a>
-        <a href="#">Features</a>
-        <a href="#">Contact</a>
-    </div>
-
-    <div class="nav-actions">
-        <button class="theme-btn">
-            <i class="bi bi-moon"></i>
-        </button>
-
-        <button class="signin-btn">
-            Sign in
-            <i class="bi bi-arrow-up-right"></i>
-        </button>
-    </div>
-
-</nav>
-
+<div class="nav-bar"></div>
 
 <!-- Main -->
 
@@ -141,7 +110,7 @@
                         type="email"
                         id="email"
                         name="email"
-                        required>
+                        readonly>
                 </div>
 
                 <div class="form-group">
@@ -230,74 +199,12 @@
 
 
 <!-- Footer -->
-<footer class="footer">
+<div class="footer"></div>
 
-    <div class="footer-content">
-
-        <div class="footer-about">
-
-            <h2>MYSTA</h2>
-            <span>IT COMPANY</span>
-
-            <p>
-                Building modern software solutions and creating
-                better digital experiences for businesses.
-            </p>
-
-            <p>
-                <i class="bi bi-envelope"></i>
-                contact@mysta.com
-            </p>
-
-            <p>
-                <i class="bi bi-telephone"></i>
-                +962 7 9000 0000
-            </p>
-
-        </div>
-
-
-        <div class="footer-links">
-
-            <h3>Quick Links</h3>
-
-            <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Team</a>
-            <a href="#">Contact</a>
-
-        </div>
-
-
-        <div>
-
-            <h3>Our Location</h3>
-
-            <div class="location-box">
-                <i class="fa-solid fa-location-dot"></i>
-                <p>Amman, Jordan</p>
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="footer-bottom">
-
-        <p>© 2026 Mysta. All rights reserved.</p>
-
-        <div>
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-        </div>
-
-    </div>
-
-</footer>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../../layout/footer.js"></script>
+<script src="../../layout/header.js"></script>
 <script src="edit-profile.js"></script>
-
-  <script src="../../demo/flow.js"></script>
+<script src="../../demo/flow.js"></script>
 </body>
 </html>

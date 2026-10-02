@@ -1,283 +1,298 @@
 
-// ==============================
-// 1. Get logged-in employee ID
-// ==============================
+// =========================
+// 1. Elements & Variables
+// =========================
 
-let userId = Number(
-    localStorage.getItem("loggedInUserId")
-);
+const userId = Number(localStorage.getItem("loggedInUserId"));
 
 const form = document.getElementById("editProfileForm");
-
-const fullName = document.getElementById("fullName");
-const employeeId = document.getElementById("employeeId");
-const email = document.getElementById("email");
-const phone = document.getElementById("phone");
-const position = document.getElementById("position");
-const department = document.getElementById("department");
-
-const contactName = document.getElementById("contactName");
-const contactPhone = document.getElementById("contactPhone");
-
 const imageInput = document.getElementById("profileImage");
 const imagePreview = document.getElementById("editProfileImage");
+
+const fields = {
+    name: document.getElementById("fullName"),
+    email: document.getElementById("email"),
+    phone: document.getElementById("phone"),
+    emergencyContactName: document.getElementById("contactName"),
+    emergencyContactPhone: document.getElementById("contactPhone")
+};
 
 let currentEmployee = null;
 let selectedImage = null;
 
 
-// ==============================
-// 2. Read Local Storage
-// ==============================
+// =========================
+// 2. Local Storage
+// =========================
 
 function getSavedProfiles() {
     try {
-        return JSON.parse(
-            localStorage.getItem("profileEdits")
-        ) || {};
-    } catch (error) {
-        console.error(error);
+        return JSON.parse(localStorage.getItem("profileEdits")) || {};
+    } catch {
         return {};
     }
 }
 
 
-// ==============================
-// 3. Load employee data
-// ==============================
+// =========================
+// 3. Display Profile Image
+// =========================
 
-if (!userId) {
-    alert("Please log in first.");
-} else {
+function getImagePath(path) {
 
-    fetch("../../employee.json")
+    if (!path) {
+        return "../../Json-Imges/images.jpg";
+    }
 
-        .then(function(response) {
+    if (path.startsWith("data:")) {
+        return path;
+    }
 
-            if (!response.ok) {
-                throw new Error("JSON file not found");
-            }
-
-            return response.json();
-        })
-
-        .then(function(data) {
-
-            // Find the logged-in employee
-            let employee = (Array.isArray(data) ? data : data.employees).find(function(user) {
-                return user.id === userId;
-            });
-
-            if (!employee) {
-                throw new Error("Employee not found");
-            }
-
-            // Get saved changes for this employee
-            let savedProfiles = getSavedProfiles();
-            let savedData = savedProfiles[userId] || {};
-
-            // Merge original and edited information
-            currentEmployee = {
-                ...employee,
-                ...savedData
-            };
-
-            // Display employee information
-            loadEmployee(currentEmployee);
-        })
-
-        .catch(function(error) {
-            console.error(error);
-            alert("Unable to load employee data.");
-        });
+    return "../../" + path.replace(
+        "Json-Images/",
+        "Json-Imges/"
+    );
 }
 
 
-// ==============================
-// 4. Fill the form
-// ==============================
+// =========================
+// 4. Fill Employee Form
+// =========================
 
-function loadEmployee(employee) {
+function fillForm(employee) {
 
-    fullName.value = employee.name || "";
+    // Editable fields
+    for (const key in fields) {
+        fields[key].value = employee[key] || "";
+    }
 
-    employeeId.value =
+    // Read-only fields
+    document.getElementById("employeeId").value =
         "EMP" + String(employee.id).padStart(3, "0");
 
-    email.value = employee.email || "";
-    phone.value = employee.phone || "";
+    document.getElementById("position").value =
+        employee.position || "";
 
-    position.value = employee.position || "";
-    department.value = employee.department || "";
+    document.getElementById("department").value =
+        employee.department || "";
 
-    contactName.value = employee.emergencyContactName || "";
-    contactPhone.value = employee.emergencyContactPhone || "";
+    // Profile image
+    imagePreview.src = getImagePath(employee.profileImage);
+}
 
-    if (employee.profileImage && !employee.profileImage.startsWith('images/')) {
-        imagePreview.src = employee.profileImage;
+
+// =========================
+// 5. Load Employee Data
+// =========================
+
+async function loadEmployee() {
+
+    if (!userId) {
+        alert("Please log in first.");
+        form.querySelector(".save-btn").disabled = true;
+        return;
+    }
+
+    try {
+        const response = await fetch("../../employee.json");
+
+        if (!response.ok) {
+            throw new Error("Failed to load employees");
+        }
+
+        const data = await response.json();
+
+        const employees = Array.isArray(data)
+            ? data
+            : data.employees;
+
+        const employee = employees.find(
+            user => user.id === userId
+        );
+
+        if (!employee) {
+            throw new Error("Employee not found");
+        }
+
+        const saved = getSavedProfiles()[userId] || {};
+
+            currentEmployee = {
+            ...employee,
+            ...saved,
+            email: employee.email
+        };
+
+        fillForm(currentEmployee);
+
+    } catch (error) {
+        console.error(error);
+        alert("Unable to load employee information.");
+        form.querySelector(".save-btn").disabled = true;
     }
 }
 
+loadEmployee();
 
-// ==============================
-// 5. Preview profile image
-// ==============================
 
-imageInput.addEventListener("change", function() {
+// =========================
+// 6. Upload Profile Image
+// =========================
 
-    const file = imageInput.files[0];
+imageInput.addEventListener("change", function () {
+
+    const file = this.files[0];
 
     if (!file) {
         selectedImage = null;
-        imagePreview.src =
-            (currentEmployee?.profileImage?.startsWith('images/') ? '' : currentEmployee?.profileImage) || "../photo.jpg";
+
+        if (currentEmployee) {
+            imagePreview.src = getImagePath(
+                currentEmployee.profileImage
+            );
+        }
+
         return;
     }
 
-    const allowedTypes = [
-        "image/jpeg",
-        "image/png"
-    ];
+    const allowedTypes = ["image/jpeg", "image/png"];
 
-    // File type validation
     if (!allowedTypes.includes(file.type)) {
         alert("Please choose a JPG or PNG image.");
-        imageInput.value = "";
+        this.value = "";
         return;
     }
 
-    // Maximum size: 1 MB
     if (file.size > 1024 * 1024) {
         alert("Maximum image size is 1MB.");
-        imageInput.value = "";
+        this.value = "";
         return;
     }
 
     const reader = new FileReader();
 
-    reader.onload = function() {
+    reader.onload = function () {
         selectedImage = reader.result;
         imagePreview.src = selectedImage;
     };
 
     reader.readAsDataURL(file);
-
 });
 
 
-// ==============================
-// 6. Save profile changes
-// ==============================
+// =========================
+// 7. Validate Form
+// =========================
 
-form.addEventListener("submit", function(event) {
+function validateForm(data) {
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\+?[\d\s-]{9,20}$/;
+
+    if (!data.name) {
+        alert("Please enter your full name.");
+        fields.name.focus();
+        return false;
+    }
+
+    if (!emailRegex.test(data.email)) {
+        alert("Please enter a valid email.");
+        fields.email.focus();
+        return false;
+    }
+
+    const phones = [
+        ["phone", "Please enter a valid phone number."],
+        ["emergencyContactPhone",
+         "Please enter a valid emergency contact number."]
+    ];
+
+    for (const [key, message] of phones) {
+        if (data[key] && !phoneRegex.test(data[key])) {
+            alert(message);
+            fields[key].focus();
+            return false;
+        }
+    }
+
+    return true;
+}
+
+
+// =========================
+// 8. Save Profile Changes
+// =========================
+
+form.addEventListener("submit", function (event) {
 
     event.preventDefault();
 
-    if (!currentEmployee) {
-        alert("Employee data is not ready.");
-        return;
+    if (!currentEmployee) return;
+
+    // Read editable fields
+    const updatedData = {};
+
+    for (const key in fields) {
+    if (key === "email") continue;
+
+    updatedData[key] = fields[key].value.trim();
+}
+
+updatedData.email = currentEmployee.email;
+
+    // Validate entered information
+    if (!validateForm(updatedData)) return;
+
+    // Add image only if changed
+    if (selectedImage) {
+        updatedData.profileImage = selectedImage;
     }
 
-    // Read input values
-    let nameValue = fullName.value.trim();
-    let emailValue = email.value.trim();
-    let phoneValue = phone.value.trim();
+    // Save changes for logged-in employee
+    const savedProfiles = getSavedProfiles();
 
-    let contactNameValue = contactName.value.trim();
-    let contactPhoneValue = contactPhone.value.trim();
-
-
-    // ==========================
-    // 7. Form Validation
-    // ==========================
-
-    if (nameValue === "") {
-        alert("Please enter your full name.");
-        fullName.focus();
-        return;
-    }
-
-    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailRegex.test(emailValue)) {
-        alert("Please enter a valid email.");
-        email.focus();
-        return;
-    }
-
-    let phoneRegex = /^\+?[\d\s-]{9,20}$/;
-
-    if (
-        phoneValue !== "" &&
-        !phoneRegex.test(phoneValue)
-    ) {
-        alert("Please enter a valid phone number.");
-        phone.focus();
-        return;
-    }
-
-    if (
-        contactPhoneValue !== "" &&
-        !phoneRegex.test(contactPhoneValue)
-    ) {
-        alert("Please enter a valid emergency contact number.");
-        contactPhone.focus();
-        return;
-    }
-
-
-    // ==========================
-    // 8. Prepare updated data
-    // ==========================
-
-    let updatedEmployee = {
-        ...currentEmployee,
-
-        name: nameValue,
-        email: emailValue,
-        phone: phoneValue,
-
-        emergencyContactName: contactNameValue,
-        emergencyContactPhone: contactPhoneValue,
-
-        emergencyContact: [
-            contactNameValue,
-            contactPhoneValue
-        ].filter(Boolean).join(" - "),
-
-        profileImage:
-            selectedImage || currentEmployee.profileImage || ""
+    savedProfiles[userId] = {
+        ...savedProfiles[userId],
+        ...updatedData
     };
 
-
-    // ==========================
-    // 9. Save to Local Storage
-    // ==========================
-
-    let savedProfiles = getSavedProfiles();
-
-    savedProfiles[userId] = updatedEmployee;
-
     try {
-
         localStorage.setItem(
             "profileEdits",
             JSON.stringify(savedProfiles)
         );
 
-        alert("Profile updated successfully!");
+        // Update the logged-in user's stored information
+        const session = JSON.parse(localStorage.getItem("user"));
 
-        window.location.href =
-            "../Employee-profile/Profile.html";
+        if (session && Number(session.id) === userId) {
+            localStorage.setItem(
+                "user",
+                JSON.stringify({
+                    ...session,
+                    ...updatedData
+                })
+            );
+        }
+
+        Swal.fire({
+    icon: "success",
+    title: "Changes Saved!",
+    text: "Your profile has been updated successfully.",
+    position: "center",
+    showConfirmButton: false,
+    timer: 1800,
+    background: "#ffffff",
+    color: "#232743",
+    customClass: {
+        popup: "mysta-popup"
+    }
+}).then(() => {
+    window.location.href =
+        "../Employee-profile/Profile.html";
+});
 
     } catch (error) {
-
         console.error(error);
-
-        alert(
-            "Unable to save changes. " +
-            "Please try a smaller profile image."
-        );
+        alert("Unable to save changes. Try a smaller image.");
     }
-
 });

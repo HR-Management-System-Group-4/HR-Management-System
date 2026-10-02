@@ -1,17 +1,15 @@
 
+// ==========================
 // 1. Settings
-
-// Temporary HR account for testing
-localStorage.setItem("loggedInUserId", "1");
+// ==========================
 
 const userId = Number(localStorage.getItem("loggedInUserId"));
 const jsonPath = "../../employee.json";
-const defaultImage = "../photo.jpg";
 
 const el = id => document.getElementById(id);
 
 const fields = [
-    "name", "email", "phone", "position", "department",
+    "name", "phone", "position", "department",
     "contactName", "contactPhone", "startDate"
 ];
 
@@ -24,7 +22,9 @@ let newImage = null;
 let imageLoading = false;
 
 
-// 2. Local Storage
+// ==========================
+// 2. Helper Functions
+// ==========================
 
 function getSavedProfiles() {
     try {
@@ -34,28 +34,61 @@ function getSavedProfiles() {
     }
 }
 
+function getImagePath(path) {
+    if (!path) return "../../Json-Imges/images.jpg";
 
-// 3. Display Profile
+    if (path.startsWith("data:")) return path;
+
+    return "../../" + path.replace(
+        "Json-Images/",
+        "Json-Imges/"
+    );
+}
+
+// Handle values that are missing from HTML select options
+function setSelectValue(id, value) {
+    const select = el(id);
+    const selectedValue = value || "";
+
+    if (
+        selectedValue &&
+        !Array.from(select.options).some(
+            option => option.value === selectedValue
+        )
+    ) {
+        select.add(new Option(selectedValue, selectedValue));
+    }
+
+    select.value = selectedValue;
+}
+
+
+// ==========================
+// 3. Display HR Profile
+// ==========================
 
 function displayProfile() {
     const id = "HR" + String(profile.id).padStart(3, "0");
-    const image = profile.profileImage || defaultImage;
+    const image = getImagePath(profile.profileImage);
 
+    // Header
     el("headerName").textContent = profile.name;
     el("topName").textContent = profile.name;
-
     el("headerJob").textContent =
         `${profile.position} • ${profile.department}`;
 
     el("headerId").textContent = id;
     el("headerStatus").textContent = profile.accountState;
     el("employeeId").textContent = id;
-    el("displayDate").textContent = profile.startDate || "Not provided";
 
+    el("displayDate").textContent =
+        profile.startDate || "Not provided";
+
+    // Profile and top bar images
     el("profileImage").src = image;
     el("topImage").src = image;
 
-    // Fill the fields
+    // Input values
     const values = {
         name: profile.name,
         email: profile.email,
@@ -64,24 +97,30 @@ function displayProfile() {
         department: profile.department,
         contactName: profile.emergencyContactName,
         contactPhone: profile.emergencyContactPhone,
-        startDate: profile.startDate,
-        employmentType: profile.employmentType,
-        workLocation: profile.workLocation,
-        accountState: profile.accountState
+        startDate: profile.startDate
     };
 
     Object.entries(values).forEach(([id, value]) => {
-        el(id).value = value || "";
+        el(id).value = value ?? "";
+    });
+
+    selects.forEach(id => {
+        setSelectValue(id, profile[id]);
     });
 }
 
 
+// ==========================
 // 4. Edit Mode
+// ==========================
 
 function editMode(editing) {
     fields.forEach(id => {
         el(id).readOnly = !editing;
     });
+
+    // Email can never be edited
+    el("email").readOnly = true;
 
     selects.forEach(id => {
         el(id).disabled = !editing;
@@ -95,40 +134,64 @@ function editMode(editing) {
     el("hrForm").classList.toggle("editing", editing);
 }
 
-// Start in view mode
 editMode(false);
 
 
-// 5. Fetch JSON
+// ==========================
+// 5. Load Logged-in HR
+// ==========================
 
-fetch(jsonPath)
-    .then(response => {
-        if (!response.ok) throw new Error("JSON not found");
-        return response.json();
-    })
+async function loadProfile() {
+    if (!userId) {
+        alert("Please log in first.");
+        return;
+    }
 
-    .then(data => {
-        const employee = (Array.isArray(data) ? data : data.employees).find(user => user.id === userId);
+    try {
+        const response = await fetch(jsonPath);
 
-        if (!employee || employee.role !== "HR") {
-            throw new Error("HR employee not found");
+        if (!response.ok) {
+            throw new Error("Failed to load employee data");
         }
+
+        const data = await response.json();
+
+        const employees = Array.isArray(data)
+            ? data
+            : data.employees;
+
+        const employee = employees.find(
+            user => user.id === userId && user.role === "HR"
+        );
+
+        if (!employee) {
+            throw new Error("HR account not found");
+        }
+
+        const saved = getSavedProfiles()[userId] || {};
 
         profile = {
             ...employee,
-            ...getSavedProfiles()[userId]
+            ...saved,
+            email: employee.email,
+            id: employee.id,
+            role: employee.role
         };
 
         displayProfile();
-    })
 
-    .catch(error => {
+    } catch (error) {
         console.error(error);
         alert("Unable to load HR profile.");
-    });
+    }
+}
+
+loadProfile();
 
 
-// 6. Edit Button
+// ==========================
+// 6. Edit & Cancel
+// ==========================
 
 el("editBtn").addEventListener("click", () => {
     if (!profile) return;
@@ -139,9 +202,6 @@ el("editBtn").addEventListener("click", () => {
     editMode(true);
 });
 
-
-// 7. Cancel Button
-
 el("cancelBtn").addEventListener("click", () => {
     newImage = null;
     el("imageInput").value = "";
@@ -151,15 +211,21 @@ el("cancelBtn").addEventListener("click", () => {
 });
 
 
-// 8. Change Profile Image
+// ==========================
+// 7. Upload Image
+// ==========================
 
-el("imageInput").addEventListener("change", function() {
+el("imageInput").addEventListener("change", function () {
     const file = this.files[0];
+
     if (!file) return;
 
-    if (!["image/jpeg", "image/png"].includes(file.type) ||
-        file.size > 1024 * 1024) {
+    const allowedTypes = ["image/jpeg", "image/png"];
 
+    if (
+        !allowedTypes.includes(file.type) ||
+        file.size > 1024 * 1024
+    ) {
         alert("Choose a JPG or PNG image under 1MB.");
         this.value = "";
         return;
@@ -173,7 +239,6 @@ el("imageInput").addEventListener("change", function() {
     reader.onload = () => {
         newImage = reader.result;
         el("profileImage").src = newImage;
-
         imageLoading = false;
         el("saveBtn").disabled = false;
     };
@@ -188,46 +253,41 @@ el("imageInput").addEventListener("change", function() {
 });
 
 
-// 9. Save Changes
+// ==========================
+// 8. Save Changes
+// ==========================
 
-el("hrForm").addEventListener("submit", function(event) {
+el("hrForm").addEventListener("submit", event => {
     event.preventDefault();
 
     if (!profile || imageLoading) return;
 
     const value = id => el(id).value.trim();
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^\+?[\d\s-]{9,20}$/;
 
-    if (!value("name") || !value("position") ||
-        !value("department")) {
-
+    // Validation
+    if (
+        !value("name") ||
+        !value("position") ||
+        !value("department") ||
+        !value("startDate")
+    ) {
         alert("Please fill all required fields.");
         return;
     }
 
-    if (!emailRegex.test(value("email"))) {
-        alert("Invalid email address.");
-        return;
-    }
-
-    if ([value("phone"), value("contactPhone")].some(
-        phone => phone && !phoneRegex.test(phone)
-    )) {
+    if (
+        [value("phone"), value("contactPhone")].some(
+            phone => phone && !phoneRegex.test(phone)
+        )
+    ) {
         alert("Invalid phone number.");
         return;
     }
 
-    if (!value("startDate")) {
-        alert("Please select a start date.");
-        return;
-    }
-
+    // Prepare changes
     const updated = {
-        ...profile,
         name: value("name"),
-        email: value("email"),
         phone: value("phone"),
         position: value("position"),
         department: value("department"),
@@ -236,12 +296,23 @@ el("hrForm").addEventListener("submit", function(event) {
         startDate: value("startDate"),
         employmentType: value("employmentType"),
         workLocation: value("workLocation"),
-        accountState: value("accountState"),
-        profileImage: newImage || profile.profileImage || ""
+        accountState: value("accountState")
     };
 
+    if (newImage) {
+        updated.profileImage = newImage;
+    }
+
+    // Save only the edited information
     const saved = getSavedProfiles();
-    saved[userId] = updated;
+
+    saved[userId] = {
+        ...saved[userId],
+        ...updated
+    };
+
+    // Keep the original login email
+    delete saved[userId].email;
 
     try {
         localStorage.setItem(
@@ -249,7 +320,26 @@ el("hrForm").addEventListener("submit", function(event) {
             JSON.stringify(saved)
         );
 
-        profile = updated;
+        // Update current session
+        const session = JSON.parse(
+            localStorage.getItem("user") || "null"
+        );
+
+        if (session && Number(session.id) === userId) {
+            localStorage.setItem(
+                "user",
+                JSON.stringify({
+                    ...session,
+                    ...updated
+                })
+            );
+        }
+
+        profile = {
+            ...profile,
+            ...updated
+        };
+
         newImage = null;
 
         displayProfile();

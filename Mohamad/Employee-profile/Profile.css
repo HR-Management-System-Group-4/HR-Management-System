@@ -494,3 +494,32 @@ body {
         grid-template-columns: 1fr;
     }
 }
+.nav-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #232743;
+    font-weight: 600;
+}
+
+.nav-user-img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #118ab2;
+}
+
+.action-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.action-row:hover {
+    color: #118ab2;
+}
