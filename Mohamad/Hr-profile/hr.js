@@ -35,14 +35,15 @@ function getSavedProfiles() {
 }
 
 function getImagePath(path) {
-    if (!path) return "../../Json-Imges/images.jpg";
+    if (!path) {
+        return "../../Json-Images/images.jpg";
+    }
 
-    if (path.startsWith("data:")) return path;
+    if (path.startsWith("data:")) {
+        return path;
+    }
 
-    return "../../" + path.replace(
-        "Json-Images/",
-        "Json-Imges/"
-    );
+    return "../../" + path;
 }
 
 // Handle values that are missing from HTML select options

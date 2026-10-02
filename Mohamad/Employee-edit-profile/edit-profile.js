@@ -39,19 +39,15 @@ function getSavedProfiles() {
 // =========================
 
 function getImagePath(path) {
-
     if (!path) {
-        return "../../Json-Imges/images.jpg";
+        return "../../Json-Images/images.jpg";
     }
 
     if (path.startsWith("data:")) {
         return path;
     }
 
-    return "../../" + path.replace(
-        "Json-Images/",
-        "Json-Imges/"
-    );
+    return "../../" + path;
 }
 
 
