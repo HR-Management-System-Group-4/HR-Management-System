@@ -11,58 +11,13 @@
 
     <link rel="stylesheet" href="hr-panel.css">
     <link rel="stylesheet" href="employeeManagement.css">
+    <link rel="stylesheet" href="../Side_Bar/embed.css">
     <title>Employees Management</title>
 </head>
-<body>
-    <aside>
-        <div class="header">
-            <div class="logo">
-
-            </div>
-
-            <div>Mysta</div>
-            <div class="caption">HR 
-                CONTROL PANEL
-            </div>
-        </div>
-
-       <nav class="links">
-            <a class="overview" href="../Timaaa/Dashboard-HR/index.html">
-                <span>Overview</span>
-            </a>
-
-            <a class="employees" href="../Yasmeen_Telfah/employeeManagement.html" aria-current="page">
-                <span>Employees</span>
-            </a>
-
-            <a class="taskManagement" href="../Ahmad/HR-tasks/index.html">
-                <span>Task Management</span>
-            </a>
-
-            <a class="leaveRequests" href="../Sara_Dolat/Leave-HR/index.html">
-                <span>Leave Requests</span>
-            </a>
-
-            <a class="meetings" href="../Ahmad/HR-zoom/index.html">
-                <span>Meetings</span>
-            </a>
-
-            <a class="policies" href="../Sara_Dolat/company policies/index.html">
-                <span>Policies</span>
-            </a>
-
-            <a class="feedbackInbox" href="../Sara_Sawalmeh/Feedback_HR/Feedback_HR.html">
-                <span>Feedback Inbox</span>
-            </a>
-        </nav>
-
-           
-        <div class="logOut">
-
-            <button type="button" onclick="localStorage.removeItem('user'); localStorage.removeItem('loggedInUserId'); location.href='../Sara_Dolat/log in/index.html'">Log Out</button>
-        </div>
-
-    </aside>
+<body class="hr-page">
+    <button class="hr-nav-toggle" type="button" aria-controls="hrNavigation" aria-expanded="false" aria-label="Open HR menu">☰ HR menu</button>
+    <button class="hr-nav-backdrop" type="button" aria-label="Close HR menu" hidden></button>
+    <iframe id="hrNavigation" class="hr-navigation" src="../Side_Bar/Side_bar.html" title="HR navigation"></iframe>
 
 
 
@@ -194,6 +149,7 @@
         </main>
     </div>
     <script src="employeeManagement.js"></script>
+    <script src="../Side_Bar/embed.js"></script>
   <script src="../demo/flow.js"></script>
 </body>
 </html>

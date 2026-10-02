@@ -14,6 +14,37 @@ if (!reducedMotion && 'IntersectionObserver' in window) {
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
   document.querySelectorAll('[data-reveal], .problems-section').forEach((element) => revealObserver.observe(element));
+
+  const impactSection = document.querySelector('.impact-section');
+  const impactObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      if (entry.target !== impactSection) animateImpactValue(entry.target.querySelector('.impact-value'));
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.28, rootMargin: '0px 0px -5% 0px' });
+  impactObserver.observe(impactSection);
+  impactSection.querySelectorAll('.impact-item').forEach((item) => impactObserver.observe(item));
+}
+
+function animateImpactValue(element) {
+  const target = element.dataset.count;
+  const parts = target.split('/').map(Number);
+  const duration = 1500;
+  let startTime;
+  element.textContent = parts.map(() => '0').join('/');
+
+  function frame(now) {
+    if (startTime === undefined) startTime = now;
+    const progress = Math.min((now - startTime) / duration, 1);
+    const eased = 1 - (1 - progress) ** 4;
+    element.textContent = parts.map(value => Math.round(value * eased)).join('/');
+    if (progress < 1) requestAnimationFrame(frame);
+    else element.textContent = target;
+  }
+
+  requestAnimationFrame(frame);
 }
 
 const services = {

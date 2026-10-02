@@ -7,25 +7,29 @@
 
     <title>Company Policies</title>
 
+    <link rel="stylesheet" href="../../assets/Colors.css">
+    <link rel="stylesheet" href="../../layout/header.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../Side_Bar/embed.css">
+
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
-<body>
+<body class="hr-page">
 
-    <!-- Sidebar -->
-    <button class="mobile-nav-toggle" id="sidebarToggle" type="button" aria-controls="hrSidebar" aria-expanded="false">☰ HR menu</button>
-    <button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="Close HR menu" hidden></button>
-    <aside class="hr-sidebar" id="hrSidebar" aria-label="HR navigation">
-      <iframe src="../../Side_Bar/Side_bar.html" class="sidebar-frame" title="HR navigation"></iframe>
-    </aside>
+    <button class="hr-nav-toggle" type="button" aria-controls="hrNavigation" aria-expanded="false" aria-label="Open HR menu">☰ HR menu</button>
+    <button class="hr-nav-backdrop" type="button" aria-label="Close HR menu" hidden></button>
+    <iframe id="hrNavigation" class="hr-navigation" src="../../Side_Bar/Side_bar.html" title="HR navigation"></iframe>
+
+    <div class="nav-bar"></div>
 
 
     <!-- Main Page -->
     <main class="page">
-        <a class="employee-services-link" href="../../Timaaa/services/index.html">← Back to services</a>
 
         <section class="policies-section">
 
@@ -49,14 +53,14 @@
     </main>
 
 
+    <script src="../../layout/header.js"></script>
     <script src="script.js"></script>
-    <script src="../../Timaaa/Dashboard-HR/sidebar.js"></script>
+    <script src="../../Side_Bar/embed.js"></script>
     <script>
       try {
         if (JSON.parse(localStorage.getItem('user') || 'null')?.role === 'Employee') document.body.classList.add('employee-view');
       } catch (_) { /* Demo can still show the policy library. */ }
     </script>
-    <script src="../../demo/flow.js"></script>
 
 </body>
 

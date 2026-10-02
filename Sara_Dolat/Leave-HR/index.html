@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,68 +8,103 @@
     <title>Leave Requests</title>
 
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../Side_Bar/embed.css">
 </head>
 
-<body>
-     
+<body class="hr-page">
+
+    <button class="hr-nav-toggle" type="button" aria-controls="hrNavigation" aria-expanded="false" aria-label="Open HR menu">☰ HR menu</button>
+    <button class="hr-nav-backdrop" type="button" aria-label="Close HR menu" hidden></button>
+    <iframe id="hrNavigation" class="hr-navigation" src="../../Side_Bar/Side_bar.html" title="HR navigation"></iframe>
+
 <div class="leave">
-    <button class="mobile-nav-toggle" id="sidebarToggle" type="button" aria-controls="hrSidebar" aria-expanded="false">☰ HR menu</button>
-    <button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="Close HR menu" hidden></button>
-    <aside class="hr-sidebar" id="hrSidebar" aria-label="HR navigation">
-      <iframe src="../../Side_Bar/Side_bar.html" title="HR navigation"></iframe>
-    </aside>
 
     <div class="page">
 
+        <!-- Header -->
         <header>
-            <p>MYSTA / HR CONTROL PANEL</p>
+            <p>NORTHWIND / HR CONTROL PANEL</p>
+
             <h1>Leave requests</h1>
-            <span>Review time-off requests and keep decisions clear.</span>
+
+            <span>
+                Review time-off requests and keep decisions clear.
+            </span>
         </header>
+
 
         <main>
 
-            <section class="summary" aria-label="Leave request summary">
-                <div class="summary-card">
+            <!-- Summary -->
+            <div class="summary">
+
+                <div class="summary-card total-card">
                     <div class="summary-icon blue">▤</div>
+
                     <div>
                         <h2 id="total">0</h2>
                         <p>Total Requests</p>
                     </div>
                 </div>
 
-                <div class="summary-card">
+
+                <div class="summary-card pending-card">
                     <div class="summary-icon yellow">◷</div>
+
                     <div>
                         <h2 id="pendingCount">0</h2>
                         <p>Pending</p>
                     </div>
                 </div>
 
-                <div class="summary-card">
+
+                <div class="summary-card approved-card">
                     <div class="summary-icon green">✓</div>
+
                     <div>
                         <h2 id="approvedCount">0</h2>
                         <p>Approved</p>
                     </div>
                 </div>
 
-                <div class="summary-card">
+
+                <div class="summary-card rejected-card">
                     <div class="summary-icon red">×</div>
+
                     <div>
                         <h2 id="rejectedCount">0</h2>
                         <p>Rejected</p>
                     </div>
                 </div>
-            </section>
 
-           <div id="filter">
-    <button type="button" data-status="All" onclick="filterRequests('All')">All</button>
-    <button type="button" data-status="Pending" onclick="filterRequests('Pending')">Pending</button>
-    <button type="button" data-status="Approved" onclick="filterRequests('Approved')">Approved</button>
-    <button type="button" data-status="Rejected" onclick="filterRequests('Rejected')">Rejected</button>
-</div>
+            </div>
 
+
+            <!-- Filter -->
+            <div id="filter">
+
+                <button
+                    class="active"
+                    onclick="filterRequests('All')">
+                    ▦ &nbsp; All
+                </button>
+
+                <button onclick="filterRequests('Pending')">
+                    ◷ &nbsp; Pending
+                </button>
+
+                <button onclick="filterRequests('Approved')">
+                    ✓ &nbsp; Approved
+                </button>
+
+                <button onclick="filterRequests('Rejected')">
+                    × &nbsp; Rejected
+                </button>
+
+            </div>
+
+
+            <!-- Requests -->
             <div id="requests"></div>
 
         </main>
@@ -76,9 +112,9 @@
     </div>
 
 </div>
-    <script src="script.js"></script>
-    <script src="../../Timaaa/Dashboard-HR/sidebar.js"></script>
-    <script src="../../demo/flow.js"></script>
-    
+
+<script src="script.js"></script>
+<script src="../../Side_Bar/embed.js"></script>
+<script src="../../demo/flow.js"></script>
 </body>
 </html>

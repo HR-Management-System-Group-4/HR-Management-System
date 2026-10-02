@@ -82,42 +82,8 @@ min-height:100vh;
 
 
 /* ===============================
-SIDEBAR
+DASHBOARD LAYOUT
 =============================== */
-
-
-.sidebar-space{
-
-
-width:260px;
-
-flex-shrink:0;
-
-
-}
-
-
-
-.sidebar-frame{
-
-
-position:fixed;
-
-left:0;
-
-top:0;
-
-width:260px;
-
-height:100vh;
-
-border:none;
-
-
-}
-
-
-
 
 
 .dashboard{
@@ -1171,16 +1137,6 @@ grid-template-columns:repeat(2,1fr);
 
 
 
-.sidebar-space{
-
-
-display:none;
-
-
-}
-
-
-
 .main{
 
 
@@ -1302,4 +1258,3 @@ LEAVE OVERVIEW DOTS
     color:var(--color-text-muted);
 
 }
-
