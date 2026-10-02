@@ -34,7 +34,7 @@ iframe {
 }
 
 header {
-    padding: 30px 8px;
+    padding: 40px;
 }
 
 header p {
@@ -55,8 +55,8 @@ header span {
 }
 
 main {
-    width: 93%;
-    padding: 10px;
+    width: 100%;
+    padding: 40px;
 }
 
 /* SUMMARY */
