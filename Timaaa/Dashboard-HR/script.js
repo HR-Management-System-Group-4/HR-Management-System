@@ -1,40 +1,56 @@
 // ===================================
-// NEXUS HR DASHBOARD JAVASCRIPT
+// MYSTA HR DASHBOARD JAVASCRIPT
 // ===================================
 
 
 
 // ===============================
-// DATA
+// VARIABLES
+// ===============================
+
+
+let leaveChart;
+
+
+
+
+// ===============================
+// EMPLOYEES DATA
 // ===============================
 
 
 const employees = [
+
 
 {
 name:"Adam Smith",
 department:"Engineering"
 },
 
+
 {
 name:"Lina Ahmad",
 department:"Design"
 },
+
 
 {
 name:"Sara Ahmed",
 department:"Marketing"
 },
 
+
 {
 name:"Omar Khalil",
 department:"Analytics"
 },
 
+
 {
 name:"John David",
 department:"Engineering"
 },
+
 
 {
 name:"Emma Brown",
@@ -42,46 +58,118 @@ department:"Engineering"
 }
 
 
+
 ];
 
 
 
 
+
+
+
+
+// ===============================
+// LEAVE DATA
+// ===============================
 
 
 const leaves = [
-  { employee: "Ahmad Saleh", type: "Annual Leave", date: "2026-10-12", status: "Pending" },
-  { employee: "Dana Rimawi", type: "Annual Leave", date: "2026-10-04", status: "Approved" },
-  { employee: "Tariq Hijazi", type: "Sick Leave", date: "2026-09-27", status: "Rejected" }
-];
-
-try {
-  const decisions = JSON.parse(localStorage.getItem('sampleLeaveDecisions') || '{}');
-  [['sample-1', 0], ['sample-2', 1], ['sample-3', 2]].forEach(([id, index]) => {
-    if (['Approved', 'Rejected'].includes(decisions[id])) leaves[index].status = decisions[id];
-  });
-} catch (_) { /* Use sample statuses. */ }
 
 
-try {
-  const saved = JSON.parse(localStorage.getItem('leaveApplications') || '[]');
-  if (Array.isArray(saved)) {
-    saved.forEach(item => leaves.push({
-      employee: item.employee || 'Employee',
-      type: item.leaveType || 'Leave',
-      date: item.startDate || '',
-      status: item.status || 'Pending'
-    }));
-  }
-} catch (error) {
-  console.warn('Saved leave requests could not be loaded.', error);
+{
+employee:"Ahmad Saleh",
+type:"Annual Leave",
+date:"2026-10-12",
+status:"Pending"
+},
+
+
+{
+employee:"Dana Rimawi",
+type:"Annual Leave",
+date:"2026-10-04",
+status:"Approved"
+},
+
+
+{
+employee:"Tariq Hijazi",
+type:"Sick Leave",
+date:"2026-09-27",
+status:"Rejected"
 }
 
-const escapeDashboardText = value => String(value).replace(/[&<>"']/g, character => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[character]);
+
+
+];
 
 
 
 
+
+
+
+// ===============================
+// LOAD LOCAL STORAGE LEAVES
+// ===============================
+
+
+try{
+
+
+let savedLeaves =
+JSON.parse(
+localStorage.getItem("leaveApplications")
+) || [];
+
+
+
+savedLeaves.forEach(item=>{
+
+
+leaves.push({
+
+
+employee:item.employee || "Employee",
+
+type:item.leaveType || "Leave",
+
+date:item.startDate || "",
+
+status:item.status || "Pending"
+
+
+
+});
+
+
+});
+
+
+}
+
+catch(error){
+
+
+console.log(
+"Local storage error",
+error
+);
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// TASK DATA
+// ===============================
 
 
 const tasks=[
@@ -111,6 +199,7 @@ status:"Completed"
 }
 
 
+
 ];
 
 
@@ -118,7 +207,15 @@ status:"Completed"
 
 
 
-const feedback = [
+
+
+// ===============================
+// FEEDBACK
+// ===============================
+
+
+const feedback=[
+
 
 "New feedback received",
 
@@ -126,7 +223,12 @@ const feedback = [
 
 "HR review completed"
 
+
+
 ];
+
+
+
 
 
 
@@ -144,7 +246,9 @@ function updateStatistics(){
 
 document.getElementById(
 "totalEmployees"
-).innerHTML = employees.length;
+).innerHTML =
+employees.length;
+
 
 
 
@@ -152,9 +256,12 @@ document.getElementById(
 "pendingLeaves"
 ).innerHTML =
 
+
 leaves.filter(
-item=>item.status==="Pending"
+x=>x.status==="Pending"
 ).length;
+
+
 
 
 
@@ -163,9 +270,12 @@ document.getElementById(
 "activeTasks"
 ).innerHTML =
 
+
 tasks.filter(
-item=>item.status==="Active"
+x=>x.status==="Active"
 ).length;
+
+
 
 
 
@@ -174,16 +284,20 @@ document.getElementById(
 "completedTasks"
 ).innerHTML =
 
+
 tasks.filter(
-item=>item.status==="Completed"
+x=>x.status==="Completed"
 ).length;
+
+
 
 
 
 
 document.getElementById(
 "feedback"
-).innerHTML = feedback.length;
+).innerHTML =
+feedback.length;
 
 
 
@@ -196,8 +310,9 @@ document.getElementById(
 
 
 
+
 // ===============================
-// EMPLOYEE DEPARTMENT
+// DEPARTMENT SECTION
 // ===============================
 
 
@@ -209,6 +324,11 @@ let container =
 document.getElementById(
 "department"
 );
+
+
+
+if(!container)
+return;
 
 
 
@@ -232,7 +352,9 @@ departments[emp.department]=0;
 }
 
 
+
 departments[emp.department]++;
+
 
 
 });
@@ -243,6 +365,10 @@ departments[emp.department]++;
 
 Object.keys(departments)
 .forEach(dep=>{
+
+
+let width =
+departments[dep] * 15;
 
 
 
@@ -260,13 +386,17 @@ ${dep}
 ${departments[dep]}
 </b>
 
+
 </p>
 
 
-<span></span>
+
+<span style="width:${width}%"></span>
+
 
 
 </div>
+
 
 
 `;
@@ -288,7 +418,7 @@ ${departments[dep]}
 
 
 // ===============================
-// LEAVE OVERVIEW
+// LEAVE OVERVIEW + CHART
 // ===============================
 
 
@@ -303,10 +433,17 @@ document.getElementById(
 
 
 
+if(!box)
+return;
+
+
+
+
 let pending =
 leaves.filter(
 x=>x.status==="Pending"
 ).length;
+
 
 
 
@@ -317,6 +454,7 @@ x=>x.status==="Approved"
 
 
 
+
 let rejected =
 leaves.filter(
 x=>x.status==="Rejected"
@@ -324,59 +462,270 @@ x=>x.status==="Rejected"
 
 
 
-box.innerHTML=`
+
+let total =
+pending + approved + rejected;
 
 
-<p>
 
-<span class="orange"></span>
+
+
+
+box.innerHTML = `
+
+
+
+<div class="leave-item">
+
+
+<div class="leave-name">
+
+
+<span class="leave-dot"
+style="background:#118ab2">
+</span>
+
 
 Pending
 
-<b>
+
+</div>
+
+
+<div class="leave-number">
+
 ${pending}
-</b>
 
-</p>
+<span class="leave-percent">
+
+${Math.round((pending/total)*100 || 0)}%
+
+</span>
+
+
+</div>
+
+
+</div>
 
 
 
-<p>
 
-<span class="green-dot"></span>
+
+
+<div class="leave-item">
+
+
+<div class="leave-name">
+
+
+<span class="leave-dot"
+style="background:#7cd5c7">
+</span>
+
 
 Approved
 
-<b>
+
+</div>
+
+
+<div class="leave-number">
+
 ${approved}
-</b>
-
-</p>
 
 
+<span class="leave-percent">
 
-<p>
+${Math.round((approved/total)*100 || 0)}%
 
-<span class="red"></span>
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="leave-item">
+
+
+<div class="leave-name">
+
+
+<span class="leave-dot"
+style="background:#ef476f">
+</span>
+
 
 Rejected
 
-<b>
+
+</div>
+
+
+<div class="leave-number">
+
 ${rejected}
-</b>
-
-</p>
 
 
+<span class="leave-percent">
 
-<a href="../../Sara_Dolat/Leave-HR/index.html">
+${Math.round((rejected/total)*100 || 0)}%
 
-View All Requests →
+</span>
 
-</a>
+
+</div>
+
+
+</div>
+
+
 
 
 `;
+
+
+
+
+
+
+
+// CREATE CHART
+
+
+let chartElement =
+document.getElementById(
+"leaveChart"
+);
+
+
+
+if(chartElement){
+
+
+
+if(leaveChart){
+
+leaveChart.destroy();
+
+
+}
+
+
+
+
+leaveChart =
+new Chart(chartElement,{
+
+
+
+type:"doughnut",
+
+
+
+data:{
+
+
+labels:[
+
+"Pending",
+
+"Approved",
+
+"Rejected"
+
+],
+
+
+
+datasets:[{
+
+
+data:[
+
+pending,
+
+approved,
+
+rejected
+
+],
+
+
+
+backgroundColor:[
+
+
+"#118ab2",
+
+"#7cd5c7",
+
+"#ef476f"
+
+
+
+],
+
+
+borderWidth:0
+
+
+
+}]
+
+
+
+},
+
+
+
+options:{
+
+
+
+responsive:true,
+
+
+cutout:"70%",
+
+
+
+plugins:{
+
+
+
+legend:{
+
+
+display:false
+
+
+}
+
+
+
+}
+
+
+
+}
+
+
+
+});
+
+
+
+}
 
 
 
@@ -406,16 +755,23 @@ document.getElementById(
 
 
 
+if(!container)
+return;
+
+
+
 container.innerHTML="";
 
 
 
 
 leaves
+
 .filter(
-leave=>leave.status==="Pending"
+x=>x.status==="Pending"
 )
-.forEach(leave=>{
+
+.forEach(item=>{
 
 
 
@@ -429,12 +785,19 @@ container.innerHTML += `
 
 
 <h4>
-${escapeDashboardText(leave.employee)}
+
+${item.employee}
+
 </h4>
 
 
+
 <p>
-${escapeDashboardText(leave.type)} • ${escapeDashboardText(leave.date)}
+
+${item.type}
+•
+${item.date}
+
 </p>
 
 
@@ -443,12 +806,15 @@ ${escapeDashboardText(leave.type)} • ${escapeDashboardText(leave.date)}
 
 
 <button>
+
 Pending
+
 </button>
 
 
 
 </div>
+
 
 
 `;
@@ -470,7 +836,7 @@ Pending
 
 
 // ===============================
-// RECENT ACTIVITY
+// ACTIVITY TIMELINE
 // ===============================
 
 
@@ -485,26 +851,51 @@ document.getElementById(
 
 
 
+if(!activity)
+return;
+
+
+
 activity.innerHTML="";
+
 
 
 
 let data=[
 
+
+
 {
+
 text:"Ahmad Saleh submitted a leave request",
+
 time:"2 hours ago"
+
+
 },
 
+
+
 {
+
 text:"Lina updated task status",
+
 time:"Yesterday"
+
+
 },
 
+
+
 {
+
 text:"New feedback received",
+
 time:"Today"
+
+
 }
+
 
 
 ];
@@ -513,29 +904,44 @@ time:"Today"
 
 
 
+
+
 data.forEach(item=>{
 
 
-activity.innerHTML +=`
+
+activity.innerHTML += `
 
 
-<li>
+<div class="timeline-item">
 
 
-<div class="circle"></div>
+<div class="timeline-dot"></div>
 
+
+
+<div class="timeline-content">
+
+
+<div class="timeline-title">
 
 ${item.text}
 
+</div>
 
-<small>
+
+<div class="timeline-time">
 
 ${item.time}
 
-</small>
+</div>
 
 
-</li>
+
+</div>
+
+
+</div>
 
 
 `;
@@ -557,31 +963,71 @@ ${item.time}
 
 
 // ===============================
-// QUICK ACTION CLICK EFFECT
+// LOAD EMPLOYEE JSON
 // ===============================
 
 
-document
-.querySelectorAll(".quick-card")
-.forEach(card=>{
+function loadEmployeesJSON(){
 
 
-card.addEventListener(
-"click",
-function(){
+
+fetch("../../employee.json")
+
+
+.then(response=>response.json())
+
+
+.then(data=>{
+
+
+let list =
+Array.isArray(data)
+?
+data
+:
+data.employees;
+
+
+
+if(Array.isArray(list)){
+
+
+
+employees.splice(
+0,
+employees.length,
+...list
+);
+
+
+
+updateStatistics();
+
+loadDepartments();
+
+
+
+}
+
+
+
+})
+
+
+.catch(error=>{
 
 
 console.log(
-"Opening:",
-this.innerText
+"JSON loading error",
+error
 );
 
 
 });
 
 
-});
 
+}
 
 
 
@@ -596,10 +1042,11 @@ this.innerText
 // ===============================
 
 
-
 window.addEventListener(
 "load",
+
 function(){
+
 
 
 updateStatistics();
@@ -616,18 +1063,10 @@ loadPendingRequests();
 
 loadActivity();
 
-fetch('../../employee.json')
-  .then(response => response.json())
-  .then(data => {
-    const all = Array.isArray(data) ? data : data.employees;
-    if (Array.isArray(all)) {
-      employees.splice(0, employees.length, ...all);
-      updateStatistics();
-      loadDepartments();
-    }
-  })
-  .catch(error => console.warn('Employee count unavailable.', error));
+
+loadEmployeesJSON();
 
 
 
 });
+
