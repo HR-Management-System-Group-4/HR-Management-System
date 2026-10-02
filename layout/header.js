@@ -26,7 +26,7 @@ if (navbarContainer) {
 
       nav.querySelectorAll('[data-page-anchor]').forEach((link) => {
         const anchor = `#${link.dataset.pageAnchor}`;
-        link.href = link.dataset.pageAnchor === 'services' ? servicesUrl.href
+        link.href = link.dataset.pageAnchor === 'services' ? (isHomepage ? '#services' : servicesUrl.href)
           : link.dataset.pageAnchor === 'team' ? `${teamUrl.href}#team`
           : link.dataset.pageAnchor === 'about' ? teamUrl.href
           : isHomepage ? anchor : `${homepageUrl.href}${anchor}`;

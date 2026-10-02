@@ -91,9 +91,13 @@
     </main>
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <dialog id="meetingDetails" class="meeting-dialog" aria-labelledby="detailsTitle">
+    <div class="dialog-heading"><h2 id="detailsTitle">Meeting details</h2><button type="button" id="closeDetails" aria-label="Close meeting details">×</button></div>
+    <dl id="detailsList"></dl>
+    <a id="detailsJoin" class="join-link" target="_blank" rel="noopener noreferrer" hidden>Join now</a>
+  </dialog>
   <div class="footer"></div>
-  <script src="main.js?v=demo-flow-1"></script>
+  <script src="main.js?v=meeting-flow-2"></script>
   <script src="../../Side_Bar/embed.js"></script>
-  <script src="../../demo/flow.js"></script>
 </body>
 </html>

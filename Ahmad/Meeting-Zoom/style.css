@@ -92,3 +92,8 @@ body.dark-mode { --color-text-primary: #eef5f5; --color-text-secondary: #b7c6cd;
 .dark-mode .time-options input:checked + span { background: #193c45; }
 @media (max-width: 1000px) { .page-grid { grid-template-columns: 1fr; } .meeting-page { margin-top: 36px; } }
 @media (max-width: 600px) { .meeting-page { width: 94%; margin-top: 30px; } .page-heading p br { display: none; } .meeting-form-card, .upcoming-card, .status-card { padding: 20px; } .date-time-grid { grid-template-columns: 1fr; gap: 0; } .scheduled-banner { flex-wrap: wrap; } .scheduled-pill { margin-left: 64px; } .details-list > div { grid-template-columns: 45% 1fr; } .status-line { flex-wrap: wrap; } .status-pill { padding: 8px 10px; } }
+
+#scheduledMeeting[hidden], #statusPill[hidden] { display: none; }
+#meetingEmpty { color: var(--color-text-muted); font-size: 14px; }
+.meeting-join { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; margin-top: 20px; padding: 0 20px; border-radius: 10px; color: #fff; background: var(--color-accent); font-weight: 700; text-decoration: none; }
+.meeting-join:hover { color: #fff; filter: brightness(.9); }

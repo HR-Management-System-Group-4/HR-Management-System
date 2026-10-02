@@ -4,6 +4,17 @@ document.querySelector('#heroVimeo').addEventListener('load', () => {
 });
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const loginUrl = new URL('../../Sara_Dolat/log in/index.html', document.baseURI).href;
+const servicesUrl = new URL('../../Timaaa/services/index.html', document.baseURI).href;
+
+function isSignedIn() {
+  return ['currentUser', 'user'].some(key => {
+    try {
+      const value = JSON.parse(localStorage.getItem(key) || 'null');
+      return value && typeof value === 'object' && Boolean(value.role);
+    } catch (_) { return false; }
+  });
+}
 if (!reducedMotion && 'IntersectionObserver' in window) {
   document.documentElement.classList.add('motion-ready');
   const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -53,40 +64,40 @@ const services = {
     description: 'Access and manage personal and employment information.',
     pill: 'EMP-1042 · Active',
     items: ['View your employment details', 'Keep contact information current', 'Store your emergency contact', 'View and download your CV'],
-    link: '../../Mohamad/Employee-profile/Profile.html'
+    link: '../../Mohamad/Employee-profile/Profile.html', action: 'Open your profile'
   },
   tasks: {
     number: '02', name: 'TASK MANAGEMENT', title: 'Stay on top of<br>every task.',
     description: 'View assigned work, send solutions, and follow progress.',
     pill: '3 tasks · In progress',
     items: ['See tasks assigned to you', 'Check priorities and due dates', 'Submit your work to HR', 'Track review and completion'],
-    link: '../../Sara_Sawalmeh/Employee_Task/Employee_Task.html'
+    link: '../../Sara_Sawalmeh/Employee_Task/Employee_Task.html', action: 'View your tasks'
   },
   leave: {
     number: '03', name: 'LEAVE MANAGEMENT', title: 'Time off,<br>made simple.',
     description: 'Request leave and see the status of each application.',
     pill: 'Leave · Employee view',
     items: ['Choose your leave type', 'Select start and end dates', 'Explain your request', 'Follow the approval status'],
-    link: '../../Timaaa/Leave-application/Timaa.html'
+    link: '../../Timaaa/Leave-application/Timaa.html', action: 'Request time off'
   },
   policies: {
     number: '04', name: 'COMPANY POLICIES', title: 'Find the policy<br>you need.',
     description: 'Keep important company guidance easy to find.',
     pill: 'Policies · Library',
     items: ['Browse published policies', 'Read current guidance', 'Find documents quickly', 'Stay informed about updates'],
-    link: '../../Sara_Dolat/company policies/index.html'
+    link: '../../Sara_Dolat/company policies/index.html', action: 'Browse policies'
   },
   meetings: {
     number: '05', name: 'MEETINGS', title: 'Never miss a<br>meeting.',
     description: 'View upcoming company meetings and join scheduled Zoom sessions.',
-    link: '../Meeting-Zoom/index.html'
+    link: '../Meeting-Zoom/index.html', action: 'Request a meeting'
   },
   feedback: {
     number: '06', name: 'FEEDBACK', title: 'Your voice,<br>heard clearly.',
     description: 'Share feedback with HR in one simple place.',
     pill: 'Feedback · Employee view',
     items: ['Write your feedback', 'Send it to HR', 'Keep communication organized', 'Help improve everyday work'],
-    link: '../../Yasmeen_Telfah/feedbackEmployees.html'
+    link: '../../Yasmeen_Telfah/feedbackEmployees.html', action: 'Share your feedback'
   }
 };
 
@@ -102,7 +113,12 @@ function renderNextMeeting() {
   let meetings = [];
   try {
     const saved = JSON.parse(localStorage.getItem('ahmadHrZoomDashboardV1') || 'null');
-    if (Array.isArray(saved?.meetings)) meetings = saved.meetings;
+    const requests = JSON.parse(localStorage.getItem('ahmadMeetingRequests') || '[]');
+    const activeId = localStorage.getItem('ahmadActiveMeetingRequest');
+    const activeRequest = requests.find(item => (item.id || item.sentAt) === activeId) || requests.at(-1);
+    if (Array.isArray(saved?.meetings) && activeRequest) {
+      meetings = saved.meetings.filter(item => item.requestId === (activeRequest.id || activeRequest.sentAt));
+    }
   } catch (error) {
     console.warn('Meeting data could not be loaded.', error);
   }
@@ -110,7 +126,7 @@ function renderNextMeeting() {
   // A saved Zoom link distinguishes a scheduled appointment from dashboard sample data.
   const now = Date.now();
   const nextMeeting = meetings
-    .filter(item => item?.status === 'Scheduled' && item.link && /^https?:\/\//i.test(item.link))
+    .filter(item => item?.status === 'Scheduled' && item.link && (() => { try { const url = new URL(item.link); return url.protocol === 'https:' && (url.hostname === 'zoom.us' || url.hostname.endsWith('.zoom.us')); } catch { return false; } })())
     .map(item => ({ ...item, startsAt: new Date(`${item.date}T${item.time}`).getTime() }))
     .filter(item => Number.isFinite(item.startsAt) && item.startsAt >= now)
     .sort((a, b) => a.startsAt - b.startsAt)[0];
@@ -134,10 +150,13 @@ function renderService(key) {
   document.querySelector('#serviceTitle').innerHTML = service.title;
   document.querySelector('#serviceDescription').textContent = service.description;
   const link = document.querySelector('#serviceLink');
-  link.href = service.link;
-  link.innerHTML = key === 'meetings'
-    ? 'Request a meeting <i class="bi bi-arrow-right" aria-hidden="true"></i>'
-    : 'Learn more <i class="bi bi-arrow-up-right" aria-hidden="true"></i>';
+  const signedIn = isSignedIn();
+  link.href = signedIn ? service.link : loginUrl;
+  link.innerHTML = `${signedIn ? service.action : `Log in to ${service.action.toLowerCase()}`} <i class="bi bi-arrow-right" aria-hidden="true"></i>`;
+  document.querySelector('#serviceAccessNote').hidden = signedIn;
+  const getStarted = document.querySelector('#getStartedLink');
+  getStarted.href = signedIn ? servicesUrl : loginUrl;
+  getStarted.setAttribute('aria-label', signedIn ? 'Get started with Mysta services' : 'Log in to get started with Mysta services');
 
   standardPreview.hidden = key === 'meetings';
   meetingPreview.hidden = key !== 'meetings';
@@ -193,4 +212,6 @@ document.querySelectorAll('[data-service]').forEach(element => {
 selectService('profile');
 window.addEventListener('storage', (event) => {
   if (event.key === 'ahmadHrZoomDashboardV1' && activeService === 'meetings') renderNextMeeting();
+  if (event.key === 'currentUser' || event.key === 'user') renderService(activeService);
 });
+window.addEventListener('pageshow', () => renderService(activeService));

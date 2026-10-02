@@ -1,6 +1,6 @@
 # Mysta footer 3D location
 
-The footer opens a real, interactive San Francisco 3D scene when clicked. The default scene uses public textured San Francisco building meshes and satellite imagery, so visitors enter nothing and a static checkout works without a build. The footer lazy-loads its iframe only after a click.
+The footer opens a real, interactive San Francisco 3D scene automatically as visitors approach it. The default scene uses public textured San Francisco building meshes and satellite imagery, so visitors enter nothing and a static checkout works without a build. The footer starts loading its iframe shortly before it enters the viewport.
 
 When a site owner supplies a Cesium ion token and builds the optional Vite app, the iframe instead uses the original Three.js + Google Photorealistic 3D Tiles renderer. The public scene uses the ArcGIS SceneView renderer and I3S data; it is real 3D city geometry, but it is not Google's full photogrammetric mesh. The source and imagery services require an internet connection.
 

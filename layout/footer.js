@@ -3,6 +3,9 @@ const footerContainer = document.querySelector('.footer');
 if (footerContainer) {
   const footerUrl = new URL('footer.html', document.currentScript.src);
   const homepageUrl = new URL('../Ahmad/Homepage/index.html', footerUrl);
+  const servicesUrl = new URL('../Timaaa/services/index.html', footerUrl);
+  const aboutUrl = new URL('../Yasmeen_Telfah/aboutUs.html', footerUrl);
+  const teamUrl = new URL('../Yasmeen_Telfah/aboutUs.html#team', footerUrl);
 
   fetch(footerUrl)
     .then((response) => {
@@ -18,7 +21,10 @@ if (footerContainer) {
       const isHomepage = window.location.pathname === homepageUrl.pathname;
       footer.querySelectorAll('[data-page-anchor]').forEach((link) => {
         const anchor = `#${link.dataset.pageAnchor}`;
-        link.href = isHomepage ? anchor : `${homepageUrl.href}${anchor}`;
+        link.href = link.dataset.pageAnchor === 'services' ? (isHomepage ? '#services' : servicesUrl.href)
+          : link.dataset.pageAnchor === 'about' ? aboutUrl.href
+          : link.dataset.pageAnchor === 'team' ? teamUrl.href
+          : isHomepage ? anchor : `${homepageUrl.href}${anchor}`;
       });
       footerContainer.replaceChildren(footer);
       initializeFooterMap(footer, footerUrl);
@@ -53,11 +59,11 @@ function initializeFooterMap(footer, footerUrl) {
     }
   });
 
-  placeholder.addEventListener('click', async () => {
+  const startMap = async () => {
     if (mapStarted) return;
     mapStarted = true;
-    placeholder.disabled = true;
     placeholder.querySelector('small').textContent = 'Preparing the 3D city…';
+    frame.loading = 'eager';
     try {
       const response = await fetch(mapUrl, { method: 'HEAD' });
       frame.src = response.ok ? mapUrl.href : publicMapUrl.href;
@@ -66,7 +72,15 @@ function initializeFooterMap(footer, footerUrl) {
       frame.src = publicMapUrl.href;
       console.warn('Mysta footer map build unavailable; opening the public 3D scene:', error);
     }
-  });
+  };
+
+  const preloadObserver = new IntersectionObserver((entries, observer) => {
+    if (entries[0].isIntersecting) {
+      startMap();
+      observer.disconnect();
+    }
+  }, { rootMargin: '300px 0px' });
+  preloadObserver.observe(viewport);
 
   const visibleObserver = new IntersectionObserver((entries) => {
     visible = entries[0].isIntersecting && document.visibilityState === 'visible';

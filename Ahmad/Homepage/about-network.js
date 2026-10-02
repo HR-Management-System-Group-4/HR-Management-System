@@ -95,8 +95,8 @@
   }
   function globe(time,dark) {
     const mobile=matchMedia('(max-width: 900px)').matches;
-    const cx=w*(mobile?.5:.745)+px*(mobile?5:13), cy=h*(mobile?.49:.435)+py*8;
-    const r=mobile?Math.min(w*.37,h*.39,172):Math.min(w*.175,h*.31,285);
+    const cx=w*(mobile?.5:.765)+px*(mobile?4:9), cy=h*(mobile?.5:.5)+py*6;
+    const r=mobile?Math.min(w*.3,h*.34,125):Math.min(w*.125,h*.27,190);
     const aura=ctx.createRadialGradient(cx,cy,r*.45,cx,cy,r*1.75);
     aura.addColorStop(0,dark?'rgba(38,152,234,.2)':'rgba(39,170,255,.22)');
     aura.addColorStop(1,'rgba(63,161,255,0)'); circle(cx,cy,r*1.75,aura);
