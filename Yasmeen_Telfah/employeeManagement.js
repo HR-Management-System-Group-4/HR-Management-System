@@ -136,6 +136,44 @@ cancelEmployee.addEventListener("click", function(){
     })
         
 
+let currentTime = document.querySelector("#currentTime");
+let now = new Date();
+
+
+// now.toLocaleString() turns it into readable text.
+currentTime.textContent = now.toLocaleString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+}).toUpperCase();
+
+
+
+
+
+
+
+
+
+let loggedInUser = JSON.parse(localStorage.getItem("user"));
+
+let positionTag = document.querySelector(".positionTage");
+let nameTag = document.querySelector(".nameTag");
+
+if(loggedInUser){
+    positionTag.textContent = "HR ADMIN";
+    nameTag.textContent = loggedInUser.name;
+}
+
+
+
+
+
+
+
+
 
 
 

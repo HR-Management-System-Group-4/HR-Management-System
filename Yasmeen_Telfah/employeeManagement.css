@@ -61,18 +61,15 @@ aside {
     border: 1px solid var(--color-border);
 }
 
-.content-wrapper > header {
-    background-color: var(--color-background);
-    border-bottom: 1px solid var(--color-border);
-}
+
 .content-wrapper {
     margin-left: 320px;
     min-height: 100vh;
 }
 
 .content-wrapper > header {
-    height: 105px;
-    padding: 0 55px;
+    height: 72px;
+    padding: 0 36px;
 
     display: flex;
     justify-content: space-between;
@@ -86,9 +83,8 @@ aside {
 
 main {
     max-width: var(--app-content-max);
-
     margin: 0 auto;
-    padding: 50px 55px;
+    padding: 40px 36px;
 }
 
 main > div:first-child > p:first-child {
@@ -146,6 +142,7 @@ main > div:first-child h1 {
     border-radius: 16px;
 
     overflow: hidden;
+    overflow-x: auto;
 }
 
 /* border-collapse: collapse prevents weird gaps between the table cells. */
@@ -153,6 +150,7 @@ main > div:first-child h1 {
 .employeesCard table {
     width: 100%;
     border-collapse: collapse;
+    min-width: 700px;
 }
 
 .employeesCard th {
@@ -261,7 +259,7 @@ main > div:first-child h1 {
 
 .addEmployeeForm form {
     width: 500px;
-
+    max-width: 90%;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -385,7 +383,7 @@ main > div:first-child h1 {
 
 .editEmployeeForm form {
     width: 500px;
-
+    max-width: 90%;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -611,4 +609,162 @@ Don't sit beside the floated logo. Start underneath it */
     display: flex;
     align-items: center;
     gap: 12px;
+}
+.positionTag {
+    margin: 0;
+
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+
+    color: var(--color-text-muted);
+}
+.nameTag {
+    margin: 0;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: var(--color-text-primary);
+}
+
+#currentTime {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+
+    color: var(--color-text-muted);
+}
+.dlmode {
+    display: block;
+
+    width: 40px;
+    height: 40px;
+
+    padding: 0;
+
+    background-color: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    position: relative;
+}
+
+.dlmode::after {
+    content: "☾";
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    color: var(--color-text-primary);
+
+    font-size: 20px;
+}
+
+#currentTime::before {
+    content: "";
+
+    display: inline-block;
+
+    width: 7px;
+    height: 7px;
+
+    margin-right: 10px;
+
+    background-color: var(--color-accent);
+
+    border-radius: 50%;
+}
+
+.positionTag {
+    padding: 6px 10px;
+
+    background-color: var(--color-surface-blue);
+    border-radius: 20px;
+}
+
+/* overflow-y: auto;
+gives the form its own vertical scrollbar instead of 
+letting it escape off-screen like an unsupervised child. */
+
+.addEmployeeForm form,
+.editEmployeeForm form {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@media (max-width: 900px) {
+
+    aside {
+        width: 220px;
+    }
+
+    .content-wrapper {
+        margin-left: 220px;
+    }
+
+    .content-wrapper > header {
+        padding: 0 20px;
+    }
+
+    main {
+        padding: 30px 20px;
+    }
+}
+@media (max-width: 700px) {
+
+    aside {
+        display: none;
+    }
+
+    .content-wrapper {
+        margin-left: 0;
+    }
+
+    main {
+        padding: 25px 15px;
+    }
+    .addEmployee {
+        margin-top: 20px;
+        margin-bottom: 30px;
+        justify-content: flex-start;
+    }
+    .content-wrapper > header {
+        height: auto;
+        padding: 15px;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .content-wrapper > header > div:last-child {
+        gap: 8px;
+    }
+
+    #currentTime {
+        font-size: 9px;
+    }
+
+    .positionTag {
+        font-size: 9px;
+    }
+
+    .nameTag {
+        font-size: 12px;
+    }
+
+    #saveNewEmployee,
+    #saveEmployee,
+    #cancelNewEmployee,
+    #cancel {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 8px;
+    }
 }
