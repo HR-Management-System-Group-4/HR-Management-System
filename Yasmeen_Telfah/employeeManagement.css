@@ -476,9 +476,7 @@ main > div:first-child > p:last-child {
 
 #cancel:hover {
     background-color: var(--color-surface-blue);
-}
-
-.employeesCard th:nth-child(1),
+}.employeesCard th:nth-child(1),
 .employeesCard td:nth-child(1) {
     width: 40%;
 }
@@ -490,13 +488,12 @@ main > div:first-child > p:last-child {
 
 .employeesCard th:nth-child(3),
 .employeesCard td:nth-child(3) {
-    width: 20%;
+    width: 15%;
 }
 
 .employeesCard th:nth-child(4),
 .employeesCard td:nth-child(4) {
-    width: 22%;
-    min-width: 180px;
+    width: 20%;
 }
 
 .employeesCard tbody tr td {
