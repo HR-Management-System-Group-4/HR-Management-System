@@ -252,19 +252,5 @@ document.querySelector('.notification-button').addEventListener('click', () => s
 document.querySelector('.profile-button').addEventListener('click', () => showToast('HR Admin'));
 document.querySelectorAll('[data-placeholder]').forEach((link) => link.addEventListener('click', (event) => { event.preventDefault(); showToast('This section is coming soon.'); }));
 
-const menuButton = document.querySelector('#menuButton');
-menuButton.addEventListener('click', () => {
-  const open = document.querySelector('#sidebar').classList.toggle('open');
-  menuButton.setAttribute('aria-expanded', String(open));
-  menuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
-});
-document.addEventListener('click', (event) => {
-  if (window.innerWidth > 870 || !document.querySelector('#sidebar').classList.contains('open')) return;
-  if (event.target.closest('#sidebar, #menuButton')) return;
-  document.querySelector('#sidebar').classList.remove('open');
-  menuButton.setAttribute('aria-expanded', 'false');
-  menuButton.setAttribute('aria-label', 'Open navigation');
-});
-
 document.querySelector('#meetingDate').min = localToday;
 renderAll();

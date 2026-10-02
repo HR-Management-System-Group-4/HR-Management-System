@@ -1,0 +1,77 @@
+/* Shared HR navigation on pages outside the dashboard. */
+body.hr-page { padding-left: 260px; }
+
+.hr-navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    width: 260px;
+    height: 100vh;
+    border: 0;
+    background: #0e1b2a;
+}
+
+.hr-nav-toggle, .hr-nav-backdrop { display: none; }
+
+body.hr-page .content-wrapper,
+body.hr-page .page-content,
+body.hr-page .main-content,
+body.hr-page .page { margin-left: 0; }
+
+body.hr-page .main-content,
+body.hr-page .page { width: 100%; }
+
+body.hr-page .app-shell { display: block; max-width: none; }
+
+body.hr-page.employee-view { padding-left: 0; }
+body.hr-page.employee-view .hr-navigation { display: none; }
+body.hr-page.employee-view .page { margin-inline: auto; }
+
+@media (max-width: 800px) {
+    body.hr-page { padding-left: 0; }
+    .hr-navigation {
+        z-index: 1002;
+        transform: translateX(-100%);
+        transition: transform .2s ease;
+    }
+    body.hr-nav-open .hr-navigation { transform: translateX(0); }
+    .hr-nav-toggle {
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        z-index: 1003;
+        display: block;
+        padding: 10px 14px;
+        border: 0;
+        border-radius: 8px;
+        background: #0e1b2a;
+        color: #fff;
+        font: 700 13px Arial, sans-serif;
+        cursor: pointer;
+    }
+    body.hr-nav-open .hr-nav-toggle { left: 216px; }
+    .hr-nav-backdrop:not([hidden]) {
+        position: fixed;
+        inset: 0;
+        z-index: 1001;
+        display: block;
+        width: 100%;
+        border: 0;
+        background: #0e1b2a88;
+    }
+    body.hr-nav-open { overflow: hidden; }
+    body.hr-page .main-content,
+    body.hr-page .page-content,
+    body.hr-page .workspace,
+    body.hr-page .dashboard,
+    body.hr-page .page { padding-top: max(64px, env(safe-area-inset-top)); }
+    body.hr-page.employee-view .page { padding-top: 24px; }
+    body.hr-page.employee-view .hr-nav-toggle { display: none; }
+    body.hr-page .leave .page { padding-top: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hr-navigation { transition: none; }
+}
