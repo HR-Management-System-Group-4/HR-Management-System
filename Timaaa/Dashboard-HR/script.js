@@ -9,14 +9,15 @@
 
 let employees = [];
 
+let leaves = [];
+
+
 
 
 
 // ===============================
 // LOAD LEAVES FROM LOCAL STORAGE
 // ===============================
-
-let leaves = [];
 
 
 try {
@@ -34,14 +35,13 @@ savedLeaves.forEach(item=>{
 
 leaves.push({
 
-employee: item.employee || "Employee",
+employee:item.employee || "Employee",
 
-type: item.leaveType || "Leave",
+type:item.leaveType || "Leave",
 
-date: item.startDate || "",
+date:item.startDate || "",
 
-status: item.status || "Pending"
-
+status:item.status || "Pending"
 
 });
 
@@ -50,6 +50,7 @@ status: item.status || "Pending"
 
 
 }
+
 catch(error){
 
 console.log(
@@ -64,34 +65,41 @@ error
 
 
 
+
 // ===============================
 // TASK DATA
 // ===============================
 
 
-const tasks = [
+const tasks=[
+
 
 {
 title:"Employee Handbook",
 status:"Active"
 },
 
+
 {
 title:"Performance Review",
 status:"Active"
 },
+
 
 {
 title:"System Update",
 status:"Completed"
 },
 
+
 {
 title:"Database Backup",
 status:"Completed"
 }
 
+
 ];
+
 
 
 
@@ -103,7 +111,15 @@ status:"Completed"
 // ===============================
 
 
-const feedback = [];
+const feedback=[
+
+"New feedback received",
+
+"Employee satisfaction survey"
+
+];
+
+
 
 
 
@@ -118,10 +134,8 @@ const feedback = [];
 function updateStatistics(){
 
 
-
 document.getElementById("totalEmployees").innerHTML =
 employees.length;
-
 
 
 
@@ -133,13 +147,11 @@ x=>x.status==="Pending"
 
 
 
-
 document.getElementById("activeTasks").innerHTML =
 
 tasks.filter(
 x=>x.status==="Active"
 ).length;
-
 
 
 
@@ -151,13 +163,13 @@ x=>x.status==="Completed"
 
 
 
-
 document.getElementById("feedback").innerHTML =
 feedback.length;
 
 
 
 }
+
 
 
 
@@ -188,7 +200,7 @@ container.innerHTML="";
 
 
 
-let departments = {};
+let departments={};
 
 
 
@@ -207,7 +219,6 @@ departments[emp.department]=0;
 departments[emp.department]++;
 
 
-
 });
 
 
@@ -216,7 +227,6 @@ departments[emp.department]++;
 
 Object.keys(departments)
 .forEach(dep=>{
-
 
 
 let width =
@@ -242,9 +252,7 @@ ${departments[dep]}
 </p>
 
 
-
 <span style="width:${width}%"></span>
-
 
 
 </div>
@@ -253,9 +261,7 @@ ${departments[dep]}
 `;
 
 
-
 });
-
 
 
 }
@@ -269,7 +275,7 @@ ${departments[dep]}
 
 
 // ===============================
-// LEAVE OVERVIEW
+// LEAVE OVERVIEW + DONUT
 // ===============================
 
 
@@ -286,12 +292,10 @@ return;
 
 
 
-
 let pending =
 leaves.filter(
 x=>x.status==="Pending"
 ).length;
-
 
 
 
@@ -302,7 +306,6 @@ x=>x.status==="Approved"
 
 
 
-
 let rejected =
 leaves.filter(
 x=>x.status==="Rejected"
@@ -310,9 +313,80 @@ x=>x.status==="Rejected"
 
 
 
-
 let total =
 pending + approved + rejected;
+
+
+
+
+
+document.getElementById("totalRequests").innerHTML =
+total;
+
+
+
+
+
+let pendingPercent =
+total ? (pending/total)*360 : 0;
+
+
+let approvedPercent =
+total ? (approved/total)*360 : 0;
+
+
+let rejectedPercent =
+total ? (rejected/total)*360 : 0;
+
+
+
+
+
+let pendingEnd =
+pendingPercent;
+
+
+let approvedEnd =
+pendingPercent + approvedPercent;
+
+
+
+let pendingPercentValue =
+total ? Math.round((pending / total) * 100) : 0;
+
+let approvedPercentValue =
+total ? Math.round((approved / total) * 100) : 0;
+
+let rejectedPercentValue =
+total ? Math.round((rejected / total) * 100) : 0;
+
+let chart =
+document.getElementById("leaveChart");
+
+
+
+if(chart){
+
+
+chart.style.background =
+
+`
+conic-gradient(
+#118ab2 0deg ${pendingEnd}deg,
+
+#7cd5c7 ${pendingEnd}deg ${approvedEnd}deg,
+
+#ef476f ${approvedEnd}deg 360deg
+)
+`;
+
+
+}
+
+
+
+
+
 
 
 
@@ -337,16 +411,12 @@ Pending
 </div>
 
 
-
 <div class="leave-number">
 
 ${pending}
 
-
-<span class="leave-percent">
-
-${Math.round((pending/total)*100 || 0)}%
-
+<span>
+(${Math.round((pending/total)*100 || 0)}%)
 </span>
 
 
@@ -354,6 +424,8 @@ ${Math.round((pending/total)*100 || 0)}%
 
 
 </div>
+
+
 
 
 
@@ -376,16 +448,12 @@ Approved
 </div>
 
 
-
 <div class="leave-number">
 
 ${approved}
 
-
-<span class="leave-percent">
-
-${Math.round((approved/total)*100 || 0)}%
-
+<span>
+(${Math.round((approved/total)*100 || 0)}%)
 </span>
 
 
@@ -393,6 +461,8 @@ ${Math.round((approved/total)*100 || 0)}%
 
 
 </div>
+
+
 
 
 
@@ -416,16 +486,12 @@ Rejected
 </div>
 
 
-
 <div class="leave-number">
 
 ${rejected}
 
-
-<span class="leave-percent">
-
-${Math.round((rejected/total)*100 || 0)}%
-
+<span>
+(${Math.round((rejected/total)*100 || 0)}%)
 </span>
 
 
@@ -438,7 +504,17 @@ ${Math.round((rejected/total)*100 || 0)}%
 
 `;
 
+
+
 }
+
+
+
+
+
+
+
+
 
 // ===============================
 // PENDING REQUESTS
@@ -458,18 +534,17 @@ return;
 
 
 
-container.innerHTML = "";
+container.innerHTML="";
 
 
 
 leaves
 
 .filter(
-item => item.status === "Pending"
+item=>item.status==="Pending"
 )
 
 .forEach(item=>{
-
 
 
 container.innerHTML += `
@@ -488,7 +563,6 @@ ${item.employee}
 </h4>
 
 
-
 <p>
 
 ${item.type}
@@ -501,13 +575,11 @@ ${item.date}
 </div>
 
 
-
 <button>
 
 Pending
 
 </button>
-
 
 
 </div>
@@ -516,12 +588,10 @@ Pending
 `;
 
 
-
 });
 
 
 }
-
 
 
 
@@ -548,47 +618,57 @@ return;
 
 
 
-activity.innerHTML = "";
+activity.innerHTML="";
 
 
 
-let data = [];
+let data=[];
 
 
-
-
-// Create activity from leave requests
 
 leaves.forEach(item=>{
 
 
 data.push({
 
-text:
-`${item.employee} submitted a leave request`,
+employee:item.employee,
 
-time:
-item.date
+action:"submitted a leave request",
 
-});
+date:item.date
 
 
 });
 
 
+});
 
 
 
-if(data.length === 0){
+// newest first
+
+data.sort((a,b)=>{
+
+
+return new Date(b.date)-new Date(a.date);
+
+
+});
+
+
+
+
+
+if(data.length===0){
 
 
 data.push({
 
-text:
-"No recent activity",
+employee:"No activity",
 
-time:
-""
+action:"",
+
+date:""
 
 });
 
@@ -599,40 +679,64 @@ time:
 
 
 
+data.forEach((item,index)=>{
 
-data.forEach(item=>{
+
+let last = 
+index === data.length-1
+?
+"last"
+:
+"";
+
 
 
 activity.innerHTML += `
 
 
-<div class="timeline-item">
+<div class="timeline-item ${last}">
+
+
+
+<div class="timeline-marker">
 
 
 <div class="timeline-dot"></div>
+
+
+<div class="timeline-line"></div>
+
+
+</div>
+
+
 
 
 
 <div class="timeline-content">
 
 
+
 <div class="timeline-title">
 
-${item.text}
+${item.employee} ${item.action}
 
 </div>
+
 
 
 
 <div class="timeline-time">
 
-${item.time}
+${item.date}
 
 </div>
 
 
 
+
 </div>
+
 
 
 </div>
@@ -642,6 +746,7 @@ ${item.time}
 `;
 
 
+
 });
 
 
@@ -650,18 +755,12 @@ ${item.time}
 
 
 
-
-
-
-
-
 // ===============================
-// LOAD EMPLOYEES JSON
+// LOAD EMPLOYEE JSON
 // ===============================
 
 
 function loadEmployeesJSON(){
-
 
 
 fetch("../../employee.json")
@@ -692,7 +791,6 @@ data.employees;
 if(Array.isArray(list)){
 
 
-
 employees.splice(
 
 0,
@@ -705,10 +803,7 @@ employees.length,
 
 
 
-
-
 updateStatistics();
-
 
 loadDepartments();
 
@@ -717,9 +812,7 @@ loadDepartments();
 }
 
 
-
 })
-
 
 
 .catch(error=>{
@@ -732,7 +825,6 @@ console.log(
 error
 
 );
-
 
 
 });
@@ -761,33 +853,33 @@ document.getElementById("profileLink");
 
 
 
-let user = null;
+let user=null;
 
 
 
 try{
 
 
-user =
-JSON.parse(
+user = JSON.parse(
 
-localStorage.getItem("user") ||
+localStorage.getItem("user")
 
-localStorage.getItem("currentUser") ||
+||
+
+localStorage.getItem("currentUser")
+
+||
 
 "null"
 
 );
 
 
-
 }
 
 catch(error){
 
-
 console.log(error);
-
 
 }
 
@@ -798,18 +890,16 @@ console.log(error);
 if(profileLink && user){
 
 
-
 profileLink.href =
 
 `../../Mohamad/Hr-profile/hr.html?id=${user.id}`;
 
 
-
 }
 
 
-}
 
+}
 
 
 
@@ -821,47 +911,116 @@ profileLink.href =
 
 
 // ===============================
-// START DASHBOARD
+// LOAD USER HEADER
 // ===============================
 
+
+function loadUser(){
+
+
+let user=null;
+
+
+try{
+
+
+user=JSON.parse(
+
+localStorage.getItem("currentUser")
+
+||
+
+localStorage.getItem("user")
+
+||
+
+"null"
+
+);
+
+
+}
+
+catch(error){}
+
+
+
+if(user){
+
+
+document.getElementById("dashboardName").textContent =
+user.name || "User";
+
+
+document.getElementById("userRole").textContent =
+user.role || "Employee";
+
+
+
+document.getElementById("dashboardWelcome").textContent =
+`Welcome back, ${user.name?.split(" ")[0] || "User"}!`;
+
+
+
+if(user.profileImage){
+
+    let imageName = user.profileImage.split("/").pop();
+
+    document.getElementById("profileImage").src =
+    "../../Json-Imges/" + imageName;
+
+}
+
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// START
+// ===============================
 
 
 window.addEventListener(
-
 "load",
-
 function(){
 
+
+loadUser();
 
 
 loadEmployeesJSON();
 
 
-
 updateStatistics();
-
 
 
 loadDepartments();
 
 
-
 loadLeaveOverview();
-
 
 
 loadPendingRequests();
 
 
-
 loadActivity();
-
 
 
 loadProfileLink();
 
 
 
-}
-
-);
+});

@@ -8,11 +8,16 @@
 
 <title>Mysta HR Dashboard</title>
 
+<link rel="stylesheet" href="../../assets/Colors.css">
+
 <link rel="stylesheet" href="style.css">
+
 <link rel="stylesheet" href="../../Side_Bar/embed.css">
+
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 
 </head>
 
@@ -20,35 +25,70 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 <body class="hr-page">
 
 
-<button class="hr-nav-toggle" type="button" aria-controls="hrNavigation" aria-expanded="false" aria-label="Open HR menu">
+<button class="hr-nav-toggle"
+type="button"
+aria-controls="hrNavigation"
+aria-expanded="false"
+aria-label="Open HR menu">
+
 ☰ HR menu
+
 </button>
 
-<button class="hr-nav-backdrop" type="button" aria-label="Close HR menu" hidden></button>
 
-<iframe id="hrNavigation" class="hr-navigation" src="../../Side_Bar/Side_bar.html" title="HR navigation"></iframe>
+
+<button class="hr-nav-backdrop"
+type="button"
+aria-label="Close HR menu"
+hidden>
+
+</button>
+
+
+
+
+<iframe 
+id="hrNavigation"
+class="hr-navigation"
+src="../../Side_Bar/Side_bar.html"
+title="HR navigation">
+
+</iframe>
+
+
+
 
 
 <div class="dashboard">
+
 
 <main class="main">
 
 
 
-<!-- HEADER -->
+
+
+<!-- ================= HEADER ================= -->
+
 
 <section class="hero-header">
 
 
 <div>
 
+
 <h1 id="dashboardWelcome">
+
 Welcome back!
+
 </h1>
 
 
+
 <p>
+
 Here's what's happening at Mysta HR today.
+
 </p>
 
 
@@ -57,26 +97,18 @@ Here's what's happening at Mysta HR today.
 
 
 
+
 <div class="profile-area">
 
 
-<a href="#" 
-id="logout"
-class="demo-signout">
 
-Sign out
-
-</a>
-
-
-
-
-<a id="profileLink" href="#">
+<a id="profileLink"
+href="#">
 
 <img 
 id="profileImage"
-src="../../Json-Imges/images.jpg">
-
+src="../../Json-Imges/images.jpg"
+alt="Profile">
 </a>
 
 
@@ -91,7 +123,6 @@ User
 </h4>
 
 
-
 <span id="userRole">
 
 Employee
@@ -99,12 +130,11 @@ Employee
 </span>
 
 
-
 </div>
 
 
-
 </div>
+
 
 
 </section>
@@ -113,7 +143,11 @@ Employee
 
 
 
-<!-- STATISTICS -->
+
+
+
+
+<!-- ================= STAT CARDS ================= -->
 
 
 <section class="stats">
@@ -121,6 +155,7 @@ Employee
 
 
 <div class="stat-card blue">
+
 
 <span>
 TOTAL EMPLOYEES
@@ -227,7 +262,10 @@ This quarter
 
 
 
-<div class="stat-card violet">
+
+<!-- changed violet to turquoise -->
+
+<div class="stat-card turquoise">
 
 
 <span>
@@ -254,10 +292,14 @@ Needs review
 
 </section>
 
-</section>
 
 
-<!-- ANALYTICS -->
+
+
+
+
+
+<!-- ================= ANALYTICS ================= -->
 
 
 <section class="analytics">
@@ -278,9 +320,8 @@ Employees by Department
 
 
 
-<div  
-class="department" 
-id="department">
+<div id="department"
+class="department">
 
 
 </div>
@@ -288,6 +329,8 @@ id="department">
 
 
 </div>
+
+
 
 
 
@@ -298,7 +341,7 @@ id="department">
 <!-- LEAVE OVERVIEW -->
 
 
-<div class="box">
+<div class="box leave-box">
 
 
 <h3>
@@ -307,34 +350,59 @@ Leave Overview
 
 
 
-<div  
-class="leave"
+<div class="leave-chart-container">
+
+
+
+<div class="donut-chart"
+id="leaveChart">
+
+
+<div class="donut-center">
+
+
+<h2 id="totalRequests">
+0
+</h2>
+
+
+<span>
+Total Requests
+</span>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="leave-details"
 id="leaveOverview">
 
 
-
 </div>
 
 
 
 </div>
 
+
+
+</div>
 
 
 
 
 </section>
 
-
-
-
-
-<!-- BOTTOM SECTION -->
+<!-- ================= BOTTOM SECTION ================= -->
 
 
 <section class="bottom">
-
-
 
 
 
@@ -365,9 +433,7 @@ Pending Leave Requests
 
 
 
-
-
-<!-- RECENT ACTIVITY TIMELINE -->
+<!-- RECENT ACTIVITY -->
 
 
 <div class="box">
@@ -379,7 +445,8 @@ Recent Activity
 
 
 
-<div class="timeline" id="activity">
+<div class="timeline"
+id="activity">
 
 
 </div>
@@ -387,6 +454,7 @@ Recent Activity
 
 
 </div>
+
 
 
 
@@ -400,7 +468,7 @@ Recent Activity
 
 
 
-<!-- QUICK ACTIONS -->
+<!-- ================= QUICK ACTIONS ================= -->
 
 
 <section class="quick-section">
@@ -409,6 +477,7 @@ Recent Activity
 <h3>
 Quick Actions
 </h3>
+
 
 
 
@@ -458,8 +527,6 @@ Manage Tasks
 
 
 
-
-
 <a href="../../Mohamad/Hr-profile/hr.html"
 class="quick-card">
 
@@ -468,7 +535,7 @@ class="quick-card">
 
 
 <h4>
-Employee Profile
+my Profile
 </h4>
 
 
@@ -480,20 +547,16 @@ Employee Profile
 
 
 
-<a href="../../Sara_Dolat/company policies/index.html"
+<a href="../../Sara_Sawalmeh/Policies/Policies_HR.html"
 class="quick-card">
 
-
 <i class="fa-solid fa-file"></i>
-
 
 <h4>
 Company Policies
 </h4>
 
-
 </a>
-
 
 
 
@@ -502,7 +565,9 @@ Company Policies
 
 
 
+
 </section>
+
 
 
 
@@ -520,104 +585,12 @@ Company Policies
 
 
 
+
+
 <script src="script.js"></script>
 
+
 <script src="../../Side_Bar/embed.js"></script>
-
-
-
-
-
-
-<script>
-
-
-// ===============================
-// LOAD USER FROM LOCAL STORAGE
-// Main's login uses currentUser; older dashboard flows use user.
-
-let dashboardUser = null;
-
-try {
-
-dashboardUser = JSON.parse(
-localStorage.getItem("currentUser") ||
-localStorage.getItem("user") ||
-"null"
-);
-
-} catch (error) {
-
-console.log("Dashboard user loading error", error);
-
-}
-
-
-
-if (dashboardUser) {
-
-const name = dashboardUser.name || "User";
-
-
-document.getElementById("dashboardWelcome").textContent =
-`Welcome back, ${name.split(" ")[0]}!`;
-
-
-document.getElementById("dashboardName").textContent =
-name;
-
-
-document.getElementById("userRole").textContent =
-dashboardUser.role || "Employee";
-
-
-
-const imageMap = {
-
-"Sara Ahmad":"../../Json-Imges/sara.jpg",
-
-"Ahmad Saleh":"../../Json-Imges/ahmad.jpg"
-
-};
-
-
-
-document.getElementById("profileImage").src =
-imageMap[name] || "../../Json-Imges/images.jpg";
-
-
-}
-
-
-
-
-// LOGOUT
-
-document.getElementById("logout").addEventListener("click", function(event){
-
-
-event.preventDefault();
-
-
-localStorage.removeItem("user");
-
-localStorage.removeItem("currentUser");
-
-localStorage.removeItem("loggedInUserId");
-
-
-window.location.href =
-"../../Sara_Dolat/log in/index.html";
-
-
-});
-
-
-
-</script>
-
-
-
 
 
 
@@ -625,8 +598,7 @@ window.location.href =
 
 
 
-
-
 </body>
+
 
 </html>

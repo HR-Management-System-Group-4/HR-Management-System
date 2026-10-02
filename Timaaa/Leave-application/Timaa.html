@@ -1,258 +1,439 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Employee Leave Application</title>
+<title>Employee Leave Application</title>
 
-    <link rel="stylesheet" href="../../assets/Colors.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../../layout/header.css">
-    <link rel="stylesheet" href="../../layout/footer.css">
-    <!-- Page CSS -->
-    <link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet" href="../../assets/Colors.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<link rel="stylesheet" href="../../layout/header.css">
+
+<link rel="stylesheet" href="../../layout/footer.css">
+
+<link rel="stylesheet" href="style.css">
 
 </head>
 
 
+
 <body>
 
-    <!-- =========================
-         Navbar
-    ========================== -->
 
-    <div class="nav-bar"></div>
+<div class="nav-bar"></div>
 
 
-    <!-- =========================
-         Main Page
-    ========================== -->
 
-    <main class="page">
 
-        <!-- =========================
-             Page Header
-        ========================== -->
+<main class="page">
 
-        <div class="page-header">
 
-            <span class="subtitle">
-                EMPLOYEE SERVICES
-            </span>
 
-            <h1>
-                Leave Application
-            </h1>
+<div class="page-header">
 
-            <p>
-                Submit your leave request for HR review and approval.
-            </p>
 
-        </div>
+<span class="subtitle">
+EMPLOYEE SERVICES
+</span>
 
 
-        <!-- =========================
-             Leave Form
-        ========================== -->
 
-        <div class="form-card">
+<h1>
+Leave Application
+</h1>
 
-            <form id="leaveForm">
 
-                <!-- =========================
-                     Employee Information
-                ========================== -->
 
-                <div class="employee-box">
+<p>
+Submit your leave request for HR review and approval.
+</p>
 
-                    <img
-                        id="employeeImage"
-                        src="images.jpg"
-                        alt="Employee"
-                        class="employee-image">
 
-                    <div class="employee-info">
+</div>
 
-                        <h3 id="employeeName">
-                            Employee
-                            </h3>
 
 
-                            <p id="employeeInfo">
-                            Position • EMP001
-                            </p>
 
-                    </div>
 
-                </div>
+<div class="leave-layout">
 
 
-                <!-- =========================
-                     Leave Type
-                ========================== -->
 
-                <div class="form-group">
+<div class="form-card">
 
-                    <label for="leaveType">
-                        Leave Type <span>*</span>
-                    </label>
 
-                    <select id="leaveType">
 
-                        <option value="">
-                            Select leave type...
-                        </option>
+<form id="leaveForm">
 
-                        <option value="Annual Leave">
-                            Annual Leave
-                        </option>
 
-                        <option value="Sick Leave">
-                            Sick Leave
-                        </option>
 
-                        <option value="Emergency Leave">
-                            Emergency Leave
-                        </option>
 
-                        <option value="Unpaid Leave">
-                            Unpaid Leave
-                        </option>
 
-                    </select>
+<div class="employee-box">
 
-                </div>
 
+<img
+id="employeeImage"
+src="images.jpg"
+alt="Employee"
+class="employee-image">
 
-                <!-- =========================
-                     Dates
-                ========================== -->
 
-                <div class="date-row">
 
-                    <div class="form-group">
+<div class="employee-info">
 
-                        <label for="startDate">
-                            Start Date <span>*</span>
-                        </label>
 
-                        <input
-                            type="date"
-                            id="startDate">
+<h3 id="employeeName">
+Employee
+</h3>
 
-                    </div>
 
 
-                    <div class="form-group">
+<p id="employeeInfo">
+Position • EMP001
+</p>
 
-                        <label for="endDate">
-                            End Date <span>*</span>
-                        </label>
 
-                        <input
-                            type="date"
-                            id="endDate">
 
-                    </div>
+</div>
 
-                </div>
 
+</div>
 
-                <!-- =========================
-                     Hours
-                ========================== -->
 
-                <div class="form-group">
 
-                    <label for="hours">
-                        Hours <span>*</span>
-                    </label>
 
-                    <input
-                        type="number"
-                        id="hours"
-                        placeholder="Enter number of hours"
-                        min="1">
 
-                </div>
 
+<div class="form-group">
 
-                <!-- =========================
-                     Reason
-                ========================== -->
 
-                <div class="form-group">
+<label>
+Leave Type <span>*</span>
+</label>
 
-                    <label for="reason">
-                        Reason for Leave <span>*</span>
-                    </label>
 
-                    <textarea
-                        id="reason"
-                        maxlength="500"
-                        placeholder="Please provide details about your leave request..."
-                    ></textarea>
 
+<select id="leaveType">
 
-                    <div class="textarea-footer">
 
-                        <span>
-                            Minimum 10 characters required
-                        </span>
+<option value="">
+Select leave type...
+</option>
 
-                        <span id="charCount">
-                            0 chars
-                        </span>
 
-                    </div>
+<option value="Annual Leave">
+Annual Leave
+</option>
 
-                </div>
 
+<option value="Sick Leave">
+Sick Leave
+</option>
 
-                <!-- =========================
-                     Buttons
-                ========================== -->
 
-                <div class="buttons">
+<option value="Emergency Leave">
+Emergency Leave
+</option>
 
-                    <button
-                        type="submit"
-                        class="submit-button">
-                        Submit Application
-                    </button>
 
+<option value="Unpaid Leave">
+Unpaid Leave
+</option>
 
-                    <button
-                        type="button"
-                        class="cancel-button"
-                        id="cancelButton">
-                        Cancel
-                    </button>
 
-                </div>
+<option value="Others">
+Others
+</option>
 
-            </form>
 
-        </div>
+</select>
 
-    </main>
 
 
-    <!-- =========================
-         Page JavaScript
-    ========================== -->
+<p id="leaveTypeError" class="error-message"></p>
 
-    <div class="footer"></div>
-    <script src="../../layout/header.js"></script>
-    <script src="../../layout/footer.js"></script>
-    <script src="script.js"></script>
 
-  <script src="../../demo/flow.js"></script>
+
+</div>
+
+
+
+
+
+
+<div class="form-group"
+id="otherLeaveBox"
+style="display:none;">
+
+
+<label>
+Specify Leave Type
+</label>
+
+
+<input
+type="text"
+id="otherLeaveInput"
+placeholder="Enter leave type">
+
+
+
+<p id="otherLeaveError" class="error-message"></p>
+
+
+
+</div>
+
+
+
+
+
+<div class="date-row">
+
+
+<div class="form-group">
+
+
+<label>
+Start Date <span>*</span>
+</label>
+
+
+<input
+type="date"
+id="startDate">
+
+
+
+<p id="startDateError" class="error-message"></p>
+
+
+
+</div>
+
+
+
+
+
+<div class="form-group">
+
+
+<label>
+End Date <span>*</span>
+</label>
+
+
+<input
+type="date"
+id="endDate">
+
+
+
+<p id="endDateError" class="error-message"></p>
+
+
+
+</div>
+
+
+
+</div>
+<!-- HOURS -->
+
+<div class="form-group"
+id="hoursGroup"
+style="display:none;">
+
+
+<label>
+Hours <span>*</span>
+</label>
+
+
+<input
+type="number"
+id="hours"
+min="1"
+max="24"
+placeholder="Enter number of hours">
+
+
+
+<p id="hoursError" class="error-message"></p>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- REASON -->
+
+
+<div class="form-group">
+
+
+<label>
+Reason for Leave <span>*</span>
+</label>
+
+
+
+<textarea
+id="reason"
+maxlength="500"
+placeholder="Please provide details about your leave request..."></textarea>
+
+
+
+
+<div class="textarea-footer">
+
+
+<span>
+Minimum 10 characters required
+</span>
+
+
+
+<span id="charCount">
+0 chars
+</span>
+
+
+
+</div>
+
+
+
+
+<p id="reasonError" class="error-message"></p>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- BUTTONS -->
+
+
+<div class="buttons">
+
+
+<button
+type="submit"
+class="submit-button">
+
+Submit Application
+
+</button>
+
+
+
+
+
+<button
+type="button"
+class="cancel-button"
+id="cancelButton">
+
+Cancel
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+</form>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- REQUEST HISTORY -->
+
+
+<section class="request-history">
+
+
+<h2>
+My leave requests
+</h2>
+
+
+<div class="request-history-list">
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+</main>
+
+
+
+
+
+
+<div class="footer"></div>
+
+
+
+<script src="../../layout/header.js"></script>
+
+<script src="../../layout/footer.js"></script>
+
+<script src="script.js"></script>
+
+
+<script src="../../demo/flow.js"></script>
+
+
+
+
 </body>
 
 </html>
