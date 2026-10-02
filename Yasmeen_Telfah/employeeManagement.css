@@ -1,5 +1,3 @@
-
-
 body {
     margin: 0;
     background-color: var(--color-background);
@@ -11,29 +9,23 @@ aside {
     position: fixed;
     top: 0;
     left: 0;
-
     width: 320px;
     height: 100vh;
     padding: 32px 20px;
-
     background: linear-gradient(
         180deg,
         var(--color-sidebar-top),
         var(--color-sidebar-bottom)
     );
-
     border-right: 1px solid var(--color-border);
-
     display: flex;
     flex-direction: column;
 }
 
 .header > div:nth-child(2) {
     height: 40px;
-
     display: flex;
     align-items: center;
-
     font-size: 17px;
     font-weight: 700;
 }
@@ -61,7 +53,6 @@ aside {
     border: 1px solid var(--color-border);
 }
 
-
 .content-wrapper {
     margin-left: 320px;
     min-height: 100vh;
@@ -70,17 +61,14 @@ aside {
 .content-wrapper > header {
     height: 72px;
     padding: 0 36px;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     background-color: var(--color-background);
     border-bottom: 1px solid var(--color-border);
 }
 
 /* same as max-width: var(--app-content-max); */
-
 main {
     max-width: var(--app-content-max);
     margin: 0 auto;
@@ -89,22 +77,18 @@ main {
 
 main > div:first-child > p:first-child {
     margin: 0 0 12px;
-
     font-family: var(--font-mono);
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 2px;
-
     color: var(--color-text-muted);
 }
 
 main > div:first-child h1 {
     margin: 0 0 10px;
-
     font-size: 46px;
     font-weight: 700;
     line-height: 1.1;
-
     color: var(--color-text-primary);
 }
 
@@ -113,7 +97,6 @@ main > div:first-child > p:last-child {
     font-weight: 500;
     line-height: 1.6;
 }
-
 
 .addEmployee {
     display: flex;
@@ -124,17 +107,13 @@ main > div:first-child > p:last-child {
 
 .addEmployee button {
     padding: 13px 20px;
-
     background-color: var(--color-primary);
     border: 1px solid var(--color-primary);
     border-radius: 10px;
-
     color: white;
-
     font-family: var(--font-sans);
     font-size: 13px;
     font-weight: 600;
-
     cursor: pointer;
 }
 
@@ -144,12 +123,9 @@ main > div:first-child > p:last-child {
 
 .employeesCard {
     margin-top: 20px;
-
     background-color: var(--color-surface);
-
     border: 1px solid var(--color-border);
     border-radius: 16px;
-
     overflow: hidden;
     overflow-x: auto;
 }
@@ -159,13 +135,14 @@ main > div:first-child > p:last-child {
     color: var(--color-text-muted);
     opacity: 0.7;
 }
+
 .addEmployeeForm input:disabled,
 .editEmployeeForm input:disabled {
     background-color: var(--color-surface-blue);
     cursor: not-allowed;
 }
-/* border-collapse: collapse prevents weird gaps between the table cells. */
 
+/* border-collapse: collapse prevents weird gaps between the table cells. */
 .employeesCard table {
     width: 100%;
     border-collapse: collapse;
@@ -174,78 +151,80 @@ main > div:first-child > p:last-child {
 
 .employeesCard th {
     padding: 18px 24px;
-
     text-align: left;
-
     font-family: var(--font-mono);
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 1.5px;
-
     color: var(--color-text-muted);
-
     border-bottom: 1px solid var(--color-border);
 }
 
-
 .employeesCard td {
     padding: 22px 24px;
-
     color: var(--color-text-primary);
-
     border-bottom: 1px solid var(--color-border);
 }
 
 .employeesCard tbody tr:last-child td {
     border-bottom: none;
 }
+
 .employeeInfo p {
     margin: 0;
 }
+
+.employeeProfile {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.employeeImage {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--color-primary-soft);
+    object-fit: cover;
+    object-position: center;
+    flex-shrink: 0;
+    background-color: var(--color-surface-soft);
+    box-shadow: 0 3px 10px rgba(35, 39, 67, 0.10);
+}
+
 .employeeName {
     margin-bottom: 4px !important;
-
     font-size: 15px;
     font-weight: 700;
-
     color: var(--color-text-primary);
 }
 
 .employeeEmail {
     margin-bottom: 6px !important;
-
     font-size: 13px;
     font-weight: 500;
-
     color: var(--color-text-secondary);
 }
-
 
 .employeeDetails {
     font-family: var(--font-mono);
     font-size: 10px;
     font-weight: 500;
     letter-spacing: 0.5px;
-
     color: var(--color-text-muted);
 }
 
 .employeeStatus {
     display: inline-block;
-
     padding: 6px 12px;
-
     background-color: var(--color-surface-mint);
-
     border: 1px solid var(--color-mint);
     border-radius: 20px;
-
     font-size: 12px;
     font-weight: 600;
-
     color: var(--color-text-primary);
-
 }
+
 .employeeStatus.active {
     background-color: var(--color-success-bg);
     color: var(--color-success);
@@ -260,38 +239,67 @@ main > div:first-child > p:last-child {
 
 .edit {
     padding: 8px 16px;
-
     background-color: transparent;
-
     border: 1px solid var(--color-border);
     border-radius: 10px;
-
     font-family: var(--font-sans);
     font-size: 12px;
     font-weight: 600;
-
     color: var(--color-text-secondary);
-
     cursor: pointer;
+    transition: 0.2s;
+}
+
+.edit,
+.blockEmployee {
+    padding: 9px 16px;
+    border-radius: 10px;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
 }
 
 .edit:hover {
-    background-color: var(--color-surface-blue);
+    background-color: var(--color-primary-soft);
     color: var(--color-text-primary);
+}
+
+.employeeActions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    white-space: nowrap;
+}
+
+.blockEmployee {
+    padding: 8px 16px;
+    background-color: transparent;
+    border: 1px solid var(--color-danger);
+    border-radius: 10px;
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-danger);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.blockEmployee:hover {
+    background-color: var(--color-danger-bg);
 }
 
 .addEmployeeForm {
     display: none;
-
     position: fixed;
     top: 0;
     left: 0;
-
     width: 100%;
     height: 100vh;
-
     background-color: rgba(35, 39, 67, 0.35);
-
     z-index: 100;
 }
 
@@ -301,57 +309,42 @@ main > div:first-child > p:last-child {
     position: absolute;
     top: 50%;
     left: 50%;
-
     transform: translate(-50%, -50%);
-
     padding: 35px;
-
     background-color: var(--color-surface);
-
     border: 1px solid var(--color-border);
     border-radius: 18px;
-
     box-shadow: 0 20px 60px rgba(35, 39, 67, 0.15);
 }
+
 .addEmployeeForm h2 {
     margin: 0 0 30px;
-
     font-size: 26px;
     font-weight: 700;
-
     color: var(--color-text-primary);
 }
 
 .addEmployeeForm label {
     display: block;
-
     margin-bottom: 7px;
-
     font-family: var(--font-mono);
     font-size: 10px;
     font-weight: 500;
     letter-spacing: 1.2px;
-
     color: var(--color-text-muted);
 }
 
 .addEmployeeForm input,
 .addEmployeeForm select {
     width: 100%;
-
     padding: 12px 14px;
     margin-bottom: 18px;
-
     background-color: var(--color-surface);
-
     border: 1px solid var(--color-border);
     border-radius: 8px;
-
     font-family: var(--font-sans);
     font-size: 14px;
-
     color: var(--color-text-primary);
-
     outline: none;
 }
 
@@ -368,18 +361,13 @@ main > div:first-child > p:last-child {
 
 #saveNewEmployee {
     padding: 12px 20px;
-
     background-color: var(--color-mint);
-
     border: 1px solid var(--color-mint-strong);
     border-radius: 10px;
-
     color: var(--color-text-primary);
-
     font-family: var(--font-sans);
     font-size: 13px;
     font-weight: 600;
-
     cursor: pointer;
 }
 
@@ -390,18 +378,13 @@ main > div:first-child > p:last-child {
 #cancelNewEmployee {
     padding: 12px 20px;
     margin-left: 8px;
-
     background-color: transparent;
-
     border: 1px solid var(--color-border);
     border-radius: 10px;
-
     color: var(--color-text-secondary);
-
     font-family: var(--font-sans);
     font-size: 13px;
     font-weight: 600;
-
     cursor: pointer;
 }
 
@@ -411,16 +394,12 @@ main > div:first-child > p:last-child {
 
 .editEmployeeForm {
     display: none;
-
     position: fixed;
     top: 0;
     left: 0;
-
     width: 100%;
     height: 100vh;
-
     background-color: rgba(35, 39, 67, 0.35);
-
     z-index: 100;
 }
 
@@ -430,48 +409,34 @@ main > div:first-child > p:last-child {
     position: absolute;
     top: 50%;
     left: 50%;
-
     transform: translate(-50%, -50%);
-
     padding: 35px;
-
     background-color: var(--color-surface);
-
     border: 1px solid var(--color-border);
     border-radius: 18px;
-
     box-shadow: 0 20px 60px rgba(35, 39, 67, 0.15);
 }
 
 .editEmployeeForm label {
     display: block;
-
     margin-bottom: 7px;
-
     font-family: var(--font-mono);
     font-size: 10px;
     letter-spacing: 1.2px;
-
     color: var(--color-text-muted);
 }
 
 .editEmployeeForm input,
 .editEmployeeForm select {
     width: 100%;
-
     padding: 12px 14px;
     margin-bottom: 18px;
-
     background-color: var(--color-surface);
-
     border: 1px solid var(--color-border);
     border-radius: 8px;
-
     font-family: var(--font-sans);
     font-size: 14px;
-
     color: var(--color-text-primary);
-
     outline: none;
 }
 
@@ -482,18 +447,13 @@ main > div:first-child > p:last-child {
 
 #saveEmployee {
     padding: 12px 20px;
-
     background-color: var(--color-mint);
-
     border: 1px solid var(--color-mint-strong);
     border-radius: 10px;
-
     color: var(--color-text-primary);
-
     font-family: var(--font-sans);
     font-size: 13px;
     font-weight: 600;
-
     cursor: pointer;
 }
 
@@ -504,18 +464,13 @@ main > div:first-child > p:last-child {
 #cancel {
     padding: 12px 20px;
     margin-left: 8px;
-
     background-color: transparent;
-
     border: 1px solid var(--color-border);
     border-radius: 10px;
-
     color: var(--color-text-secondary);
-
     font-family: var(--font-sans);
     font-size: 13px;
     font-weight: 600;
-
     cursor: pointer;
 }
 
@@ -540,39 +495,45 @@ main > div:first-child > p:last-child {
 
 .employeesCard th:nth-child(4),
 .employeesCard td:nth-child(4) {
-    width: 15%;
+    width: 22%;
+    min-width: 180px;
 }
 
-.employeesCard tbody tr {
-    transition: background-color 0.2s;
+.employeesCard tbody tr td {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease,
+        filter 0.4s ease;
 }
 
-
+.employeesCard tbody tr.searchHidden td {
+    opacity: 0;
+    transform: translateY(-6px);
+    filter: blur(2px);
+}
 
 .employeesCard td:nth-child(2) {
     font-size: 13px;
     font-weight: 500;
     color: var(--color-text-secondary);
 }
+
 .links {
     margin-top: 30px;
-
     display: flex;
     flex-direction: column;
-
     gap: 8px;
 }
 
 .links a {
     padding: 15px 18px;
-
     display: flex;
     align-items: center;
-
     text-decoration: none;
-
     border-radius: 16px;
-
     font-size: 14px;
     font-weight: 600;
 }
@@ -584,86 +545,65 @@ main > div:first-child > p:last-child {
 
 .links .employees::after {
     content: "→";
-
     margin-left: auto;
-
     font-size: 17px;
-
     color: var(--color-text-primary);
 }
 
 .caption {
     clear: both;
-
     padding-top: 28px;
-
     font-family: var(--font-mono);
     font-size: 9px;
     font-weight: 600;
     letter-spacing: 2px;
     line-height: 1.6;
-
     color: var(--color-text-muted);
 }
-
 
 .header {
     padding: 5px 15px;
 }
+
 .logo {
     width: 40px;
     height: 40px;
-
     float: left;
     margin-right: 12px;
-
     border: 1px solid var(--color-border);
     border-radius: 10px;
-
     background-color: var(--color-surface);
 }
+
 .caption {
-
     /* Because .logo uses float: left, clear: both tells the caption:
-Don't sit beside the floated logo. Start underneath it */
-
+    Don't sit beside the floated logo. Start underneath it */
     clear: both;
-
     padding-top: 28px;
-
     font-family: var(--font-mono);
     font-size: 9px;
     letter-spacing: 2px;
     line-height: 1.6;
-
     color: var(--color-text-muted);
 }
 
 /* auto takes all the unused vertical space and puts it above .logOut, pushing it downward. */
-
 .logOut {
     margin-top: auto;
 }
 
 .logOut button {
     width: 100%;
-
     padding: 14px 18px;
-
     background-color: transparent;
-
     border: 1px solid var(--color-border);
     border-radius: 14px;
-
     font-family: var(--font-sans);
     font-size: 13px;
     font-weight: 600;
-
     color: var(--color-text-secondary);
-
     cursor: pointer;
 }
-
 
 .logOut button:hover {
     background-color: var(--color-surface);
@@ -675,23 +615,20 @@ Don't sit beside the floated logo. Start underneath it */
     align-items: center;
     gap: 12px;
 }
+
 .positionTag {
     margin: 0;
-
     font-family: var(--font-mono);
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 1px;
-
     color: var(--color-text-muted);
 }
 
 .nameTag {
     margin: 0;
-
     font-size: 13px;
     font-weight: 700;
-
     color: var(--color-text-primary);
 }
 
@@ -700,40 +637,28 @@ Don't sit beside the floated logo. Start underneath it */
     font-size: 11px;
     font-weight: 500;
     letter-spacing: 1px;
-
     color: var(--color-text-muted);
 }
 
 .dlmode {
     display: block;
-
     width: 40px;
     height: 40px;
-
     padding: 0;
-
     background-color: var(--color-surface);
-
     border: 1px solid var(--color-border);
     border-radius: 50%;
-
     cursor: pointer;
-
     position: relative;
 }
 
 .dlmode::after {
     content: "☾";
-
     position: absolute;
-
     top: 50%;
     left: 50%;
-
     transform: translate(-50%, -50%);
-
     color: var(--color-text-primary);
-
     font-size: 20px;
 }
 
@@ -743,38 +668,72 @@ body.dark .dlmode::after {
 
 #currentTime::before {
     content: "";
-
     display: inline-block;
-
     width: 7px;
     height: 7px;
-
     margin-right: 10px;
-
     background-color: var(--color-accent);
-
     border-radius: 50%;
 }
 
 .positionTag {
     padding: 6px 10px;
-
     background-color: var(--color-surface-blue);
     border-radius: 20px;
 }
 
 /* overflow-y: auto;
-gives the form its own vertical scrollbar instead of 
+gives the form its own vertical scrollbar instead of
 letting it escape off-screen like an unsupervised child. */
-
 .addEmployeeForm form,
 .editEmployeeForm form {
     max-height: 90vh;
     overflow-y: auto;
 }
 
-@media (max-width: 900px) {
+.employeesCard tr.disabled {
+    background-color: var(--color-surface-soft);
+    opacity: 0.6;
+}
 
+.employeesCard tr.disabled .blockEmployee {
+    opacity: 1;
+}
+
+.employeesCard tr.disabled .edit {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.searchEmployee {
+    margin-bottom: 20px;
+}
+
+.searchEmployee input {
+    width: 500px;
+    max-width: 100%;
+    padding: 13px 18px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    outline: none;
+    transition: 0.2s;
+}
+
+.searchEmployee input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.searchEmployee input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-soft);
+}
+
+@media (max-width: 900px) {
     aside {
         width: 220px;
     }
@@ -799,13 +758,14 @@ letting it escape off-screen like an unsupervised child. */
     .header {
         padding: 5px 10px;
     }
+
     .employeesCard th,
     .employeesCard td {
         padding: 16px 18px;
     }
 }
-@media (max-width: 700px) {
 
+@media (max-width: 700px) {
     aside {
         display: none;
     }
@@ -817,11 +777,13 @@ letting it escape off-screen like an unsupervised child. */
     main {
         padding: 25px 15px;
     }
+
     .addEmployee {
         margin-top: 20px;
         margin-bottom: 30px;
         justify-content: flex-start;
     }
+
     .content-wrapper > header {
         height: auto;
         padding: 15px;
@@ -853,10 +815,12 @@ letting it escape off-screen like an unsupervised child. */
         margin-left: 0;
         margin-top: 8px;
     }
+
     main > div:first-child h1 {
         font-size: 32px;
     }
-        .addEmployeeForm form,
+
+    .addEmployeeForm form,
     .editEmployeeForm form {
         padding: 25px 20px;
     }
