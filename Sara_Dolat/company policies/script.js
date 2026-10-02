@@ -1,4 +1,4 @@
-fetch("employee.json")
+fetch("../../employee.json")
     .then(response => response.json())
     .then(data => {
 
@@ -23,10 +23,6 @@ fetch("employee.json")
 
                             <span class="policy-name">
                                 ${policy.name}
-                            </span>
-
-                            <span class="category">
-                                ${policy.category}
                             </span>
 
                         </div>

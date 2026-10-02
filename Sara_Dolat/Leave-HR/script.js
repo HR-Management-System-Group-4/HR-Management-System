@@ -11,92 +11,85 @@ function save() {
 }
 
 function updateCounts() {
-  document.getElementById("total").innerText = requests.length;
-  document.getElementById("pendingCount").innerText = requests.filter(r => r.status == "Pending").length;
-  document.getElementById("approvedCount").innerText = requests.filter(r => r.status == "Approved").length;
-  document.getElementById("rejectedCount").innerText = requests.filter(r => r.status == "Rejected").length;
+  total.innerText = requests.length;
+  pendingCount.innerText = requests.filter(r => r.status == "Pending").length;
+  approvedCount.innerText = requests.filter(r => r.status == "Approved").length;
+  rejectedCount.innerText = requests.filter(r => r.status == "Rejected").length;
 }
 
 function show(data) {
-  box.innerHTML = "";
+  box.innerHTML = data.map(r => `
+    <div class="card">
 
-  data.forEach(r => {
-    box.innerHTML += `
-      <div class="card">
-
-        <div class="name">
-          <div>
-            <h3>${r.employee}</h3>
-            <p class="details">${r.leaveType}</p>
-          </div>
-        </div>
-
+      <div class="name">
         <div>
-          <p class="details">
-            ▣ &nbsp; ${r.startDate} - ${r.endDate}
-          </p>
-
-          <p class="reason">
-            ▢ &nbsp; ${r.reason}
-          </p>
+          <h3>${r.employee || r.name}</h3>
+          <p class="details">${r.leaveType}</p>
         </div>
+      </div>
 
-        <div>
+      <div>
+        <p class="details">
+          ${r.startDate || r.date}${r.endDate ? " - " + r.endDate : ""}
+        </p>
+        <p class="reason">${r.reason}</p>
+      </div>
 
-          <span class="status ${r.status.toLowerCase()}">
-            ${r.status}
-          </span>
+      <div>
+        <span class="status ${r.status.toLowerCase()}">${r.status}</span>
 
-          ${
-            r.status == "Pending"
+        ${
+          r.status == "Pending"
             ? `
               <div class="actions">
-
-                <button class="approve" onclick="approve(${r.id})">
-                  Approve
-                </button>
-
-                <button class="reject" onclick="reject(${r.id})">
-                  Reject
-                </button>
-
+                <button class="approve" onclick="approve(${r.id})">Approve</button>
+                <button class="reject" onclick="reject(${r.id})">Reject</button>
               </div>
-
               <div class="reviewed">
-                Requested on ${r.createdDate}
+                ${r.createdDate ? "Requested on " + r.createdDate : ""}
               </div>
             `
             : `
               <div class="reviewed">
-                ${r.status}
-                <br>by HR Admin
+                ${r.status}<br>by HR Admin
               </div>
             `
-          }
-
-        </div>
-
+        }
       </div>
-    `;
-  });
+
+    </div>
+  `).join("");
+}
+
+function changeStatus(id, status) {
+  let request = requests.find(r => r.id == id);
+  if (request) request.status = status;
+
+  save();
+  updateCounts();
+  show(requests);
 }
 
 function approve(id) {
-  requests.find(r => r.id == id).status = "Approved";
-  save();
-  updateCounts();
-  show(requests);
+  changeStatus(id, "Approved");
 }
 
 function reject(id) {
-  requests.find(r => r.id == id).status = "Rejected";
-  save();
-  updateCounts();
-  show(requests);
+  changeStatus(id, "Rejected");
 }
 
 function filterRequests(status) {
-  show(status == "All" ? requests : requests.filter(r => r.status == status));
+  document.querySelectorAll("#filter button")
+    .forEach(btn => btn.classList.remove("active"));
+
+  document.querySelector(
+    `#filter button[onclick="filterRequests('${status}')"]`
+  ).classList.add("active");
+
+  show(status == "All"
+    ? requests
+    : requests.filter(r => r.status == status)
+  );
 }
 
 updateCounts();

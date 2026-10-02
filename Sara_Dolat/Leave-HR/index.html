@@ -15,13 +15,25 @@
 
 <body class="hr-page">
 
-    <button class="hr-nav-toggle" type="button" aria-controls="hrNavigation" aria-expanded="false" aria-label="Open HR menu">☰ HR menu</button>
-    <button class="hr-nav-backdrop" type="button" aria-label="Close HR menu" hidden></button>
-    <iframe id="hrNavigation" class="hr-navigation" src="../../Side_Bar/Side_bar.html" title="HR navigation"></iframe>
+    <button class="hr-nav-toggle"
+            type="button"
+            aria-controls="hrNavigation"
+            aria-expanded="false"
+            aria-label="Open HR menu">☰ HR menu</button>
+
+    <button class="hr-nav-backdrop"
+            type="button"
+            aria-label="Close HR menu"
+            hidden></button>
+
+    <iframe id="hrNavigation"
+            class="hr-navigation"
+            src="../../Side_Bar/Side_bar.html"
+            title="HR navigation"></iframe>
+
 
 <div class="leave">
-
-    <div class="page">
+<div class="page">
 
         <!-- Header -->
         <header>
@@ -86,7 +98,7 @@
             <div id="filter">
 
                 <button
-                    class="active"
+                    class="active" id="all"
                     onclick="filterRequests('All')">
                     ▦ &nbsp; All
                 </button>

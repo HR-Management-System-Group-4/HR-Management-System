@@ -1,12 +1,12 @@
-
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-      
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <title>Login</title>
 
     <link rel="stylesheet" href="style.css">
@@ -19,88 +19,107 @@
     <!-- LEFT SIDE -->
     <div class="left">
 
-        <div class="logo">
-           <img src="../../assets/Logo.png" width="100" height="100" alt="Mysta">
+    <div class="space">
+
+        <!-- Stars -->
+        <span class="star s1"></span>
+        <span class="star s2"></span>
+        <span class="star s3"></span>
+        <span class="star s4"></span>
+        <span class="star s5"></span>
+        <span class="star s6"></span>
+        <span class="star s7"></span>
+        <span class="star s8"></span>
+        <span class="star s9"></span>
+        <span class="star s10"></span>
+        <span class="star s11"></span>
+        <span class="star s12"></span>
+
+        <!-- Orbits -->
+        <div class="orbit orbit1">
+            <span class="planet"></span>
         </div>
 
-        <h1>
-            One sign-in for your whole
-            workday.
-        </h1>
+        <div class="orbit orbit2">
+            <span class="planet"></span>
+        </div>
 
-        <p class="description">
-            Your dashboard adapts to your role after you sign in.
-        </p>
+        <div class="orbit orbit3">
+            <span class="planet"></span>
+        </div>
 
-        <p class="bottom">
-            ACCOUNTS ARE CREATED BY HR
-           
-            NEED ACCESS?
-            CONTACT YOUR HR TEAM
-        </p>
+        <!-- Logo -->
+        <div class="logo">
+            <img src="../../assets/Logo.png"
+                 width="250"
+                 height="250"
+                 alt="Mysta">
+        </div>
 
     </div>
 
+
+</div>
 
     <!-- RIGHT SIDE -->
     <div class="right">
 
         <div class="login-box">
 
-            <a class="back-link" href="../../Ahmad/Homepage/index.html">← Back to website</a>
+            <a class="back-link"
+                href="../../Ahmad/Homepage/index.html">
+                ← Back to website
+            </a>
 
             <h2>Log in</h2>
 
-            <p>Use your work email and password.</p>
+            <p>
+                Use your work email and password.
+            </p>
 
 
-            <form id="loginForm">
-            <!-- ROLE -->
-            <div class="role">
+           <form id="loginForm">
 
-                <button type="button" id="employee">
-                <i class="fa-solid fa-users"  ></i>
-                    Employee
-                </button>
+    <div class="role">
 
-                <button type="button" id="hr">
-                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-gear" viewBox="0 0 16 16">
-                      <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"  />
-                   </svg>
-                HR
-                </button>
+        <button type="button" id="employee">
+            <i class="fa-solid fa-users"></i>
+            Employee
+        </button>
 
-            </div>
+        <button type="button" id="hr">
+            <!-- SVG تبعك -->
+            HR
+        </button>
 
+    </div>
 
-            <!-- EMAIL -->
-            <label for="email">Email</label>
+    <label for="email">Email</label>
 
-            <input
-                type="email"
-                id="email"
-                placeholder="Enter your email"
-            >
+    <input
+        type="email"
+        id="email"
+        placeholder="Enter your email"
+        required
+    >
 
+    <label for="password">Password</label>
 
-            <!-- PASSWORD -->
-            <label for="password">Password</label>
+    <input
+        type="password"
+        id="password"
+        placeholder="Enter your password"
+        minlength="6"
+        required
+    >
 
-            <input
-                type="password"
-                id="password"
-                placeholder="Enter your password"
-            >
+    <button type="submit" id="login">
+        Log in ↗
+    </button>
 
+    <p id="message"></p>
 
-            <!-- LOGIN -->
-            <button type="submit" id="login">
-                Log in ↗
-            </button>
-
-            <p id="message" role="alert"></p>
-            </form>
-          <!--  <p class="demo-account">Demo HR: sara.ahmad@mysta.com / Sara@123<br>Demo Employee: omar.khaled@mysta.com / Omar@123</p>-->
+</form>
 
         </div>
 
