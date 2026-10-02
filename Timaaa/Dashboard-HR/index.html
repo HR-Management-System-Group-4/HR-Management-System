@@ -6,53 +6,89 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Nexus HR Dashboard</title>
+<title>Mysta HR Dashboard</title>
+
+<link rel="stylesheet" href="../../assets/Colors.css">
 
 <link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet" href="../../Side_Bar/embed.css">
+
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+
 </head>
 
 
-<body>
+<body class="hr-page">
 
 
-<!-- SIDEBAR -->
+<button class="hr-nav-toggle"
+type="button"
+aria-controls="hrNavigation"
+aria-expanded="false"
+aria-label="Open HR menu">
+
+☰ HR menu
+
+</button>
+
+
+
+<button class="hr-nav-backdrop"
+type="button"
+aria-label="Close HR menu"
+hidden>
+
+</button>
+
+
+
 
 <iframe 
+id="hrNavigation"
+class="hr-navigation"
 src="../../Side_Bar/Side_bar.html"
-class="sidebar-frame">
+title="HR navigation">
+
 </iframe>
+
+
 
 
 
 <div class="dashboard">
 
 
-<aside class="sidebar-space"></aside>
-
-
-
 <main class="main">
 
 
 
-<!-- HEADER -->
+
+
+<!-- ================= HEADER ================= -->
+
 
 <section class="hero-header">
 
 
 <div>
 
-<h1>
-Welcome back, Rachel!
+
+<h1 id="dashboardWelcome">
+
+Welcome back!
+
 </h1>
 
 
+
 <p>
-Here's what's happening at Nexus HR today.
+
+Here's what's happening at Mysta HR today.
+
 </p>
 
 
@@ -60,23 +96,37 @@ Here's what's happening at Nexus HR today.
 
 
 
+
+
 <div class="profile-area">
 
 
 
+<a id="profileLink"
+href="#">
 
-<img src="https://i.pravatar.cc/100">
+<img 
+id="profileImage"
+src="../../Json-Imges/images.jpg"
+alt="Profile">
+</a>
+
 
 
 <div>
 
-<h4>
-Rachel Carter
+
+<h4 id="dashboardName">
+
+User
+
 </h4>
 
 
-<span>
-HR Admin
+<span id="userRole">
+
+Employee
+
 </span>
 
 
@@ -84,6 +134,7 @@ HR Admin
 
 
 </div>
+
 
 
 </section>
@@ -93,27 +144,36 @@ HR Admin
 
 
 
-<!-- STATISTICS -->
+
+
+
+<!-- ================= STAT CARDS ================= -->
 
 
 <section class="stats">
 
 
+
 <div class="stat-card blue">
+
 
 <span>
 TOTAL EMPLOYEES
 </span>
 
-<h2>
-6
+
+<h2 id="totalEmployees">
+0
 </h2>
+
 
 <p>
 +2 this month
 </p>
 
+
 <i class="fa-solid fa-users"></i>
+
 
 </div>
 
@@ -123,19 +183,24 @@ TOTAL EMPLOYEES
 
 <div class="stat-card green">
 
+
 <span>
 PENDING LEAVES
 </span>
 
-<h2>
-2
+
+<h2 id="pendingLeaves">
+0
 </h2>
+
 
 <p>
 Awaiting review
 </p>
 
+
 <i class="fa-solid fa-calendar"></i>
+
 
 </div>
 
@@ -145,19 +210,24 @@ Awaiting review
 
 <div class="stat-card purple">
 
+
 <span>
 ACTIVE TASKS
 </span>
 
-<h2>
-5
+
+<h2 id="activeTasks">
+0
 </h2>
+
 
 <p>
 Across all teams
 </p>
 
+
 <i class="fa-solid fa-check"></i>
+
 
 </div>
 
@@ -167,19 +237,24 @@ Across all teams
 
 <div class="stat-card mint">
 
+
 <span>
 COMPLETED
 </span>
 
-<h2>
-1
+
+<h2 id="completedTasks">
+0
 </h2>
+
 
 <p>
 This quarter
 </p>
 
+
 <i class="fa-solid fa-circle-check"></i>
+
 
 </div>
 
@@ -187,21 +262,29 @@ This quarter
 
 
 
-<div class="stat-card violet">
+
+<!-- changed violet to turquoise -->
+
+<div class="stat-card turquoise">
+
 
 <span>
 NEW FEEDBACK
 </span>
 
-<h2>
-3
+
+<h2 id="feedback">
+0
 </h2>
+
 
 <p>
 Needs review
 </p>
 
+
 <i class="fa-solid fa-comment"></i>
+
 
 </div>
 
@@ -216,14 +299,16 @@ Needs review
 
 
 
-<!-- ANALYTICS -->
+<!-- ================= ANALYTICS ================= -->
 
 
 <section class="analytics">
 
 
 
-<!-- EMPLOYEES -->
+
+
+<!-- DEPARTMENT -->
 
 
 <div class="box">
@@ -235,61 +320,9 @@ Employees by Department
 
 
 
-<div class="department">
+<div id="department"
+class="department">
 
-
-<div>
-
-<p>
-Engineering
-<b>12</b>
-</p>
-
-<span></span>
-
-</div>
-
-
-
-
-<div>
-
-<p>
-Marketing
-<b>8</b>
-</p>
-
-<span></span>
-
-</div>
-
-
-
-
-
-<div>
-
-<p>
-Design
-<b>5</b>
-</p>
-
-<span></span>
-
-</div>
-
-
-
-
-
-<div>
-
-<p>
-Analytics
-<b>4</b>
-</p>
-
-<span></span>
 
 </div>
 
@@ -297,8 +330,6 @@ Analytics
 
 </div>
 
-
-</div>
 
 
 
@@ -310,7 +341,7 @@ Analytics
 <!-- LEAVE OVERVIEW -->
 
 
-<div class="box">
+<div class="box leave-box">
 
 
 <h3>
@@ -319,60 +350,25 @@ Leave Overview
 
 
 
-<div class="leave">
-
-
-<p>
-
-<span class="orange"></span>
-
-Pending
-
-<b>
-2
-</b>
-
-</p>
+<div class="leave-chart-container">
 
 
 
-
-<p>
-
-<span class="green-dot"></span>
-
-Approved
-
-<b>
-8
-</b>
-
-</p>
+<div class="donut-chart"
+id="leaveChart">
 
 
+<div class="donut-center">
 
 
-<p>
-
-<span class="red"></span>
-
-Rejected
-
-<b>
-1
-</b>
-
-</p>
+<h2 id="totalRequests">
+0
+</h2>
 
 
-
-<a href="../Leave-application/index.html"
-target="_blank">
-
-View All Requests →
-
-</a>
-
+<span>
+Total Requests
+</span>
 
 
 </div>
@@ -380,27 +376,37 @@ View All Requests →
 
 </div>
 
+
+
+
+
+<div class="leave-details"
+id="leaveOverview">
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
 
 
 
 
 </section>
 
-
-
-
-
-
-
-
-
-<!-- BOTTOM -->
+<!-- ================= BOTTOM SECTION ================= -->
 
 
 <section class="bottom">
 
 
 
+<!-- PENDING REQUESTS -->
 
 
 <div class="box">
@@ -412,63 +418,10 @@ Pending Leave Requests
 
 
 
-
-<div class="request">
-
-
-<div>
-
-<h4>
-Adam Smith
-</h4>
-
-
-<p>
-Annual Leave • 2026-10-10
-</p>
+<div id="pendingRequests">
 
 
 </div>
-
-
-
-<button>
-Pending
-</button>
-
-
-</div>
-
-
-
-
-
-<div class="request">
-
-
-<div>
-
-<h4>
-Lina Ahmad
-</h4>
-
-
-<p>
-Sick Leave • 2026-10-15
-</p>
-
-
-</div>
-
-
-
-<button>
-Pending
-</button>
-
-
-</div>
-
 
 
 
@@ -478,6 +431,9 @@ Pending
 
 
 
+
+
+<!-- RECENT ACTIVITY -->
 
 
 <div class="box">
@@ -489,58 +445,11 @@ Recent Activity
 
 
 
-<ul class="activity">
+<div class="timeline"
+id="activity">
 
 
-<li>
-
-<div class="circle"></div>
-
-Adam Smith submitted a leave request
-
-<small>
-2 hours ago
-</small>
-
-
-</li>
-
-
-
-
-<li>
-
-<div class="circle"></div>
-
-Lina updated task status
-
-<small>
-Yesterday
-</small>
-
-
-</li>
-
-
-
-
-
-<li>
-
-<div class="circle"></div>
-
-New feedback received
-
-<small>
-Today
-</small>
-
-
-</li>
-
-
-
-</ul>
+</div>
 
 
 
@@ -559,7 +468,7 @@ Today
 
 
 
-<!-- QUICK ACTIONS -->
+<!-- ================= QUICK ACTIONS ================= -->
 
 
 <section class="quick-section">
@@ -571,12 +480,14 @@ Quick Actions
 
 
 
+
 <div class="quick-actions">
 
 
 
 
-<a href="../Leave-application/index.html"
+
+<a href="../../Sara_Dolat/Leave-HR/index.html"
 class="quick-card">
 
 
@@ -584,7 +495,7 @@ class="quick-card">
 
 
 <h4>
-Request Leave
+Review Leave Requests
 </h4>
 
 
@@ -594,7 +505,9 @@ Request Leave
 
 
 
-<a href="../task_page/index.html"
+
+
+<a href="../../Ahmad/HR-tasks/index.html"
 class="quick-card">
 
 
@@ -610,42 +523,82 @@ Manage Tasks
 
 
 
-<a href="../Employee-profile/index.html"
+
+
+
+
+<a href="../../Mohamad/Hr-profile/hr.html"
 class="quick-card">
 
 
 <i class="fa-solid fa-user"></i>
 
+
 <h4>
-Employee Profile
+my Profile
 </h4>
+
 
 </a>
 
 
-<a href="../Policies/index.html"
+
+
+
+
+
+<a href="../../Sara_Sawalmeh/Policies/Policies_HR.html"
 class="quick-card">
 
-
 <i class="fa-solid fa-file"></i>
-
 
 <h4>
 Company Policies
 </h4>
 
-
 </a>
 
+
+
+
 </div>
+
+
 
 
 </section>
 
 
+
+
+
+
+
 </main>
+
+
 </div>
 
+
+
+
+
+
+
+
+
 <script src="script.js"></script>
+
+
+<script src="../../Side_Bar/embed.js"></script>
+
+
+
+<script src="../../demo/flow.js"></script>
+
+
+
 </body>
+
+
 </html>

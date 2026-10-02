@@ -1,80 +1,89 @@
-/* =========================
+/* =====================================================
+   MYSTA HR DASHBOARD STYLE
+===================================================== */
+
+
+/* ===============================
+   ROOT COLORS
+=============================== */
+
+:root{
+
+--color-text-primary:#232743;
+
+--color-text-secondary:#60657d;
+
+--color-text-muted:#70758d;
+
+--color-background:#f2f2ed;
+
+--color-surface:#ffffff;
+
+--color-border:rgba(70,75,113,.16);
+
+--color-accent:#118ab2;
+
+--color-surface-blue:#e6e8f1;
+
+--color-surface-mint:#dff3ef;
+
+--color-mint:#c4ebe4;
+
+--color-mint-strong:#7cd5c7;
+
+}
+
+
+
+/* ===============================
 RESET
-========================= */
+=============================== */
+
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:"Inter","Segoe UI",Arial,sans-serif;
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Manrope",system-ui,sans-serif;
+
 }
+
 
 
 body{
 
-    background:#f7f8f5;
-    color:#172554;
+background:var(--color-background);
+
+color:var(--color-text-primary);
+
+min-height:100vh;
 
 }
 
 
-/* =========================
-SIDEBAR
-========================= */
 
 
-.sidebar-frame{
-
-    position:fixed;
-
-    top:0;
-    left:0;
-
-    width:285px;
-    height:100vh;
-
-    border:none;
-
-    z-index:1000;
-
-}
-
+/* ===============================
+LAYOUT
+=============================== */
 
 
 .dashboard{
 
-    display:flex;
+display:flex;
 
-    min-height:100vh;
-
-}
-
-
-
-.sidebar-space{
-
-    width:285px;
-
-    flex-shrink:0;
+min-height:100vh;
 
 }
 
-
-
-
-
-
-
-/* =========================
-MAIN
-========================= */
 
 
 .main{
 
-    flex:1;
+flex:1;
 
-    padding:35px 45px 60px;
+padding:35px 45px;
 
 }
 
@@ -83,34 +92,32 @@ MAIN
 
 
 
-
-/* =========================
+/* ===============================
 HEADER
-========================= */
+=============================== */
 
 
 .hero-header{
 
-    display:flex;
+display:flex;
 
-    justify-content:space-between;
+justify-content:space-between;
 
-    align-items:center;
+align-items:center;
 
-    margin-bottom:35px;
+margin-bottom:35px;
 
 }
-
 
 
 
 .hero-header h1{
 
-    font-size:36px;
+font-size:36px;
 
-    color:#173d6d;
+font-weight:700;
 
-    font-weight:700;
+color:var(--color-text-primary);
 
 }
 
@@ -118,11 +125,11 @@ HEADER
 
 .hero-header p{
 
-    margin-top:8px;
+margin-top:8px;
 
-    color:#64748b;
+font-size:15px;
 
-    font-size:15px;
+color:var(--color-text-secondary);
 
 }
 
@@ -131,21 +138,11 @@ HEADER
 
 .profile-area{
 
-    display:flex;
+display:flex;
 
-    align-items:center;
+align-items:center;
 
-    gap:15px;
-
-}
-
-
-
-.profile-area i{
-
-    font-size:22px;
-
-    color:#64748b;
+gap:15px;
 
 }
 
@@ -153,13 +150,13 @@ HEADER
 
 .profile-area img{
 
-    width:50px;
+width:60px;
 
-    height:50px;
+height:60px;
 
-    border-radius:50%;
+border-radius:50%;
 
-    object-fit:cover;
+object-fit:cover;
 
 }
 
@@ -167,9 +164,7 @@ HEADER
 
 .profile-area h4{
 
-    color:#172554;
-
-    font-size:15px;
+font-size:15px;
 
 }
 
@@ -177,9 +172,9 @@ HEADER
 
 .profile-area span{
 
-    color:#64748b;
+font-size:13px;
 
-    font-size:13px;
+color:var(--color-text-secondary);
 
 }
 
@@ -188,39 +183,36 @@ HEADER
 
 
 
-
-/* =========================
+/* ===============================
 STAT CARDS
-========================= */
+=============================== */
 
 
 .stats{
 
-    display:grid;
+display:grid;
 
-    grid-template-columns:repeat(5,1fr);
+grid-template-columns:repeat(5,1fr);
 
-    gap:20px;
+gap:20px;
 
 }
-
 
 
 
 .stat-card{
 
+height:145px;
 
-    height:135px;
+padding:25px;
 
-    padding:25px;
+border-radius:25px;
 
-    border-radius:24px;
+position:relative;
 
-    position:relative;
+overflow:hidden;
 
-    overflow:hidden;
-
-    transition:.3s;
+transition:.3s;
 
 }
 
@@ -228,23 +220,19 @@ STAT CARDS
 
 .stat-card:hover{
 
-    transform:translateY(-5px);
+transform:translateY(-5px);
 
 }
 
 
 
-
-
 .stat-card span{
 
+font-size:11px;
 
-    font-size:11px;
+font-weight:700;
 
-    color:#64748b;
-
-    font-weight:600;
-
+color:var(--color-text-secondary);
 
 }
 
@@ -252,13 +240,9 @@ STAT CARDS
 
 .stat-card h2{
 
+margin-top:15px;
 
-    margin-top:12px;
-
-    font-size:34px;
-
-    color:#173d6d;
-
+font-size:34px;
 
 }
 
@@ -266,49 +250,39 @@ STAT CARDS
 
 .stat-card p{
 
+margin-top:8px;
 
-    margin-top:8px;
+font-size:13px;
 
-    color:#64748b;
-
-    font-size:13px;
-
+color:var(--color-text-muted);
 
 }
-
-
 
 
 
 .stat-card i{
 
+position:absolute;
 
-    position:absolute;
+right:22px;
 
-    right:20px;
+top:22px;
 
-    top:20px;
+width:45px;
 
+height:45px;
 
-    width:45px;
+border-radius:15px;
 
-    height:45px;
+background:white;
 
+display:flex;
 
-    background:white;
+align-items:center;
 
-    border-radius:15px;
+justify-content:center;
 
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-
-    color:#173d6d;
-
+color:var(--color-accent);
 
 }
 
@@ -316,10 +290,12 @@ STAT CARDS
 
 
 
+/* Soft backgrounds */
+
 
 .blue{
 
-background:#e7f2fb;
+background:#e6f2fb;
 
 }
 
@@ -327,7 +303,7 @@ background:#e7f2fb;
 
 .green{
 
-background:#e2f7ef;
+background:var(--color-surface-mint);
 
 }
 
@@ -335,7 +311,7 @@ background:#e2f7ef;
 
 .purple{
 
-background:#e9edff;
+background:#e9f6f3;
 
 }
 
@@ -349,9 +325,11 @@ background:#ddf6ef;
 
 
 
-.violet{
+/* replaced violet */
 
-background:#eee8ff;
+.turquoise{
+
+background:#d8f3ef;
 
 }
 
@@ -360,68 +338,51 @@ background:#eee8ff;
 
 
 
-
-
-
-/* =========================
+/* ===============================
 BOXES
-========================= */
+=============================== */
 
 
-.analytics{
+.analytics,
+.bottom{
 
+display:grid;
 
-    display:grid;
+grid-template-columns:1.3fr 1fr;
 
-    grid-template-columns:1.3fr 1fr;
+gap:25px;
 
-    gap:25px;
-
-    margin-top:30px;
-
+margin-top:30px;
 
 }
-
 
 
 
 .box{
 
+background:var(--color-surface);
 
-    background:white;
+border:1px solid var(--color-border);
 
+border-radius:25px;
 
-    border:1px solid #e5eaf1;
+padding:28px;
 
+box-shadow:
 
-    border-radius:25px;
-
-
-    padding:28px;
-
-
-
-    box-shadow:
-
-    0 10px 30px rgba(15,23,42,.04);
-
-
+0 10px 30px rgba(35,39,67,.06);
 
 }
-
-
 
 
 
 .box h3{
 
+font-size:18px;
 
-    color:#173d6d;
+margin-bottom:25px;
 
-    font-size:18px;
-
-    margin-bottom:25px;
-
+color:var(--color-text-primary);
 
 }
 
@@ -430,162 +391,51 @@ BOXES
 
 
 
-
-
-
-/* =========================
+/* ===============================
 DEPARTMENT
-========================= */
+=============================== */
 
 
 .department div{
 
-
-    margin-bottom:22px;
-
+margin-bottom:22px;
 
 }
-
 
 
 .department p{
 
+display:flex;
 
-    display:flex;
+justify-content:space-between;
 
-    justify-content:space-between;
+font-size:14px;
 
-    font-size:14px;
-
-    color:#475569;
-
+color:var(--color-text-secondary);
 
 }
-
 
 
 
 .department b{
 
-    color:#173d6d;
+color:var(--color-text-primary);
 
 }
-
 
 
 
 .department span{
 
-
-    display:block;
-
-    height:8px;
-
-    background:#129bc5;
-
-    border-radius:20px;
-
-    margin-top:8px;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* =========================
-LEAVE OVERVIEW
-========================= */
-
-
-.leave p{
-
-
-    display:flex;
-
-    align-items:center;
-
-    gap:15px;
-
-    padding:18px 0;
-
-    border-bottom:1px solid #edf2f7;
-
-
-}
-
-
-
-.leave b{
-
-
-    margin-left:auto;
-
-
-}
-
-
-
-.leave span{
-
-
-    width:10px;
-
-    height:10px;
-
-    border-radius:50%;
-
-
-}
-
-
-
-
-.orange{
-
-background:#f59e0b;
-
-}
-
-
-
-.green-dot{
-
-background:#10b981;
-
-}
-
-
-
-.red{
-
-background:#ef4444;
-
-}
-
-
-
-
-.leave a{
-
-
 display:block;
 
-text-align:center;
+height:8px;
 
-margin-top:25px;
+margin-top:10px;
 
-color:#0891b2;
+border-radius:20px;
 
-font-size:14px;
-
-text-decoration:none;
-
+background:var(--color-accent);
 
 }
 
@@ -594,53 +444,125 @@ text-decoration:none;
 
 
 
+/* ===============================
+DONUT CHART
+=============================== */
+
+
+.leave-chart-container{
+
+display:flex;
+
+align-items:center;
+
+gap:35px;
+
+}
 
 
 
-/* =========================
-BOTTOM SECTION
-========================= */
+.donut-chart{
+
+width:180px;
+
+height:180px;
+
+border-radius:50%;
+
+background:
+
+conic-gradient(
+
+#118ab2 0deg,
+
+#118ab2 120deg,
+
+#7cd5c7 120deg,
+
+#7cd5c7 300deg,
+
+#ef476f 300deg,
+
+#ef476f 360deg
+
+);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
 
 
-.bottom{
+
+.donut-center{
+
+width:115px;
+
+height:115px;
+
+border-radius:50%;
+
+background:white;
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+justify-content:center;
+
+}
 
 
-    display:grid;
 
-    grid-template-columns:1.1fr 1fr;
+.donut-center h2{
 
-    gap:25px;
+font-size:28px;
 
-    margin-top:25px;
+color:var(--color-text-primary);
 
+}
+
+
+
+.donut-center span{
+
+font-size:11px;
+
+color:var(--color-text-muted);
 
 }
 
 
 
 
+.leave-details{
 
-
-.request{
-
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:18px 0;
-
-    border-bottom:1px solid #edf2f7;
-
+flex:1;
 
 }
 
 
 
+.leave-item{
 
-.request:last-child{
+display:flex;
+
+justify-content:space-between;
+
+padding:14px 0;
+
+border-bottom:1px solid var(--color-border);
+
+}
+
+
+
+.leave-item:last-child{
 
 border:none;
 
@@ -648,12 +570,66 @@ border:none;
 
 
 
+.leave-name{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+font-size:14px;
+
+}
+
+
+
+.leave-dot{
+
+width:12px;
+
+height:12px;
+
+border-radius:50%;
+
+}
+
+
+
+.leave-number{
+
+font-weight:bold;
+
+}
+
+
+
+
+
+/* ===============================
+REQUESTS
+=============================== */
+
+
+.request{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:18px 0;
+
+border-bottom:1px solid var(--color-border);
+
+}
+
+
 
 .request h4{
 
-    color:#173d6d;
-
-    font-size:15px;
+font-size:15px;
 
 }
 
@@ -661,13 +637,11 @@ border:none;
 
 .request p{
 
+font-size:13px;
 
-    margin-top:5px;
+color:var(--color-text-secondary);
 
-    font-size:13px;
-
-    color:#64748b;
-
+margin-top:6px;
 
 }
 
@@ -675,125 +649,170 @@ border:none;
 
 .request button{
 
-
-    border:none;
-
-    background:#e0f2fe;
-
-    color:#0284c7;
-
-
-    padding:8px 20px;
-
-    border-radius:20px;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* =========================
-ACTIVITY
-========================= */
-
-
-.activity{
-
-list-style:none;
-
-}
-
-
-
-.activity li{
-
-
-    position:relative;
-
-    padding:0 0 20px 30px;
-
-
-    margin-bottom:20px;
-
-
-    color:#173d6d;
-
-
-    border-bottom:1px solid #edf2f7;
-
-
-}
-
-
-
-.activity li:last-child{
-
 border:none;
 
-}
+background:#e6f2fb;
 
+color:var(--color-accent);
 
+padding:8px 18px;
 
+border-radius:20px;
 
-
-.circle{
-
-
-    position:absolute;
-
-    left:0;
-
-    top:5px;
-
-
-    width:11px;
-
-    height:11px;
-
-
-    background:#129bc5;
-
-
-    border-radius:50%;
-
+font-weight:bold;
 
 }
 
 
 
 
-.activity small{
 
 
-display:block;
+/* ===============================
+   RECENT ACTIVITY TIMELINE
+=============================== */
 
-margin-top:8px;
 
-color:#94a3b8;
+.timeline{
+
+position:relative;
+
+padding-top:10px;
+
+}
+
+
+
+.timeline-item{
+
+display:flex;
+
+gap:20px;
+
+position:relative;
+
+min-height:95px;
+
+}
+
+
+
+.timeline-marker{
+
+width:30px;
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+position:relative;
+
+}
+
+
+
+/* colored circle */
+
+.timeline-dot{
+
+width:22px;
+
+height:22px;
+
+border-radius:50%;
+
+background:#118ab2;
+
+border:4px solid #dff3ef;
+
+box-shadow:0 0 0 2px #118ab2;
+
+z-index:2;
+
+}
+
+
+
+/* vertical line */
+
+.timeline-line{
+
+width:3px;
+
+background:#d9e4ea;
+
+flex:1;
+
+margin-top:6px;
+
+border-radius:20px;
+
+}
+
+
+
+/* remove line from last item */
+
+.timeline-item.last .timeline-line{
+
+display:none;
+
+}
+
+
+
+
+
+.timeline-content{
+
+flex:1;
+
+padding-bottom:25px;
+
+border-bottom:1px solid rgba(70,75,113,.16);
+
+}
+
+
+
+.timeline-item.last .timeline-content{
+
+border-bottom:none;
+
+}
+
+
+
+
+.timeline-title{
+
+font-size:16px;
+
+font-weight:700;
+
+color:#232743;
+
+}
+
+
+
+.timeline-time{
+
+margin-top:10px;
 
 font-size:13px;
 
+color:#60657d;
 
 }
 
 
 
-
-
-
-
-
-
-
-/* =========================
+/* ===============================
 QUICK ACTIONS
-========================= */
+=============================== */
 
 
 .quick-section{
@@ -804,20 +823,7 @@ margin-top:35px;
 
 
 
-
-.quick-section h3{
-
-
-margin-bottom:20px;
-
-
-}
-
-
-
-
 .quick-actions{
-
 
 display:grid;
 
@@ -825,92 +831,49 @@ grid-template-columns:repeat(4,1fr);
 
 gap:20px;
 
-
 }
-
-
 
 
 
 .quick-card{
 
-
-height:140px;
-
+height:145px;
 
 background:white;
 
-
-border:1px solid #e5eaf1;
-
+border:1px solid var(--color-border);
 
 border-radius:25px;
 
-
 padding:25px;
-
 
 text-decoration:none;
 
-
-color:#173d6d;
-
-
-transition:.3s;
-
+color:var(--color-text-primary);
 
 }
-
-
-
-
-
-.quick-card:hover{
-
-
-transform:translateY(-6px);
-
-
-box-shadow:
-
-0 15px 35px rgba(0,0,0,.08);
-
-
-}
-
-
 
 
 
 .quick-card i{
 
+width:50px;
 
-width:48px;
+height:50px;
 
-
-height:48px;
-
-
-background:#505887;
-
+background:var(--color-accent);
 
 color:white;
 
-
 border-radius:15px;
-
 
 display:flex;
 
+align-items:center;
 
 justify-content:center;
 
-
-align-items:center;
-
-
-margin-bottom:22px;
-
+margin-bottom:20px;
 
 }
 
@@ -918,23 +881,9 @@ margin-bottom:22px;
 
 
 
-.quick-card h4{
-
-
-font-size:15px;
-
-
-}
-
-
-
-
-
-
-
-/* =========================
+/* ===============================
 RESPONSIVE
-========================= */
+=============================== */
 
 
 @media(max-width:1200px){
@@ -947,20 +896,18 @@ grid-template-columns:repeat(3,1fr);
 }
 
 
+.quick-actions{
+
+grid-template-columns:repeat(2,1fr);
+
 }
 
+
+}
 
 
 
 @media(max-width:900px){
-
-
-.sidebar-space{
-
-display:none;
-
-}
-
 
 
 .main{
@@ -983,26 +930,13 @@ gap:20px;
 
 
 
-
-.stats{
-
-grid-template-columns:1fr;
-
-}
-
-
-
-
-
+.stats,
 .analytics,
 .bottom{
 
-
 grid-template-columns:1fr;
 
-
 }
-
 
 
 
@@ -1013,5 +947,5 @@ grid-template-columns:1fr;
 }
 
 
-
 }
+

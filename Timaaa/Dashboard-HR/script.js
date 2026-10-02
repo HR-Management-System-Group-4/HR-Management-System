@@ -1,87 +1,74 @@
 // ===================================
-// NEXUS HR DASHBOARD JAVASCRIPT
+// MYSTA HR DASHBOARD JAVASCRIPT
 // ===================================
 
 
+// ===============================
+// VARIABLES
+// ===============================
+
+let employees = [];
+
+let leaves = [];
+
+
+
+
 
 // ===============================
-// DATA
+// LOAD LEAVES FROM LOCAL STORAGE
 // ===============================
-
-
-const employees = [
-
-{
-name:"Adam Smith",
-department:"Engineering"
-},
-
-{
-name:"Lina Ahmad",
-department:"Design"
-},
-
-{
-name:"Sara Ahmed",
-department:"Marketing"
-},
-
-{
-name:"Omar Khalil",
-department:"Analytics"
-},
-
-{
-name:"John David",
-department:"Engineering"
-},
-
-{
-name:"Emma Brown",
-department:"Engineering"
-}
-
-
-];
-
-
-
-
-
-
-const leaves = [
-  { employee: "Ahmad Saleh", type: "Annual Leave", date: "2026-10-12", status: "Pending" },
-  { employee: "Dana Rimawi", type: "Annual Leave", date: "2026-10-04", status: "Approved" },
-  { employee: "Tariq Hijazi", type: "Sick Leave", date: "2026-09-27", status: "Rejected" }
-];
-
-try {
-  const decisions = JSON.parse(localStorage.getItem('sampleLeaveDecisions') || '{}');
-  [['sample-1', 0], ['sample-2', 1], ['sample-3', 2]].forEach(([id, index]) => {
-    if (['Approved', 'Rejected'].includes(decisions[id])) leaves[index].status = decisions[id];
-  });
-} catch (_) { /* Use sample statuses. */ }
 
 
 try {
-  const saved = JSON.parse(localStorage.getItem('leaveApplications') || '[]');
-  if (Array.isArray(saved)) {
-    saved.forEach(item => leaves.push({
-      employee: item.employee || 'Employee',
-      type: item.leaveType || 'Leave',
-      date: item.startDate || '',
-      status: item.status || 'Pending'
-    }));
-  }
-} catch (error) {
-  console.warn('Saved leave requests could not be loaded.', error);
+
+
+let savedLeaves =
+JSON.parse(
+localStorage.getItem("leaveApplications")
+) || [];
+
+
+
+savedLeaves.forEach(item=>{
+
+
+leaves.push({
+
+employee:item.employee || "Employee",
+
+type:item.leaveType || "Leave",
+
+date:item.startDate || "",
+
+status:item.status || "Pending"
+
+});
+
+
+});
+
+
 }
 
-const escapeDashboardText = value => String(value).replace(/[&<>"']/g, character => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[character]);
+catch(error){
+
+console.log(
+"Leave loading error",
+error
+);
+
+}
 
 
 
 
+
+
+
+// ===============================
+// TASK DATA
+// ===============================
 
 
 const tasks=[
@@ -118,13 +105,17 @@ status:"Completed"
 
 
 
-const feedback = [
+
+// ===============================
+// FEEDBACK
+// ===============================
+
+
+const feedback=[
 
 "New feedback received",
 
-"Employee satisfaction survey",
-
-"HR review completed"
+"Employee satisfaction survey"
 
 ];
 
@@ -133,57 +124,47 @@ const feedback = [
 
 
 
+
+
 // ===============================
-// UPDATE STAT CARDS
+// UPDATE STATISTICS
 // ===============================
 
 
 function updateStatistics(){
 
 
-
-document.getElementById(
-"totalEmployees"
-).innerHTML = employees.length;
+document.getElementById("totalEmployees").innerHTML =
+employees.length;
 
 
 
-document.getElementById(
-"pendingLeaves"
-).innerHTML =
+document.getElementById("pendingLeaves").innerHTML =
 
 leaves.filter(
-item=>item.status==="Pending"
+x=>x.status==="Pending"
 ).length;
 
 
 
-
-document.getElementById(
-"activeTasks"
-).innerHTML =
+document.getElementById("activeTasks").innerHTML =
 
 tasks.filter(
-item=>item.status==="Active"
+x=>x.status==="Active"
 ).length;
 
 
 
-
-document.getElementById(
-"completedTasks"
-).innerHTML =
+document.getElementById("completedTasks").innerHTML =
 
 tasks.filter(
-item=>item.status==="Completed"
+x=>x.status==="Completed"
 ).length;
 
 
 
-
-document.getElementById(
-"feedback"
-).innerHTML = feedback.length;
+document.getElementById("feedback").innerHTML =
+feedback.length;
 
 
 
@@ -196,19 +177,22 @@ document.getElementById(
 
 
 
+
 // ===============================
-// EMPLOYEE DEPARTMENT
+// DEPARTMENT SECTION
 // ===============================
 
 
 function loadDepartments(){
 
 
-
 let container =
-document.getElementById(
-"department"
-);
+document.getElementById("department");
+
+
+
+if(!container)
+return;
 
 
 
@@ -245,6 +229,10 @@ Object.keys(departments)
 .forEach(dep=>{
 
 
+let width =
+departments[dep] * 15;
+
+
 
 container.innerHTML += `
 
@@ -260,10 +248,11 @@ ${dep}
 ${departments[dep]}
 </b>
 
+
 </p>
 
 
-<span></span>
+<span style="width:${width}%"></span>
 
 
 </div>
@@ -272,9 +261,7 @@ ${departments[dep]}
 `;
 
 
-
 });
-
 
 
 }
@@ -288,18 +275,20 @@ ${departments[dep]}
 
 
 // ===============================
-// LEAVE OVERVIEW
+// LEAVE OVERVIEW + DONUT
 // ===============================
 
 
 function loadLeaveOverview(){
 
 
-
 let box =
-document.getElementById(
-"leaveOverview"
-);
+document.getElementById("leaveOverview");
+
+
+
+if(!box)
+return;
 
 
 
@@ -324,56 +313,193 @@ x=>x.status==="Rejected"
 
 
 
-box.innerHTML=`
+let total =
+pending + approved + rejected;
 
 
-<p>
 
-<span class="orange"></span>
+
+
+document.getElementById("totalRequests").innerHTML =
+total;
+
+
+
+
+
+let pendingPercent =
+total ? (pending/total)*360 : 0;
+
+
+let approvedPercent =
+total ? (approved/total)*360 : 0;
+
+
+let rejectedPercent =
+total ? (rejected/total)*360 : 0;
+
+
+
+
+
+let pendingEnd =
+pendingPercent;
+
+
+let approvedEnd =
+pendingPercent + approvedPercent;
+
+
+
+let pendingPercentValue =
+total ? Math.round((pending / total) * 100) : 0;
+
+let approvedPercentValue =
+total ? Math.round((approved / total) * 100) : 0;
+
+let rejectedPercentValue =
+total ? Math.round((rejected / total) * 100) : 0;
+
+let chart =
+document.getElementById("leaveChart");
+
+
+
+if(chart){
+
+
+chart.style.background =
+
+`
+conic-gradient(
+#118ab2 0deg ${pendingEnd}deg,
+
+#7cd5c7 ${pendingEnd}deg ${approvedEnd}deg,
+
+#ef476f ${approvedEnd}deg 360deg
+)
+`;
+
+
+}
+
+
+
+
+
+
+
+
+box.innerHTML = `
+
+
+
+<div class="leave-item">
+
+
+<div class="leave-name">
+
+
+<span class="leave-dot"
+style="background:#118ab2">
+</span>
+
 
 Pending
 
-<b>
+
+</div>
+
+
+<div class="leave-number">
+
 ${pending}
-</b>
 
-</p>
+<span>
+(${Math.round((pending/total)*100 || 0)}%)
+</span>
+
+
+</div>
+
+
+</div>
 
 
 
-<p>
 
-<span class="green-dot"></span>
+
+
+
+<div class="leave-item">
+
+
+<div class="leave-name">
+
+
+<span class="leave-dot"
+style="background:#7cd5c7">
+</span>
+
 
 Approved
 
-<b>
+
+</div>
+
+
+<div class="leave-number">
+
 ${approved}
-</b>
 
-</p>
+<span>
+(${Math.round((approved/total)*100 || 0)}%)
+</span>
+
+
+</div>
+
+
+</div>
 
 
 
-<p>
 
-<span class="red"></span>
+
+
+
+
+<div class="leave-item">
+
+
+<div class="leave-name">
+
+
+<span class="leave-dot"
+style="background:#ef476f">
+</span>
+
 
 Rejected
 
-<b>
+
+</div>
+
+
+<div class="leave-number">
+
 ${rejected}
-</b>
 
-</p>
+<span>
+(${Math.round((rejected/total)*100 || 0)}%)
+</span>
 
 
+</div>
 
-<a href="../../Sara_Dolat/Leave-HR/index.html">
 
-View All Requests →
+</div>
 
-</a>
 
 
 `;
@@ -398,11 +524,13 @@ View All Requests →
 function loadPendingRequests(){
 
 
-
 let container =
-document.getElementById(
-"pendingRequests"
-);
+document.getElementById("pendingRequests");
+
+
+
+if(!container)
+return;
 
 
 
@@ -410,13 +538,13 @@ container.innerHTML="";
 
 
 
-
 leaves
-.filter(
-leave=>leave.status==="Pending"
-)
-.forEach(leave=>{
 
+.filter(
+item=>item.status==="Pending"
+)
+
+.forEach(item=>{
 
 
 container.innerHTML += `
@@ -429,23 +557,29 @@ container.innerHTML += `
 
 
 <h4>
-${escapeDashboardText(leave.employee)}
+
+${item.employee}
+
 </h4>
 
 
 <p>
-${escapeDashboardText(leave.type)} • ${escapeDashboardText(leave.date)}
+
+${item.type}
+•
+${item.date}
+
 </p>
 
 
 </div>
 
 
-
 <button>
-Pending
-</button>
 
+Pending
+
+</button>
 
 
 </div>
@@ -454,9 +588,7 @@ Pending
 `;
 
 
-
 });
-
 
 
 }
@@ -468,20 +600,21 @@ Pending
 
 
 
-
 // ===============================
-// RECENT ACTIVITY
+// ACTIVITY TIMELINE
 // ===============================
 
 
 function loadActivity(){
 
 
-
 let activity =
-document.getElementById(
-"activity"
-);
+document.getElementById("activity");
+
+
+
+if(!activity)
+return;
 
 
 
@@ -489,53 +622,125 @@ activity.innerHTML="";
 
 
 
-let data=[
+let data=[];
 
-{
-text:"Ahmad Saleh submitted a leave request",
-time:"2 hours ago"
-},
 
-{
-text:"Lina updated task status",
-time:"Yesterday"
-},
 
-{
-text:"New feedback received",
-time:"Today"
+leaves.forEach(item=>{
+
+
+data.push({
+
+employee:item.employee,
+
+action:"submitted a leave request",
+
+date:item.date
+
+
+});
+
+
+});
+
+
+
+// newest first
+
+data.sort((a,b)=>{
+
+
+return new Date(b.date)-new Date(a.date);
+
+
+});
+
+
+
+
+
+if(data.length===0){
+
+
+data.push({
+
+employee:"No activity",
+
+action:"",
+
+date:""
+
+});
+
+
 }
 
 
-];
+
+
+
+data.forEach((item,index)=>{
+
+
+let last = 
+index === data.length-1
+?
+"last"
+:
+"";
+
+
+
+activity.innerHTML += `
+
+
+<div class="timeline-item ${last}">
+
+
+
+<div class="timeline-marker">
+
+
+<div class="timeline-dot"></div>
+
+
+<div class="timeline-line"></div>
+
+
+</div>
 
 
 
 
 
-data.forEach(item=>{
+<div class="timeline-content">
 
 
-activity.innerHTML +=`
+
+<div class="timeline-title">
+
+${item.employee} ${item.action}
+
+</div>
 
 
-<li>
 
 
-<div class="circle"></div>
+<div class="timeline-time">
+
+${item.date}
+
+</div>
 
 
-${item.text}
 
 
-<small>
-
-${item.time}
-
-</small>
+</div>
 
 
-</li>
+
+</div>
+
 
 
 `;
@@ -545,6 +750,85 @@ ${item.time}
 });
 
 
+}
+
+
+
+
+// ===============================
+// LOAD EMPLOYEE JSON
+// ===============================
+
+
+function loadEmployeesJSON(){
+
+
+fetch("../../employee.json")
+
+
+.then(response=>response.json())
+
+
+.then(data=>{
+
+
+let list =
+
+Array.isArray(data)
+
+?
+
+data
+
+:
+
+data.employees;
+
+
+
+
+
+if(Array.isArray(list)){
+
+
+employees.splice(
+
+0,
+
+employees.length,
+
+...list
+
+);
+
+
+
+updateStatistics();
+
+loadDepartments();
+
+
+
+}
+
+
+})
+
+
+.catch(error=>{
+
+
+console.log(
+
+"Employee JSON loading error",
+
+error
+
+);
+
+
+});
+
 
 }
 
@@ -557,30 +841,65 @@ ${item.time}
 
 
 // ===============================
-// QUICK ACTION CLICK EFFECT
+// PROFILE LINK
 // ===============================
 
 
-document
-.querySelectorAll(".quick-card")
-.forEach(card=>{
+function loadProfileLink(){
 
 
-card.addEventListener(
-"click",
-function(){
+let profileLink =
+document.getElementById("profileLink");
 
 
-console.log(
-"Opening:",
-this.innerText
+
+let user=null;
+
+
+
+try{
+
+
+user = JSON.parse(
+
+localStorage.getItem("user")
+
+||
+
+localStorage.getItem("currentUser")
+
+||
+
+"null"
+
 );
 
 
-});
+}
+
+catch(error){
+
+console.log(error);
+
+}
 
 
-});
+
+
+
+if(profileLink && user){
+
+
+profileLink.href =
+
+`../../Mohamad/Hr-profile/hr.html?id=${user.id}`;
+
+
+}
+
+
+
+}
 
 
 
@@ -592,14 +911,97 @@ this.innerText
 
 
 // ===============================
-// START DASHBOARD
+// LOAD USER HEADER
 // ===============================
 
+
+function loadUser(){
+
+
+let user=null;
+
+
+try{
+
+
+user=JSON.parse(
+
+localStorage.getItem("currentUser")
+
+||
+
+localStorage.getItem("user")
+
+||
+
+"null"
+
+);
+
+
+}
+
+catch(error){}
+
+
+
+if(user){
+
+
+document.getElementById("dashboardName").textContent =
+user.name || "User";
+
+
+document.getElementById("userRole").textContent =
+user.role || "Employee";
+
+
+
+document.getElementById("dashboardWelcome").textContent =
+`Welcome back, ${user.name?.split(" ")[0] || "User"}!`;
+
+
+
+if(user.profileImage){
+
+    let imageName = user.profileImage.split("/").pop();
+
+    document.getElementById("profileImage").src =
+    "../../Json-Imges/" + imageName;
+
+}
+
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// START
+// ===============================
 
 
 window.addEventListener(
 "load",
 function(){
+
+
+loadUser();
+
+
+loadEmployeesJSON();
 
 
 updateStatistics();
@@ -616,17 +1018,8 @@ loadPendingRequests();
 
 loadActivity();
 
-fetch('../../employee.json')
-  .then(response => response.json())
-  .then(data => {
-    const all = Array.isArray(data) ? data : data.employees;
-    if (Array.isArray(all)) {
-      employees.splice(0, employees.length, ...all);
-      updateStatistics();
-      loadDepartments();
-    }
-  })
-  .catch(error => console.warn('Employee count unavailable.', error));
+
+loadProfileLink();
 
 
 
