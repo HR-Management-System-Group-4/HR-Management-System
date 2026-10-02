@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mysta HR Dashboard</title>
+<title>Nexus HR Dashboard</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -19,12 +19,19 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 <body>
 
 
+<!-- SIDEBAR -->
+
+<iframe 
+src="../../Side_Bar/Side_bar.html"
+class="sidebar-frame">
+</iframe>
+
+
+
 <div class="dashboard">
-<button class="sidebar-toggle" id="sidebarToggle" type="button" aria-controls="hrSidebar" aria-expanded="false" aria-label="Open HR menu"><i class="fa-solid fa-bars" aria-hidden="true"></i> HR menu</button>
-<button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="Close HR menu" hidden></button>
-<aside class="sidebar-space" id="hrSidebar" aria-label="HR navigation">
-  <iframe class="sidebar-frame" src="../../Side_Bar/Side_bar.html" title="HR navigation"></iframe>
-</aside>
+
+
+<aside class="sidebar-space"></aside>
 
 
 
@@ -39,13 +46,13 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
 <div>
 
-<h1 id="dashboardWelcome">
-Welcome back, Sara!
+<h1>
+Welcome back, Rachel!
 </h1>
 
 
 <p>
-Here's what's happening at Mysta HR today.
+Here's what's happening at Nexus HR today.
 </p>
 
 
@@ -54,7 +61,6 @@ Here's what's happening at Mysta HR today.
 
 
 <div class="profile-area">
-<a href="../../Sara_Dolat/log in/index.html" class="demo-signout">Sign out</a>
 
 
 
@@ -64,8 +70,8 @@ Here's what's happening at Mysta HR today.
 
 <div>
 
-<h4 id="dashboardName">
-Sara Ahmad
+<h4>
+Rachel Carter
 </h4>
 
 
@@ -99,7 +105,7 @@ HR Admin
 TOTAL EMPLOYEES
 </span>
 
-<h2 id="totalEmployees">
+<h2>
 6
 </h2>
 
@@ -121,7 +127,7 @@ TOTAL EMPLOYEES
 PENDING LEAVES
 </span>
 
-<h2 id="pendingLeaves">
+<h2>
 2
 </h2>
 
@@ -143,7 +149,7 @@ Awaiting review
 ACTIVE TASKS
 </span>
 
-<h2 id="activeTasks">
+<h2>
 5
 </h2>
 
@@ -165,7 +171,7 @@ Across all teams
 COMPLETED
 </span>
 
-<h2 id="completedTasks">
+<h2>
 1
 </h2>
 
@@ -187,7 +193,7 @@ This quarter
 NEW FEEDBACK
 </span>
 
-<h2 id="feedback">
+<h2>
 3
 </h2>
 
@@ -229,7 +235,7 @@ Employees by Department
 
 
 
-<div class="department" id="department">
+<div class="department">
 
 
 <div>
@@ -313,7 +319,7 @@ Leave Overview
 
 
 
-<div class="leave" id="leaveOverview">
+<div class="leave">
 
 
 <p>
@@ -360,7 +366,7 @@ Rejected
 
 
 
-<a href="../../Sara_Dolat/Leave-HR/index.html"
+<a href="../Leave-application/index.html"
 target="_blank">
 
 View All Requests →
@@ -407,7 +413,6 @@ Pending Leave Requests
 
 
 
-<div id="pendingRequests">
 <div class="request">
 
 
@@ -468,7 +473,6 @@ Pending
 
 
 </div>
-</div>
 
 
 
@@ -485,7 +489,7 @@ Recent Activity
 
 
 
-<ul class="activity" id="activity">
+<ul class="activity">
 
 
 <li>
@@ -572,7 +576,7 @@ Quick Actions
 
 
 
-<a href="../../Sara_Dolat/Leave-HR/index.html"
+<a href="../Leave-application/index.html"
 class="quick-card">
 
 
@@ -580,7 +584,7 @@ class="quick-card">
 
 
 <h4>
-Review Leave Requests
+Request Leave
 </h4>
 
 
@@ -590,7 +594,7 @@ Review Leave Requests
 
 
 
-<a href="../../Ahmad/HR-tasks/index.html"
+<a href="../task_page/index.html"
 class="quick-card">
 
 
@@ -606,7 +610,7 @@ Manage Tasks
 
 
 
-<a href="../../Mohamad/Hr-profile/hr.html"
+<a href="../Employee-profile/index.html"
 class="quick-card">
 
 
@@ -619,7 +623,7 @@ Employee Profile
 </a>
 
 
-<a href="../../Sara_Dolat/company policies/index.html"
+<a href="../Policies/index.html"
 class="quick-card">
 
 
@@ -643,20 +647,5 @@ Company Policies
 </div>
 
 <script src="script.js"></script>
-<script src="sidebar.js"></script>
-<script>
-  try {
-    const user = JSON.parse(localStorage.getItem('user') || 'null');
-    if (user?.role === 'HR') {
-      document.getElementById('dashboardWelcome').textContent = `Welcome back, ${user.name.split(' ')[0]}!`;
-      document.getElementById('dashboardName').textContent = user.name;
-    }
-  } catch (_) { /* Keep the demo dashboard visible. */ }
-  document.querySelector('.demo-signout').addEventListener('click', () => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('loggedInUserId');
-  });
-</script>
-<script src="../../demo/flow.js"></script>
 </body>
 </html>
