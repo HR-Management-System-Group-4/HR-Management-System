@@ -1,7 +1,51 @@
 const navbarContainer = document.querySelector('.nav-bar');
 
+const layoutUrl = new URL('header.html', document.currentScript.src);
+const servicePages = {
+  HR: {
+    home: '../Timaaa/services/index.html',
+    profile: '../Mohamad/Hr-profile/hr.html',
+    tasks: '../Ahmad/HR-tasks/index.html',
+    leave: '../Sara_Dolat/Leave-HR/index.html',
+    policies: '../Sara_Sawalmeh/Policies/Policies_HR.Html',
+    meetings: '../Ahmad/HR-zoom/index.html',
+    feedback: '../Sara_Sawalmeh/Feedback_HR/Feedback_HR.html',
+    employees: '../Yasmeen_Telfah/employeeManagement.html'
+  },
+  Employee: {
+    home: '../Timaaa/services/index.html',
+    profile: '../Mohamad/Employee-profile/Profile.html',
+    tasks: '../Sara_Sawalmeh/Employee_Task/Employee_Task.html',
+    leave: '../Timaaa/Leave-application/Timaa.html',
+    policies: '../Sara_Dolat/company policies/index.html',
+    meetings: '../Ahmad/Meeting-Zoom/index.html',
+    feedback: '../Yasmeen_Telfah/feedbackEmployees.html',
+    employees: '../Mohamad/My-Employee-Information/info.html'
+  }
+};
+const loginPageUrl = new URL('../Sara_Dolat/log in/index.html', layoutUrl).href;
+
+function getServiceRole() {
+  for (const key of ['currentUser', 'user']) {
+    try {
+      const role = JSON.parse(localStorage.getItem(key) || 'null')?.role;
+      if (role === 'HR' || role === 'Employee') return role;
+    } catch (_) { /* Ignore malformed demo storage. */ }
+  }
+  return null;
+}
+
+function getServiceUrl(page = 'home') {
+  const role = getServiceRole();
+  return role && servicePages[role][page]
+    ? new URL(servicePages[role][page], layoutUrl).href
+    : loginPageUrl;
+}
+
+window.MystaServiceRouting = { getRole: getServiceRole, pageUrl: getServiceUrl };
+
 if (navbarContainer) {
-  const navbarUrl = new URL('header.html', document.currentScript.src);
+  const navbarUrl = layoutUrl;
   const homepageUrl = new URL('../Ahmad/Homepage/index.html', navbarUrl);
   const servicesUrl = new URL('../Timaaa/services/index.html', navbarUrl);
   const teamUrl = new URL('../Yasmeen_Telfah/aboutUs.html', navbarUrl);
@@ -26,7 +70,7 @@ if (navbarContainer) {
 
       nav.querySelectorAll('[data-page-anchor]').forEach((link) => {
         const anchor = `#${link.dataset.pageAnchor}`;
-        link.href = link.dataset.pageAnchor === 'services' ? (isHomepage ? '#services' : servicesUrl.href)
+        link.href = link.dataset.pageAnchor === 'services' ? getServiceUrl()
           : link.dataset.pageAnchor === 'team' ? `${teamUrl.href}#team`
           : link.dataset.pageAnchor === 'about' ? teamUrl.href
           : isHomepage ? anchor : `${homepageUrl.href}${anchor}`;
@@ -47,10 +91,9 @@ if (navbarContainer) {
       window.addEventListener('hashchange', updateActiveLink);
 
       const loginLink = nav.querySelector('[data-login-link]');
-      loginLink.href = new URL('../Sara_Dolat/log in/index.html', navbarUrl).href;
+      loginLink.href = loginPageUrl;
       try {
-        const signedInUser = JSON.parse(localStorage.getItem('currentUser') || localStorage.getItem('user') || 'null');
-        if (signedInUser) {
+        if (getServiceRole()) {
           loginLink.textContent = 'Logout';
           loginLink.addEventListener('click', (event) => {
             event.preventDefault();

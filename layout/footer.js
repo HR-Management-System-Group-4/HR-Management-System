@@ -3,7 +3,7 @@ const footerContainer = document.querySelector('.footer');
 if (footerContainer) {
   const footerUrl = new URL('footer.html', document.currentScript.src);
   const homepageUrl = new URL('../Ahmad/Homepage/index.html', footerUrl);
-  const servicesUrl = new URL('../Timaaa/services/index.html', footerUrl);
+  const loginUrl = new URL('../Sara_Dolat/log in/index.html', footerUrl);
   const aboutUrl = new URL('../Yasmeen_Telfah/aboutUs.html', footerUrl);
   const teamUrl = new URL('../Yasmeen_Telfah/aboutUs.html#team', footerUrl);
 
@@ -21,7 +21,7 @@ if (footerContainer) {
       const isHomepage = window.location.pathname === homepageUrl.pathname;
       footer.querySelectorAll('[data-page-anchor]').forEach((link) => {
         const anchor = `#${link.dataset.pageAnchor}`;
-        link.href = link.dataset.pageAnchor === 'services' ? (isHomepage ? '#services' : servicesUrl.href)
+        link.href = link.dataset.pageAnchor === 'services' ? (window.MystaServiceRouting?.pageUrl() || loginUrl.href)
           : link.dataset.pageAnchor === 'about' ? aboutUrl.href
           : link.dataset.pageAnchor === 'team' ? teamUrl.href
           : isHomepage ? anchor : `${homepageUrl.href}${anchor}`;

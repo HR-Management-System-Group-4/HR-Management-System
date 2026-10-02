@@ -15,27 +15,30 @@ html, body { margin: 0; }
     position: fixed;
     top: 0;
     left: 0;
+    overflow-y: auto;
 }
 
 /* تنسيق الشعار في الأعلى */
 .sidebar-brand {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding-bottom: 25px;
+    justify-content: center;
+    flex: none;
+    padding: 0 0 16px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.logo-icon {
-   
-    color: white;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.sidebar-brand img {
+    display: block;
+    width: 112px;
+    height: 112px;
+    object-fit: contain;
+}
+
+.sidebar-brand:focus-visible {
+    outline: 2px solid #94a3b8;
+    outline-offset: 4px;
     border-radius: 8px;
-    font-weight: bold;
 }
 
 .brand-name {

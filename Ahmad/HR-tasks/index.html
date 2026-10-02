@@ -81,12 +81,6 @@
 
           Back to Services
         </a>
-
-        <button class="add-button" id="addTaskButton" type="button">
-          <i class="bi bi-plus-lg"></i>
-
-          Add Task
-        </button>
       </div>
 
       <!-- =========================
@@ -211,23 +205,31 @@
         <!-- Section Heading -->
 
         <div class="section-heading">
-          <div>
-            <p class="section-kicker">YOUR WORKSPACE</p>
+          <div class="section-title-tools">
+            <div>
+              <p class="section-kicker">YOUR WORKSPACE</p>
 
-            <h2>Tasks overview</h2>
+              <h2>Tasks overview</h2>
+            </div>
+
+            <!-- Search -->
+
+            <div class="search-field">
+              <i class="bi bi-search"></i>
+
+              <input
+                id="taskSearch"
+                type="search"
+                placeholder="Search tasks or employees..."
+              />
+            </div>
           </div>
 
-          <!-- Search -->
+          <button class="add-button" id="addTaskButton" type="button">
+            <i class="bi bi-plus-lg"></i>
 
-          <div class="search-field">
-            <i class="bi bi-search"></i>
-
-            <input
-              id="taskSearch"
-              type="search"
-              placeholder="Search tasks or employees..."
-            />
-          </div>
+            Add Task
+          </button>
         </div>
 
         <!-- =========================

@@ -28,7 +28,7 @@
 .story-tag i { width: 70px; background: currentColor; opacity: .35; }
 .problems-tag { margin-bottom: 28px; color: #26374a; }
 
-.problems-section { position: relative; min-height: clamp(780px, 56vw, 960px); padding: 40px 5% 190px; isolation: isolate; overflow: hidden; color: var(--color-text-primary); background: var(--color-background); text-align: center; }
+.problems-section { position: relative; min-height: clamp(660px, 49vw, 820px); padding: 40px 5% 80px; isolation: isolate; overflow: hidden; color: var(--color-text-primary); background: var(--color-background); text-align: center; }
 .problems-background, .problems-light { position: absolute; inset: 0; pointer-events: none; }
 .problems-background { z-index: -3; background: url("assets/problems-workspace.png") center center / contain no-repeat; }
 .problems-light { z-index: -2; background: linear-gradient(90deg, rgba(255,255,255,.02) 17%, rgba(255,255,255,.28) 37%, rgba(255,255,255,.4) 56%, rgba(255,255,255,.03) 79%), linear-gradient(180deg, rgba(255,255,255,.15), transparent 58%, rgba(255,255,255,.28)); }
@@ -50,19 +50,6 @@
 .problems-video { padding: 0 4px; color: #182032; }
 .problems-video i { font-size: 28px; }
 .problems-video:hover { transform: translateY(-4px); color: var(--color-accent); }
-.problem-cards { position: absolute; z-index: 2; right: 6%; bottom: 43px; left: 6%; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-.problem-card { display: flex; align-items: center; gap: 20px; min-width: 0; min-height: 126px; padding: 19px 22px; border: 1px solid rgba(255,255,255,.58); border-radius: 20px; color: #111621; background: rgba(255,255,255,.81); box-shadow: 0 17px 30px rgba(54,100,137,.1); backdrop-filter: blur(17px); text-align: left; transition: transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s ease, background .4s ease; }
-.problem-card:hover { transform: translateY(-10px); color: #111621; background: rgba(255,255,255,.96); box-shadow: 0 25px 42px rgba(54,100,137,.2); }
-.problem-card > span:nth-child(2) { min-width: 0; }
-.problem-card strong, .problem-card small { display: block; }
-.problem-card strong { margin-bottom: 6px; font: 700 18px Georgia, "Times New Roman", serif; }
-.problem-card small { color: #586474; font: 400 14px/1.4 Georgia, "Times New Roman", serif; }
-.problem-icon { display: grid; place-items: center; width: 67px; height: 67px; flex: none; border-radius: 50%; font-size: 30px; }
-.problem-icon.people { color: #d55354; background: #faeae6; }
-.problem-icon.documents { color: var(--color-accent); background: #e6f1f8; }
-.problem-icon.meetings { color: #12a16f; background: #e4f5ed; }
-.problem-icon.tasks { color: #6556c5; background: #efedfa; }
-.card-arrow { margin-left: auto; font-size: 18px; }
 
 /* Animate only after JavaScript initializes; all content remains visible without it. */
 .motion-ready [data-reveal] { opacity: 0; transform: translate3d(0, 34px, 0); transition: opacity .8s ease, transform .9s cubic-bezier(.2,.8,.2,1); }
@@ -71,9 +58,6 @@
 .motion-ready .about-section .title-line:nth-child(3) { transition-delay: .24s; }
 .motion-ready .about-section p, .motion-ready .problems-section p { transition-delay: .3s; }
 .motion-ready .about-button, .motion-ready .problems-actions { transition-delay: .4s; }
-.motion-ready .problem-card:nth-child(2) { transition-delay: .13s; }
-.motion-ready .problem-card:nth-child(3) { transition-delay: .25s; }
-.motion-ready .problem-card:nth-child(4) { transition-delay: .37s; }
 .motion-ready .problems-section.is-visible .problems-energy path { animation: energyTrace 2.2s cubic-bezier(.2,.8,.2,1) forwards; }
 .motion-ready .problems-section.is-visible .problems-energy path:nth-child(2) { animation-delay: .18s; }
 
@@ -82,15 +66,10 @@
 .dark-mode .problems-tag { color: #eaf5f8; }
 .dark-mode .problems-light { background: rgba(12, 19, 33, .71); }
 .dark-mode .problems-section h2, .dark-mode .problems-section p, .dark-mode .problems-kicker, .dark-mode .problems-video { color: #f0f5f6; }
-.dark-mode .problem-card { border-color: var(--color-border); color: var(--color-text-primary); background: rgba(27,39,54,.87); }
-.dark-mode .problem-card:hover { color: var(--color-text-primary); background: rgba(35,52,70,.96); }
-.dark-mode .problem-card small { color: var(--color-text-secondary); }
 
 @media (max-width: 1200px) {
   .about-section { min-height: 590px; }
   .about-section h2 { font-size: clamp(52px, 5.5vw, 66px); }
-  .problem-card { gap: 12px; padding: 15px; }
-  .problem-icon { width: 53px; height: 53px; font-size: 24px; }
 }
 @media (max-width: 900px) {
   .about-section { min-height: 0; padding: 65px 5% 50px; }
@@ -100,7 +79,6 @@
   .problems-section { min-height: 0; padding: 38px 5% 50px; }
   .problems-section h2 { margin-top: 82px; font-size: clamp(55px, 7.4vw, 76px); }
   .problems-background { position: relative; z-index: 0; inset: auto; width: 100%; aspect-ratio: 1983 / 793; margin-top: 30px; background-size: contain; }
-  .problem-cards { position: relative; right: auto; bottom: auto; left: auto; grid-template-columns: repeat(2, 1fr); margin-top: 20px; }
 }
 @media (max-width: 600px) {
   .about-section { padding: 52px 6% 38px; }
@@ -122,16 +100,10 @@
   .problems-section p { font-size: 16px; }
   .problems-actions { gap: 14px; flex-wrap: wrap; margin-top: 28px; }
   .problems-primary, .problems-video { min-height: 50px; padding: 0 22px; font-size: 14px; }
-  .problem-cards { gap: 10px; margin-top: 16px; }
-  .problem-card { display: block; min-height: 169px; padding: 16px; }
-  .problem-icon { width: 46px; height: 46px; margin-bottom: 9px; font-size: 22px; }
-  .problem-card strong { font-size: 16px; }
-  .problem-card small { font-size: 12px; }
-  .problem-card br, .card-arrow { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .motion-ready [data-reveal] { opacity: 1; transform: none; transition: none; }
   .problems-energy { display: none; }
-  .about-button, .problem-card, .problems-primary, .problems-video, .about-button i { transition: none; }
+  .about-button, .problems-primary, .problems-video, .about-button i { transition: none; }
   .about-section.is-energized .title-gradient { animation: none; }
 }

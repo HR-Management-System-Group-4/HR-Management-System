@@ -5,16 +5,7 @@ document.querySelector('#heroVimeo').addEventListener('load', () => {
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const loginUrl = new URL('../../Sara_Dolat/log in/index.html', document.baseURI).href;
-const servicesUrl = new URL('../../Timaaa/services/index.html', document.baseURI).href;
-
-function isSignedIn() {
-  return ['currentUser', 'user'].some(key => {
-    try {
-      const value = JSON.parse(localStorage.getItem(key) || 'null');
-      return value && typeof value === 'object' && Boolean(value.role);
-    } catch (_) { return false; }
-  });
-}
+const serviceRouting = window.MystaServiceRouting;
 if (!reducedMotion && 'IntersectionObserver' in window) {
   document.documentElement.classList.add('motion-ready');
   const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -64,40 +55,40 @@ const services = {
     description: 'Access and manage personal and employment information.',
     pill: 'EMP-1042 · Active',
     items: ['View your employment details', 'Keep contact information current', 'Store your emergency contact', 'View and download your CV'],
-    link: '../../Mohamad/Employee-profile/Profile.html', action: 'Open your profile'
+    action: 'Open your profile', hrAction: 'Open your HR profile'
   },
   tasks: {
     number: '02', name: 'TASK MANAGEMENT', title: 'Stay on top of<br>every task.',
     description: 'View assigned work, send solutions, and follow progress.',
     pill: '3 tasks · In progress',
     items: ['See tasks assigned to you', 'Check priorities and due dates', 'Submit your work to HR', 'Track review and completion'],
-    link: '../../Sara_Sawalmeh/Employee_Task/Employee_Task.html', action: 'View your tasks'
+    action: 'View your tasks', hrAction: 'Manage tasks'
   },
   leave: {
     number: '03', name: 'LEAVE MANAGEMENT', title: 'Time off,<br>made simple.',
     description: 'Request leave and see the status of each application.',
     pill: 'Leave · Employee view',
     items: ['Choose your leave type', 'Select start and end dates', 'Explain your request', 'Follow the approval status'],
-    link: '../../Timaaa/Leave-application/Timaa.html', action: 'Request time off'
+    action: 'Request time off', hrAction: 'Review leave requests'
   },
   policies: {
     number: '04', name: 'COMPANY POLICIES', title: 'Find the policy<br>you need.',
     description: 'Keep important company guidance easy to find.',
     pill: 'Policies · Library',
     items: ['Browse published policies', 'Read current guidance', 'Find documents quickly', 'Stay informed about updates'],
-    link: '../../Sara_Dolat/company policies/index.html', action: 'Browse policies'
+    action: 'Browse policies', hrAction: 'Manage policies'
   },
   meetings: {
     number: '05', name: 'MEETINGS', title: 'Never miss a<br>meeting.',
     description: 'View upcoming company meetings and join scheduled Zoom sessions.',
-    link: '../Meeting-Zoom/index.html', action: 'Request a meeting'
+    action: 'Request a meeting', hrAction: 'Manage meetings'
   },
   feedback: {
     number: '06', name: 'FEEDBACK', title: 'Your voice,<br>heard clearly.',
     description: 'Share feedback with HR in one simple place.',
     pill: 'Feedback · Employee view',
     items: ['Write your feedback', 'Send it to HR', 'Keep communication organized', 'Help improve everyday work'],
-    link: '../../Yasmeen_Telfah/feedbackEmployees.html', action: 'Share your feedback'
+    action: 'Share your feedback', hrAction: 'View feedback'
   }
 };
 
@@ -150,13 +141,16 @@ function renderService(key) {
   document.querySelector('#serviceTitle').innerHTML = service.title;
   document.querySelector('#serviceDescription').textContent = service.description;
   const link = document.querySelector('#serviceLink');
-  const signedIn = isSignedIn();
-  link.href = signedIn ? service.link : loginUrl;
-  link.innerHTML = `${signedIn ? service.action : `Log in to ${service.action.toLowerCase()}`} <i class="bi bi-arrow-right" aria-hidden="true"></i>`;
-  document.querySelector('#serviceAccessNote').hidden = signedIn;
+  const role = serviceRouting?.getRole();
+  link.href = serviceRouting?.pageUrl(key) || loginUrl;
+  link.innerHTML = `${role ? (role === 'HR' ? service.hrAction : service.action) : `Log in to ${service.action.toLowerCase()}`} <i class="bi bi-arrow-right" aria-hidden="true"></i>`;
+  document.querySelector('#serviceAccessNote').hidden = Boolean(role);
   const getStarted = document.querySelector('#getStartedLink');
-  getStarted.href = signedIn ? servicesUrl : loginUrl;
-  getStarted.setAttribute('aria-label', signedIn ? 'Get started with Mysta services' : 'Log in to get started with Mysta services');
+  getStarted.href = serviceRouting?.pageUrl() || loginUrl;
+  getStarted.setAttribute('aria-label', role ? 'Get started with Mysta services' : 'Log in to get started with Mysta services');
+  document.querySelectorAll('.problem-card[data-service]').forEach((card) => {
+    card.href = serviceRouting?.pageUrl(card.dataset.service) || loginUrl;
+  });
 
   standardPreview.hidden = key === 'meetings';
   meetingPreview.hidden = key !== 'meetings';
@@ -205,7 +199,7 @@ async function selectService(key) {
   ], { duration: 390, delay: index * 55, easing: 'cubic-bezier(.2,.8,.2,1)' }));
 }
 
-document.querySelectorAll('[data-service]').forEach(element => {
+document.querySelectorAll('.service-tab[data-service]').forEach(element => {
   element.addEventListener('click', () => selectService(element.dataset.service));
 });
 
