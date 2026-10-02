@@ -21,16 +21,95 @@ let hours = document.getElementById("hours");
 
 
 // ============================
+// Load Current User
+// ============================
+
+let currentUser = null;
+
+try {
+
+    currentUser = JSON.parse(
+        localStorage.getItem("user") ||
+        localStorage.getItem("currentUser") ||
+        "null"
+    );
+
+}
+catch(error){
+
+    console.log("User loading error");
+
+}
+
+
+
+// ============================
+// Display Employee Data
+// ============================
+
+if(currentUser){
+
+
+    let nameElement = document.getElementById("employeeName");
+
+    let infoElement = document.getElementById("employeeInfo");
+
+    let imageElement = document.getElementById("employeeImage");
+
+
+
+    if(nameElement){
+
+        nameElement.textContent =
+        currentUser.name || "Employee";
+
+    }
+
+
+
+    if(infoElement){
+
+        infoElement.textContent =
+        `${currentUser.position || currentUser.role || "Employee"} • EMP${String(currentUser.id || "").padStart(3,"0")}`;
+
+    }
+
+
+
+if(imageElement){
+
+    imageElement.src =
+    currentUser.profileImage
+    ? "../../Json-Imges/" + currentUser.profileImage.split("/").pop()
+    : "images.jpg";
+
+}
+
+
+}
+
+
+
+
+
+
+// ============================
 // Character Counter
 // ============================
 
 reason.addEventListener("input", function () {
 
+
     let count = reason.value.length;
 
-    charCount.textContent = count + " chars";
+
+    charCount.textContent =
+    count + " chars";
+
 
 });
+
+
 
 
 
@@ -38,6 +117,7 @@ reason.addEventListener("input", function () {
 // ============================
 // Date Validation
 // ============================
+
 
 endDate.addEventListener("change", function () {
 
@@ -65,9 +145,12 @@ endDate.addEventListener("change", function () {
 
 
 
+
+
 // ============================
 // Submit Form
 // ============================
+
 
 leaveForm.addEventListener("submit", function(event){
 
@@ -81,17 +164,19 @@ leaveForm.addEventListener("submit", function(event){
 
 
 
-    // ============================
-    // Validation
-    // ============================
-
 
     if(
+
         leaveType.value === "" ||
+
         startDate.value === "" ||
+
         endDate.value === "" ||
+
         hours.value === "" ||
+
         reasonText === ""
+
     ){
 
 
@@ -101,6 +186,7 @@ leaveForm.addEventListener("submit", function(event){
 
 
     }
+
 
 
 
@@ -120,6 +206,7 @@ leaveForm.addEventListener("submit", function(event){
 
 
 
+
     if(hours.value <= 0){
 
 
@@ -129,6 +216,7 @@ leaveForm.addEventListener("submit", function(event){
 
 
     }
+
 
 
 
@@ -161,13 +249,17 @@ leaveForm.addEventListener("submit", function(event){
         reason: reasonText,
 
 
-        status: "Pending",
+        status:"Pending",
 
 
-        employee: JSON.parse(localStorage.getItem("user") || "null")?.name || "Demo Employee",
+
+        employee:
+        currentUser?.name || "Demo Employee",
 
 
-        createdDate: new Date().toLocaleDateString()
+
+        createdDate:
+        new Date().toLocaleDateString()
 
 
 
@@ -179,35 +271,33 @@ leaveForm.addEventListener("submit", function(event){
 
 
 
+
+
     // ============================
-    // Save To Local Storage
+    // Save Local Storage
     // ============================
 
 
-
-    // Get old applications
-
-    let leaveApplications = JSON.parse(
+    let leaveApplications =
+    JSON.parse(
         localStorage.getItem("leaveApplications")
     ) || [];
 
 
 
-
-    // Add new application
-
-    leaveApplications.push(leaveApplication);
-
+    leaveApplications.push(
+        leaveApplication
+    );
 
 
-
-
-    // Save again
 
     localStorage.setItem(
         "leaveApplications",
         JSON.stringify(leaveApplications)
     );
+
+
+
     renderMyRequests();
 
 
@@ -215,26 +305,19 @@ leaveForm.addEventListener("submit", function(event){
 
 
 
-
-
-    // ============================
-    // Success Message
-    // ============================
-
-
-    alert("Leave application submitted successfully!");
+    alert(
+        "Leave application submitted successfully!"
+    );
 
 
 
 
-
-    // Reset Form
 
 
     leaveForm.reset();
 
 
-    charCount.textContent = "0 chars";
+    charCount.textContent="0 chars";
 
 
 
@@ -255,11 +338,10 @@ leaveForm.addEventListener("submit", function(event){
 cancelButton.addEventListener("click", function(){
 
 
-
-    let confirmCancel = confirm(
+    let confirmCancel =
+    confirm(
         "Are you sure you want to cancel?"
     );
-
 
 
 
@@ -275,44 +357,189 @@ cancelButton.addEventListener("click", function(){
     }
 
 
-
 });
 
-let currentUser = null;
-try { currentUser = JSON.parse(localStorage.getItem('user') || 'null'); } catch (_) { /* Demo mode. */ }
-if (currentUser) {
-    document.querySelector('.employee-info h3').textContent = currentUser.name;
-    document.querySelector('.employee-info p').textContent = `${currentUser.position || currentUser.role} • EMP${String(currentUser.id).padStart(3, '0')}`;
-}
 
-const requestHistory = document.createElement('section');
-requestHistory.className = 'request-history';
-requestHistory.innerHTML = '<h2>My leave requests</h2><div class="request-history-list"></div>';
-document.querySelector('main.page').append(requestHistory);
 
-function renderMyRequests() {
-    const list = requestHistory.querySelector('.request-history-list');
+
+
+
+
+
+
+// ============================
+// Request History
+// ============================
+
+
+const requestHistory =
+document.createElement("section");
+
+
+requestHistory.className =
+"request-history";
+
+
+
+requestHistory.innerHTML =
+`
+<h2>
+My leave requests
+</h2>
+
+<div class="request-history-list"></div>
+
+`;
+
+
+
+document
+.querySelector("main.page")
+.append(requestHistory);
+
+
+
+
+
+
+
+
+function renderMyRequests(){
+
+
+    const list =
+    requestHistory.querySelector(
+        ".request-history-list"
+    );
+
+
+
     list.replaceChildren();
-    let saved = [];
-    try { saved = JSON.parse(localStorage.getItem('leaveApplications') || '[]'); } catch (_) { /* Start empty. */ }
-    if (!Array.isArray(saved)) saved = [];
-    const mine = saved.filter(item => !currentUser || item.employee === currentUser.name);
-    if (!mine.length) {
-        const empty = document.createElement('p');
-        empty.textContent = 'No leave requests submitted yet.';
-        list.append(empty);
-        return;
+
+
+
+
+    let saved=[];
+
+
+    try{
+
+        saved =
+        JSON.parse(
+            localStorage.getItem("leaveApplications") || "[]"
+        );
+
     }
-    mine.slice().reverse().forEach(item => {
-        const row = document.createElement('div');
-        row.className = 'request-history-item';
-        const summary = document.createElement('span');
-        summary.textContent = `${item.leaveType} · ${item.startDate} – ${item.endDate}`;
-        const status = document.createElement('strong');
-        status.textContent = item.status;
-        row.append(summary, status);
+
+    catch(error){
+
+        saved=[];
+
+    }
+
+
+
+
+
+    const mine =
+    saved.filter(
+        item =>
+        !currentUser ||
+        item.employee === currentUser.name
+    );
+
+
+
+
+
+
+    if(!mine.length){
+
+
+        let empty =
+        document.createElement("p");
+
+
+        empty.textContent =
+        "No leave requests submitted yet.";
+
+
+        list.append(empty);
+
+
+        return;
+
+
+    }
+
+
+
+
+
+
+
+    mine
+    .slice()
+    .reverse()
+    .forEach(item=>{
+
+
+
+        let row =
+        document.createElement("div");
+
+
+        row.className =
+        "request-history-item";
+
+
+
+
+        let summary =
+        document.createElement("span");
+
+
+
+        summary.textContent =
+        `${item.leaveType} · ${item.startDate} – ${item.endDate}`;
+
+
+
+
+
+        let status =
+        document.createElement("strong");
+
+
+
+        status.textContent =
+        item.status;
+
+
+
+
+
+        row.append(
+            summary,
+            status
+        );
+
+
+
         list.append(row);
+
+
+
     });
+
+
+
 }
+
+
+
+
+
+
 
 renderMyRequests();

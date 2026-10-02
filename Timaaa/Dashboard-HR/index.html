@@ -20,14 +20,18 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 <body class="hr-page">
 
 
-<button class="hr-nav-toggle" type="button" aria-controls="hrNavigation" aria-expanded="false" aria-label="Open HR menu">☰ HR menu</button>
+<button class="hr-nav-toggle" type="button" aria-controls="hrNavigation" aria-expanded="false" aria-label="Open HR menu">
+☰ HR menu
+</button>
+
 <button class="hr-nav-backdrop" type="button" aria-label="Close HR menu" hidden></button>
+
 <iframe id="hrNavigation" class="hr-navigation" src="../../Side_Bar/Side_bar.html" title="HR navigation"></iframe>
 
+
 <div class="dashboard">
+
 <main class="main">
-
-
 
 
 
@@ -53,7 +57,6 @@ Here's what's happening at Mysta HR today.
 
 
 
-
 <div class="profile-area">
 
 
@@ -68,11 +71,13 @@ Sign out
 
 
 
+<a id="profileLink" href="#">
+
 <img 
 id="profileImage"
 src="../../Json-Imges/images.jpg">
 
-
+</a>
 
 
 
@@ -103,10 +108,6 @@ Employee
 
 
 </section>
-
-
-
-
 
 
 
@@ -145,7 +146,6 @@ TOTAL EMPLOYEES
 
 
 
-
 <div class="stat-card green">
 
 
@@ -168,7 +168,6 @@ Awaiting review
 
 
 </div>
-
 
 
 
@@ -201,7 +200,6 @@ Across all teams
 
 
 
-
 <div class="stat-card mint">
 
 
@@ -224,7 +222,6 @@ This quarter
 
 
 </div>
-
 
 
 
@@ -257,12 +254,7 @@ Needs review
 
 </section>
 
-
-
-
-
-
-
+</section>
 
 
 <!-- ANALYTICS -->
@@ -286,8 +278,8 @@ Employees by Department
 
 
 
-<div 
-class="department"
+<div  
+class="department" 
 id="department">
 
 
@@ -315,7 +307,7 @@ Leave Overview
 
 
 
-<div 
+<div  
 class="leave"
 id="leaveOverview">
 
@@ -333,10 +325,16 @@ id="leaveOverview">
 
 </section>
 
+
+
+
+
 <!-- BOTTOM SECTION -->
 
 
 <section class="bottom">
+
+
 
 
 
@@ -360,6 +358,7 @@ Pending Leave Requests
 
 
 </div>
+
 
 
 
@@ -417,6 +416,8 @@ Quick Actions
 
 
 
+
+
 <a href="../../Sara_Dolat/Leave-HR/index.html"
 class="quick-card">
 
@@ -430,6 +431,7 @@ Review Leave Requests
 
 
 </a>
+
 
 
 
@@ -456,6 +458,8 @@ Manage Tasks
 
 
 
+
+
 <a href="../../Mohamad/Hr-profile/hr.html"
 class="quick-card">
 
@@ -469,6 +473,7 @@ Employee Profile
 
 
 </a>
+
 
 
 
@@ -492,11 +497,13 @@ Company Policies
 
 
 
+
 </div>
 
 
 
 </section>
+
 
 
 
@@ -520,40 +527,92 @@ Company Policies
 
 
 
+
+
 <script>
 
 
 // ===============================
 // LOAD USER FROM LOCAL STORAGE
 // Main's login uses currentUser; older dashboard flows use user.
+
 let dashboardUser = null;
+
 try {
-  dashboardUser = JSON.parse(localStorage.getItem("currentUser") || localStorage.getItem("user") || "null");
+
+dashboardUser = JSON.parse(
+localStorage.getItem("currentUser") ||
+localStorage.getItem("user") ||
+"null"
+);
+
 } catch (error) {
-  console.log("Dashboard user loading error", error);
+
+console.log("Dashboard user loading error", error);
+
 }
+
+
 
 if (dashboardUser) {
-  const name = dashboardUser.name || "User";
-  document.getElementById("dashboardWelcome").textContent = `Welcome back, ${name.split(" ")[0]}!`;
-  document.getElementById("dashboardName").textContent = name;
-  document.getElementById("userRole").textContent = dashboardUser.role || "Employee";
 
-  const imageMap = {
-    "Sara Ahmad": "../../Json-Imges/sara.jpg",
-    "Ahmad Saleh": "../../Json-Imges/ahmad.jpg"
-  };
-  document.getElementById("profileImage").src = imageMap[name] || "../../Json-Imges/images.jpg";
+const name = dashboardUser.name || "User";
+
+
+document.getElementById("dashboardWelcome").textContent =
+`Welcome back, ${name.split(" ")[0]}!`;
+
+
+document.getElementById("dashboardName").textContent =
+name;
+
+
+document.getElementById("userRole").textContent =
+dashboardUser.role || "Employee";
+
+
+
+const imageMap = {
+
+"Sara Ahmad":"../../Json-Imges/sara.jpg",
+
+"Ahmad Saleh":"../../Json-Imges/ahmad.jpg"
+
+};
+
+
+
+document.getElementById("profileImage").src =
+imageMap[name] || "../../Json-Imges/images.jpg";
+
+
 }
 
+
+
+
 // LOGOUT
-document.getElementById("logout").addEventListener("click", function (event) {
-  event.preventDefault();
-  localStorage.removeItem("user");
-  localStorage.removeItem("currentUser");
-  localStorage.removeItem("loggedInUserId");
-  window.location.href = "../../Sara_Dolat/log in/index.html";
+
+document.getElementById("logout").addEventListener("click", function(event){
+
+
+event.preventDefault();
+
+
+localStorage.removeItem("user");
+
+localStorage.removeItem("currentUser");
+
+localStorage.removeItem("loggedInUserId");
+
+
+window.location.href =
+"../../Sara_Dolat/log in/index.html";
+
+
 });
+
+
 
 </script>
 
@@ -561,7 +620,10 @@ document.getElementById("logout").addEventListener("click", function (event) {
 
 
 
+
 <script src="../../demo/flow.js"></script>
+
+
 
 
 

@@ -1258,3 +1258,137 @@ LEAVE OVERVIEW DOTS
     color:var(--color-text-muted);
 
 }
+
+/* ===============================
+   ACTIVITY TIMELINE
+=============================== */
+
+
+.timeline{
+    margin-top:25px;
+}
+
+
+.timeline-item{
+
+    position:relative;
+
+    display:flex;
+
+    gap:18px;
+
+    margin-bottom:30px;
+
+}
+
+
+
+.timeline-dot{
+
+    width:18px;
+
+    height:18px;
+
+    background:white;
+
+    border:3px solid #118ab2;
+
+    border-radius:50%;
+
+    flex-shrink:0;
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+
+
+.timeline-item:not(:last-child)::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:8px;
+
+    top:18px;
+
+    height:100%;
+
+    width:2px;
+
+    background:#dce5ef;
+
+}
+
+
+
+.timeline-content{
+
+    flex:1;
+
+    padding-bottom:18px;
+
+    border-bottom:1px solid #e5e7eb;
+
+}
+
+
+
+.timeline-title{
+
+    font-size:16px;
+
+    font-weight:600;
+
+    color:#173d6d;
+
+    margin-bottom:8px;
+
+}
+
+
+
+.timeline-time{
+
+    font-size:13px;
+
+    color:#60758f;
+
+    margin-bottom:8px;
+
+}
+
+
+
+.timeline-status{
+
+    font-size:13px;
+
+    color:#8492a5;
+
+}
+
+
+
+.timeline-status span{
+
+    font-weight:bold;
+
+    color:#118ab2;
+
+}
+
+
+
+.timeline-created{
+
+    margin-top:6px;
+
+    font-size:12px;
+
+    color:#9aa8b8;
+
+}

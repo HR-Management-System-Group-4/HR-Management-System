@@ -3,118 +3,23 @@
 // ===================================
 
 
-
 // ===============================
 // VARIABLES
 // ===============================
 
-
-let leaveChart;
-
-
-
-
-// ===============================
-// EMPLOYEES DATA
-// ===============================
-
-
-const employees = [
-
-
-{
-name:"Adam Smith",
-department:"Engineering"
-},
-
-
-{
-name:"Lina Ahmad",
-department:"Design"
-},
-
-
-{
-name:"Sara Ahmed",
-department:"Marketing"
-},
-
-
-{
-name:"Omar Khalil",
-department:"Analytics"
-},
-
-
-{
-name:"John David",
-department:"Engineering"
-},
-
-
-{
-name:"Emma Brown",
-department:"Engineering"
-}
-
-
-
-];
-
-
-
-
+let employees = [];
 
 
 
 
 // ===============================
-// LEAVE DATA
+// LOAD LEAVES FROM LOCAL STORAGE
 // ===============================
 
-
-const leaves = [
-
-
-{
-employee:"Ahmad Saleh",
-type:"Annual Leave",
-date:"2026-10-12",
-status:"Pending"
-},
+let leaves = [];
 
 
-{
-employee:"Dana Rimawi",
-type:"Annual Leave",
-date:"2026-10-04",
-status:"Approved"
-},
-
-
-{
-employee:"Tariq Hijazi",
-type:"Sick Leave",
-date:"2026-09-27",
-status:"Rejected"
-}
-
-
-
-];
-
-
-
-
-
-
-
-// ===============================
-// LOAD LOCAL STORAGE LEAVES
-// ===============================
-
-
-try{
+try {
 
 
 let savedLeaves =
@@ -129,15 +34,13 @@ savedLeaves.forEach(item=>{
 
 leaves.push({
 
+employee: item.employee || "Employee",
 
-employee:item.employee || "Employee",
+type: item.leaveType || "Leave",
 
-type:item.leaveType || "Leave",
+date: item.startDate || "",
 
-date:item.startDate || "",
-
-status:item.status || "Pending"
-
+status: item.status || "Pending"
 
 
 });
@@ -147,20 +50,14 @@ status:item.status || "Pending"
 
 
 }
-
 catch(error){
 
-
 console.log(
-"Local storage error",
+"Leave loading error",
 error
 );
 
-
 }
-
-
-
 
 
 
@@ -172,37 +69,29 @@ error
 // ===============================
 
 
-const tasks=[
-
+const tasks = [
 
 {
 title:"Employee Handbook",
 status:"Active"
 },
 
-
 {
 title:"Performance Review",
 status:"Active"
 },
-
 
 {
 title:"System Update",
 status:"Completed"
 },
 
-
 {
 title:"Database Backup",
 status:"Completed"
 }
 
-
-
 ];
-
-
 
 
 
@@ -214,21 +103,7 @@ status:"Completed"
 // ===============================
 
 
-const feedback=[
-
-
-"New feedback received",
-
-"Employee satisfaction survey",
-
-"HR review completed"
-
-
-
-];
-
-
-
+const feedback = [];
 
 
 
@@ -236,7 +111,7 @@ const feedback=[
 
 
 // ===============================
-// UPDATE STAT CARDS
+// UPDATE STATISTICS
 // ===============================
 
 
@@ -244,18 +119,13 @@ function updateStatistics(){
 
 
 
-document.getElementById(
-"totalEmployees"
-).innerHTML =
+document.getElementById("totalEmployees").innerHTML =
 employees.length;
 
 
 
 
-document.getElementById(
-"pendingLeaves"
-).innerHTML =
-
+document.getElementById("pendingLeaves").innerHTML =
 
 leaves.filter(
 x=>x.status==="Pending"
@@ -264,12 +134,7 @@ x=>x.status==="Pending"
 
 
 
-
-
-document.getElementById(
-"activeTasks"
-).innerHTML =
-
+document.getElementById("activeTasks").innerHTML =
 
 tasks.filter(
 x=>x.status==="Active"
@@ -278,12 +143,7 @@ x=>x.status==="Active"
 
 
 
-
-
-document.getElementById(
-"completedTasks"
-).innerHTML =
-
+document.getElementById("completedTasks").innerHTML =
 
 tasks.filter(
 x=>x.status==="Completed"
@@ -292,17 +152,12 @@ x=>x.status==="Completed"
 
 
 
-
-
-document.getElementById(
-"feedback"
-).innerHTML =
+document.getElementById("feedback").innerHTML =
 feedback.length;
 
 
 
 }
-
 
 
 
@@ -319,11 +174,8 @@ feedback.length;
 function loadDepartments(){
 
 
-
 let container =
-document.getElementById(
-"department"
-);
+document.getElementById("department");
 
 
 
@@ -336,7 +188,7 @@ container.innerHTML="";
 
 
 
-let departments={};
+let departments = {};
 
 
 
@@ -352,7 +204,6 @@ departments[emp.department]=0;
 }
 
 
-
 departments[emp.department]++;
 
 
@@ -365,6 +216,7 @@ departments[emp.department]++;
 
 Object.keys(departments)
 .forEach(dep=>{
+
 
 
 let width =
@@ -398,7 +250,6 @@ ${departments[dep]}
 </div>
 
 
-
 `;
 
 
@@ -418,18 +269,15 @@ ${departments[dep]}
 
 
 // ===============================
-// LEAVE OVERVIEW + CHART
+// LEAVE OVERVIEW
 // ===============================
 
 
 function loadLeaveOverview(){
 
 
-
 let box =
-document.getElementById(
-"leaveOverview"
-);
+document.getElementById("leaveOverview");
 
 
 
@@ -468,9 +316,6 @@ pending + approved + rejected;
 
 
 
-
-
-
 box.innerHTML = `
 
 
@@ -492,9 +337,11 @@ Pending
 </div>
 
 
+
 <div class="leave-number">
 
 ${pending}
+
 
 <span class="leave-percent">
 
@@ -507,7 +354,6 @@ ${Math.round((pending/total)*100 || 0)}%
 
 
 </div>
-
 
 
 
@@ -528,6 +374,7 @@ Approved
 
 
 </div>
+
 
 
 <div class="leave-number">
@@ -552,8 +399,6 @@ ${Math.round((approved/total)*100 || 0)}%
 
 
 
-
-
 <div class="leave-item">
 
 
@@ -569,6 +414,7 @@ Rejected
 
 
 </div>
+
 
 
 <div class="leave-number">
@@ -590,154 +436,9 @@ ${Math.round((rejected/total)*100 || 0)}%
 
 
 
-
 `;
 
-
-
-
-
-
-
-// CREATE CHART
-
-
-let chartElement =
-document.getElementById(
-"leaveChart"
-);
-
-
-
-if(chartElement){
-
-
-
-if(leaveChart){
-
-leaveChart.destroy();
-
-
 }
-
-
-
-
-leaveChart =
-new Chart(chartElement,{
-
-
-
-type:"doughnut",
-
-
-
-data:{
-
-
-labels:[
-
-"Pending",
-
-"Approved",
-
-"Rejected"
-
-],
-
-
-
-datasets:[{
-
-
-data:[
-
-pending,
-
-approved,
-
-rejected
-
-],
-
-
-
-backgroundColor:[
-
-
-"#118ab2",
-
-"#7cd5c7",
-
-"#ef476f"
-
-
-
-],
-
-
-borderWidth:0
-
-
-
-}]
-
-
-
-},
-
-
-
-options:{
-
-
-
-responsive:true,
-
-
-cutout:"70%",
-
-
-
-plugins:{
-
-
-
-legend:{
-
-
-display:false
-
-
-}
-
-
-
-}
-
-
-
-}
-
-
-
-});
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
 
 // ===============================
 // PENDING REQUESTS
@@ -747,11 +448,8 @@ display:false
 function loadPendingRequests(){
 
 
-
 let container =
-document.getElementById(
-"pendingRequests"
-);
+document.getElementById("pendingRequests");
 
 
 
@@ -760,15 +458,14 @@ return;
 
 
 
-container.innerHTML="";
-
+container.innerHTML = "";
 
 
 
 leaves
 
 .filter(
-x=>x.status==="Pending"
+item => item.status === "Pending"
 )
 
 .forEach(item=>{
@@ -816,13 +513,11 @@ Pending
 </div>
 
 
-
 `;
 
 
 
 });
-
 
 
 }
@@ -843,11 +538,8 @@ Pending
 function loadActivity(){
 
 
-
 let activity =
-document.getElementById(
-"activity"
-);
+document.getElementById("activity");
 
 
 
@@ -856,50 +548,52 @@ return;
 
 
 
-activity.innerHTML="";
+activity.innerHTML = "";
+
+
+
+let data = [];
 
 
 
 
-let data=[
+// Create activity from leave requests
+
+leaves.forEach(item=>{
+
+
+data.push({
+
+text:
+`${item.employee} submitted a leave request`,
+
+time:
+item.date
+
+});
+
+
+});
 
 
 
-{
-
-text:"Ahmad Saleh submitted a leave request",
-
-time:"2 hours ago"
 
 
-},
+if(data.length === 0){
 
 
+data.push({
 
-{
+text:
+"No recent activity",
 
-text:"Lina updated task status",
+time:
+""
 
-time:"Yesterday"
-
-
-},
-
-
-
-{
-
-text:"New feedback received",
-
-time:"Today"
+});
 
 
 }
-
-
-
-];
-
 
 
 
@@ -907,7 +601,6 @@ time:"Today"
 
 
 data.forEach(item=>{
-
 
 
 activity.innerHTML += `
@@ -930,6 +623,7 @@ ${item.text}
 </div>
 
 
+
 <div class="timeline-time">
 
 ${item.time}
@@ -944,12 +638,11 @@ ${item.time}
 </div>
 
 
+
 `;
 
 
-
 });
-
 
 
 }
@@ -963,7 +656,7 @@ ${item.time}
 
 
 // ===============================
-// LOAD EMPLOYEE JSON
+// LOAD EMPLOYEES JSON
 // ===============================
 
 
@@ -981,11 +674,18 @@ fetch("../../employee.json")
 
 
 let list =
+
 Array.isArray(data)
+
 ?
+
 data
+
 :
+
 data.employees;
+
+
 
 
 
@@ -994,14 +694,21 @@ if(Array.isArray(list)){
 
 
 employees.splice(
+
 0,
+
 employees.length,
+
 ...list
+
 );
 
 
 
+
+
 updateStatistics();
+
 
 loadDepartments();
 
@@ -1014,20 +721,96 @@ loadDepartments();
 })
 
 
+
 .catch(error=>{
 
 
 console.log(
-"JSON loading error",
+
+"Employee JSON loading error",
+
 error
+
 );
+
 
 
 });
 
 
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// PROFILE LINK
+// ===============================
+
+
+function loadProfileLink(){
+
+
+let profileLink =
+document.getElementById("profileLink");
+
+
+
+let user = null;
+
+
+
+try{
+
+
+user =
+JSON.parse(
+
+localStorage.getItem("user") ||
+
+localStorage.getItem("currentUser") ||
+
+"null"
+
+);
+
+
 
 }
+
+catch(error){
+
+
+console.log(error);
+
+
+}
+
+
+
+
+
+if(profileLink && user){
+
+
+
+profileLink.href =
+
+`../../Mohamad/Hr-profile/hr.html?id=${user.id}`;
+
+
+
+}
+
+
+}
+
+
 
 
 
@@ -1042,31 +825,43 @@ error
 // ===============================
 
 
+
 window.addEventListener(
+
 "load",
 
 function(){
 
 
 
+loadEmployeesJSON();
+
+
+
 updateStatistics();
+
 
 
 loadDepartments();
 
 
+
 loadLeaveOverview();
+
 
 
 loadPendingRequests();
 
 
+
 loadActivity();
 
 
-loadEmployeesJSON();
+
+loadProfileLink();
 
 
 
-});
+}
 
+);
