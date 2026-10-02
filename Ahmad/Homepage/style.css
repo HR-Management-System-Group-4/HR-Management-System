@@ -5,7 +5,7 @@ a { text-decoration: none; }
 button { font: inherit; }
 section { scroll-margin-top: 92px; }
 .custom-navbar { position: absolute; top: 0; left: 50%; z-index: 20; transform: translateX(-50%); width: min(94%, 1240px); background: rgba(255,255,255,.91); backdrop-filter: blur(18px); }
-.nav-links-box .nav-link.active { color: var(--color-accent); }
+.nav-links-box .nav-link.active { color: #3534c7; }
 .custom-navbar .signin-btn { display: inline-flex; align-items: center; text-decoration: none; }
 
 /* The hero follows the supplied Vimeo landing page. */
@@ -107,6 +107,8 @@ section { scroll-margin-top: 92px; }
 .team-section { max-width: 1240px; margin: auto; padding: 75px 5% 110px; }
 .team-section h2 { margin: 22px 0 10px; font-size: clamp(34px,4vw,55px); font-weight: 800; letter-spacing: -.05em; }
 .team-section p { color: var(--color-text-secondary); }
+.team-section > a { display: inline-flex; align-items: center; gap: 12px; margin-top: 16px; color: var(--color-accent); font-weight: 700; }
+.team-section > a:hover, .team-section > a:focus-visible { text-decoration: underline; }
 .dark-mode { --color-text-primary: #f2f2ed; --color-text-secondary: #c5c8db; --color-text-muted: #9096b3; --color-background: #141728; --color-surface: #1c2038; --color-surface-blue: #262b4a; --color-surface-mint: #143033; --color-mint: #17404a; --color-accent: #4cc3ea; --color-accent-contrast: #8a91d1; --color-border: rgba(255,255,255,.12); }
 .dark-mode .custom-navbar, .dark-mode .service-preview, .dark-mode .theme-btn { background: var(--color-surface); color: var(--color-text-primary); }
 .dark-mode .nav-links-box { border-color: var(--color-border); background: var(--color-surface-blue); }

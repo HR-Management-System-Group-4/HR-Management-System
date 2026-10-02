@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1722">
+  <title>Mysta — San Francisco 3D map</title>
+  <link rel="stylesheet" href="./src/map.css">
+</head>
+<body>
+  <main class="map-app" aria-label="Interactive 3D location view">
+    <div id="map-stage" class="map-stage"></div>
+    <div id="map-status" class="map-status" role="status">
+      <span class="status-orbit" aria-hidden="true"></span>
+      <strong data-location-name></strong>
+      <span id="status-detail">Preparing the 3D city</span>
+    </div>
+    <div class="map-topline" aria-hidden="true"><span class="map-topline-dot"></span> MYSTA / LOCATION</div>
+    <div id="destination-card" class="destination-card" hidden>
+      <span class="destination-card-kicker">OUR LOCATION</span>
+      <strong>MYSTA</strong>
+      <span data-location-name></span>
+    </div>
+    <div id="explore-hint" class="explore-hint" hidden>Drag to explore</div>
+    <div class="attribution" aria-label="Map data attribution"><span id="tile-credits"></span></div>
+  </main>
+  <script type="module" src="./src/public-entry.js"></script>
+</body>
+</html>

@@ -36,9 +36,27 @@
   </head>
 
   <body class="hr-page">
-    <button class="hr-nav-toggle" type="button" aria-controls="hrNavigation" aria-expanded="false" aria-label="Open HR menu">☰ HR menu</button>
-    <button class="hr-nav-backdrop" type="button" aria-label="Close HR menu" hidden></button>
-    <iframe id="hrNavigation" class="hr-navigation" src="../../Side_Bar/Side_bar.html" title="HR navigation"></iframe>
+    <button
+      class="hr-nav-toggle"
+      type="button"
+      aria-controls="hrNavigation"
+      aria-expanded="false"
+      aria-label="Open HR menu"
+    >
+      ☰ HR menu
+    </button>
+    <button
+      class="hr-nav-backdrop"
+      type="button"
+      aria-label="Close HR menu"
+      hidden
+    ></button>
+    <iframe
+      id="hrNavigation"
+      class="hr-navigation"
+      src="../../Side_Bar/Side_bar.html"
+      title="HR navigation"
+    ></iframe>
     <!-- =========================
          Header
     ========================== -->
@@ -345,26 +363,51 @@
           <div class="task-options-column">
             <!-- Assign Employee -->
 
-            <div class="option-field">
-              <label class="task-field-label" for="assignTo">
+            <div class="assignee-column">
+              <div class="task-field-label">
                 <i class="bi bi-people-fill"></i>
 
                 Assign to
-              </label>
+              </div>
 
-              <div class="styled-select">
-                <span class="select-indicator"></span>
+              <div class="assignee-picker">
+                <!-- Selected employees -->
 
-                <select id="assignTo" required>
-                  <option value="">Select employee...</option>
+                <div class="assignee-trigger" id="assigneeTrigger">
+                  <div class="selected-employees" id="selectedEmployees">
+                    <span class="assignee-placeholder">
+                      Select team members...
+                    </span>
+                  </div>
 
-                  <!--
-                                    Employees from employee.json
-                                    will be added here using JavaScript
-                                -->
-                </select>
+                  <button
+                    id="assigneeToggle"
+                    class="assignee-toggle"
+                    type="button"
+                  >
+                    <i class="bi bi-chevron-down"></i>
+                  </button>
+                </div>
 
-                <i class="bi bi-chevron-down"></i>
+                <!-- Dropdown -->
+
+                <div class="assignee-dropdown" id="assigneeDropdown" hidden>
+                  <!-- Search -->
+
+                  <div class="employee-search">
+                    <i class="bi bi-search"></i>
+
+                    <input
+                      id="employeeSearch"
+                      type="search"
+                      placeholder="Search employees..."
+                    />
+                  </div>
+
+                  <!-- Employees from JSON -->
+
+                  <div class="employee-options" id="employeeOptions"></div>
+                </div>
               </div>
             </div>
 
@@ -630,9 +673,8 @@
 
     <script src="../../layout/header.js"></script>
 
-
     <script src="main.js"></script>
     <script src="../../Side_Bar/embed.js"></script>
     <script src="../../demo/flow.js"></script>
-</body>
+  </body>
 </html>

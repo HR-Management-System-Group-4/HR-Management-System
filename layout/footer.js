@@ -21,6 +21,60 @@ if (footerContainer) {
         link.href = isHomepage ? anchor : `${homepageUrl.href}${anchor}`;
       });
       footerContainer.replaceChildren(footer);
+      initializeFooterMap(footer, footerUrl);
     })
     .catch((error) => console.error('Footer could not be loaded:', error));
+}
+
+function initializeFooterMap(footer, footerUrl) {
+  const viewport = footer.querySelector('[data-footer-map]');
+  const frame = footer.querySelector('[data-map-frame]');
+  const placeholder = footer.querySelector('[data-map-placeholder]');
+  if (!viewport || !frame || !placeholder) return;
+
+  const mapUrl = new URL('footer-map/dist/index.html', footerUrl);
+  const publicMapUrl = new URL('footer-map/public-map.html', footerUrl);
+  let mapStarted = false;
+  let mapReady = false;
+  let visible = false;
+
+  const tellMapVisibility = () => {
+    if (mapReady && frame.contentWindow) {
+      frame.contentWindow.postMessage({ type: 'mysta-map:visibility', visible }, window.location.origin);
+    }
+  };
+
+  window.addEventListener('message', (event) => {
+    if (event.origin !== window.location.origin || event.source !== frame.contentWindow) return;
+    if (event.data?.type === 'mysta-map:ready') {
+      mapReady = true;
+      placeholder.hidden = true;
+      tellMapVisibility();
+    }
+  });
+
+  placeholder.addEventListener('click', async () => {
+    if (mapStarted) return;
+    mapStarted = true;
+    placeholder.disabled = true;
+    placeholder.querySelector('small').textContent = 'Preparing the 3D city…';
+    try {
+      const response = await fetch(mapUrl, { method: 'HEAD' });
+      frame.src = response.ok ? mapUrl.href : publicMapUrl.href;
+    } catch (error) {
+      // A static checkout works even before the optional Cesium build exists.
+      frame.src = publicMapUrl.href;
+      console.warn('Mysta footer map build unavailable; opening the public 3D scene:', error);
+    }
+  });
+
+  const visibleObserver = new IntersectionObserver((entries) => {
+    visible = entries[0].isIntersecting && document.visibilityState === 'visible';
+    tellMapVisibility();
+  }, { threshold: 0.01 });
+  visibleObserver.observe(viewport);
+  document.addEventListener('visibilitychange', () => {
+    visible = document.visibilityState === 'visible' && viewport.getBoundingClientRect().bottom > 0 && viewport.getBoundingClientRect().top < window.innerHeight;
+    tellMapVisibility();
+  });
 }
