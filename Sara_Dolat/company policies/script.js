@@ -2,12 +2,12 @@ fetch("employee.json")
     .then(response => response.json())
     .then(data => {
 
-        const policies = data.policies;
-        const container = document.getElementById("policies");
+        let policies = data.policies;
+        let container = document.getElementById("policies");
 
         policies.forEach(policy => {
 
-            const div = document.createElement("div");
+            let div = document.createElement("div");
 
             div.className = "policy";
 
@@ -57,7 +57,7 @@ fetch("employee.json")
 
             container.appendChild(div);
 
-            const header = div.querySelector(".policy-header-row");
+            let header = div.querySelector(".policy-header-row");
 
             header.addEventListener("click", function () {
 
