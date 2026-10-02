@@ -55,16 +55,7 @@
                 </div> 
             </div> 
  
-            <div class="locationCard"> 
-                <div class="locationMap"> 
-                    <!-- Add your map image or embedded map here. --> 
-                </div> 
- 
-                <div class="locationInfo"> 
-                    <h3>Nexus HR Headquarters</h3> 
-                    <p>1200 Innovation Drive, SF, CA 94105</p> 
-                </div> 
-            </div> 
+            
         </div> 
  
         <div class="feedbackCard"> 
@@ -75,8 +66,22 @@
                     to you within 24 hours. 
                 </p> 
             </div> 
+
+
  
             <form id="feedbackForm"> 
+                <div class="anonymousField">
+                    <input type="checkbox" id="anonymousFeedback">
+
+                    <label for="anonymousFeedback">
+                        <img src="img/incognito-svgrepo-com.svg">
+
+                        <span class="anonymousText">
+                            <span>Submit anonymously</span>
+                            <small>Your identity will not be shown to HR</small>
+                        </span>
+                    </label>
+                </div>
                 <div class="categoryField"> 
                     <label for="feedbackCategory">CATEGORY</label> 
                     <select id="feedbackCategory" required> 
@@ -116,7 +121,9 @@
                     <button type="reset" id="clearFeedback"> 
                         Clear 
                     </button> 
-                </div> 
+                </div>
+                
+
             </form> 
 
             <p id="feedbackResult" role="status" aria-live="polite"></p> 

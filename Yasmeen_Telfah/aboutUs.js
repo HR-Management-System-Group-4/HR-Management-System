@@ -1,3 +1,4 @@
+
 let boxes = document.querySelectorAll(".boxes > div");
 let content = document.querySelectorAll(".content-wrapper > div");
 
