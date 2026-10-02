@@ -18,8 +18,8 @@ aside {
 
     background: linear-gradient(
         180deg,
-        var(--color-surface-blue),
-        var(--color-surface-mint)
+        var(--color-sidebar-top),
+        var(--color-sidebar-bottom)
     );
 
     border-right: 1px solid var(--color-border);
@@ -34,8 +34,8 @@ aside {
     display: flex;
     align-items: center;
 
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 17px;
+    font-weight: 700;
 }
 
 .caption {
@@ -92,6 +92,7 @@ main > div:first-child > p:first-child {
 
     font-family: var(--font-mono);
     font-size: 11px;
+    font-weight: 600;
     letter-spacing: 2px;
 
     color: var(--color-text-muted);
@@ -100,11 +101,20 @@ main > div:first-child > p:first-child {
 main > div:first-child h1 {
     margin: 0 0 10px;
 
-    font-size: 42px;
-    font-weight: 600;
+    font-size: 46px;
+    font-weight: 700;
+    line-height: 1.1;
 
     color: var(--color-text-primary);
 }
+
+main > div:first-child > p:last-child {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+
 .addEmployee {
     display: flex;
     justify-content: flex-end;
@@ -115,12 +125,11 @@ main > div:first-child h1 {
 .addEmployee button {
     padding: 13px 20px;
 
-    background-color: var(--color-mint);
-
-    border: 1px solid var(--color-mint-strong);
+    background-color: var(--color-primary);
+    border: 1px solid var(--color-primary);
     border-radius: 10px;
 
-    color: var(--color-text-primary);
+    color: white;
 
     font-family: var(--font-sans);
     font-size: 13px;
@@ -130,7 +139,7 @@ main > div:first-child h1 {
 }
 
 .addEmployee button:hover {
-    background-color: var(--color-mint-strong);
+    background-color: var(--color-primary-dark);
 }
 
 .employeesCard {
@@ -145,6 +154,16 @@ main > div:first-child h1 {
     overflow-x: auto;
 }
 
+.addEmployeeForm input::placeholder,
+.editEmployeeForm input::placeholder {
+    color: var(--color-text-muted);
+    opacity: 0.7;
+}
+.addEmployeeForm input:disabled,
+.editEmployeeForm input:disabled {
+    background-color: var(--color-surface-blue);
+    cursor: not-allowed;
+}
 /* border-collapse: collapse prevents weird gaps between the table cells. */
 
 .employeesCard table {
@@ -160,13 +179,14 @@ main > div:first-child h1 {
 
     font-family: var(--font-mono);
     font-size: 10px;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 1.5px;
 
     color: var(--color-text-muted);
 
     border-bottom: 1px solid var(--color-border);
 }
+
 
 .employeesCard td {
     padding: 22px 24px;
@@ -186,24 +206,30 @@ main > div:first-child h1 {
     margin-bottom: 4px !important;
 
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 700;
 
     color: var(--color-text-primary);
 }
+
 .employeeEmail {
     margin-bottom: 6px !important;
 
     font-size: 13px;
+    font-weight: 500;
 
     color: var(--color-text-secondary);
 }
+
+
 .employeeDetails {
     font-family: var(--font-mono);
     font-size: 10px;
+    font-weight: 500;
     letter-spacing: 0.5px;
 
     color: var(--color-text-muted);
 }
+
 .employeeStatus {
     display: inline-block;
 
@@ -218,6 +244,18 @@ main > div:first-child h1 {
     font-weight: 600;
 
     color: var(--color-text-primary);
+
+}
+.employeeStatus.active {
+    background-color: var(--color-success-bg);
+    color: var(--color-success);
+    border: 1px solid var(--color-success);
+}
+
+.employeeStatus.inactive {
+    background-color: var(--color-danger-bg);
+    color: var(--color-danger);
+    border: 1px solid var(--color-danger);
 }
 
 .edit {
@@ -279,7 +317,7 @@ main > div:first-child h1 {
     margin: 0 0 30px;
 
     font-size: 26px;
-    font-weight: 600;
+    font-weight: 700;
 
     color: var(--color-text-primary);
 }
@@ -321,6 +359,11 @@ main > div:first-child h1 {
 .addEmployeeForm select:focus {
     /* :focus means when the user clicks/selects that input. */
     border-color: var(--color-mint-strong);
+}
+
+.addEmployeeForm label,
+.editEmployeeForm label {
+    font-weight: 600;
 }
 
 #saveNewEmployee {
@@ -508,6 +551,7 @@ main > div:first-child h1 {
 
 .employeesCard td:nth-child(2) {
     font-size: 13px;
+    font-weight: 500;
     color: var(--color-text-secondary);
 }
 .links {
@@ -518,6 +562,7 @@ main > div:first-child h1 {
 
     gap: 8px;
 }
+
 .links a {
     padding: 15px 18px;
 
@@ -529,11 +574,14 @@ main > div:first-child h1 {
     border-radius: 16px;
 
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
 }
+
 .links .employees {
+    font-weight: 700;
     box-shadow: 0 8px 25px rgba(35, 39, 67, 0.07);
 }
+
 .links .employees::after {
     content: "→";
 
@@ -543,6 +591,22 @@ main > div:first-child h1 {
 
     color: var(--color-text-primary);
 }
+
+.caption {
+    clear: both;
+
+    padding-top: 28px;
+
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    line-height: 1.6;
+
+    color: var(--color-text-muted);
+}
+
+
 .header {
     padding: 5px 15px;
 }
@@ -593,12 +657,13 @@ Don't sit beside the floated logo. Start underneath it */
 
     font-family: var(--font-sans);
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
 
     color: var(--color-text-secondary);
 
     cursor: pointer;
 }
+
 
 .logOut button:hover {
     background-color: var(--color-surface);
@@ -615,15 +680,17 @@ Don't sit beside the floated logo. Start underneath it */
 
     font-family: var(--font-mono);
     font-size: 10px;
+    font-weight: 600;
     letter-spacing: 1px;
 
     color: var(--color-text-muted);
 }
+
 .nameTag {
     margin: 0;
 
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
 
     color: var(--color-text-primary);
 }
@@ -631,10 +698,12 @@ Don't sit beside the floated logo. Start underneath it */
 #currentTime {
     font-family: var(--font-mono);
     font-size: 11px;
+    font-weight: 500;
     letter-spacing: 1px;
 
     color: var(--color-text-muted);
 }
+
 .dlmode {
     display: block;
 
@@ -666,6 +735,10 @@ Don't sit beside the floated logo. Start underneath it */
     color: var(--color-text-primary);
 
     font-size: 20px;
+}
+
+body.dark .dlmode::after {
+    content: "☀";
 }
 
 #currentTime::before {
@@ -717,6 +790,19 @@ letting it escape off-screen like an unsupervised child. */
     main {
         padding: 30px 20px;
     }
+
+    .links a {
+        padding: 13px 14px;
+        font-size: 13px;
+    }
+
+    .header {
+        padding: 5px 10px;
+    }
+    .employeesCard th,
+    .employeesCard td {
+        padding: 16px 18px;
+    }
 }
 @media (max-width: 700px) {
 
@@ -766,5 +852,12 @@ letting it escape off-screen like an unsupervised child. */
         width: 100%;
         margin-left: 0;
         margin-top: 8px;
+    }
+    main > div:first-child h1 {
+        font-size: 32px;
+    }
+        .addEmployeeForm form,
+    .editEmployeeForm form {
+        padding: 25px 20px;
     }
 }

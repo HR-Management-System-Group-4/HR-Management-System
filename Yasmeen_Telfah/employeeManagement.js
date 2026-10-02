@@ -32,11 +32,13 @@ addEmployee.addEventListener("click", function(){
     newEmployee.name = document.querySelector("#fullNameNew").value;
     newEmployee.email = document.querySelector("#workEmailNew").value;
     newEmployee.password = document.querySelector("#passwordNew").value;
+    newEmployee.position = document.querySelector("#positionNew").value;
     newEmployee.department = document.querySelector("#departmentNew").value;
     newEmployee.accountState = document.querySelector("#accountStatusNew").value;
 
     employees.push(newEmployee);
     localStorage.setItem("employees", JSON.stringify(employees));
+
 })
 })
 
@@ -73,7 +75,7 @@ cancelEmployee.addEventListener("click", function(){
                     </div>
                 </td>
 
-                <td>${employee.department}</td>
+                <td class="department">${employee.department}</td>
 
                 <td>
                     <span class="employeeStatus">${employee.accountState}</span>
@@ -83,6 +85,12 @@ cancelEmployee.addEventListener("click", function(){
                     <button type="button" class="edit">Edit</button>
                 </td>
             `;
+            if(employee.accountState.toLowerCase() == "active"){
+                row.querySelector(".employeeStatus").classList.add("active");
+            }
+            else {
+                row.querySelector(".employeeStatus").classList.add("inactive");
+            }
 
             table.appendChild(row);
 
@@ -106,15 +114,28 @@ cancelEmployee.addEventListener("click", function(){
                     saveButton.onclick = function (event) {
                     event.preventDefault();
                     employee.name = editForm.querySelector("#fullName").value;
-                    row.cells[0].textContent = employee.name;
                     employee.email = editForm.querySelector("#workEmail").value;
                     employee.position = editForm.querySelector("#position").value;
                     employee.department = editForm.querySelector("#department").value;
-                    row.cells[1].textContent = employee.department;
                     employee.accountState = editForm.querySelector("#accountStatus").value;
-                    row.cells[2].textContent = employee.accountStatus;
+
+                    row.querySelector(".employeeName").textContent = employee.name;
+                    row.querySelector(".employeeEmail").textContent = employee.email;
+                    row.querySelector(".employeePosition").textContent = employee.position;
+                    row.querySelector(".department").textContent = employee.department;
+                    let status = row.querySelector(".employeeStatus")
+                    status.textContent = employee.accountState;
+                    status.classList.remove("active", "inactive");
+                    if (employee.accountState.toLowerCase() == "active") {
+                        status.classList.add("active");
+                    } else {
+                        status.classList.add("inactive");
+                    }
 
                     localStorage.setItem("employees", JSON.stringify(employees));
+                    editForm.style.display = "none";
+
+
                 };      
                 })
             
@@ -159,7 +180,7 @@ currentTime.textContent = now.toLocaleString("en-US", {
 
 let loggedInUser = JSON.parse(localStorage.getItem("user"));
 
-let positionTag = document.querySelector(".positionTage");
+let positionTag = document.querySelector(".positionTag");
 let nameTag = document.querySelector(".nameTag");
 
 if(loggedInUser){
@@ -167,8 +188,23 @@ if(loggedInUser){
     nameTag.textContent = loggedInUser.name;
 }
 
+let darkModeButton = document.querySelector(".dlmode");
 
+if (localStorage.getItem("darkMode") == "true") {
+    document.body.classList.add("dark");
+}
 
+darkModeButton.addEventListener("click", function () {
+
+    document.body.classList.toggle("dark");
+
+    if (document.body.classList.contains("dark")) {
+        localStorage.setItem("darkMode", "true");
+    } else {
+        localStorage.setItem("darkMode", "false");
+    }
+
+});
 
 
 
