@@ -77,7 +77,7 @@ if (navbarContainer) {
       const nav = new DOMParser().parseFromString(html, 'text/html').querySelector('nav');
       if (!nav) throw new Error('Navbar markup was not found.');
 
-      nav.querySelector('[data-brand-logo]').src = new URL('../assets/Logo.png', navbarUrl).href;
+      nav.querySelector('[data-brand-logo]').src = new URL('../assets/Logo-cropped.png', navbarUrl).href;
       nav.querySelector('[data-service-page="profile"]').href = getProfileUrl();
 
       nav.querySelectorAll('[data-page-anchor]').forEach((link) => {
