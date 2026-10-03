@@ -1430,6 +1430,11 @@ td:nth-child(2) {
 .dark-mode .meeting-dialog {
   background: var(--color-surface);
 }
+body.hr-page .workspace {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
 .dark-mode .form-field input,
 .dark-mode .form-field select,
 .dark-mode .form-field textarea,

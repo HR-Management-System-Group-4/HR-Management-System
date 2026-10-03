@@ -26,6 +26,8 @@ let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 let selectedEmployees = [];
 
+let availableEmployees = [];
+
 let taskToDelete = "";
 
 let currentViewTaskId = "";
@@ -144,6 +146,8 @@ function displayEmployees() {
       } else {
         employees = data.employees;
       }
+
+      availableEmployees = employees;
 
       employeeOptions.innerHTML = "";
 
@@ -367,6 +371,14 @@ taskForm.onsubmit = function (event) {
 
   let assignTo = selectedEmployees.slice();
 
+  let assigneeIds = availableEmployees
+    .filter(function (employee) {
+      return selectedEmployees.includes(employee.name);
+    })
+    .map(function (employee) {
+      return employee.id;
+    });
+
   let priority = document.getElementById("taskPriority").value;
 
   let dueDate = document.getElementById("taskDueDate").value;
@@ -388,6 +400,10 @@ taskForm.onsubmit = function (event) {
       description: taskDescription,
 
       assignTo: assignTo,
+
+      assigneeIds: assigneeIds,
+
+      assignedDate: new Date().toISOString().slice(0, 10),
 
       priority: priority,
 
@@ -418,6 +434,8 @@ taskForm.onsubmit = function (event) {
         tasks[i].description = taskDescription;
 
         tasks[i].assignTo = assignTo;
+
+        tasks[i].assigneeIds = assigneeIds;
 
         tasks[i].priority = priority;
 

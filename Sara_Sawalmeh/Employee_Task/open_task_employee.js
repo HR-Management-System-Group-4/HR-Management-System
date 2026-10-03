@@ -1,8 +1,37 @@
-let loggedInUser = JSON.parse(localStorage.getItem("currentUser"));
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-let myTasks = tasks.filter(function (task) {
-    return task.assignTo && task.assignTo.includes(loggedInUser.name);
-});
+function readStoredUser(key) {
+    try {
+        return JSON.parse(localStorage.getItem(key) || "null");
+    } catch (_) {
+        return null;
+    }
+}
+function getLoggedInEmployee() {
+    const storedId = localStorage.getItem("loggedInUserId");
+    const users = [readStoredUser("currentUser"), readStoredUser("user")];
+    return users.find(function (user) {
+        return user && user.role === "Employee" &&
+            (!storedId || String(user.id) === storedId);
+    }) || null;
+}
+function isAssignedToEmployee(task, employee) {
+    if (!employee) return false;
+    if (Array.isArray(task.assigneeIds) && task.assigneeIds.length) {
+        return task.assigneeIds.some(function (id) {
+            return String(id) === String(employee.id);
+        });
+    }
+    // Tasks saved before assignee IDs were added still contain employee names.
+    const names = Array.isArray(task.assignTo) ? task.assignTo
+        : Array.isArray(task.assignedTo) ? task.assignedTo
+        : [task.assignTo || task.assignedTo].filter(Boolean);
+    return names.some(function (name) {
+        return String(name).trim().toLocaleLowerCase() ===
+            String(employee.name).trim().toLocaleLowerCase();
+    });
+}
+let loggedInUser = getLoggedInEmployee();
+let tasks = [];
+let myTasks = [];
 let tasksContainer = document.getElementById("tasksContainer");
 let taskModal = document.getElementById("taskModal");
 let closeModalBtn = document.getElementById("closeModalBtn");
@@ -23,12 +52,16 @@ function findStoredTaskIndex(task) {
         if (task.id !== undefined) {
             return item.id === task.id;
         }
-        return item.title === task.title &&
-            item.assignTo && item.assignTo.includes(loggedInUser.name);
+        return item.title === task.title && isAssignedToEmployee(item, loggedInUser);
     });
 }
 function displayTasks() {
     tasksContainer.innerHTML = "";
+    if (myTasks.length === 0) {
+        tasksContainer.innerHTML = `<div class="col-12"><p class="text-center text-muted py-5">${loggedInUser ?
+            "No tasks are assigned to you yet." :
+            "Sign in as an employee to view your assigned tasks."}</p></div>`;
+    }
     myTasks.forEach(function (task) {
         let priorityClass = task.priority.toLowerCase();
         let statusClass = task.status.toLowerCase().replace(" ", "-");
@@ -109,7 +142,7 @@ function addOpenEvents() {
             document.getElementById("modalStatus").textContent = task.status;
             document.getElementById("modalAssignedDate").textContent =task.assignedDate || "Not specified";
             document.getElementById("modalDueDate").textContent = task.dueDate;
-            document.getElementById("modalHrNotes").textContent =task.hrNotes || "No HR notes.";
+            document.getElementById("modalHrNotes").textContent = task.hrNotes || task.notes || "No HR notes.";
             let deadline = new Date(task.dueDate);
             let now = new Date();
             if (now > deadline) {
@@ -326,4 +359,24 @@ filter_btn_progress.addEventListener("click", function () {
     setActiveFilter(filter_btn_progress);
 });
 
-displayTasks();
+function refreshTasks() {
+    loggedInUser = getLoggedInEmployee();
+    try {
+        const storedTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+        tasks = Array.isArray(storedTasks) ? storedTasks : [];
+    } catch (_) {
+        tasks = [];
+    }
+    myTasks = tasks.filter(function (task) {
+        return isAssignedToEmployee(task, loggedInUser);
+    });
+    displayTasks();
+}
+window.addEventListener("storage", function (event) {
+    if (!event.key || ["tasks", "currentUser", "user", "loggedInUserId"].includes(event.key)) {
+        refreshTasks();
+    }
+});
+window.addEventListener("focus", refreshTasks);
+window.addEventListener("pageshow", refreshTasks);
+refreshTasks();
