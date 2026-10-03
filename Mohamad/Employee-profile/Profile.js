@@ -1,18 +1,7 @@
+// Get logged-in employee ID
+const userId = Number(localStorage.getItem("loggedInUserId"));
 
-// ==========================
-// 1. Get Logged-in User
-// ==========================
-
-const userId = Number(
-    localStorage.getItem("loggedInUserId")
-);
-
-
-// ==========================
-// 2. Helper Functions
-// ==========================
-
-// Display text inside HTML elements
+// Display a value inside an HTML element
 function setText(id, value) {
     const element = document.getElementById(id);
 
@@ -21,18 +10,16 @@ function setText(id, value) {
     }
 }
 
-// Get saved profile changes
+// Read saved profile edits
 function getSavedProfiles() {
     try {
-        return JSON.parse(
-            localStorage.getItem("profileEdits")
-        ) || {};
+        return JSON.parse(localStorage.getItem("profileEdits")) || {};
     } catch {
         return {};
     }
 }
 
-// Get correct image path
+// Prepare the image path
 function getImagePath(path) {
     if (!path) {
         return "../../Json-Images/images.jpg";
@@ -45,13 +32,8 @@ function getImagePath(path) {
     return "../../" + path;
 }
 
-
-// ==========================
-// 3. Display Employee Profile
-// ==========================
-
+// Display employee information
 function displayProfile(employee) {
-
     const employeeId =
         "EMP" + String(employee.id).padStart(3, "0");
 
@@ -81,45 +63,22 @@ function displayProfile(employee) {
     setText("employmentStatus", employee.accountState);
     setText("employmentStart", employee.startDate);
 
-    // Employee image from JSON
-    const imagePath = getImagePath(employee.profileImage);
-
-    const profileImage =
-        document.getElementById("profileImage");
-
-    const navImage =
-        document.getElementById("navUserImage");
+    // Profile image
+    const profileImage = document.getElementById("profileImage");
 
     if (profileImage) {
-    profileImage.src = imagePath;
-
-    profileImage.onerror = function () {
-        console.error("Image failed:", this.src);
-    };
-}
-
-    if (navImage) {
-        navImage.src = imagePath;
+        profileImage.src = getImagePath(employee.profileImage);
     }
-
-    // Navbar employee name
-    setText("navUserName", employee.name);
 }
 
-
-// ==========================
-// 4. Load Employee Data
-// ==========================
-
+// Load employee data and saved edits
 async function loadProfile() {
-
     if (!userId) {
         console.error("No logged-in employee found");
         return;
     }
 
     try {
-
         const response = await fetch("../../employee.json");
 
         if (!response.ok) {
@@ -127,42 +86,27 @@ async function loadProfile() {
         }
 
         const data = await response.json();
+        const employees = Array.isArray(data) ? data : data.employees;
 
-        const employees = Array.isArray(data)
-            ? data
-            : data.employees;
-
-        // Find logged-in employee
-        const employee = employees.find(
-            user => user.id === userId
-        );
+        const employee = employees.find(user => user.id === userId);
 
         if (!employee) {
             throw new Error("Employee not found");
         }
 
-        // Get previously saved changes
         const saved = getSavedProfiles()[userId] || {};
 
-        // Merge employee information
         const profile = {
-    ...employee,
-    ...saved,
-    profileImage: saved.profileImage || employee.profileImage
-};
+            ...employee,
+            ...saved,
+            profileImage: saved.profileImage || employee.profileImage
+        };
 
         displayProfile(profile);
-
     } catch (error) {
-
         console.error(error);
         alert("Unable to load profile");
     }
 }
-document.querySelectorAll("[data-pending]").forEach(link => {
-    link.addEventListener("click", event => {
-        event.preventDefault();
-    });
-});
 
 loadProfile();
