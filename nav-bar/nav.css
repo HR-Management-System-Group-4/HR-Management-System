@@ -1,0 +1,2 @@
+.custom-navbar .brand-symbol { display: block; width: 100px; height: 80px; overflow: hidden; }
+.custom-navbar .brand-logo { display: block; width: 140px; height: 140px; max-width: none; transform: translate(-20px, -28px); object-fit: contain; }
