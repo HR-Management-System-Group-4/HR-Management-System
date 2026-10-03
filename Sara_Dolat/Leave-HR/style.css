@@ -138,7 +138,7 @@ main {
 
 #filter button.active,
 #filter button:hover {
-    background: var(--color-accent-contrast);
+    background: var(--color-accent); 
     color: var(--color-surface);
 }
 
