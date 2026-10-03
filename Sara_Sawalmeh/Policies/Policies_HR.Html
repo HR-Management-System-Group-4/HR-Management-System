@@ -11,11 +11,11 @@
     <link rel="stylesheet" href="../../layout/page-transition.css">
     <script src="../../layout/page-transition.js"></script>
 </head>
-<body>
+<body class="hr-page">
+    <button class="hr-nav-toggle" type="button" aria-controls="hrNavigation" aria-expanded="false" aria-label="Open HR menu">☰ HR menu</button>
+    <button class="hr-nav-backdrop" type="button" aria-label="Close HR menu" hidden></button>
+    <iframe id="hrNavigation" class="hr-navigation" src="../../Side_Bar/Side_bar.html" title="HR navigation"></iframe>
     <div class="dashboard-layout">
-        <aside class="sidebar">
-            <iframe src="../../Side_Bar/Side_bar.html" frameborder="0"></iframe>
-        </aside>
         <div class="app-container">
             <main class="main-content">
                 <div class="workspace-header">
@@ -74,6 +74,7 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="Policies_HR.js"></script>
+    <script src="../../Side_Bar/embed.js"></script>
 </body>
 
 </html>
