@@ -10,7 +10,7 @@ const servicePages = {
     policies: '../Sara_Sawalmeh/Policies/Policies_HR.Html',
     meetings: '../Ahmad/HR-zoom/index.html',
     feedback: '../Sara_Sawalmeh/Feedback_HR/Feedback_HR.html',
-    employees: '../Yasmeen_Telfah/employeeManagement.html'
+    employees: '../Yasmeen_Telfah/employeeManagement/employeeManagement.html'
   },
   Employee: {
     home: '../Timaaa/services/index.html',
@@ -19,7 +19,7 @@ const servicePages = {
     leave: '../Timaaa/Leave-application/Timaa.html',
     policies: '../Sara_Dolat/company policies/index.html',
     meetings: '../Ahmad/Meeting-Zoom/index.html',
-    feedback: '../Yasmeen_Telfah/feedbackEmployees.html',
+    feedback: '../Yasmeen_Telfah/feedbackEmployees/feedbackEmployees.html',
     employees: '../Mohamad/My-Employee-Information/info.html'
   }
 };
@@ -58,8 +58,8 @@ if (navbarContainer) {
   const navbarUrl = layoutUrl;
   const homepageUrl = new URL('../Ahmad/Homepage/index.html', navbarUrl);
   const servicesUrl = new URL('../Timaaa/services/index.html', navbarUrl);
-  const aboutUrl = new URL('../Yasmeen_Telfah/aboutUs.html', navbarUrl);
-  const feedbackFormUrl = new URL('../Yasmeen_Telfah/feedbackEmployees.html', navbarUrl);
+  const aboutUrl = new URL('../Yasmeen_Telfah/aboutUs/aboutUs.html', navbarUrl);
+  const feedbackFormUrl = new URL('../Yasmeen_Telfah/feedbackEmployees/feedbackEmployees.html', navbarUrl);
   const isHomepage = window.location.pathname === homepageUrl.pathname;
   const themeClass = document.body.dataset.themeClass || 'dark-mode';
   const themeKey = document.body.dataset.themeKey || 'mysta_theme';

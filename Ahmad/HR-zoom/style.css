@@ -1540,33 +1540,6 @@ body.hr-page .workspace {
   .meeting-sidebar-stack {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  #scheduleForm {
-    display: grid;
-    grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.2fr);
-    gap: 12px 18px;
-    align-items: start;
-  }
-  #scheduleForm > .form-field:first-child {
-    grid-column: 1;
-    grid-row: 1;
-  }
-  #scheduleForm > .zoom-steps {
-    grid-column: 2;
-    grid-row: 1 / span 4;
-    margin: 0;
-  }
-  #scheduleForm > .hr-notes-field {
-    grid-column: 1;
-    grid-row: 2;
-  }
-  #scheduleForm > .primary-button {
-    grid-column: 1;
-    grid-row: 3;
-  }
-  #scheduleForm > .form-feedback {
-    grid-column: 1;
-    grid-row: 4;
-  }
 }
 @media (max-width: 900px) {
   .right-column {
@@ -1665,3 +1638,26 @@ td,
 .join-link {
   font-size: 12px;
 }
+.room-explainer {
+  margin: 12px 0;
+  padding: 12px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  color: var(--color-text-secondary);
+  background: var(--color-surface-blue);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.replace-room {
+  display: inline-flex;
+  min-height: 36px;
+  margin: 8px 0 0;
+  padding: 7px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-accent);
+  background: var(--color-surface-blue);
+  font-size: 13px;
+  font-weight: 700;
+}
+.replace-room[hidden] { display: none; }

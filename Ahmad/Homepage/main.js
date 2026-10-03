@@ -80,7 +80,7 @@ const services = {
   },
   meetings: {
     number: '05', name: 'MEETINGS', title: 'Never miss a<br>meeting.',
-    description: 'View upcoming company meetings and join scheduled Zoom sessions.',
+    description: 'View meeting requests and join video rooms created by HR.',
     action: 'Request a meeting', hrAction: 'Manage meetings'
   },
   feedback: {
@@ -114,10 +114,10 @@ function renderNextMeeting() {
     console.warn('Meeting data could not be loaded.', error);
   }
 
-  // A saved Zoom link distinguishes a scheduled appointment from dashboard sample data.
+  // Only show a meeting that has a usable video room or legacy Zoom link.
   const now = Date.now();
   const nextMeeting = meetings
-    .filter(item => item?.status === 'Scheduled' && item.link && (() => { try { const url = new URL(item.link); return url.protocol === 'https:' && (url.hostname === 'zoom.us' || url.hostname.endsWith('.zoom.us')); } catch { return false; } })())
+    .filter(item => item?.status === 'Scheduled' && item.link && (() => { try { const url = new URL(item.link); return url.protocol === 'https:' && (url.hostname === 'zoom.us' || url.hostname.endsWith('.zoom.us') || url.hostname === 'meet.jit.si'); } catch { return false; } })())
     .map(item => ({ ...item, startsAt: item.date && item.time ? new Date(`${item.date}T${item.time}`).getTime() : NaN }))
     .filter(item => !Number.isFinite(item.startsAt) || item.startsAt >= now)
     .sort((a, b) => (Number.isFinite(a.startsAt) ? a.startsAt : Infinity) - (Number.isFinite(b.startsAt) ? b.startsAt : Infinity))[0];
@@ -127,7 +127,7 @@ function renderNextMeeting() {
   if (!nextMeeting) return;
 
   if (!Number.isFinite(nextMeeting.startsAt)) {
-    document.querySelector('#meetingWhen').textContent = nextMeeting.whenLabel || 'Zoom link ready';
+    document.querySelector('#meetingWhen').textContent = nextMeeting.whenLabel || 'Meeting room ready';
     return;
   }
   const date = new Date(nextMeeting.startsAt);

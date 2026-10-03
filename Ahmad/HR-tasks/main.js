@@ -44,7 +44,6 @@ function showToast(message) {
 
   toast.classList.add("show");
 
-  clearTimeout(toastTimer);
 
   toastTimer = setTimeout(function () {
     toast.classList.remove("show");
@@ -61,7 +60,6 @@ btn.onclick = function () {
 
   document.getElementById("taskId").value = "";
 
-  selectedEmployees = [];
 
   displaySelectedEmployees();
 
@@ -135,11 +133,6 @@ function displayEmployees() {
     .then(function (data) {
       let employees;
 
-      // Works if JSON is:
-      // [ {...}, {...} ]
-      //
-      // or:
-      // { employees: [...] }
 
       if (Array.isArray(data)) {
         employees = data;
@@ -206,10 +199,6 @@ function getInitials(name) {
 
   let initials = words[0][0];
 
-  if (words.length > 1) {
-    initials += words[1][0];
-  }
-
   return initials.toUpperCase();
 }
 
@@ -217,21 +206,21 @@ function getInitials(name) {
 // Select Employee
 // ========================================
 
-function selectEmployee(checkbox) {
-  if (checkbox.checked) {
-    if (!selectedEmployees.includes(checkbox.value)) {
-      selectedEmployees.push(checkbox.value);
-    }
-  } else {
-    let index = selectedEmployees.indexOf(checkbox.value);
+  function selectEmployee(checkbox) {
+    if (checkbox.checked) {
+      if (!selectedEmployees.includes(checkbox.value)) {
+        selectedEmployees.push(checkbox.value);
+      }
+    } else {
+      let index = selectedEmployees.indexOf(checkbox.value);
 
-    if (index != -1) {
-      selectedEmployees.splice(index, 1);
+      if (index != -1) {
+        selectedEmployees.splice(index, 1);
+      }
     }
+
+    displaySelectedEmployees();
   }
-
-  displaySelectedEmployees();
-}
 
 // ========================================
 // Display Selected Employees

@@ -86,7 +86,7 @@ HR users have administrative access to the system and can:
 - Filter leave requests by employee or status.
 - View company policies.
 - View employee feedback.
-- Manage Zoom meetings.
+- Manage video meetings.
 
 ### 👤 Employee
 
@@ -104,7 +104,7 @@ Employees can:
 - Track leave-request status.
 - View company policies.
 - Send feedback to HR.
-- Access Zoom meetings.
+- Access video meetings.
 
 ---
 
@@ -218,11 +218,11 @@ Submitted feedback is stored using `LocalStorage` and can later be reviewed from
 
 ---
 
-## 🎥 Zoom Meetings
+## 🎥 Video Meetings
 
 The platform also includes functionality for company meetings.
 
-HR can manage Zoom meeting information, while employees can access meeting details through their dashboard.
+HR reviews employee requests and creates a unique Jitsi room for each approved request. The **Join now** button opens the room inside the site for HR and the employee. The first person starting a room on the public `meet.jit.si` service may need to sign in to Jitsi. Existing Zoom meeting links remain available through their original URL; HR can create a replacement Jitsi room from the meeting details. Request and room data are stored in browser `localStorage`, so both roles must use the same browser and site origin.
 
 ---
 
@@ -263,7 +263,7 @@ The application is organized into several pages and modules:
 | 🏖️ Leave | Leave request management |
 | 📜 Policies | Company policies |
 | 💬 Feedback | Employee-to-HR feedback |
-| 🎥 Meetings | Zoom meeting management |
+| 🎥 Meetings | Video meeting management |
 | ℹ️ About Us | Project and team information |
 | 📞 Contact Us | Contact information and feedback form |
 
@@ -479,9 +479,9 @@ Open:
 index.html
 ```
 
-in your browser.
+in your browser. The root page opens the homepage at `Ahmad/Homepage/index.html` while keeping its existing asset paths and page links intact.
 
-For features that load JSON files using `fetch()`, running the project through a local development server such as **Live Server** is recommended.
+Run the project through a local development server such as **Live Server** so pages that load JSON and shared layout files with `fetch()` work correctly.
 
 ---
 

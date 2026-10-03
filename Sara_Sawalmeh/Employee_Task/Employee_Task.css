@@ -36,7 +36,18 @@ main.container {
     margin-bottom: 20px;
     font-size: 0.9rem;
 }
-
+.stat-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #e6f4fb;
+  color:var(--color-accent);
+  font-size: 25px;
+  margin-right: 10px;
+}
 .back-link:hover {
     color: var(--color-accent);
 }
@@ -44,7 +55,7 @@ main.container {
     font-size: 0.72rem;
     letter-spacing: 1px;
     font-weight: 700;
-    color: var(--color-text-muted);
+    color: var(--color-accent);
     text-transform: uppercase;
 }
 .header-section h2 {

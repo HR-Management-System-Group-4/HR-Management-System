@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meeting room | Mysta</title>
+  <link rel="icon" type="image/png" href="../../assets/Logo-cropped.png">
+  <link rel="stylesheet" href="../../assets/Colors.css">
+  <link rel="stylesheet" href="room.css">
+</head>
+<body>
+  <main class="room-page">
+    <header class="room-header">
+      <div>
+        <a id="backLink" href="index.html">← Back to meetings</a>
+        <h1 id="roomTitle">Meeting room</h1>
+        <p id="roomStatus" role="status" aria-live="polite">Loading the meeting room…</p>
+      </div>
+      <a id="openDirect" class="direct-link" hidden>Open directly in Jitsi</a>
+    </header>
+    <section class="room-stage" aria-label="Video meeting">
+      <div id="meet"></div>
+    </section>
+    <p class="room-help">The first person to start a new room may need to sign in to Jitsi. If the meeting window does not load, use “Open directly in Jitsi”.</p>
+  </main>
+  <script src="room.js?v=3"></script>
+</body>
+</html>
