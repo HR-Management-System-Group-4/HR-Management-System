@@ -59,6 +59,7 @@ function showToast(message) {
 btn.onclick = function () {
   // Clear old form values
   taskForm.reset();
+  taskForm.classList.add("is-creating");
 
   document.getElementById("taskId").value = "";
 
@@ -78,16 +79,7 @@ btn.onclick = function () {
   // Default values
   document.getElementById("taskPriority").value = "Medium";
 
-  // If Pending exists in HTML use Pending
-  let statusSelect = document.getElementById("taskStatus");
-
-  let pendingOption = statusSelect.querySelector('option[value="Pending"]');
-
-  if (pendingOption) {
-    statusSelect.value = "Pending";
-  } else {
-    statusSelect.value = "In Progress";
-  }
+  document.getElementById("taskStatus").value = "Pending";
 
   updateDecorations();
 
@@ -405,7 +397,7 @@ taskForm.onsubmit = function (event) {
 
       dueDate: dueDate,
 
-      status: status,
+      status: "Pending",
 
       notes: notes,
 
@@ -771,6 +763,7 @@ closeViewButton.onclick = function () {
 function editTask(id) {
   for (let i = 0; i < tasks.length; i++) {
     if (tasks[i].id == id) {
+      taskForm.classList.remove("is-creating");
       // Store ID
       document.getElementById("taskId").value = tasks[i].id;
 

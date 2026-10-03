@@ -38,7 +38,20 @@ let showAllMeetings = false;
 let showAllActivity = false;
 let toastTimer;
 
-const zoomUrl = (value) => { try { const url = new URL(value); return url.protocol === 'https:' && (url.hostname === 'zoom.us' || url.hostname.endsWith('.zoom.us')); } catch { return false; } };
+const zoomUrl = (value) => {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && (url.hostname === 'zoom.us' || url.hostname.endsWith('.zoom.us')) && /^\/(?:j\/\d+|my\/[a-z0-9._-]+|wc\/join\/\d+)\/?$/i.test(url.pathname);
+  } catch { return false; }
+};
+const extractZoomLink = (text) => {
+  const candidates = String(text).match(/https?:\/\/[^\s<>"']+/gi) || [];
+  for (const candidate of candidates) {
+    const link = candidate.replace(/[.,;:!?)\]]+$/, '');
+    if (zoomUrl(link)) return link;
+  }
+  return '';
+};
 const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
 const icon = (name) => `<svg aria-hidden="true"><use href="#i-${name}"/></svg>`;
 const initials = (name) => name.split(' ').map((part) => part[0]).slice(0, 2).join('').toUpperCase();
@@ -189,6 +202,23 @@ document.querySelector('#pagination').addEventListener('click', (event) => {
 
 document.querySelector('#statusFilter').addEventListener('change', () => { currentPage = 1; renderRequests(); });
 
+const invitation = document.querySelector('#zoomInvitation');
+function updateInvitation() {
+  const link = extractZoomLink(invitation.value.trim());
+  document.querySelector('#zoomLink').value = link;
+  document.querySelector('#invitationFeedback').textContent = link ? 'Zoom join link found. You can schedule this meeting.' : invitation.value.trim() ? 'No Zoom join link found in this text.' : '';
+}
+invitation.addEventListener('input', updateInvitation);
+document.querySelector('#pasteInvitation').addEventListener('click', async () => {
+  try {
+    invitation.value = await navigator.clipboard.readText();
+    updateInvitation();
+  } catch (error) {
+    document.querySelector('#invitationFeedback').textContent = 'Clipboard access is unavailable. Paste the invitation into the box above.';
+    invitation.focus();
+  }
+});
+
 document.querySelector('#scheduleForm').addEventListener('submit', (event) => {
   event.preventDefault();
   const employee = state.requests.find((item) => String(item.id) === document.querySelector('#employeeSelect').value);
@@ -202,15 +232,16 @@ document.querySelector('#scheduleForm').addEventListener('submit', (event) => {
   const meeting = {
     id: crypto.randomUUID(), requestId: employee.id, name: employee.name, topic: document.querySelector('#meetingTopic').value.trim(), date, time,
     duration: Number(document.querySelector('#meetingDuration').value), status: 'Scheduled', avatar: employee.avatar,
-    link: document.querySelector('#zoomLink').value.trim(), notes: document.querySelector('#hrNotes').value.trim()
+    link: extractZoomLink(invitation.value.trim()), notes: document.querySelector('#hrNotes').value.trim()
   };
   if (!meeting.topic) { feedback.textContent = 'Add a meeting topic.'; return; }
-  if (!zoomUrl(meeting.link)) { feedback.textContent = 'Enter a valid Zoom meeting link.'; return; }
+  if (!meeting.link) { feedback.textContent = 'Create the meeting in Zoom and paste its invitation or join link first.'; invitation.focus(); return; }
   state.meetings.push(meeting);
   employee.status = 'Scheduled';
   state.activity.unshift({ action: 'scheduled', name: employee.name, at: Date.now() });
   saveState(); renderAll();
   event.target.reset();
+  updateInvitation();
   feedback.textContent = 'Meeting scheduled. The Zoom link is available to the employee on this device and browser.';
   showToast(`Meeting scheduled with ${employee.name}.`);
 });

@@ -54,6 +54,7 @@ body:not(.dark) .add-button,body:not(.dark) .primary-button{background:var(--col
 #taskDialog .close-button { width: 52px; height: 52px; font-size: 22px; }
 .task-form-top { display: grid; gap: 20px; }
 .wide-field, .option-field { display: flex; flex-direction: column; gap: 10px; }
+.task-form-card.is-creating .status-field { display: none; }
 .task-field-label {
   display: flex;
   align-items: center;

@@ -70,12 +70,20 @@
 
         <aside class="right-column" aria-label="Scheduling and activity">
           <section class="panel schedule-panel" aria-labelledby="scheduleTitle">
-            <div class="aside-heading"><span class="small-icon"><svg><use href="#i-video"/></svg></span><div><h2 id="scheduleTitle">Schedule Zoom Meeting</h2><p>Fill in the details and schedule a Zoom meeting for this employee.</p></div></div>
+            <div class="aside-heading"><span class="small-icon"><svg><use href="#i-video"/></svg></span><div><h2 id="scheduleTitle">Schedule Zoom Meeting</h2><p>Create a meeting in Zoom, then paste its invitation here to connect it to this request.</p></div></div>
             <form id="scheduleForm">
               <div class="form-field"><label for="employeeSelect">Employee</label><div class="input-shell"><svg><use href="#i-search"/></svg><select id="employeeSelect" required><option value="">Select employee</option></select><svg class="field-chevron"><use href="#i-down"/></svg></div></div>
               <div class="form-field"><label for="meetingTopic">Meeting topic</label><input id="meetingTopic" type="text" placeholder="e.g., Career Guidance Discussion" required></div>
               <div class="form-row"><div class="form-field"><label for="meetingDate">Date</label><input id="meetingDate" type="date" required></div><div class="form-field"><label for="meetingTime">Time</label><input id="meetingTime" type="time" required></div></div>
-              <div class="form-row"><div class="form-field"><label for="meetingDuration">Duration</label><select id="meetingDuration"><option value="30">30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option></select></div><div class="form-field"><label for="zoomLink">Zoom link</label><input id="zoomLink" type="url" placeholder="Paste Zoom meeting link" pattern="https?://.+" title="Enter a full http or https link" required></div></div>
+              <div class="form-field"><label for="meetingDuration">Duration</label><select id="meetingDuration"><option value="30">30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option></select></div>
+              <div class="zoom-steps" aria-label="Zoom invitation setup">
+                <a class="zoom-create" href="https://zoom.us/meeting/schedule" target="_blank" rel="noopener noreferrer"><svg><use href="#i-video"/></svg>1. Create meeting in Zoom <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></a>
+                <p>Use the same date and time, then copy the Zoom invitation or join link.</p>
+                <div class="form-field"><label for="zoomInvitation">2. Paste the invitation or join link</label><textarea id="zoomInvitation" rows="3" placeholder="Paste the full Zoom invitation or its join URL"></textarea></div>
+                <button id="pasteInvitation" class="clipboard-button" type="button"><i class="bi bi-clipboard" aria-hidden="true"></i> Paste from clipboard</button>
+                <div class="form-field extracted-link"><label for="zoomLink">Detected join link</label><input id="zoomLink" type="url" readonly placeholder="The Zoom join link will appear here"></div>
+                <p id="invitationFeedback" class="invitation-feedback" role="status" aria-live="polite"></p>
+              </div>
               <div class="form-field"><label for="hrNotes">HR notes <span>(optional)</span></label><textarea id="hrNotes" rows="2" placeholder="Add any notes for this meeting..."></textarea></div>
               <button class="primary-button" type="submit"><svg><use href="#i-calendar"/></svg>Schedule Meeting</button>
               <p class="form-feedback" id="scheduleFeedback" role="status" aria-live="polite"></p>
@@ -95,7 +103,7 @@
     <a id="detailsJoin" class="join-link" target="_blank" rel="noopener noreferrer" hidden>Join now</a>
   </dialog>
   <div class="footer"></div>
-  <script src="main.js?v=meeting-flow-2"></script>
+  <script src="main.js?v=zoom-invitation-1"></script>
   <script src="../../Side_Bar/embed.js"></script>
 </body>
 </html>
