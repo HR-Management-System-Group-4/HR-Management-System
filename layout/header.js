@@ -27,13 +27,15 @@ const loginPageUrl = new URL('../Sara_Dolat/log in/index.html', layoutUrl).href;
 
 function getServiceRole() {
   try {
-    const user = JSON.parse(localStorage.getItem('user') || 'null');
-    if (user?.role === 'HR' || user?.role === 'Employee') return user.role;
-
     const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
     const loggedInUserId = localStorage.getItem('loggedInUserId');
     if (loggedInUserId && String(currentUser?.id) === loggedInUserId &&
         (currentUser.role === 'HR' || currentUser.role === 'Employee')) return currentUser.role;
+    if (loggedInUserId && String(user?.id) === loggedInUserId &&
+        (user.role === 'HR' || user.role === 'Employee')) return user.role;
+    if (!loggedInUserId && (currentUser?.role === 'HR' || currentUser?.role === 'Employee')) return currentUser.role;
+    if (!loggedInUserId && (user?.role === 'HR' || user?.role === 'Employee')) return user.role;
   } catch (_) { /* Ignore malformed demo storage. */ }
   return null;
 }
@@ -57,6 +59,7 @@ if (navbarContainer) {
   const homepageUrl = new URL('../Ahmad/Homepage/index.html', navbarUrl);
   const servicesUrl = new URL('../Timaaa/services/index.html', navbarUrl);
   const aboutUrl = new URL('../Yasmeen_Telfah/aboutUs.html', navbarUrl);
+  const feedbackFormUrl = new URL('../Yasmeen_Telfah/feedbackEmployees.html', navbarUrl);
   const isHomepage = window.location.pathname === homepageUrl.pathname;
   const themeClass = document.body.dataset.themeClass || 'dark-mode';
   const themeKey = document.body.dataset.themeKey || 'mysta_theme';
@@ -79,7 +82,8 @@ if (navbarContainer) {
 
       nav.querySelectorAll('[data-page-anchor]').forEach((link) => {
         const anchor = `#${link.dataset.pageAnchor}`;
-        link.href = link.dataset.pageAnchor === 'services' ? getServiceUrl()
+        link.href = link.dataset.pageAnchor === 'contact' ? feedbackFormUrl.href
+          : link.dataset.pageAnchor === 'services' ? getServiceUrl()
           : link.dataset.pageAnchor === 'about' ? aboutUrl.href
           : isHomepage ? anchor : `${homepageUrl.href}${anchor}`;
       });
@@ -88,6 +92,7 @@ if (navbarContainer) {
         const activeSection = window.location.pathname === profilePath
           ? 'profile'
           : window.location.pathname === aboutUrl.pathname ? 'about'
+          : window.location.pathname === feedbackFormUrl.pathname ? 'contact'
           : isHomepage ? (window.location.hash.slice(1) || 'home')
           : window.location.pathname === servicesUrl.pathname ? 'services' : '';
         nav.querySelectorAll('.nav-link').forEach((link) => {
