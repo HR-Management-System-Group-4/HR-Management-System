@@ -1,44 +1,33 @@
+
 let roleButtons = document.querySelectorAll('.role button');
 let message = document.getElementById('message');
-
 let selectedRole = 'HR';
 
 function selectRole(role) {
     selectedRole = role;
-
-    roleButtons.forEach(button => {
-        button.classList.toggle(
-            'active',
-            button.id.toLowerCase() === role.toLowerCase()
-        );
-    });
+    roleButtons.forEach(button =>
+        button.classList.toggle('active',
+            button.id.toLowerCase() === role.toLowerCase())
+    );
 }
 
-document.getElementById('employee').onclick = () =>
-    selectRole('Employee');
-
-document.getElementById('hr').onclick = () =>
-    selectRole('HR');
-
+document.getElementById('employee').onclick = () => selectRole('Employee');
+document.getElementById('hr').onclick = () => selectRole('HR');
 selectRole(selectedRole);
 
-
 document.getElementById('loginForm').onsubmit = function(e) {
-
     e.preventDefault();
 
     let email = document.getElementById('email').value;
     let password = document.getElementById('password').value;
 
     if (password.length < 6) {
-    message.textContent = "Password must be at least 6 characters";
-    return;
-}
+        message.textContent = 'Password must be at least 6 characters';
+        return;
+    }
 
     fetch('../../employee.json')
-
         .then(response => response.json())
-
         .then(data => {
 
             let user = data.employees.find(user =>
@@ -47,58 +36,30 @@ document.getElementById('loginForm').onsubmit = function(e) {
                 user.role === selectedRole
             );
 
-            if (user) {
+            if (!user) {
+                let employees =
+                    JSON.parse(localStorage.getItem('employees')) || [];
 
-                localStorage.setItem(
-                    'currentUser',
-                    JSON.stringify(user)
+                let localEmployee = employees.find(employee =>
+                    employee.email === email &&
+                    employee.password === password
                 );
 
-                // Shared navigation and feedback pages still read these keys.
-                localStorage.setItem('user', JSON.stringify(user));
+                if (localEmployee) {user = localEmployee;
+                            }            }
+
+            if (user) {
+                localStorage.setItem('currentUser', JSON.stringify(user));
                 localStorage.setItem('loggedInUserId', String(user.id));
 
-                localStorage.setItem('email', email);
-                localStorage.setItem('password', password);
-
-                if (user.role === 'HR') {
-
-                    location.href =
-                        '../../Timaaa/Dashboard-HR/index.html';
-
-                } else {
-
-                    location.href =
-                        '../../Ahmad/Homepage/index.html';
-
-                }
-
+                location.href = user.role === 'HR'
+                    ? '../../Timaaa/Dashboard-HR/index.html'
+                    : '../../Ahmad/Homepage/index.html';
             } else {
-
-                message.textContent =
-                    'Wrong email, password or role';
-
+                message.textContent = 'Wrong email, password or role';
             }
-
-        });
-
+        })
+     
 };
 
 
-/* MOUSE LIGHT */
-let space = document.querySelector('.space');
-
-space.addEventListener('mousemove', function(e) {
-
-    let light = document.createElement('span');
-
-    light.className = 'mouse-light';
-
-    light.style.left = e.offsetX + 'px';
-    light.style.top = e.offsetY + 'px';
-
-    space.appendChild(light);
-
-    setTimeout(() => light.remove(), 400);
-
-});

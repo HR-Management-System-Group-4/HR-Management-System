@@ -144,60 +144,24 @@ body {
     }
 }
 
-/* ================= MOUSE LIGHT ================= */
-
-.mouse-light {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: var(--color-surface);
-    border-radius: 50%;
-
-    box-shadow:
-        0 0 7px var(--color-surface),
-        0 0 12px var(--color-accent);
-
-    pointer-events: none;
-    animation: light .4s ease-out forwards;
-}
-
-@keyframes light {
-    to {
-        opacity: 0;
-        transform: scale(.2);
-    }
-}
-
-/* ================= LEFT TEXT ================= */
-
-.left h1 {
-    position: absolute;
-    left: 50px;
-    bottom: 150px;
-    font-size: clamp(36px, 4vw, 55px);
-    z-index: 10;
-}
-
-.description {
-    position: absolute;
-    left: 50px;
-    bottom: 100px;
-    color: var(--color-text-secondary);
-    font-size: 17px;
-    z-index: 10;
-}
-
-.bottom {
-    position: absolute;
-    left: 50px;
-    bottom: 40px;
-    color: var(--color-text-muted);
-    font-size: 9px;
-    z-index: 10;
-}
 
 /* ================= RIGHT ================= */
+.back-link {
+    color: var(--color-text-primary);
+    text-decoration: none;
+    font-weight: 600;
 
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.back-link:hover {
+    color: var(--color-accent);
+}
 .right {
     width: 50%;
     background: var(--color-background);
@@ -280,7 +244,8 @@ input {
 }
 
 #message {
-    color: var(--color-accent);
+    color: red;
+    padding: 10px;
 }
 
 /* ================= BACK ================= */
