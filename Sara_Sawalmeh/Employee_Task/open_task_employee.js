@@ -29,6 +29,56 @@ function isAssignedToEmployee(task, employee) {
             String(employee.name).trim().toLocaleLowerCase();
     });
 }
+function readSolutions() {
+    try {
+        const saved = JSON.parse(localStorage.getItem("solutions") || "[]");
+        return Array.isArray(saved) ? saved : [];
+    } catch (_) {
+        return [];
+    }
+}
+function isMySolution(solution, task) {
+    if (!loggedInUser || solution.employeeName !== loggedInUser.name) return false;
+    return solution.taskId != null ? String(solution.taskId) === String(task.id)
+        : solution.taskName === task.title;
+}
+function getMySolution(task) {
+    return readSolutions().find(function (solution) {
+        return isMySolution(solution, task);
+    });
+}
+function getMyStatus(task) {
+    const solution = getMySolution(task);
+    const assignees = Array.isArray(task.assignTo) ? task.assignTo : [task.assignTo];
+    if (solution) return solution.status ||
+        (task.status === "Completed" && assignees.length <= 1
+            ? "Completed" : "Submitted");
+    const statuses = task.employeeStatuses || {};
+    const key = String(loggedInUser.id);
+    if (statuses[loggedInUser.name] || statuses[key]) {
+        return statuses[loggedInUser.name] || statuses[key];
+    }
+    return assignees.length <= 1 ? task.status : "Pending";
+}
+function updateOverallStatus(task) {
+    const assignees = Array.isArray(task.assignTo) ? task.assignTo : [task.assignTo];
+    const solutions = readSolutions();
+    const statuses = assignees.map(function (name) {
+        const solution = solutions.find(function (item) {
+            return item.employeeName === name && (item.taskId != null
+                ? String(item.taskId) === String(task.id) : item.taskName === task.title);
+        });
+        if (solution) return solution.status || "Submitted";
+        const index = assignees.indexOf(name);
+        const id = Array.isArray(task.assigneeIds) ? task.assigneeIds[index] : null;
+        return (task.employeeStatuses || {})[name] ||
+            (task.employeeStatuses || {})[String(id)] || "Pending";
+    });
+    task.status = statuses.includes("Submitted") ? "Submitted"
+        : statuses.every(function (status) { return status === "Completed"; }) ? "Completed"
+        : statuses.includes("In Progress") || statuses.includes("Completed") ? "In Progress"
+        : "Pending";
+}
 let loggedInUser = getLoggedInEmployee();
 let tasks = [];
 let myTasks = [];
@@ -128,7 +178,10 @@ function addOpenEvents() {
                 task.status = "In Progress";
                 let taskIndex = findStoredTaskIndex(task);
                 if (taskIndex !== -1) {
-                    tasks[taskIndex].status = "In Progress";
+                    tasks[taskIndex].employeeStatuses = tasks[taskIndex].employeeStatuses || {};
+                    tasks[taskIndex].employeeStatuses[String(loggedInUser.id)] = "In Progress";
+                    tasks[taskIndex].employeeStatuses[loggedInUser.name] = "In Progress";
+                    updateOverallStatus(tasks[taskIndex]);
                     localStorage.setItem("tasks", JSON.stringify(tasks));
                 }
                 state[i].textContent = "In Progress";
@@ -142,7 +195,10 @@ function addOpenEvents() {
             document.getElementById("modalStatus").textContent = task.status;
             document.getElementById("modalAssignedDate").textContent =task.assignedDate || "Not specified";
             document.getElementById("modalDueDate").textContent = task.dueDate;
-            document.getElementById("modalHrNotes").textContent = task.hrNotes || task.notes || "No HR notes.";
+            let taskSolution = getMySolution(task);
+            document.getElementById("modalHrNotes").textContent = taskSolution && taskSolution.reviewNote
+                ? (task.notes ? task.notes + "\n\n" : "") + "HR feedback: " + taskSolution.reviewNote
+                : task.hrNotes || task.notes || "No HR notes.";
             let deadline = new Date(task.dueDate);
             let now = new Date();
             if (now > deadline) {
@@ -153,16 +209,12 @@ function addOpenEvents() {
                 btn_Edit_solution.style.display = "none";
             } else {
                 deadlineMsg.textContent = "";
-                let solutions = JSON.parse(localStorage.getItem("solutions")) || [];
-                let taskSolution = solutions.find(function (solution) {
-                    return solution.employeeName === loggedInUser.name && solution.taskName === currentTaskName;
-                });
                 if (taskSolution) {
                     userSolution.value = taskSolution.solution;
                     fileName.textContent = "File: " + taskSolution.fileName;
                     userSolution.setAttribute("readonly", true);
                     solutionFile.setAttribute("disabled", true);
-                    btn_Edit_solution.style.display = "block";
+                    btn_Edit_solution.style.display = task.status === "Completed" ? "none" : "block";
                     btn_submit_solution.style.display = "none";
 
                 } else {
@@ -224,11 +276,9 @@ btn_submit_solution.addEventListener("click", function () {
         errorMsg.style.display = "block";
         return;
     }
-    let solutions =
-        JSON.parse(localStorage.getItem("solutions")) || [];
+    let solutions = readSolutions();
     let existingIndex = solutions.findIndex(function (solution) {
-        return solution.employeeName === loggedInUser.name &&
-            solution.taskName === currentTaskName;
+        return isMySolution(solution, task);
     });
     let fileNameToSave = "";
     if (input_File.files.length > 0) {
@@ -243,10 +293,14 @@ btn_submit_solution.addEventListener("click", function () {
     }
     let solutionData = {
 
+        taskId: task.id,
+        employeeId: loggedInUser.id,
         employeeName: loggedInUser.name,
         taskName: currentTaskName,
         fileName: fileNameToSave,
-        solution: solutionText
+        solution: solutionText,
+        status: "Submitted",
+        reviewNote: ""
     };
     if (existingIndex !== -1) {
         solutions[existingIndex] = solutionData;
@@ -257,7 +311,10 @@ btn_submit_solution.addEventListener("click", function () {
     task.status = "Submitted";
     let taskIndex = findStoredTaskIndex(task);
     if (taskIndex !== -1) {
-        tasks[taskIndex].status = "Submitted";
+        tasks[taskIndex].employeeStatuses = tasks[taskIndex].employeeStatuses || {};
+        tasks[taskIndex].employeeStatuses[String(loggedInUser.id)] = "Submitted";
+        tasks[taskIndex].employeeStatuses[loggedInUser.name] = "Submitted";
+        updateOverallStatus(tasks[taskIndex]);
         localStorage.setItem("tasks", JSON.stringify(tasks));
     }
     if (currentTaskIndex !== -1) {
@@ -369,6 +426,8 @@ function refreshTasks() {
     }
     myTasks = tasks.filter(function (task) {
         return isAssignedToEmployee(task, loggedInUser);
+    }).map(function (task) {
+        return Object.assign({}, task, {status: getMyStatus(task)});
     });
     displayTasks();
 }

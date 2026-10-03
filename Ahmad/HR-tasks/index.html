@@ -361,6 +361,10 @@
                     />
                   </div>
 
+                  <button id="selectAllEmployees" class="select-all-employees" type="button">
+                    Select all employees
+                  </button>
+
                   <!-- Employees from JSON -->
 
                   <div class="employee-options" id="employeeOptions"></div>
@@ -540,9 +544,16 @@
         </div>
 
         <div class="detail-block solution">
-          <h3>Employee Solution</h3>
+          <h3>Employee submissions</h3>
+
+          <label class="field" id="submissionPicker" for="viewSubmission" hidden>
+            Submitted by
+            <select id="viewSubmission"></select>
+          </label>
 
           <p id="viewSolution">No solution has been submitted yet.</p>
+
+          <p id="viewFileName"></p>
         </div>
 
         <!-- HR Review -->

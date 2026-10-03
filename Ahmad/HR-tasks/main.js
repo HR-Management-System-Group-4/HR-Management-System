@@ -22,7 +22,16 @@ let toast = document.getElementById("toast");
 // Variables
 
 
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+function readTasks() {
+  try {
+    let saved = JSON.parse(localStorage.getItem("tasks") || "[]");
+    return Array.isArray(saved) ? saved : [];
+  } catch (_) {
+    return [];
+  }
+}
+
+let tasks = readTasks();
 
 let selectedEmployees = [];
 
@@ -31,6 +40,8 @@ let availableEmployees = [];
 let taskToDelete = "";
 
 let currentViewTaskId = "";
+
+let currentSubmissionIndex = -1;
 
 let activeFilter = "All";
 
@@ -57,6 +68,10 @@ function showToast(message) {
 btn.onclick = function () {
   taskForm.reset();
   taskForm.classList.add("is-creating");
+
+  selectedEmployees = [];
+  employeeSearch.value = "";
+  filterEmployeeOptions();
 
   document.getElementById("taskId").value = "";
 
@@ -187,6 +202,7 @@ function displayEmployees() {
       }
 
       syncEmployeeCheckboxes();
+      filterEmployeeOptions();
     });
 }
 
@@ -317,13 +333,24 @@ function syncEmployeeCheckboxes() {
   }
 }
 
+document.getElementById("selectAllEmployees").onclick = function () {
+  // Select every active employee, including names hidden by the search filter.
+  selectedEmployees = availableEmployees
+    .filter(function (employee) {
+      return employee.role === "Employee" && employee.accountState === "Active";
+    })
+    .map(function (employee) { return employee.name; });
+  syncEmployeeCheckboxes();
+  displaySelectedEmployees();
+};
+
 // ========================================
 // Search Employees
 // ========================================
 
 let employeeSearch = document.getElementById("employeeSearch");
 
-employeeSearch.oninput = function () {
+function filterEmployeeOptions() {
   let search = employeeSearch.value.toLowerCase();
 
   let employees = document.getElementsByClassName("employee-option");
@@ -337,7 +364,9 @@ employeeSearch.oninput = function () {
       employees[i].style.display = "none";
     }
   }
-};
+}
+
+employeeSearch.oninput = filterEmployeeOptions;
 
 // ========================================
 // Create / Edit Task
@@ -492,6 +521,44 @@ function getEmployeesText(task) {
   return employees.join(", ");
 }
 
+function readSolutions() {
+  try {
+    let saved = JSON.parse(localStorage.getItem("solutions") || "[]");
+    return Array.isArray(saved) ? saved : [];
+  } catch (_) {
+    return [];
+  }
+}
+
+function belongsToTask(solution, task) {
+  let assigned = getTaskEmployees(task);
+  let employeeMatches = assigned.includes(solution.employeeName);
+  if (!employeeMatches) return false;
+  // Older submissions were saved with a title instead of a task ID.
+  return solution.taskId != null
+    ? String(solution.taskId) === String(task.id)
+    : solution.taskName === task.title;
+}
+
+function getTaskSubmissions(task) {
+  return readSolutions().filter(function (solution) {
+    return belongsToTask(solution, task);
+  });
+}
+
+function getSubmissionStatus(solution, task) {
+  if (solution.status) return solution.status;
+  return getTaskEmployees(task).length === 1 && task.status === "Completed"
+    ? "Completed" : "Submitted";
+}
+
+function getDisplayStatus(task) {
+  if (getTaskSubmissions(task).some(function (solution) {
+    return getSubmissionStatus(solution, task) === "Submitted";
+  })) return "Submitted";
+  return task.status;
+}
+
 // ========================================
 // Display Tasks
 // ========================================
@@ -500,11 +567,12 @@ function displayTasks() {
   taskList.innerHTML = "";
 
   for (let i = 0; i < tasks.length; i++) {
+    let displayStatus = getDisplayStatus(tasks[i]);
     // =================================
     // Filter
     // =================================
 
-    if (activeFilter != "All" && tasks[i].status != activeFilter) {
+    if (activeFilter != "All" && displayStatus != activeFilter) {
       continue;
     }
 
@@ -514,19 +582,19 @@ function displayTasks() {
 
     let statusClass = "";
 
-    if (tasks[i].status == "Pending") {
+    if (displayStatus == "Pending") {
       statusClass = "pending";
     }
 
-    if (tasks[i].status == "In Progress") {
+    if (displayStatus == "In Progress") {
       statusClass = "progress";
     }
 
-    if (tasks[i].status == "Submitted") {
+    if (displayStatus == "Submitted") {
       statusClass = "submitted";
     }
 
-    if (tasks[i].status == "Completed") {
+    if (displayStatus == "Completed") {
       statusClass = "completed";
     }
 
@@ -584,7 +652,7 @@ function displayTasks() {
                                 class="chip status-${statusClass}"
                             >
 
-                                ${tasks[i].status}
+                                ${displayStatus}
 
                             </span>
 
@@ -694,7 +762,7 @@ function viewTask(id) {
 
       document.getElementById("viewPriority").innerHTML = tasks[i].priority;
 
-      document.getElementById("viewStatus").innerHTML = tasks[i].status;
+      document.getElementById("viewStatus").textContent = getDisplayStatus(tasks[i]);
 
       document.getElementById("viewDescription").innerHTML =
         tasks[i].description;
@@ -702,19 +770,23 @@ function viewTask(id) {
       document.getElementById("viewNotes").innerHTML =
         tasks[i].notes || "No notes";
 
-      document.getElementById("viewSolution").innerHTML =
-        tasks[i].solution || "No solution has been submitted yet.";
-
-      let reviewPanel = document.getElementById("reviewPanel");
-
-      if (tasks[i].status == "Submitted") {
-        reviewPanel.hidden = false;
-      } else {
-        reviewPanel.hidden = true;
-      }
-
-      document.getElementById("reviewFeedback").value =
-        tasks[i].reviewNote || "";
+      let submissions = getTaskSubmissions(tasks[i]);
+      let picker = document.getElementById("viewSubmission");
+      picker.replaceChildren();
+      submissions.forEach(function (submission, index) {
+        let option = document.createElement("option");
+        option.value = String(index);
+        option.textContent = submission.employeeName + " — " +
+          getSubmissionStatus(submission, tasks[i]);
+        picker.append(option);
+      });
+      document.getElementById("submissionPicker").hidden = submissions.length < 2;
+      currentSubmissionIndex = submissions.findIndex(function (submission) {
+        return getSubmissionStatus(submission, tasks[i]) === "Submitted";
+      });
+      if (currentSubmissionIndex < 0) currentSubmissionIndex = 0;
+      picker.value = String(currentSubmissionIndex);
+      renderCurrentSubmission();
 
       viewDialog.showModal();
 
@@ -722,6 +794,25 @@ function viewTask(id) {
     }
   }
 }
+
+function renderCurrentSubmission() {
+  let task = tasks.find(function (item) { return item.id == currentViewTaskId; });
+  if (!task) return;
+  let submission = getTaskSubmissions(task)[currentSubmissionIndex];
+  document.getElementById("viewSolution").textContent = submission
+    ? submission.solution : (task.solution || "No solution has been submitted yet.");
+  document.getElementById("viewFileName").textContent = submission && submission.fileName
+    ? "Attached file: " + submission.fileName : "";
+  document.getElementById("reviewFeedback").value = submission
+    ? (submission.reviewNote || "") : (task.reviewNote || "");
+  document.getElementById("reviewPanel").hidden = !submission ||
+    getSubmissionStatus(submission, task) !== "Submitted";
+}
+
+document.getElementById("viewSubmission").onchange = function () {
+  currentSubmissionIndex = Number(this.value);
+  renderCurrentSubmission();
+};
 
 // ========================================
 // Close View
@@ -849,24 +940,48 @@ confirmDeleteButton.onclick = function () {
 
 let approveButton = document.getElementById("approveButton");
 
-approveButton.onclick = function () {
-  for (let i = 0; i < tasks.length; i++) {
-    if (tasks[i].id == currentViewTaskId) {
-      tasks[i].status = "Completed";
+function reviewCurrentSubmission(status) {
+  let task = tasks.find(function (item) { return item.id == currentViewTaskId; });
+  if (!task) return false;
+  let solutions = readSolutions();
+  let matchingIndices = [];
+  solutions.forEach(function (solution, index) {
+    if (belongsToTask(solution, task)) matchingIndices.push(index);
+  });
+  let solution = solutions[matchingIndices[currentSubmissionIndex]];
+  if (!solution || getSubmissionStatus(solution, task) !== "Submitted") return false;
 
-      tasks[i].reviewNote = document.getElementById("reviewFeedback").value;
+  solution.status = status;
+  solution.reviewNote = document.getElementById("reviewFeedback").value.trim();
+  localStorage.setItem("solutions", JSON.stringify(solutions));
 
-      break;
-    }
-  }
-
+  task.employeeStatuses = task.employeeStatuses || {};
+  let key = solution.employeeId != null ? String(solution.employeeId)
+    : solution.employeeName;
+  task.employeeStatuses[key] = status;
+  task.employeeStatuses[solution.employeeName] = status;
+  let assigned = getTaskEmployees(task);
+  let statuses = assigned.map(function (name) {
+    let submission = solutions.find(function (item) {
+      return belongsToTask(item, task) && item.employeeName === name;
+    });
+    if (submission) return getSubmissionStatus(submission, task);
+    let employee = availableEmployees.find(function (item) { return item.name === name; });
+    return task.employeeStatuses[name] ||
+      task.employeeStatuses[String(employee ? employee.id : name)] || "Pending";
+  });
+  task.status = statuses.includes("Submitted") ? "Submitted"
+    : statuses.every(function (item) { return item === "Completed"; }) ? "Completed"
+    : statuses.includes("In Progress") || statuses.includes("Completed") ? "In Progress"
+    : "Pending";
   localStorage.setItem("tasks", JSON.stringify(tasks));
-
   displayTasks();
-
   document.getElementById("viewDialog").close();
+  return true;
+}
 
-  showToast("Task approved.");
+approveButton.onclick = function () {
+  if (reviewCurrentSubmission("Completed")) showToast("Submission approved.");
 };
 
 // ========================================
@@ -884,23 +999,7 @@ requestChangesButton.onclick = function () {
     return;
   }
 
-  for (let i = 0; i < tasks.length; i++) {
-    if (tasks[i].id == currentViewTaskId) {
-      tasks[i].status = "In Progress";
-
-      tasks[i].reviewNote = feedback;
-
-      break;
-    }
-  }
-
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-
-  displayTasks();
-
-  document.getElementById("viewDialog").close();
-
-  showToast("Changes requested.");
+  if (reviewCurrentSubmission("In Progress")) showToast("Changes requested.");
 };
 
 // ========================================
@@ -917,19 +1016,20 @@ function updateCounters() {
   let pending = 0;
 
   for (let i = 0; i < tasks.length; i++) {
-    if (tasks[i].status == "Pending") {
+    let status = getDisplayStatus(tasks[i]);
+    if (status == "Pending") {
       pending++;
     }
 
-    if (tasks[i].status == "In Progress") {
+    if (status == "In Progress") {
       progress++;
     }
 
-    if (tasks[i].status == "Submitted") {
+    if (status == "Submitted") {
       submitted++;
     }
 
-    if (tasks[i].status == "Completed") {
+    if (status == "Completed") {
       completed++;
     }
   }
@@ -1059,3 +1159,17 @@ displayEmployees();
 displayTasks();
 
 updateDecorations();
+
+function refreshTasks() {
+  tasks = readTasks();
+  displayTasks();
+  if (document.getElementById("viewDialog").open) {
+    renderCurrentSubmission();
+  }
+}
+
+window.addEventListener("storage", function (event) {
+  if (!event.key || event.key === "tasks" || event.key === "solutions") refreshTasks();
+});
+window.addEventListener("focus", refreshTasks);
+window.addEventListener("pageshow", refreshTasks);
