@@ -7,6 +7,7 @@
     padding: 0;
 }
 body {
+     margin-top: 50px;
     font-family: var(--font-sans);
     background-color: var(--color-background);
     color: var(--color-text-primary);
@@ -42,7 +43,7 @@ body {
 .workspace-breadcrumb {
     font-size: 12px;
     font-weight: 700;
-    color: var(--color-text-muted);
+    color: var(--color-accent);
     letter-spacing: 1px;
 }
 .workspace-title-area h1 {
