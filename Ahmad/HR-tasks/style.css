@@ -1412,6 +1412,30 @@ body.dark .delete-message {
   margin-top: 8px;
   overflow-y: auto;
 }
+.select-all-employees {
+  margin-top: 10px;
+  padding: 5px 2px;
+  border: 0;
+  background: transparent;
+  color: var(--color-accent);
+  font-size: 13px;
+  font-weight: 800;
+}
+.select-all-employees:focus-visible {
+  outline: 3px solid rgba(17, 138, 178, 0.32);
+  outline-offset: 2px;
+}
+.solution #submissionPicker {
+  margin: 8px 0 12px;
+}
+.solution #submissionPicker[hidden] {
+  display: none;
+}
+.solution #viewFileName {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
 .employee-option {
   display: flex;
   align-items: center;
