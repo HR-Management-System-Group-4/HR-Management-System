@@ -1,4 +1,3 @@
-
 let roleButtons = document.querySelectorAll('.role button');
 let message = document.getElementById('message');
 let selectedRole = 'HR';
