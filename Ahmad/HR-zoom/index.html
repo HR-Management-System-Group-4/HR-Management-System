@@ -4,7 +4,7 @@
     <link rel="icon" type="image/png" href="../../assets/Logo-cropped.png" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HR Zoom Meetings | Mysta</title>
+    <title>HR Video Meetings | Mysta</title>
     <link rel="stylesheet" href="../../assets/Colors.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="../../layout/header.css" />
     <link rel="stylesheet" href="../../layout/footer.css" />
     <link rel="stylesheet" href="../../Side_Bar/embed.css" />
-    <link rel="stylesheet" href="style.css?v=meeting-layout-3" />
+    <link rel="stylesheet" href="style.css?v=jitsi-room-1" />
+    <link rel="stylesheet" href="../../layout/hr-heading.css" />
     <link rel="stylesheet" href="../../layout/page-transition.css" />
     <script src="../../layout/page-transition.js"></script>
   </head>
@@ -135,11 +136,11 @@
 
         <div class="content-grid">
           <div class="main-column">
-            <section class="page-intro" aria-labelledby="pageTitle">
-              <h1 id="pageTitle">HR Zoom Meetings</h1>
+            <section class="page-intro hr-intro" aria-labelledby="pageTitle">
+              <p class="eyebrow">HR WORKSPACE</p>
+              <h1 id="pageTitle">HR Video Meetings</h1>
               <p>
-                Review employee requests, approve or reject them, and link
-                meetings scheduled in Zoom.
+                Review employee requests and create a meeting room they can join.
               </p>
             </section>
 
@@ -171,7 +172,7 @@
                 <div>
                   <span>Approved</span><strong id="approvedCount">9</strong
                   ><small class="trend positive"
-                    >✓ &nbsp; Ready to link</small
+                    >✓ &nbsp; Ready for a room</small
                   >
                 </div>
               </article>
@@ -180,9 +181,9 @@
                   ><svg><use href="#i-calendar" /></svg
                 ></span>
                 <div>
-                  <span>Linked Meetings</span><strong id="todayCount">0</strong
+                  <span>Meeting Rooms</span><strong id="todayCount">0</strong
                   ><small class="trend violet-text"
-                    >• &nbsp; Zoom links ready</small
+                    >• &nbsp; Join links ready</small
                   >
                 </div>
               </article>
@@ -196,8 +197,8 @@
                 <div>
                   <h2 id="requestsTitle">Meeting Requests</h2>
                   <p>
-                    Employee requests for Zoom meetings. Only HR can review,
-                    approve, reject, and link these meetings.
+                    Employee requests for video meetings. HR can review,
+                    approve, reject, and create a room for each request.
                   </p>
                 </div>
                 <label class="select-shell status-filter"
@@ -251,10 +252,9 @@
                   ><svg><use href="#i-video" /></svg
                 ></span>
                 <div>
-                  <h2 id="scheduleTitle">Link Zoom Meeting</h2>
+                  <h2 id="scheduleTitle">Create Meeting Room</h2>
                   <p>
-                    Schedule the meeting once in Zoom, then attach its
-                    invitation to the employee request.
+                    Create one room for the employee. Join now opens it on this site.
                   </p>
                 </div>
               </div>
@@ -268,52 +268,7 @@
                     ><svg class="field-chevron"><use href="#i-down" /></svg>
                   </div>
                 </div>
-                <div class="zoom-steps" aria-label="Zoom invitation setup">
-                  <a
-                    class="zoom-create"
-                    href="https://zoom.us/meeting/schedule"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    ><svg><use href="#i-video" /></svg>1. Schedule in Zoom
-                    <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i
-                  ></a>
-                  <p>
-                    Choose the topic and time there. You won't enter them again
-                    here.
-                  </p>
-                  <div class="form-field">
-                    <label for="zoomInvitation"
-                      >2. Paste the invitation or join link</label
-                    ><textarea
-                      id="zoomInvitation"
-                      rows="3"
-                      placeholder="Paste the full Zoom invitation or its join URL"
-                    ></textarea>
-                  </div>
-                  <button
-                    id="pasteInvitation"
-                    class="clipboard-button"
-                    type="button"
-                  >
-                    <i class="bi bi-clipboard" aria-hidden="true"></i> Paste
-                    from clipboard
-                  </button>
-                  <div class="form-field extracted-link">
-                    <label for="zoomLink">Detected join link</label
-                    ><input
-                      id="zoomLink"
-                      type="url"
-                      readonly
-                      placeholder="The Zoom join link will appear here"
-                    />
-                  </div>
-                  <p
-                    id="invitationFeedback"
-                    class="invitation-feedback"
-                    role="status"
-                    aria-live="polite"
-                  ></p>
-                </div>
+                <p class="room-explainer">The room link is created automatically and shared with the selected employee on this browser. Jitsi may ask the first person who starts the room to sign in.</p>
                 <div class="form-field hr-notes-field">
                   <label for="hrNotes">HR notes <span>(optional)</span></label
                   ><textarea
@@ -323,8 +278,7 @@
                   ></textarea>
                 </div>
                 <button class="primary-button" type="submit">
-                  <svg><use href="#i-link" /></svg>Link Meeting &amp; Enable
-                  Join now
+                  <svg><use href="#i-link" /></svg>Create Room &amp; Enable Join now
                 </button>
                 <p
                   class="form-feedback"
@@ -400,14 +354,13 @@
       <a
         id="detailsJoin"
         class="join-link"
-        target="_blank"
-        rel="noopener noreferrer"
         hidden
         >Join now</a
       >
+      <button id="replaceRoom" class="replace-room" type="button" hidden>Create a Jitsi room for this request</button>
     </dialog>
     <div class="footer"></div>
-    <script src="main.js?v=single-schedule-1"></script>
+    <script src="main.js?v=jitsi-room-1"></script>
     <script src="../../Side_Bar/embed.js"></script>
   </body>
 </html>

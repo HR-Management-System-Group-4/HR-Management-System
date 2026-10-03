@@ -10,7 +10,7 @@ const servicePages = {
     policies: '../Sara_Sawalmeh/Policies/Policies_HR.Html',
     meetings: '../Ahmad/HR-zoom/index.html',
     feedback: '../Sara_Sawalmeh/Feedback_HR/Feedback_HR.html',
-    employees: '../Yasmeen_Telfah/employeeManagement.html'
+    employees: '../Yasmeen_Telfah/employeeManagement/employeeManagement.html'
   },
   Employee: {
     home: '../Timaaa/services/index.html',
@@ -19,7 +19,7 @@ const servicePages = {
     leave: '../Timaaa/Leave-application/Timaa.html',
     policies: '../Sara_Dolat/company policies/index.html',
     meetings: '../Ahmad/Meeting-Zoom/index.html',
-    feedback: '../Yasmeen_Telfah/feedbackEmployees.html',
+    feedback: '../Yasmeen_Telfah/feedbackEmployees/feedbackEmployees.html',
     employees: '../Mohamad/My-Employee-Information/info.html'
   }
 };
@@ -27,13 +27,15 @@ const loginPageUrl = new URL('../Sara_Dolat/log in/index.html', layoutUrl).href;
 
 function getServiceRole() {
   try {
-    const user = JSON.parse(localStorage.getItem('user') || 'null');
-    if (user?.role === 'HR' || user?.role === 'Employee') return user.role;
-
     const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
     const loggedInUserId = localStorage.getItem('loggedInUserId');
     if (loggedInUserId && String(currentUser?.id) === loggedInUserId &&
         (currentUser.role === 'HR' || currentUser.role === 'Employee')) return currentUser.role;
+    if (loggedInUserId && String(user?.id) === loggedInUserId &&
+        (user.role === 'HR' || user.role === 'Employee')) return user.role;
+    if (!loggedInUserId && (currentUser?.role === 'HR' || currentUser?.role === 'Employee')) return currentUser.role;
+    if (!loggedInUserId && (user?.role === 'HR' || user?.role === 'Employee')) return user.role;
   } catch (_) { /* Ignore malformed demo storage. */ }
   return null;
 }
@@ -56,7 +58,8 @@ if (navbarContainer) {
   const navbarUrl = layoutUrl;
   const homepageUrl = new URL('../Ahmad/Homepage/index.html', navbarUrl);
   const servicesUrl = new URL('../Timaaa/services/index.html', navbarUrl);
-  const aboutUrl = new URL('../Yasmeen_Telfah/aboutUs.html', navbarUrl);
+  const aboutUrl = new URL('../Yasmeen_Telfah/aboutUs/aboutUs.html', navbarUrl);
+  const feedbackFormUrl = new URL('../Yasmeen_Telfah/feedbackEmployees/feedbackEmployees.html', navbarUrl);
   const isHomepage = window.location.pathname === homepageUrl.pathname;
   const themeClass = document.body.dataset.themeClass || 'dark-mode';
   const themeKey = document.body.dataset.themeKey || 'mysta_theme';
@@ -79,7 +82,8 @@ if (navbarContainer) {
 
       nav.querySelectorAll('[data-page-anchor]').forEach((link) => {
         const anchor = `#${link.dataset.pageAnchor}`;
-        link.href = link.dataset.pageAnchor === 'services' ? getServiceUrl()
+        link.href = link.dataset.pageAnchor === 'contact' ? feedbackFormUrl.href
+          : link.dataset.pageAnchor === 'services' ? getServiceUrl()
           : link.dataset.pageAnchor === 'about' ? aboutUrl.href
           : isHomepage ? anchor : `${homepageUrl.href}${anchor}`;
       });
@@ -88,6 +92,7 @@ if (navbarContainer) {
         const activeSection = window.location.pathname === profilePath
           ? 'profile'
           : window.location.pathname === aboutUrl.pathname ? 'about'
+          : window.location.pathname === feedbackFormUrl.pathname ? 'contact'
           : isHomepage ? (window.location.hash.slice(1) || 'home')
           : window.location.pathname === servicesUrl.pathname ? 'services' : '';
         nav.querySelectorAll('.nav-link').forEach((link) => {

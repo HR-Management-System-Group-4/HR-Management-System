@@ -21,6 +21,13 @@ function zoomUrl(value) {
   } catch { return false; }
 }
 
+function jitsiUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && url.hostname === 'meet.jit.si' && /^\/[a-z0-9_-]{16,100}\/?$/i.test(url.pathname);
+  } catch { return false; }
+}
+
 function showLastRequest() {
   const requests = readRequests();
   const activeId = localStorage.getItem(activeRequestKey);
@@ -39,14 +46,16 @@ function showLastRequest() {
   pill.classList.toggle('pending', pill.textContent === 'Pending');
 
   const meeting = request.meeting;
-  if (request.status !== 'Scheduled' || !meeting || !zoomUrl(meeting.link)) return;
+  if (request.status !== 'Scheduled' || !meeting || !(zoomUrl(meeting.link) || jitsiUrl(meeting.link))) return;
   meetingBox.hidden = false;
   meetingEmpty.hidden = true;
   const startsAt = meeting.date && meeting.time ? new Date(`${meeting.date}T${meeting.time}`) : null;
-  document.querySelector('#meetingWhen').textContent = meeting.whenLabel || (startsAt && !Number.isNaN(startsAt.getTime()) ? startsAt.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'See Zoom for meeting time');
+  document.querySelector('#meetingWhen').textContent = meeting.whenLabel || (startsAt && !Number.isNaN(startsAt.getTime()) ? startsAt.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'Meeting link ready');
   document.querySelector('#meetingTopic').textContent = meeting.topic || request.purpose;
-  document.querySelector('#meetingNote').textContent = meeting.notes || 'Your Zoom invitation is ready.';
-  document.querySelector('#employeeJoinLink').href = meeting.link;
+  document.querySelector('#meetingNote').textContent = meeting.notes || 'Your meeting room is ready.';
+  document.querySelector('#meetingChannel').textContent = jitsiUrl(meeting.link) ? 'Jitsi Meet' : 'Zoom';
+  const join = document.querySelector('#employeeJoinLink');
+  join.href = jitsiUrl(meeting.link) ? `room.html?id=${encodeURIComponent(meeting.id)}&role=employee` : meeting.link;
 }
 
 message.addEventListener('input', () => {

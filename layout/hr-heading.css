@@ -1,0 +1,42 @@
+/* Shared heading treatment for the HR Employees, Tasks, and Zoom pages. */
+body.hr-page .hr-intro > p:first-child {
+  margin: 0 0 12px;
+  color: var(--color-text-muted);
+  font: 600 11px/1.5 var(--font-mono);
+  letter-spacing: 2px;
+}
+
+body.hr-page .hr-intro h1 {
+  margin: 0 0 10px;
+  color: var(--color-text-primary);
+  font: 700 46px/1.1 var(--font-sans);
+  letter-spacing: -.035em;
+}
+
+body.hr-page .hr-intro > p:last-child {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font: 500 15px/1.6 var(--font-sans);
+}
+
+/* Keep the utility header's space without displaying its controls. */
+body.hr-page .content-wrapper > header,
+body.hr-page .workspace > .topbar,
+body.hr-page .dashboard > .top-row {
+  visibility: hidden;
+}
+
+body.hr-page .content-wrapper > header {
+  height: 72px;
+  border-bottom: 0;
+}
+
+body.hr-page .dashboard > .top-row {
+  min-height: 72px;
+}
+
+@media (max-width: 700px) {
+  body.hr-page .hr-intro h1 { font-size: 32px; }
+  body.hr-page .dashboard > .top-row { min-height: 0; height: 0; overflow: hidden; }
+  body.hr-page .workspace > .topbar { height: 0; margin: 0; overflow: hidden; }
+}

@@ -4,8 +4,8 @@ if (footerContainer) {
   const footerUrl = new URL('footer.html', document.currentScript.src);
   const homepageUrl = new URL('../Ahmad/Homepage/index.html', footerUrl);
   const loginUrl = new URL('../Sara_Dolat/log in/index.html', footerUrl);
-  const aboutUrl = new URL('../Yasmeen_Telfah/aboutUs.html', footerUrl);
-  const teamUrl = new URL('../Yasmeen_Telfah/aboutUs.html#team', footerUrl);
+  const aboutUrl = new URL('../Yasmeen_Telfah/aboutUs/aboutUs.html', footerUrl);
+  const teamUrl = new URL('../Yasmeen_Telfah/team/team.html#team', footerUrl);
 
   fetch(footerUrl)
     .then((response) => {

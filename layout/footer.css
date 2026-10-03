@@ -6,9 +6,9 @@
 
 .mysta-footer * { box-sizing: border-box; }
 .mysta-footer a { color: inherit; text-decoration: none; }
-.mysta-footer a:hover { color: var(--color-mint-strong, #7cd5c7); }
-.mysta-footer a:focus-visible { outline: 2px solid var(--color-mint-strong, #7cd5c7); outline-offset: 4px; }
-.mysta-footer i { color: var(--color-mint-strong, #7cd5c7); }
+.mysta-footer a:hover { color: var(--color-accent, #118ab2); }
+.mysta-footer a:focus-visible { outline: 2px solid var(--color-accent, #118ab2); outline-offset: 4px; }
+.mysta-footer i { color: var(--color-accent, #118ab2); }
 
 .mysta-footer .footer-content {
   display: grid;
@@ -21,7 +21,7 @@
 
 .mysta-footer .footer-brand { display: inline-block; }
 .mysta-footer .footer-logo { display: block; width: 108px; height: 108px; object-fit: contain; }
-.mysta-footer .footer-subtitle, .mysta-footer h2 { color: var(--color-mint-strong, #7cd5c7); }
+.mysta-footer .footer-subtitle, .mysta-footer h2 { color: var(--color-accent, #118ab2); }
 .mysta-footer .footer-subtitle { margin: 0 0 18px; font-size: 12px; font-weight: 800; letter-spacing: .18em; }
 .mysta-footer .footer-about > p:not(.footer-subtitle) { max-width: 520px; margin: 0 0 18px; line-height: 1.7; }
 .mysta-footer .footer-contact { display: flex; align-items: center; gap: 10px; width: fit-content; margin-top: 10px; }
