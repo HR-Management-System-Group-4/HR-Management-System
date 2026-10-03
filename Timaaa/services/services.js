@@ -9,7 +9,8 @@ if (!role) {
     employees: ['Employee Management', 'View and manage employee records.'],
     policies: ['Company Policies', 'Create and update workplace policies.'],
     tasks: ['Task Management', 'Assign tasks and track employee progress.'],
-    feedback: ['Feedback Inbox', 'Read and respond to employee feedback.']
+    feedback: ['Feedback Inbox', 'Read and respond to employee feedback.'],
+    meetings: ['Employee Meetings', 'Schedule and manage employee meetings.']
   };
 
   if (role === 'HR') {
