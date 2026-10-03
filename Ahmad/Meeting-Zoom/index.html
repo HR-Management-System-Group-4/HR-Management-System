@@ -22,7 +22,7 @@
     <header class="page-heading">
       <div class="step"><span></span> 05&nbsp; / &nbsp;06</div>
       <h1>Request a meeting</h1>
-      <p>Send a meeting request to HR.<br>Return to this page to check its status and join when scheduled.</p>
+      <p>Send a meeting request to HR.<br>Return to this page to check its status and join when your room is ready.</p>
     </header>
     <div class="page-grid">
       <section class="card meeting-form-card" aria-labelledby="formTitle">
@@ -58,17 +58,17 @@
       <aside class="info-column" aria-label="Meeting information">
         <section class="card upcoming-card" aria-labelledby="upcomingTitle">
           <div class="card-topline"><h2 id="upcomingTitle">Upcoming meeting</h2></div>
-          <div id="meetingEmpty" class="meeting-empty"><i class="bi bi-camera-video" aria-hidden="true"></i><strong>No meeting right now</strong><p>When HR schedules a meeting, its details and Join now link will appear here.</p></div>
+          <div id="meetingEmpty" class="meeting-empty"><i class="bi bi-camera-video" aria-hidden="true"></i><strong>No meeting right now</strong><p>When HR creates a room, its details and Join now link will appear here.</p></div>
           <div id="scheduledMeeting" hidden>
-          <div class="scheduled-banner"><span class="orange-icon"><i class="bi bi-bell" aria-hidden="true"></i></span><div><strong>HR scheduled your meeting</strong><p id="meetingWhen"></p></div><span class="scheduled-pill">Scheduled by HR</span></div>
+          <div class="scheduled-banner"><span class="orange-icon"><i class="bi bi-bell" aria-hidden="true"></i></span><div><strong>Your meeting room is ready</strong><p id="meetingWhen"></p></div><span class="scheduled-pill">Created by HR</span></div>
           <h3>Meeting details</h3>
           <dl class="details-list">
             <div><dt><span class="detail-icon"><i class="bi bi-camera-video" aria-hidden="true"></i></span>Meeting type</dt><dd>One-on-one with HR</dd></div>
-            <div><dt><span class="detail-icon"><i class="bi bi-display" aria-hidden="true"></i></span>Channel</dt><dd>Zoom</dd></div>
+            <div><dt><span class="detail-icon"><i class="bi bi-display" aria-hidden="true"></i></span>Channel</dt><dd id="meetingChannel">Video meeting</dd></div>
             <div><dt><span class="detail-icon"><i class="bi bi-file-earmark-text" aria-hidden="true"></i></span>Topic</dt><dd id="meetingTopic"></dd></div>
             <div><dt><span class="detail-icon"><i class="bi bi-list" aria-hidden="true"></i></span>Note</dt><dd id="meetingNote"></dd></div>
           </dl>
-          <a id="employeeJoinLink" class="meeting-join" target="_blank" rel="noopener noreferrer">Join now</a>
+          <a id="employeeJoinLink" class="meeting-join">Join now</a>
           </div>
         </section>
         <section class="card status-card" aria-labelledby="statusTitle"><h2 id="statusTitle">Request status</h2><div class="status-line"><span class="status-icon"><i class="bi bi-clock" aria-hidden="true"></i></span><div class="status-copy"><strong id="statusHeading">No request yet</strong><p id="statusDate">Send a request to HR to get started.</p></div><span class="status-pill" id="statusPill" hidden></span></div></section>
@@ -79,6 +79,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../../layout/header.js"></script>
   <script src="../../layout/footer.js"></script>
-  <script src="main.js?v=meeting-flow-2"></script>
+  <script src="main.js?v=jitsi-room-1"></script>
 </body>
 </html>
