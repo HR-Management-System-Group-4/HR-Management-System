@@ -20,7 +20,7 @@ A front-end HR Management System designed to simplify employee management, task 
 
 | 🎨 UI/UX Design | 📋 Project Management |
 | :---: | :---: |
-| **[View Figma Design](FIGMA_LINK)** | **[View Trello Board](TRELLO_LINK)** |
+| **[View Figma Design]([FIGMA_LINK](https://www.figma.com/design/aWfk1DFm8dUlGnbCTTzprD/HR-Managment-Group4?node-id=0-1&t=DJYxDR35R90X3uMN-1))** | **[View Trello Board]([TRELLO_LINK](https://trello.com/invite/b/6abc0ac86c1336877c016551/ATTI3ae98a32a5bc0963957f3bd82ba0ccecCB5F0948/my-trello-board))** |
 | Mockups • Wireframes • Prototype | Tasks • Workflow • Team Progress |
 
 <br>
