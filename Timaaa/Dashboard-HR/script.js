@@ -1,9 +1,6 @@
 // ===================================
 // MYSTA HR DASHBOARD JAVASCRIPT
-// ===================================
 
-
-// ===============================
 // VARIABLES
 // ===============================
 
@@ -11,24 +8,16 @@ let employees = [];
 
 let leaves = [];
 
-
-
-
-
 // ===============================
 // LOAD LEAVES FROM LOCAL STORAGE
 // ===============================
 
-
 try {
-
 
 let savedLeaves =
 JSON.parse(
 localStorage.getItem("leaveApplications")
 ) || [];
-
-
 
 savedLeaves.forEach(item=>{
 

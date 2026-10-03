@@ -1,5 +1,5 @@
 const routing = window.MystaServiceRouting;
-const role = routing?.getRole();
+const role = routing?.getRole();  // role==>1 employee, role==>2 hr
 
 if (!role) {
   window.location.replace(new URL('../../Sara_Dolat/log in/index.html', document.baseURI).href);

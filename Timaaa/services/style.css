@@ -1,371 +1,170 @@
 /* =========================
    RESET
 ========================= */
-
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
-
-
 /* =========================
    BODY
 ========================= */
-
 body{
-
     font-family: var(--font-sans);
-
     background:var(--color-background);
-
     color:var(--color-text-primary);
-
 }
-
-
-
-
 /* =========================
    SERVICES SECTION
 ========================= */
-
-
 .services{
 
     padding:80px 60px;
 
 }
-
-
-
-
 /* =========================
    HEADER
 ========================= */
-
-
 .section-header{
-
     text-align:center;
-
     margin-bottom:55px;
-
 }
-
-
-
 .section-header span{
-
     font-size:12px;
-
     letter-spacing:3px;
-
     color:var(--color-accent);
-
     font-weight:700;
-
 }
-
-
-
 .section-header h1{
-
     margin-top:15px;
-
     font-size:42px;
-
     font-weight:800;
-
     color:var(--color-text-primary);
-
 }
-
-
-
 .section-header p{
-
     margin-top:18px;
-
     color:var(--color-text-secondary);
-
     font-size:17px;
-
     line-height:1.6;
-
 }
-
-
-
-
 /* =========================
    CARDS GRID
 ========================= */
-
-
 .service-grid{
-
     max-width:1200px;
-
     margin:auto;
-
     display:grid;
-
     grid-template-columns:repeat(3,1fr);
-
     gap:28px;
-
 }
-
-
-
-
 /* =========================
    SERVICE CARD
 ========================= */
-
-
 .service-card{
-
     background:var(--color-surface);
-
     border-radius:22px;
-
     padding:30px;
-
     height:260px;
-
     border:1px solid var(--color-border);
-
     transition:.3s;
-
     display:flex;
-
     flex-direction:column;
-
 }
-
-
-
-
 .service-card:hover{
-
     transform:translateY(-8px);
-
     box-shadow:0 20px 40px rgba(35,39,67,.10);
-
 }
-
-
-
-
-
 /* =========================
    ICON BOX
 ========================= */
-
-
 .icon{
-
     width:55px;
-
     height:55px;
-
     border-radius:15px;
-
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
     color:var(--color-accent);
-
     font-size:23px;
-
     margin-bottom:25px;
-
 }
-
-
-
 /* New colors based on design system */
-
-
 .blue{
-
     background:var(--color-surface-blue);
-
 }
-
-
-
 .teal{
-
     background:var(--color-surface-mint);
-
 }
-
-
-
 .purple{
 
     background:#e6e8f1;
-
 }
-
-
-
 .orange{
 
-    background:var(--color-mint);
-
+   background:var(--color-mint);
 }
-
-
-
 .green{
 
     background:#dff3ef;
-
 }
-
-
-
-
-
 /* =========================
    CARD CONTENT
 ========================= */
-
-
 .service-card h3{
-
     font-size:20px;
-
     margin-bottom:15px;
-
     color:var(--color-text-primary);
-
 }
-
-
-
 
 .service-card p{
-
     color:var(--color-text-secondary);
-
     line-height:1.6;
-
     flex:1;
-
 }
-
-
-
-
 .service-card a{
-
     text-decoration:none;
-
     color:var(--color-accent);
-
     font-weight:700;
-
     display:flex;
-
     gap:10px;
-
     align-items:center;
-
 }
-
-
-
-
-
 .service-card a:hover{
 
     color:var(--color-text-primary);
-
 }
-
-
-
-
 /* =========================
    BUTTON
 ========================= */
-
-
 .all-services{
-
     display:block;
-
     margin:45px auto 0;
-
     background:var(--color-accent);
-
     color:white;
-
     border:none;
-
     padding:16px 35px;
-
     border-radius:12px;
-
     font-size:16px;
-
     font-weight:bold;
-
     cursor:pointer;
-
     transition:.3s;
-
 }
-
-
-
 .all-services:hover{
 
     background:var(--color-accent-contrast);
-
 }
-
-
-
-
-
 /* =========================
    RESPONSIVE
 ========================= */
-
-
 @media(max-width:900px){
-
-
 .services{
 
     padding:60px 22px;
-
 }
-
-
-
 .section-header h1{
-
     font-size:34px;
-
 }
-
-
-
 .service-grid{
-
     grid-template-columns:1fr;
-
 }
-
-
 }

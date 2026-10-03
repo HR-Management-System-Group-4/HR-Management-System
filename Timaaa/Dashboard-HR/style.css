@@ -355,9 +355,6 @@ gap:25px;
 margin-top:30px;
 
 }
-
-
-
 .box{
 
 background:var(--color-surface);
@@ -374,8 +371,6 @@ box-shadow:
 
 }
 
-
-
 .box h3{
 
 font-size:18px;
@@ -385,11 +380,6 @@ margin-bottom:25px;
 color:var(--color-text-primary);
 
 }
-
-
-
-
-
 
 /* ===============================
 DEPARTMENT
@@ -422,9 +412,6 @@ color:var(--color-text-secondary);
 color:var(--color-text-primary);
 
 }
-
-
-
 .department span{
 
 display:block;
@@ -438,11 +425,6 @@ border-radius:20px;
 background:var(--color-accent);
 
 }
-
-
-
-
-
 
 /* ===============================
 DONUT CHART
@@ -516,9 +498,6 @@ align-items:center;
 justify-content:center;
 
 }
-
-
-
 .donut-center h2{
 
 font-size:28px;
@@ -526,9 +505,6 @@ font-size:28px;
 color:var(--color-text-primary);
 
 }
-
-
-
 .donut-center span{
 
 font-size:11px;
@@ -545,8 +521,6 @@ color:var(--color-text-muted);
 flex:1;
 
 }
-
-
 
 .leave-item{
 
@@ -654,259 +628,117 @@ border:none;
 background:#e6f2fb;
 
 color:var(--color-accent);
-
 padding:8px 18px;
-
 border-radius:20px;
-
 font-weight:bold;
-
 }
-
-
-
-
-
-
 /* ===============================
    RECENT ACTIVITY TIMELINE
 =============================== */
-
-
 .timeline{
 
 position:relative;
-
 padding-top:10px;
-
 }
-
-
-
 .timeline-item{
-
 display:flex;
-
 gap:20px;
-
 position:relative;
-
 min-height:95px;
-
 }
-
-
-
 .timeline-marker{
-
 width:30px;
-
 display:flex;
-
 flex-direction:column;
-
 align-items:center;
-
 position:relative;
-
 }
-
-
-
 /* colored circle */
-
 .timeline-dot{
-
 width:22px;
-
 height:22px;
-
 border-radius:50%;
-
 background:#118ab2;
-
 border:4px solid #dff3ef;
-
 box-shadow:0 0 0 2px #118ab2;
-
 z-index:2;
-
 }
-
-
-
 /* vertical line */
-
 .timeline-line{
-
 width:3px;
-
 background:#d9e4ea;
-
 flex:1;
-
 margin-top:6px;
-
 border-radius:20px;
-
 }
-
-
-
 /* remove line from last item */
-
 .timeline-item.last .timeline-line{
-
 display:none;
-
 }
-
-
-
-
-
 .timeline-content{
-
 flex:1;
-
 padding-bottom:25px;
-
 border-bottom:1px solid rgba(70,75,113,.16);
-
 }
-
-
-
 .timeline-item.last .timeline-content{
-
 border-bottom:none;
-
 }
-
-
-
-
 .timeline-title{
-
 font-size:16px;
-
 font-weight:700;
-
 color:#232743;
-
 }
-
-
-
 .timeline-time{
-
 margin-top:10px;
-
 font-size:13px;
-
 color:#60657d;
 
 }
-
-
-
 /* ===============================
 QUICK ACTIONS
 =============================== */
-
-
 .quick-section{
-
 margin-top:35px;
-
 }
-
-
 
 .quick-actions{
-
 display:grid;
-
 grid-template-columns:repeat(4,1fr);
-
 gap:20px;
-
 }
-
-
-
 .quick-card{
-
 height:145px;
-
 background:white;
-
 border:1px solid var(--color-border);
-
 border-radius:25px;
-
 padding:25px;
-
 text-decoration:none;
-
 color:var(--color-text-primary);
-
 }
-
-
-
 .quick-card i{
-
 width:50px;
-
 height:50px;
-
 background:var(--color-accent);
-
 color:white;
-
 border-radius:15px;
-
 display:flex;
-
 align-items:center;
-
 justify-content:center;
-
 margin-bottom:20px;
-
 }
-
-
-
-
 
 /* ===============================
 RESPONSIVE
 =============================== */
-
-
 @media(max-width:1200px){
-
-
 .stats{
-
 grid-template-columns:repeat(3,1fr);
 
 }
-
-
 .quick-actions{
-
 grid-template-columns:repeat(2,1fr);
-
 }
-
-
 }
-
-
-
 @media(max-width:900px){
 
 
@@ -917,19 +749,12 @@ padding:20px;
 }
 
 
-
 .hero-header{
-
 flex-direction:column;
 
 align-items:flex-start;
-
 gap:20px;
-
 }
-
-
-
 .stats,
 .analytics,
 .bottom{
@@ -937,8 +762,6 @@ gap:20px;
 grid-template-columns:1fr;
 
 }
-
-
 
 .quick-actions{
 

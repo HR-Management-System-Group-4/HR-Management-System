@@ -7,9 +7,6 @@ RESET
     padding:0;
     box-sizing:border-box;
 }
-
-
-
 iframe {
 
     display:block;
@@ -19,679 +16,283 @@ iframe {
 
 }
 
-
-
-
 /* =========================
 BODY
 ========================= */
-
 body {
-
     font-family:Arial, Helvetica, sans-serif;
-
     background-color:#f7f7f4;
-
     color:#1e3a5f;
-
     min-height:100vh;
-
     margin:0;
-
     padding:0;
-
 }
-
-
-
-
-
 /* =========================
 PAGE
 ========================= */
-
-
 .page {
-
     min-height:100vh;
-
     padding:30px 40px 60px;
-
 }
-
-
-
-
-
 /* =========================
 HEADER
 ========================= */
-
-
 .page-header {
-
     text-align:center;
-
     margin-bottom:35px;
 
 }
-
-
-
 .subtitle {
-
     display:block;
-
     color:#3aa5ad;
-
     font-size:11px;
-
     font-weight:bold;
-
     letter-spacing:.5px;
-
     margin-bottom:10px;
-
 }
-
-
-
 .page-header h1 {
-
     color:#173d6d;
-
     font-size:38px;
-
     font-weight:700;
-
     margin-bottom:10px;
-
 }
-
-
-
 .page-header p {
-
     color:#8492a5;
-
     font-size:15px;
-
 }
-
-
-
-
-
-
-
 /* =========================
 LAYOUT
 ========================= */
-
-
 .leave-layout {
-
     display:flex;
-
     justify-content:center;
-
     align-items:flex-start;
-
     gap:35px;
-
 }
-
-
-
-
-
 /* =========================
 FORM CARD
 ========================= */
-
-
 .form-card {
-
     width:650px;
-
     padding:32px;
-
     background:white;
-
     border:1px solid #dfe7ef;
-
     border-radius:18px;
-
     box-shadow:0 3px 12px rgba(20,50,80,.06);
-
 }
-
-
-
-
-
-
-
 /* =========================
 EMPLOYEE BOX
 ========================= */
-
-
 .employee-box {
-
     height:80px;
-
     display:flex;
-
     align-items:center;
-
     gap:15px;
-
     padding:12px 15px;
-
     background:#f7f9fc;
-
     border:1px solid #e2e9f0;
-
     border-radius:12px;
-
     margin-bottom:25px;
-
 }
-
-
-
 .employee-image {
-
     width:55px;
-
     height:55px;
-
     border-radius:50%;
-
     object-fit:cover;
-
 }
-
-
-
 .employee-info h3 {
-
     font-size:16px;
-
     color:#29486b;
-
 }
-
-
-
 .employee-info p {
-
     margin-top:5px;
-
     font-size:12px;
-
     color:#8392a4;
-
 }
-
-
-
-
-
-
-
-
 /* =========================
 FORM
 ========================= */
-
-
 .form-group {
-
     margin-bottom:20px;
-
 }
-
-
-
 .form-group label {
-
     display:block;
-
     color:#3c5877;
-
     font-size:13px;
-
     margin-bottom:8px;
-
     font-weight:500;
-
 }
-
-
-
 .form-group label span {
-
     color:#df7777;
-
 }
-
-
-
-
-
-
 /* =========================
 INPUTS
 ========================= */
-
-
 select,
 input,
 textarea {
-
-
     width:100%;
-
     border:1px solid #d5e0eb;
-
     border-radius:8px;
-
     background:white;
-
     outline:none;
-
     font-family:Arial;
-
     color:#526b87;
-
     transition:.2s;
-
 }
-
-
-
 select,
 input {
-
-
     height:45px;
-
     padding:0 13px;
-
     font-size:13px;
-
 }
-
-
-
 textarea {
-
-
     height:110px;
-
     padding:12px;
-
     resize:none;
-
     font-size:13px;
-
 }
-
-
-
-
 select:focus,
 input:focus,
 textarea:focus {
-
-
     border-color:#6d96b8;
-
     box-shadow:0 0 0 2px rgba(109,150,184,.08);
-
 }
-
-
-
-
-
-
 /* =========================
 VALIDATION
 ========================= */
-
-
 .error-message {
-
-
     color:#d9534f;
-
     font-size:12px;
-
     margin-top:6px;
-
     min-height:15px;
-
 }
-
-
-
-
 .input-error {
-
-
     border-color:#d9534f !important;
-
     box-shadow:0 0 0 2px rgba(217,83,79,.12);
-
 }
-
-
-
-
-
-
-
-
 /* =========================
 DATE ROW
 ========================= */
-
-
 .date-row {
-
     display:flex;
-
     gap:15px;
-
 }
-
-
-
 .date-row .form-group {
-
     width:50%;
-
 }
-
-
-
-
-
-
-
 /* =========================
 TEXT AREA FOOTER
 ========================= */
-
-
 .textarea-footer {
-
     display:flex;
-
     justify-content:space-between;
-
     margin-top:7px;
-
 }
-
-
-
 .textarea-footer span {
-
     color:#a3aeba;
-
     font-size:10px;
-
 }
-
-
-
-
-
-
-
 
 /* =========================
 BUTTONS
 ========================= */
-
-
 .buttons {
-
     display:flex;
-
     align-items:center;
-
     gap:25px;
-
     margin-top:25px;
-
 }
-
-
-
 .submit-button {
-
-
     height:45px;
-
     flex:1;
-
     border:none;
-
     border-radius:8px;
-
     background:#1d477c;
-
     color:white;
-
     font-size:13px;
-
     font-weight:bold;
-
     cursor:pointer;
-
 }
-
-
-
 .submit-button:hover {
-
     background:#163b68;
-
 }
-
-
-
-
 .cancel-button {
-
-
     width:70px;
-
     border:none;
-
     background:transparent;
-
     color:#7b8796;
-
     cursor:pointer;
-
 }
-
-
-
-
-
-
-
-
 /* =========================
 REQUEST HISTORY
 ========================= */
-
-
 .request-history {
-
-
     width:380px;
-
     background:white;
-
     padding:25px;
-
     border-radius:18px;
-
     border:1px solid #dfe7ef;
-
     box-shadow:0 3px 12px rgba(20,50,80,.06);
-
 }
-
-
-
 .request-history h2 {
-
-
     color:#173d6d;
-
     font-size:22px;
-
     margin-bottom:20px;
-
 }
-
-
-
 .request-history-item {
-
-
     display:flex;
-
     justify-content:space-between;
-
     gap:15px;
-
     padding:15px 0;
-
     border-bottom:1px solid #e5e7eb;
-
 }
-
-
-
 .request-history-item strong {
-
     color:#173d6d;
-
 }
-
-
-
-
-
-
-
-
 /* =========================
 RESPONSIVE
 ========================= */
-
-
 @media(max-width:1000px){
-
-
 .leave-layout{
-
     flex-direction:column;
-
     align-items:center;
-
 }
-
-
-
 .form-card,
 .request-history {
-
     width:100%;
-
     max-width:650px;
-
 }
-
-
-
 }
-
-
-
 @media(max-width:600px){
-
-
 .page {
-
     padding:20px;
-
 }
-
-
-
 .date-row {
-
     flex-direction:column;
-
 }
-
-
-
 .date-row .form-group {
 
     width:100%;
-
 }
-
-
 }
 /* =========================
    BACK TO SERVICES
 ========================= */
-
 .back-service{
-
     width:100%;
-
     max-width:1100px;
-
     margin:25px auto 0;
-
     padding-left:20px;
-
 }
-
-
 .back-service a{
-
     text-decoration:none;
-
     color:#64748b;
-
     font-size:13px;
-
     display:flex;
-
     align-items:center;
-
     gap:8px;
-
 }
-
-
 .back-service a:hover{
-
     color:#173d6d;
-
 }
