@@ -1,27 +1,3 @@
-// let feedbacks = JSON.parse(localStorage.getItem("feedbacks")) || [];
-// let actualFeedbacks = document.querySelector(".feedbacks");
-
-
-
-// feedbacks.forEach(feedback => {
-//     let fdiv = document.createElement("div");
-//     fdiv.innerHTML = `
-//     <p>${feedback.category}<p>
-//     <p>${feedback.subject}</p>
-//     <p>${feedback.message}<p>
-//     <span class="feedbackStatus">New</span>
-//     <button type="button" class="resolveFeedback">Mark resolved</button>
-//     `
-
-//     actualFeedbacks.appendChild(fdiv);
-
-//     let button = document.querySelector("resolveFeedback");
-//     button.addEventListener("click", function(){
-        
-//     })
-// });
-
-
 let feedbacks = JSON.parse(localStorage.getItem("feedbacks")) || [];
 let feedbackContainer = document.querySelector(".feedbacks");
 

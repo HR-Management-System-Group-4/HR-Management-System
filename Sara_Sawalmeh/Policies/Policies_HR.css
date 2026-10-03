@@ -16,14 +16,6 @@ body {
     min-height: 100vh;
 }
 
-.sidebar iframe {
-   width: 260px;
-    height: 100%;
-    border: none;
-    top: 0;
-    left: 0;
-}
-
 .app-container {
     flex: 1;
     padding: 40px;
@@ -42,7 +34,7 @@ body {
 .workspace-breadcrumb {
     font-size: 12px;
     font-weight: 700;
-    color: var(--color-text-muted);
+    color: var(--color-accent);
     letter-spacing: 1px;
 }
 .workspace-title-area h1 {
@@ -302,9 +294,6 @@ body {
 }
 
 @media (max-width: 800px) {
-    .sidebar {
-        display: none;
-    }
     .app-container {
         padding: 20px;
     }

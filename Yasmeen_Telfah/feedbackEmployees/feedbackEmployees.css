@@ -1,4 +1,4 @@
-@import url("../assets/Colors.css");
+@import url("../../assets/Colors.css");
 
 * {
     box-sizing: border-box;
@@ -28,7 +28,7 @@ body {
     width: 88%;
     max-width: 1200px;
 
-    margin: 65px auto 90px;
+    margin: 30px auto 90px;
 
     display: grid;
     grid-template-columns: 1.65fr 0.75fr;
@@ -616,7 +616,24 @@ body {
     letter-spacing: 1.3px;
     color: #17324D;
 }
+.back-link {
+    display: block;
+    width: 88%;
+    max-width: 1200px;
+    margin: 55px auto 0;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
 
+.back-link:hover {
+    color: var(--color-accent);
+}
+
+.back-link:hover {
+    color: var(--color-accent);
+}
 @media (max-width: 950px) {
 
     .feedback-wrapper {
