@@ -1,4 +1,6 @@
 @import url(../../assets/Colors.css);
+
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -14,47 +16,41 @@ body {
     min-height: 100vh;
 }
 
-.sidebar {
-    width: 250px;
-    flex-shrink: 0;
-}
-
 .sidebar iframe {
-    width: 100%;
-    height: 100vh;
+   width: 260px;
+    height: 100%;
     border: none;
+    top: 0;
+    left: 0;
 }
 
 .app-container {
     flex: 1;
     padding: 40px;
 }
-
 .main-content {
     width: 100%;
     max-width: var(--app-content-max);
-    margin: auto;
+    padding: 30px;
 }
-
 .workspace-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 35px;
 }
-
 .workspace-breadcrumb {
     font-size: 12px;
     font-weight: 700;
     color: var(--color-text-muted);
     letter-spacing: 1px;
 }
-
 .workspace-title-area h1 {
     margin-top: 8px;
     font-size: 32px;
     color: var(--color-text-primary);
 }
+
 
 .subtitle {
     margin-top: 8px;
@@ -73,6 +69,7 @@ body {
     font-size: 14px;
     font-weight: 700;
 }
+
 .btn-primary:hover {
     opacity: 0.9;
 }
@@ -81,7 +78,6 @@ body {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
 }
-
 .policy-card {
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
@@ -89,19 +85,16 @@ body {
     padding: 22px;
     box-shadow: 0 3px 10px rgba(35, 39, 67, 0.05);
 }
-
 .card-header-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 10px;
 }
-
 .card-header-row h3 {
     font-size: 18px;
     color: var(--color-text-primary);
 }
-
 .status-badge {
     padding: 5px 9px;
     border-radius: 20px;
@@ -133,6 +126,7 @@ body {
     color: var(--color-text-secondary);
     font-size: 14px;
 }
+
 .card-footer {
     display: flex;
     justify-content: flex-end;
@@ -142,7 +136,8 @@ body {
     border-top: 1px solid var(--color-border);
 }
 
-.edit-link,.delete-link {
+.edit-link,
+.delete-link {
     border: none;
     background: none;
     cursor: pointer;
@@ -159,8 +154,7 @@ body {
     color: #c0392b;
 }
 
-.edit-link:hover,
-.delete-link:hover {
+.edit-link:hover,.delete-link:hover {
     text-decoration: underline;
 }
 
@@ -210,6 +204,7 @@ body {
 .close-btn:hover {
     color: var(--color-text-primary);
 }
+
 .form-group {
     margin-bottom: 18px;
 }
@@ -222,9 +217,7 @@ body {
     color: var(--color-text-primary);
 }
 
-.form-group input,
-.form-group select,
-.form-group textarea {
+.form-group input,.form-group select,.form-group textarea {
     width: 100%;
     padding: 11px;
     border: 1px solid var(--color-border);
@@ -239,11 +232,10 @@ body {
     resize: vertical;
 }
 
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus {
     border-color: var(--color-accent);
 }
+
 .modal-actions {
     display: flex;
     justify-content: flex-end;
@@ -251,8 +243,7 @@ body {
     margin-top: 25px;
 }
 
-.cancel-btn,
-.save-btn {
+.cancel-btn,.save-btn {
     padding: 10px 17px;
     border-radius: 7px;
     cursor: pointer;
@@ -280,33 +271,52 @@ body {
     opacity: 0.9;
 }
 
-@media (max-width: 800px) {
+.mysta-popup {
+    border-radius: 16px;
+    padding: 25px;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 10px 35px rgba(35, 39, 67, 0.15);
+}
+.mysta-popup .swal2-title {
+    color: #232743;
+    font-size: 24px;
+    font-weight: 700;
+}
 
+.mysta-popup .swal2-html-container {
+    color: #60657d;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.mysta-popup .swal2-confirm {
+    border-radius: 8px;
+    padding: 10px 30px;
+    font-size: 15px;
+    font-weight: 600;
+    box-shadow: none;
+}
+
+.mysta-popup .swal2-confirm:hover {
+    opacity: 0.9;
+}
+
+@media (max-width: 800px) {
     .sidebar {
         display: none;
     }
-
     .app-container {
         padding: 20px;
     }
-
     .workspace-header {
         align-items: flex-start;
         gap: 20px;
     }
-
     .policies-grid {
         grid-template-columns: 1fr;
     }
-    .filter-section {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 15px;
-    }
-    .search-box {
-        width: 100%;
-    }
 }
+
 @media (max-width: 500px) {
     .workspace-header {
         flex-direction: column;

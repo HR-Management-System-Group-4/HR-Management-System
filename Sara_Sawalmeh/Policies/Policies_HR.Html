@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Company Policies - HR Workspace</title>
-
     <link rel="stylesheet" href="Policies_HR.css">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../Side_Bar/embed.css">
     <link rel="stylesheet" href="../../layout/page-transition.css">
     <script src="../../layout/page-transition.js"></script>
 </head>
@@ -24,48 +21,59 @@
                     <div class="workspace-title-area">
                         <span class="workspace-breadcrumb">HR WORKSPACE</span>
                         <h1>Company Policies</h1>
-                        <p class="subtitle">Create and update your workplace guidance.</p>
-                    </div>
-                    <button class="btn-primary" id="newPolicyBtn"><i class="fa-solid fa-plus"></i>New Policy</button>
+                        <p class="subtitle"> Create and update your workplace guidance.</p>
+                     </div>
+                    <button class="btn-primary" id="newPolicyBtn"><i class="fa-solid fa-plus"></i>  New Policy</button>
                 </div>
-                <!-- Cards -->
                 <div class="policies-grid" id="policiesGrid"></div>
+
             </main>
+
         </div>
+
     </div>
 
     <div class="modal" id="policyModal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="modalTitle">New Policy</h2>
-                <!-- زر اغلاق -->
-                <button class="close-btn" id="closeModal">&times;</button>
+                <button class="close-btn" id="closeModal">&times;</button>/* زر الاغلاق*/
+
             </div>
             <div class="form-group">
-                <label for="policyTitle">Policy Title</label>
-                <input type="text" id="policyTitle" placeholder="Enter policy title">
+                <label for="policyTitle"> Policy Title</label>
+                <input type="text" id="policyTitle"placeholder="Enter policy title" >
             </div>
             <div class="form-group">
-                <label for="policyCategory">Category</label>
-                <input type="text" id="policyCategory" placeholder="Example: Time & attendance" >
-            </div>
-            <div class="form-group">
-                <label for="policyStatus">Status</label>
-                <select id="policyStatus">
-                    <option value="PUBLISHED">PUBLISHED </option>
-                    <option value="DRAFT">DRAFT</option>
+                <label for="policyCategory">  Category </label>
+                <select id="policyCategory">
+                    <option value=""> Select Category </option>
+                    <option value="Benefits">  Benefits</option>
+                    <option value="Culture">Culture</option>
+                    <option value="Operations">Operations </option>
+                    <option value="Security">Security</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="policyDescription">Description</label>
-                <textarea id="policyDescription" rows="5" placeholder="Write the policy description..." ></textarea>
+                <label for="policyStatus"> Status</label>
+                <select id="policyStatus">
+                    <option value="PUBLISHED"> PUBLISHED </option>
+                    <option value="DRAFT"> DRAFT</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="policyDescription"> Description</label>
+                <textarea   id="policyDescription"   rows="5" placeholder="Write the policy description..." ></textarea>
             </div>
             <div class="modal-actions">
-                <button type="button" class="cancel-btn" id="cancelBtn"> Cancel </button>
-                <button type="button" class="save-btn" id="saveBtn"> Save Policy </button>
+                <button type="button" class="cancel-btn"  id="cancelBtn">Cancel</button>
+                <button type="button"class="save-btn" id="saveBtn"> Save Policy </button>
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../Side_Bar/embed.js"></script>
     <script src="Policies_HR.js"></script>
 </body>
+
 </html>
