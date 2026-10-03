@@ -13,7 +13,7 @@ closeAlert.addEventListener("click", function(){
 });
 
 
-fetch("../employee.json")
+fetch("../../employee.json")
     .then(response => response.json())
     .then(data => {
         let employees = Array.isArray(data) ? data : data.employees;
@@ -91,7 +91,7 @@ employees.forEach(employee => {
     row.innerHTML = `
         <td>
             <div class="employeeProfile">
-                <img class="employeeImage" src="../${employee.profileImage}" alt="${employee.name}">
+                <img class="employeeImage" src="../../${employee.profileImage}" alt="${employee.name}">
                 <div class="employeeInfo">
                     <p class="employeeName">${employee.name}</p>
                     <p class="employeeEmail">${employee.email}</p>
