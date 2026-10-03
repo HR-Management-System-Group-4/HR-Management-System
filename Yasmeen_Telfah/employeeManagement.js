@@ -38,43 +38,48 @@ let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
 addEmployee.addEventListener("click", function(event){
     event.preventDefault();
     document.querySelector(".addEmployeeForm").style.display = "block";
-})
 
-saveEmployee.addEventListener("click", function(event){
-    event.preventDefault();
-    let name = document.querySelector("#fullNameNew").value;
-    let email = document.querySelector("#workEmailNew").value;
-    let password = document.querySelector("#passwordNew").value;
+    
+    saveEmployee.addEventListener("click", function(event){
+        event.preventDefault();
+        let name = document.querySelector("#fullNameNew").value;
+        let email = document.querySelector("#workEmailNew").value;
+        let password = document.querySelector("#passwordNew").value;
 
-    if (!nameRegex.test(name)) {
-        showAlert("Enter a valid full name");
-        return;
-    }
+        if (!nameRegex.test(name)) {
+            showAlert("Enter a valid full name");
+            return;
+        }
 
-    if (!emailRegex.test(email)) {
-        showAlert("Enter a valid email");
-        return;
-    }
+        if (!emailRegex.test(email)) {
+            showAlert("Enter a valid email");
+            return;
+        }
 
-    if (!passwordRegex.test(password)) {
-        showAlert("Password must be at least 8 characters and contain a letter and number");
-        return;
-    }
+        if (!passwordRegex.test(password)) {
+            showAlert("Password must be at least 8 characters and contain a letter and number");
+            return;
+        }
 
-    const newEmployee = {};
-    newEmployee.name = document.querySelector("#fullNameNew").value;
-    newEmployee.email = document.querySelector("#workEmailNew").value;
-    newEmployee.password = document.querySelector("#passwordNew").value;
-    newEmployee.position = document.querySelector("#positionNew").value;
-    newEmployee.department = document.querySelector("#departmentNew").value;
-    newEmployee.accountState = document.querySelector("#accountStatusNew").value;
+        const newEmployee = {};
+        newEmployee.name = document.querySelector("#fullNameNew").value;
+        newEmployee.email = document.querySelector("#workEmailNew").value;
+        newEmployee.password = document.querySelector("#passwordNew").value;
+        newEmployee.position = document.querySelector("#positionNew").value;
+        newEmployee.department = document.querySelector("#departmentNew").value;
+        newEmployee.accountState = document.querySelector("#accountStatusNew").value;
 
-    employees.push(newEmployee);
-    localStorage.setItem("employees", JSON.stringify(employees));
-})
+        employees.unshift(newEmployee);
+        localStorage.setItem("employees", JSON.stringify(employees));
+        document.querySelector(".addEmployeeForm").style.display = "none";
 
-cancelEmployee.addEventListener("click", function(){
-    document.querySelector(".addEmployeeForm").style.display = "none";
+        location.reload();
+    })
+
+    cancelEmployee.addEventListener("click", function(){
+        document.querySelector(".addEmployeeForm").style.display = "none";
+    })
+
 })
 
 let table = document.querySelector("#employeesBody");
@@ -208,29 +213,32 @@ let search = document.querySelector("#searchEmployee");
 search.addEventListener("input", function(){
     let searchValue = search.value.toLowerCase();
 
-    employees.forEach((employee,index) => {
+    rows.forEach(row => {
+        let name = row.querySelector(".employeeName").textContent.toLowerCase();
+        let email = row.querySelector(".employeeEmail").textContent.toLowerCase();
+        let department = row.querySelector(".department").textContent.toLowerCase();
+
         if(
-            employee.name.toLowerCase().includes(searchValue) ||
-            employee.email.toLowerCase().includes(searchValue) ||
-            employee.department.toLowerCase().includes(searchValue)
-        )
-        {
-            rows[index].style.display = "";
+            name.includes(searchValue) ||
+            email.includes(searchValue) ||
+            department.includes(searchValue)
+        ){
+            row.style.display = "";
 
             setTimeout(function(){
-                rows[index].classList.remove("searchHidden");
+                row.classList.remove("searchHidden");
             }, 10);
         }
         else{
-            rows[index].classList.add("searchHidden");
+            row.classList.add("searchHidden");
 
             setTimeout(function(){
-                if(rows[index].classList.contains("searchHidden")){
-                    rows[index].style.display = "none";
+                if(row.classList.contains("searchHidden")){
+                    row.style.display = "none";
                 }
             }, 400);
         }
-    })
+    });
 })
 
 })
