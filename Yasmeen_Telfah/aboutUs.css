@@ -454,3 +454,550 @@ body {
 
     color: var(--color-text-primary);
 }
+
+.howMystaWorks {
+    width: 85%;
+    max-width: 1240px;
+    margin: 110px auto 0;
+}
+
+.howHeader {
+    max-width: 750px;
+    margin-bottom: 55px;
+}
+
+.howHeader .sectionNumber {
+    color: var(--color-accent);
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.howHeader h2 {
+    color: var(--color-text-primary);
+    font-size: 52px;
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -3px;
+    margin-bottom: 22px;
+}
+
+.howHeader h2 span {
+    color: var(--color-accent);
+}
+
+.howHeader > p:last-child {
+    color: var(--color-text-secondary);
+    font-size: 15px;
+    line-height: 1.8;
+    max-width: 520px;
+}
+
+.howSteps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.howStep {
+    position: relative;
+    min-height: 300px;
+    padding: 28px 25px 30px;
+    border-right: 1px solid var(--color-border);
+    transition: 0.3s;
+}
+
+.howStep:last-child {
+    border-right: none;
+}
+
+.howStep:hover {
+    background-color: var(--color-surface);
+    transform: translateY(-6px);
+}
+
+.stepNumber {
+    display: block;
+    color: var(--color-accent);
+    font-size: 11px;
+    margin-bottom: 65px;
+}
+
+.stepLabel {
+    color: var(--color-accent);
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.stepContent h3 {
+    color: var(--color-text-primary);
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    margin-bottom: 15px;
+}
+
+.stepContent > p:last-child {
+    color: var(--color-text-secondary);
+    font-size: 12px;
+    line-height: 1.75;
+    margin: 0;
+}
+
+.matchStory {
+    width: 85%;
+    max-width: 1240px;
+    margin: 120px auto;
+}
+
+.matchStoryHeader {
+    margin-bottom: 55px;
+}
+
+.matchStoryHeader .sectionNumber {
+    color: var(--color-accent);
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.matchStoryHeader h2 {
+    color: var(--color-text-primary);
+    font-size: 52px;
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -3px;
+    margin: 0;
+}
+
+.matchStoryHeader h2 span {
+    color: var(--color-accent);
+}
+
+.storyTimeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.storyMoment {
+    min-height: 350px;
+    padding: 25px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 18px;
+    transition: 0.3s;
+}
+
+.storyMoment:hover {
+    transform: translateY(-7px);
+    border-color: var(--color-accent);
+}
+
+.storyMoment > span {
+    display: block;
+    color: var(--color-accent);
+    font-size: 11px;
+    margin-bottom: 70px;
+}
+
+.storySmallTitle {
+    color: var(--color-accent);
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.storyMoment h3 {
+    color: var(--color-text-primary);
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.7px;
+    margin-bottom: 16px;
+}
+
+.storyMoment > p:last-child {
+    color: var(--color-text-secondary);
+    font-size: 12px;
+    line-height: 1.75;
+    margin: 0;
+}
+
+.finalMoment {
+    background-color: var(--color-text-primary);
+    border-color: var(--color-text-primary);
+}
+
+.finalMoment h3 {
+    color: var(--color-surface);
+}
+
+.finalMoment > p:last-child {
+    color: var(--color-border);
+}
+
+.finalMoment .storySmallTitle,
+.finalMoment > span {
+    color: var(--color-accent);
+}
+
+.storyStatement {
+    margin-top: 14px;
+    padding: 65px 55px;
+    background-color: var(--color-surface-mint);
+    border-radius: 22px;
+}
+
+.storyStatement > p:first-child {
+    color: var(--color-accent);
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+}
+
+.storyStatement h2 {
+    max-width: 850px;
+    color: var(--color-text-primary);
+    font-size: 46px;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -2.5px;
+    margin-bottom: 25px;
+}
+
+.storyStatement h2 span {
+    color: var(--color-accent);
+}
+
+.storyStatement > p:last-child {
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    margin: 0;
+}
+
+@media (max-width: 1000px) {
+    .sectionOne {
+        width: 90%;
+        gap: 35px;
+    }
+
+    .titles h3 {
+        font-size: 52px;
+        letter-spacing: -3px;
+    }
+
+    .content-wrapper {
+        min-height: 390px;
+    }
+
+    .carousel-inner {
+        height: 420px;
+    }
+
+    .principles,
+    .howMystaWorks,
+    .matchStory {
+        width: 90%;
+    }
+
+    .principles {
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+    }
+
+    .howSteps,
+    .storyTimeline {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .howStep:nth-child(2) {
+        border-right: none;
+    }
+
+    .howHeader h2,
+    .matchStoryHeader h2 {
+        font-size: 42px;
+    }
+
+    .storyStatement h2 {
+        font-size: 38px;
+    }
+}
+
+@media (max-width: 800px) {
+    .sectionOne {
+        flex-direction: column;
+        width: 90%;
+        gap: 45px;
+        margin: 40px auto;
+    }
+
+    .sectionOne .container {
+        width: 100%;
+        max-width: none;
+    }
+
+    .content-wrapper {
+        min-height: 350px;
+    }
+
+    .titles h3 {
+        font-size: 48px;
+        letter-spacing: -2.5px;
+    }
+
+    .description {
+        max-width: 600px;
+    }
+
+    .visualColumn {
+        width: 100%;
+    }
+
+    .carousel-inner {
+        height: 500px;
+    }
+
+    .carousel img {
+        min-height: 0;
+    }
+
+    .boxes {
+        margin-top: 25px;
+    }
+
+    .principles {
+        margin-top: 50px;
+    }
+
+    .howMystaWorks {
+        margin-top: 80px;
+    }
+
+    .matchStory {
+        margin-top: 90px;
+    }
+}
+
+@media (max-width: 600px) {
+    .sectionOne {
+        width: 92%;
+        margin: 30px auto;
+        gap: 35px;
+    }
+
+    .content-wrapper {
+        min-height: 390px;
+    }
+
+    .titles > p {
+        font-size: 10px;
+        margin-bottom: 16px;
+    }
+
+    .titles .subtitle {
+        margin-left: 7px;
+        letter-spacing: 1.5px;
+    }
+
+    .titles h3 {
+        font-size: 39px;
+        line-height: 1.05;
+        letter-spacing: -2px;
+    }
+
+    .description {
+        font-size: 13px;
+        line-height: 1.7;
+        margin-top: 20px;
+    }
+
+    .boxes {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .boxes > div {
+        padding: 13px 15px;
+    }
+
+    .boxes .nu {
+        margin-bottom: 8px;
+    }
+
+    .carousel {
+        border-radius: 18px;
+        padding: 6px;
+    }
+
+    .carousel-inner {
+        height: 390px;
+        border-radius: 14px;
+    }
+
+    .carouselToolbar {
+        padding: 11px 9px 6px;
+    }
+
+    .carouselArrows button {
+        width: 31px;
+        height: 31px;
+        font-size: 17px;
+    }
+
+    .imageCaption {
+        left: 20px;
+        bottom: 20px;
+    }
+
+    .imageCaption h4 {
+        font-size: 22px;
+    }
+
+    .meetTeam {
+        margin: 16px 4px 0;
+    }
+
+    .principles {
+        width: 92%;
+        grid-template-columns: 1fr;
+        gap: 17px;
+        padding: 20px 0;
+        margin-top: 45px;
+    }
+
+    .principlesTitle {
+        margin-bottom: 5px;
+    }
+
+    .howMystaWorks,
+    .matchStory {
+        width: 92%;
+    }
+
+    .howMystaWorks {
+        margin-top: 65px;
+    }
+
+    .howHeader {
+        margin-bottom: 35px;
+    }
+
+    .howHeader h2,
+    .matchStoryHeader h2 {
+        font-size: 36px;
+        letter-spacing: -2px;
+    }
+
+    .howHeader > p:last-child {
+        font-size: 13px;
+    }
+
+    .howSteps,
+    .storyTimeline {
+        grid-template-columns: 1fr;
+    }
+
+    .howStep {
+        min-height: 0;
+        padding: 25px 20px;
+        border-right: none;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .howStep:last-child {
+        border-bottom: none;
+    }
+
+    .stepNumber {
+        margin-bottom: 35px;
+    }
+
+    .matchStory {
+        margin-top: 70px;
+        margin-bottom: 70px;
+    }
+
+    .matchStoryHeader {
+        margin-bottom: 35px;
+    }
+
+    .storyMoment {
+        min-height: 0;
+        padding: 22px;
+    }
+
+    .storyMoment > span {
+        margin-bottom: 40px;
+    }
+
+    .storyStatement {
+        padding: 38px 25px;
+    }
+
+    .storyStatement h2 {
+        font-size: 31px;
+        letter-spacing: -1.5px;
+    }
+}
+
+@media (max-width: 400px) {
+    .sectionOne {
+        width: 92%;
+    }
+
+    .titles h3 {
+        font-size: 34px;
+        letter-spacing: -1.5px;
+    }
+
+    .content-wrapper {
+        min-height: 420px;
+    }
+
+    .carousel-inner {
+        height: 340px;
+    }
+
+    .dots {
+        gap: 5px;
+    }
+
+    .carouselArrows {
+        gap: 4px;
+    }
+
+    .miniAvatars div {
+        width: 27px;
+        height: 27px;
+    }
+
+    .meetText p {
+        font-size: 10px;
+    }
+
+    .meetText span {
+        font-size: 9px;
+    }
+
+    .howHeader h2,
+    .matchStoryHeader h2 {
+        font-size: 31px;
+    }
+
+    .storyStatement {
+        padding: 32px 20px;
+    }
+
+    .storyStatement h2 {
+        font-size: 27px;
+    }
+}

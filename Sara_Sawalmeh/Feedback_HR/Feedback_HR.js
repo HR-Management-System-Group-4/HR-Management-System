@@ -10,7 +10,7 @@ feedbacks.forEach(feedback => {
     feedback.status = feedback.status || 'New';
     const row = document.createElement('tr');
     row.className = feedback.status.toLowerCase();
-    for (const value of [feedback.employee || 'Employee', feedback.subject, feedback.message, feedback.date || 'Today']) {
+    for (const value of [feedback.employee || feedback.name, feedback.subject, feedback.message, feedback.date || 'Today']) {
         const cell = document.createElement('td');
         cell.textContent = value || '';
         row.append(cell);
