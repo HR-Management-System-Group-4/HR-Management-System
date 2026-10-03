@@ -1,109 +1,413 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HR Zoom Meetings | Mysta</title>
-  <link rel="stylesheet" href="../../assets/Colors.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../../layout/header.css">
-  <link rel="stylesheet" href="../../layout/footer.css">
-  <link rel="stylesheet" href="../../Side_Bar/embed.css">
-  <link rel="stylesheet" href="style.css?v=meeting-layout-3">
-  <link rel="stylesheet" href="../../layout/page-transition.css">
-  <script src="../../layout/page-transition.js"></script>
-</head>
-<body class="hr-page">
-  <button class="hr-nav-toggle" type="button" aria-controls="hrNavigation" aria-expanded="false" aria-label="Open HR menu">☰ HR menu</button>
-  <button class="hr-nav-backdrop" type="button" aria-label="Close HR menu" hidden></button>
-  <iframe id="hrNavigation" class="hr-navigation" src="../../Side_Bar/Side_bar.html" title="HR navigation"></iframe>
-  <div class="nav-bar"></div>
-  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.4"/><path d="m16 16 4.5 4.5"/></symbol>
-    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3.5"/><path d="M4.5 21v-2a7.5 7.5 0 0 1 15 0v2"/></symbol>
-    <symbol id="i-task" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="m7.5 12 3 3 6-7"/></symbol>
-    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18"/></symbol>
-    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 2.5h8l4 4V21H6zM14 2.5V7h4M9 12h6M9 16h6"/></symbol>
-    <symbol id="i-video" viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="13" height="13" rx="2"/><path d="m15.5 9 6-3v12l-6-3"/></symbol>
-    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M20.5 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 20l1-4.5A8.5 8.5 0 1 1 20.5 11.5Z"/></symbol>
-    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M2.5 20v-1.5a6.5 6.5 0 0 1 13 0V20M16 5.2a3 3 0 0 1 0 5.6M17 13a5.6 5.6 0 0 1 4.5 5.5V20"/></symbol>
-    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6.5V12l3.5 2"/></symbol>
-    <symbol id="i-check" viewBox="0 0 24 24"><path d="m4.5 12.5 5 5 10-11"/></symbol>
-    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 20a2 2 0 0 0 4 0"/></symbol>
-    <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
-    <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
-    <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
-    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M3 4h18l-7 8v6l-4 2v-8z"/></symbol>
-    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13.5a5 5 0 0 0 7 .2l2-2a5 5 0 0 0-7-7l-2 2M14 10.5a5 5 0 0 0-7-.2l-2 2a5 5 0 0 0 7 7l2-2"/></symbol>
-    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></symbol>
-    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
-  </svg>
+  <head>
+    <link rel="icon" type="image/png" href="../../assets/Logo-cropped.png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HR Zoom Meetings | Mysta</title>
+    <link rel="stylesheet" href="../../assets/Colors.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../layout/header.css" />
+    <link rel="stylesheet" href="../../layout/footer.css" />
+    <link rel="stylesheet" href="../../Side_Bar/embed.css" />
+    <link rel="stylesheet" href="style.css?v=meeting-layout-3" />
+    <link rel="stylesheet" href="../../layout/page-transition.css" />
+    <script src="../../layout/page-transition.js"></script>
+  </head>
+  <body class="hr-page">
+    <button
+      class="hr-nav-toggle"
+      type="button"
+      aria-controls="hrNavigation"
+      aria-expanded="false"
+      aria-label="Open HR menu"
+    >
+      ☰ HR menu
+    </button>
+    <button
+      class="hr-nav-backdrop"
+      type="button"
+      aria-label="Close HR menu"
+      hidden
+    ></button>
+    <iframe
+      id="hrNavigation"
+      class="hr-navigation"
+      src="../../Side_Bar/Side_bar.html"
+      title="HR navigation"
+    ></iframe>
+    <div class="nav-bar"></div>
+    <svg
+      class="icon-sprite"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <symbol id="i-search" viewBox="0 0 24 24">
+        <circle cx="10.8" cy="10.8" r="6.4" />
+        <path d="m16 16 4.5 4.5" />
+      </symbol>
+      <symbol id="i-user" viewBox="0 0 24 24">
+        <circle cx="12" cy="7.5" r="3.5" />
+        <path d="M4.5 21v-2a7.5 7.5 0 0 1 15 0v2" />
+      </symbol>
+      <symbol id="i-task" viewBox="0 0 24 24">
+        <rect x="3.5" y="3.5" width="17" height="17" rx="2" />
+        <path d="m7.5 12 3 3 6-7" />
+      </symbol>
+      <symbol id="i-calendar" viewBox="0 0 24 24">
+        <rect x="3" y="5" width="18" height="16" rx="2" />
+        <path d="M7 3v4m10-4v4M3 10h18" />
+      </symbol>
+      <symbol id="i-file" viewBox="0 0 24 24">
+        <path d="M6 2.5h8l4 4V21H6zM14 2.5V7h4M9 12h6M9 16h6" />
+      </symbol>
+      <symbol id="i-video" viewBox="0 0 24 24">
+        <rect x="2.5" y="5.5" width="13" height="13" rx="2" />
+        <path d="m15.5 9 6-3v12l-6-3" />
+      </symbol>
+      <symbol id="i-chat" viewBox="0 0 24 24">
+        <path
+          d="M20.5 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 20l1-4.5A8.5 8.5 0 1 1 20.5 11.5Z"
+        />
+      </symbol>
+      <symbol id="i-users" viewBox="0 0 24 24">
+        <circle cx="9" cy="8" r="3" />
+        <path
+          d="M2.5 20v-1.5a6.5 6.5 0 0 1 13 0V20M16 5.2a3 3 0 0 1 0 5.6M17 13a5.6 5.6 0 0 1 4.5 5.5V20"
+        />
+      </symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 6.5V12l3.5 2" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="m4.5 12.5 5 5 10-11" />
+      </symbol>
+      <symbol id="i-bell" viewBox="0 0 24 24">
+        <path
+          d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 20a2 2 0 0 0 4 0"
+        />
+      </symbol>
+      <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" /></symbol>
+      <symbol id="i-left" viewBox="0 0 24 24">
+        <path d="m15 5-7 7 7 7" />
+      </symbol>
+      <symbol id="i-right" viewBox="0 0 24 24">
+        <path d="m9 5 7 7-7 7" />
+      </symbol>
+      <symbol id="i-filter" viewBox="0 0 24 24">
+        <path d="M3 4h18l-7 8v6l-4 2v-8z" />
+      </symbol>
+      <symbol id="i-link" viewBox="0 0 24 24">
+        <path
+          d="M10 13.5a5 5 0 0 0 7 .2l2-2a5 5 0 0 0-7-7l-2 2M14 10.5a5 5 0 0 0-7-.2l-2 2a5 5 0 0 0 7 7l2-2"
+        />
+      </symbol>
+      <symbol id="i-more" viewBox="0 0 24 24">
+        <circle cx="5" cy="12" r="1" />
+        <circle cx="12" cy="12" r="1" />
+        <circle cx="19" cy="12" r="1" />
+      </symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24">
+        <path d="M4 6h16M4 12h16M4 18h16" />
+      </symbol>
+    </svg>
 
-  <div class="app-shell">
-    <main class="workspace">
-      <header class="topbar">
-        <div class="topbar-actions">
-          <button class="profile-button" type="button" aria-label="HR Admin profile"><span class="avatar admin-avatar">HA</span><span><strong>HR Admin</strong><small>Human Resources</small></span><svg><use href="#i-down"/></svg></button>
-        </div>
-      </header>
+    <div class="app-shell">
+      <main class="workspace">
+        <header class="topbar">
+          <div class="topbar-actions">
+            <button
+              class="profile-button"
+              type="button"
+              aria-label="HR Admin profile"
+            >
+              <span class="avatar admin-avatar">HA</span
+              ><span
+                ><strong>HR Admin</strong><small>Human Resources</small></span
+              ><svg><use href="#i-down" /></svg>
+            </button>
+          </div>
+        </header>
 
-      <div class="content-grid">
-        <div class="main-column">
-          <section class="page-intro" aria-labelledby="pageTitle">
-            <h1 id="pageTitle">HR Zoom Meetings</h1>
-            <p>Review employee requests, approve or reject them, and schedule Zoom meetings.</p>
-          </section>
+        <div class="content-grid">
+          <div class="main-column">
+            <section class="page-intro" aria-labelledby="pageTitle">
+              <h1 id="pageTitle">HR Zoom Meetings</h1>
+              <p>
+                Review employee requests, approve or reject them, and link
+                meetings scheduled in Zoom.
+              </p>
+            </section>
 
-          <section class="stats-grid" aria-label="Meeting overview">
-            <article class="stat-card"><span class="stat-icon blue"><svg><use href="#i-users"/></svg></span><div><span>Total Requests</span><strong id="totalCount">18</strong><small class="trend positive">↗ &nbsp; All requests</small></div></article>
-            <article class="stat-card"><span class="stat-icon amber"><svg><use href="#i-clock"/></svg></span><div><span>Pending Review</span><strong id="pendingCount">6</strong><small class="trend amber-text">• &nbsp; Awaiting action</small></div></article>
-            <article class="stat-card"><span class="stat-icon green"><svg><use href="#i-check"/></svg></span><div><span>Approved</span><strong id="approvedCount">9</strong><small class="trend positive">✓ &nbsp; Ready to schedule</small></div></article>
-            <article class="stat-card"><span class="stat-icon violet"><svg><use href="#i-calendar"/></svg></span><div><span>Today's Meetings</span><strong id="todayCount">4</strong><small class="trend violet-text">• &nbsp; On the calendar</small></div></article>
-          </section>
+            <section class="stats-grid" aria-label="Meeting overview">
+              <article class="stat-card">
+                <span class="stat-icon blue"
+                  ><svg><use href="#i-users" /></svg
+                ></span>
+                <div>
+                  <span>Total Requests</span><strong id="totalCount">18</strong
+                  ><small class="trend positive">↗ &nbsp; All requests</small>
+                </div>
+              </article>
+              <article class="stat-card">
+                <span class="stat-icon amber"
+                  ><svg><use href="#i-clock" /></svg
+                ></span>
+                <div>
+                  <span>Pending Review</span><strong id="pendingCount">6</strong
+                  ><small class="trend amber-text"
+                    >• &nbsp; Awaiting action</small
+                  >
+                </div>
+              </article>
+              <article class="stat-card">
+                <span class="stat-icon green"
+                  ><svg><use href="#i-check" /></svg
+                ></span>
+                <div>
+                  <span>Approved</span><strong id="approvedCount">9</strong
+                  ><small class="trend positive"
+                    >✓ &nbsp; Ready to link</small
+                  >
+                </div>
+              </article>
+              <article class="stat-card">
+                <span class="stat-icon violet"
+                  ><svg><use href="#i-calendar" /></svg
+                ></span>
+                <div>
+                  <span>Linked Meetings</span><strong id="todayCount">0</strong
+                  ><small class="trend violet-text"
+                    >• &nbsp; Zoom links ready</small
+                  >
+                </div>
+              </article>
+            </section>
 
-          <section class="panel requests-panel" aria-labelledby="requestsTitle">
-            <div class="section-heading"><div><h2 id="requestsTitle">Meeting Requests</h2><p>Employee requests for Zoom meetings. Only HR can review, approve, reject, and schedule these meetings.</p></div><label class="select-shell status-filter"><svg><use href="#i-filter"/></svg><select id="statusFilter" aria-label="Filter requests by status"><option value="all">All Requests</option><option value="Pending">Pending</option><option value="Approved">Approved</option><option value="Scheduled">Scheduled</option><option value="Rejected">Rejected</option></select><svg><use href="#i-down"/></svg></label></div>
-            <div class="table-scroll"><table><thead><tr><th>Employee</th><th>Email</th><th>Department</th><th>Purpose</th><th>Message</th><th>Status</th><th>Actions</th></tr></thead><tbody id="requestsBody"></tbody></table></div>
-            <div class="table-footer"><span id="paginationSummary">Showing 1–6 of 18 requests</span><div class="pagination" id="pagination" aria-label="Request pages"></div></div>
-          </section>
-        </div>
-
-        <aside class="right-column" aria-label="Scheduling and activity">
-          <section class="panel schedule-panel" aria-labelledby="scheduleTitle">
-            <div class="aside-heading"><span class="small-icon"><svg><use href="#i-video"/></svg></span><div><h2 id="scheduleTitle">Schedule Zoom Meeting</h2><p>Create a meeting in Zoom, then paste its invitation here to connect it to this request.</p></div></div>
-            <form id="scheduleForm">
-              <div class="form-field"><label for="employeeSelect">Employee</label><div class="input-shell"><svg><use href="#i-search"/></svg><select id="employeeSelect" required><option value="">Select employee</option></select><svg class="field-chevron"><use href="#i-down"/></svg></div></div>
-              <div class="form-field"><label for="meetingTopic">Meeting topic</label><input id="meetingTopic" type="text" placeholder="e.g., Career Guidance Discussion" required></div>
-              <div class="form-row"><div class="form-field"><label for="meetingDate">Date</label><input id="meetingDate" type="date" required></div><div class="form-field"><label for="meetingTime">Time</label><input id="meetingTime" type="time" required></div></div>
-              <div class="form-field"><label for="meetingDuration">Duration</label><select id="meetingDuration"><option value="30">30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option></select></div>
-              <div class="zoom-steps" aria-label="Zoom invitation setup">
-                <a class="zoom-create" href="https://zoom.us/meeting/schedule" target="_blank" rel="noopener noreferrer"><svg><use href="#i-video"/></svg>1. Create meeting in Zoom <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></a>
-                <p>Use the same date and time, then copy the Zoom invitation or join link.</p>
-                <div class="form-field"><label for="zoomInvitation">2. Paste the invitation or join link</label><textarea id="zoomInvitation" rows="3" placeholder="Paste the full Zoom invitation or its join URL"></textarea></div>
-                <button id="pasteInvitation" class="clipboard-button" type="button"><i class="bi bi-clipboard" aria-hidden="true"></i> Paste from clipboard</button>
-                <div class="form-field extracted-link"><label for="zoomLink">Detected join link</label><input id="zoomLink" type="url" readonly placeholder="The Zoom join link will appear here"></div>
-                <p id="invitationFeedback" class="invitation-feedback" role="status" aria-live="polite"></p>
+            <section
+              class="panel requests-panel"
+              aria-labelledby="requestsTitle"
+            >
+              <div class="section-heading">
+                <div>
+                  <h2 id="requestsTitle">Meeting Requests</h2>
+                  <p>
+                    Employee requests for Zoom meetings. Only HR can review,
+                    approve, reject, and link these meetings.
+                  </p>
+                </div>
+                <label class="select-shell status-filter"
+                  ><svg><use href="#i-filter" /></svg
+                  ><select
+                    id="statusFilter"
+                    aria-label="Filter requests by status"
+                  >
+                    <option value="all">All Requests</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Scheduled">Scheduled</option>
+                    <option value="Rejected">Rejected</option></select
+                  ><svg><use href="#i-down" /></svg
+                ></label>
               </div>
-              <div class="form-field"><label for="hrNotes">HR notes <span>(optional)</span></label><textarea id="hrNotes" rows="2" placeholder="Add any notes for this meeting..."></textarea></div>
-              <button class="primary-button" type="submit"><svg><use href="#i-calendar"/></svg>Schedule Meeting</button>
-              <p class="form-feedback" id="scheduleFeedback" role="status" aria-live="polite"></p>
-            </form>
-          </section>
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Employee</th>
+                      <th>Email</th>
+                      <th>Department</th>
+                      <th>Purpose</th>
+                      <th>Message</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="requestsBody"></tbody>
+                </table>
+              </div>
+              <div class="table-footer">
+                <span id="paginationSummary">Showing 1–6 of 18 requests</span>
+                <div
+                  class="pagination"
+                  id="pagination"
+                  aria-label="Request pages"
+                ></div>
+              </div>
+            </section>
+          </div>
 
-          <section class="panel mini-panel" aria-labelledby="upcomingTitle"><div class="mini-heading"><div><span class="small-icon"><svg><use href="#i-calendar"/></svg></span><h2 id="upcomingTitle">Upcoming Meetings</h2></div><button class="text-button" type="button" id="viewAllMeetings">View All</button></div><div id="upcomingList" class="upcoming-list"></div></section>
-          <section class="panel mini-panel activity-panel" aria-labelledby="activityTitle"><div class="mini-heading"><div><span class="small-icon"><svg><use href="#i-clock"/></svg></span><h2 id="activityTitle">Recent Activity</h2></div><button class="text-button" type="button" id="viewAllActivity">View All</button></div><div id="activityList" class="activity-list"></div></section>
-        </aside>
+          <aside class="right-column" aria-label="Scheduling and activity">
+            <section
+              class="panel schedule-panel"
+              aria-labelledby="scheduleTitle"
+            >
+              <div class="aside-heading">
+                <span class="small-icon"
+                  ><svg><use href="#i-video" /></svg
+                ></span>
+                <div>
+                  <h2 id="scheduleTitle">Link Zoom Meeting</h2>
+                  <p>
+                    Schedule the meeting once in Zoom, then attach its
+                    invitation to the employee request.
+                  </p>
+                </div>
+              </div>
+              <form id="scheduleForm">
+                <div class="form-field">
+                  <label for="employeeSelect">Employee</label>
+                  <div class="input-shell">
+                    <svg><use href="#i-search" /></svg
+                    ><select id="employeeSelect" required>
+                      <option value="">Select employee</option></select
+                    ><svg class="field-chevron"><use href="#i-down" /></svg>
+                  </div>
+                </div>
+                <div class="zoom-steps" aria-label="Zoom invitation setup">
+                  <a
+                    class="zoom-create"
+                    href="https://zoom.us/meeting/schedule"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    ><svg><use href="#i-video" /></svg>1. Schedule in Zoom
+                    <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i
+                  ></a>
+                  <p>
+                    Choose the topic and time there. You won't enter them again
+                    here.
+                  </p>
+                  <div class="form-field">
+                    <label for="zoomInvitation"
+                      >2. Paste the invitation or join link</label
+                    ><textarea
+                      id="zoomInvitation"
+                      rows="3"
+                      placeholder="Paste the full Zoom invitation or its join URL"
+                    ></textarea>
+                  </div>
+                  <button
+                    id="pasteInvitation"
+                    class="clipboard-button"
+                    type="button"
+                  >
+                    <i class="bi bi-clipboard" aria-hidden="true"></i> Paste
+                    from clipboard
+                  </button>
+                  <div class="form-field extracted-link">
+                    <label for="zoomLink">Detected join link</label
+                    ><input
+                      id="zoomLink"
+                      type="url"
+                      readonly
+                      placeholder="The Zoom join link will appear here"
+                    />
+                  </div>
+                  <p
+                    id="invitationFeedback"
+                    class="invitation-feedback"
+                    role="status"
+                    aria-live="polite"
+                  ></p>
+                </div>
+                <div class="form-field hr-notes-field">
+                  <label for="hrNotes">HR notes <span>(optional)</span></label
+                  ><textarea
+                    id="hrNotes"
+                    rows="2"
+                    placeholder="Add any notes for this meeting..."
+                  ></textarea>
+                </div>
+                <button class="primary-button" type="submit">
+                  <svg><use href="#i-link" /></svg>Link Meeting &amp; Enable
+                  Join now
+                </button>
+                <p
+                  class="form-feedback"
+                  id="scheduleFeedback"
+                  role="status"
+                  aria-live="polite"
+                ></p>
+              </form>
+            </section>
+
+            <div class="meeting-sidebar-stack">
+              <section class="panel mini-panel" aria-labelledby="upcomingTitle">
+                <div class="mini-heading">
+                  <div>
+                    <span class="small-icon"
+                      ><svg><use href="#i-calendar" /></svg
+                    ></span>
+                    <h2 id="upcomingTitle">Upcoming Meetings</h2>
+                  </div>
+                  <button
+                    class="text-button"
+                    type="button"
+                    id="viewAllMeetings"
+                  >
+                    View All
+                  </button>
+                </div>
+                <div id="upcomingList" class="upcoming-list"></div>
+              </section>
+              <section
+                class="panel mini-panel activity-panel"
+                aria-labelledby="activityTitle"
+              >
+                <div class="mini-heading">
+                  <div>
+                    <span class="small-icon"
+                      ><svg><use href="#i-clock" /></svg
+                    ></span>
+                    <h2 id="activityTitle">Recent Activity</h2>
+                  </div>
+                  <button
+                    class="text-button"
+                    type="button"
+                    id="viewAllActivity"
+                  >
+                    View All
+                  </button>
+                </div>
+                <div id="activityList" class="activity-list"></div>
+              </section>
+            </div>
+          </aside>
+        </div>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+    <dialog
+      id="meetingDetails"
+      class="meeting-dialog"
+      aria-labelledby="detailsTitle"
+    >
+      <div class="dialog-heading">
+        <h2 id="detailsTitle">Meeting details</h2>
+        <button
+          type="button"
+          id="closeDetails"
+          aria-label="Close meeting details"
+        >
+          ×
+        </button>
       </div>
-    </main>
-  </div>
-  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
-  <dialog id="meetingDetails" class="meeting-dialog" aria-labelledby="detailsTitle">
-    <div class="dialog-heading"><h2 id="detailsTitle">Meeting details</h2><button type="button" id="closeDetails" aria-label="Close meeting details">×</button></div>
-    <dl id="detailsList"></dl>
-    <a id="detailsJoin" class="join-link" target="_blank" rel="noopener noreferrer" hidden>Join now</a>
-  </dialog>
-  <div class="footer"></div>
-  <script src="main.js?v=zoom-invitation-1"></script>
-  <script src="../../Side_Bar/embed.js"></script>
-</body>
+      <dl id="detailsList"></dl>
+      <a
+        id="detailsJoin"
+        class="join-link"
+        target="_blank"
+        rel="noopener noreferrer"
+        hidden
+        >Join now</a
+      >
+    </dialog>
+    <div class="footer"></div>
+    <script src="main.js?v=single-schedule-1"></script>
+    <script src="../../Side_Bar/embed.js"></script>
+  </body>
 </html>

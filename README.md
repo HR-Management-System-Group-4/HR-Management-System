@@ -20,6 +20,6 @@ Include `layout/header.css` and `layout/footer.css` in the page head, then `layo
 
 ## Zoom meeting workflow
 
-On the HR meetings page, approve a request, choose **Schedule**, and use **Create meeting in Zoom**. After creating the meeting in Zoom, copy its invitation or join link back into the HR form. The form extracts a Zoom join URL, saves it with that request, and shows **Join now** in both HR and employee views. The clipboard button can paste the copied invitation on the same laptop.
+On the HR meetings page, approve a request and choose **Link Zoom**. Schedule the topic and time once in Zoom. Copy the Zoom invitation or join link back into the HR form and select **Link Meeting & Enable Join now**. The form extracts the join URL and, when available, the topic and time from the invitation. It saves the link with that employee request and shows **Join now** in both HR and employee views. The clipboard button can paste the copied invitation on the same laptop.
 
 Meeting requests and links currently use browser `localStorage`, so both views need the same browser and site origin. The page does not create a Zoom meeting through the API; that would require an authorized Zoom app and a backend to protect its credentials.

@@ -1,6 +1,5 @@
-// ========================================
+
 // Main Elements
-// ========================================
 
 let btn = document.getElementById("addTaskButton");
 
@@ -20,9 +19,8 @@ let saveTaskButton = document.getElementById("saveTaskButton");
 
 let toast = document.getElementById("toast");
 
-// ========================================
 // Variables
-// ========================================
+
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
@@ -36,9 +34,8 @@ let activeFilter = "All";
 
 let toastTimer;
 
-// ========================================
 // Toast
-// ========================================
+
 
 function showToast(message) {
   toast.textContent = message;
@@ -52,12 +49,11 @@ function showToast(message) {
   }, 3500);
 }
 
-// ========================================
+
 // Open Add Task Popup
-// ========================================
+
 
 btn.onclick = function () {
-  // Clear old form values
   taskForm.reset();
   taskForm.classList.add("is-creating");
 
@@ -496,36 +492,12 @@ function getEmployeesText(task) {
 function displayTasks() {
   taskList.innerHTML = "";
 
-  let searchInput = document.getElementById("taskSearch");
-
-  let search = "";
-
-  if (searchInput) {
-    search = searchInput.value.toLowerCase();
-  }
-
   for (let i = 0; i < tasks.length; i++) {
     // =================================
     // Filter
     // =================================
 
     if (activeFilter != "All" && tasks[i].status != activeFilter) {
-      continue;
-    }
-
-    // =================================
-    // Search
-    // =================================
-
-    let taskText = (
-      tasks[i].title +
-      " " +
-      tasks[i].description +
-      " " +
-      getEmployeesText(tasks[i])
-    ).toLowerCase();
-
-    if (!taskText.includes(search)) {
       continue;
     }
 
@@ -596,8 +568,6 @@ function displayTasks() {
                                 class="chip priority-${tasks[i].priority.toLowerCase()}"
                             >
 
-                                <i class="bi bi-bar-chart-fill"></i>
-
                                 ${tasks[i].priority}
 
                             </span>
@@ -606,8 +576,6 @@ function displayTasks() {
                             <span
                                 class="chip status-${statusClass}"
                             >
-
-                                <i class="bi bi-record-circle"></i>
 
                                 ${tasks[i].status}
 
@@ -989,16 +957,6 @@ function updateCounters() {
     }
   }
 }
-
-// ========================================
-// Search Tasks
-// ========================================
-
-let taskSearch = document.getElementById("taskSearch");
-
-taskSearch.oninput = function () {
-  displayTasks();
-};
 
 // ========================================
 // Task Filters

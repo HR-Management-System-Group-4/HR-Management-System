@@ -26,13 +26,21 @@ const servicePages = {
 const loginPageUrl = new URL('../Sara_Dolat/log in/index.html', layoutUrl).href;
 
 function getServiceRole() {
-  for (const key of ['currentUser', 'user']) {
-    try {
-      const role = JSON.parse(localStorage.getItem(key) || 'null')?.role;
-      if (role === 'HR' || role === 'Employee') return role;
-    } catch (_) { /* Ignore malformed demo storage. */ }
-  }
+  try {
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    if (user?.role === 'HR' || user?.role === 'Employee') return user.role;
+
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+    const loggedInUserId = localStorage.getItem('loggedInUserId');
+    if (loggedInUserId && String(currentUser?.id) === loggedInUserId &&
+        (currentUser.role === 'HR' || currentUser.role === 'Employee')) return currentUser.role;
+  } catch (_) { /* Ignore malformed demo storage. */ }
   return null;
+}
+
+function getProfileUrl() {
+  const role = getServiceRole() === 'HR' ? 'HR' : 'Employee';
+  return new URL(servicePages[role].profile, layoutUrl).href;
 }
 
 function getServiceUrl(page = 'home') {
@@ -42,13 +50,13 @@ function getServiceUrl(page = 'home') {
     : loginPageUrl;
 }
 
-window.MystaServiceRouting = { getRole: getServiceRole, pageUrl: getServiceUrl };
+window.MystaServiceRouting = { getRole: getServiceRole, pageUrl: getServiceUrl, profileUrl: getProfileUrl };
 
 if (navbarContainer) {
   const navbarUrl = layoutUrl;
   const homepageUrl = new URL('../Ahmad/Homepage/index.html', navbarUrl);
   const servicesUrl = new URL('../Timaaa/services/index.html', navbarUrl);
-  const teamUrl = new URL('../Yasmeen_Telfah/aboutUs.html', navbarUrl);
+  const aboutUrl = new URL('../Yasmeen_Telfah/aboutUs.html', navbarUrl);
   const isHomepage = window.location.pathname === homepageUrl.pathname;
   const themeClass = document.body.dataset.themeClass || 'dark-mode';
   const themeKey = document.body.dataset.themeKey || 'mysta_theme';
@@ -67,21 +75,23 @@ if (navbarContainer) {
       if (!nav) throw new Error('Navbar markup was not found.');
 
       nav.querySelector('[data-brand-logo]').src = new URL('../assets/Logo-cropped.png', navbarUrl).href;
+      nav.querySelector('[data-service-page="profile"]').href = getProfileUrl();
 
       nav.querySelectorAll('[data-page-anchor]').forEach((link) => {
         const anchor = `#${link.dataset.pageAnchor}`;
         link.href = link.dataset.pageAnchor === 'services' ? getServiceUrl()
-          : link.dataset.pageAnchor === 'team' ? `${teamUrl.href}#team`
-          : link.dataset.pageAnchor === 'about' ? teamUrl.href
+          : link.dataset.pageAnchor === 'about' ? aboutUrl.href
           : isHomepage ? anchor : `${homepageUrl.href}${anchor}`;
       });
       const updateActiveLink = () => {
-        const activeSection = window.location.pathname === teamUrl.pathname
-          ? window.location.hash === '#team' ? 'team' : 'about'
+        const profilePath = new URL(getProfileUrl()).pathname;
+        const activeSection = window.location.pathname === profilePath
+          ? 'profile'
+          : window.location.pathname === aboutUrl.pathname ? 'about'
           : isHomepage ? (window.location.hash.slice(1) || 'home')
           : window.location.pathname === servicesUrl.pathname ? 'services' : '';
         nav.querySelectorAll('.nav-link').forEach((link) => {
-          const active = link.dataset.pageAnchor === activeSection;
+          const active = (link.dataset.pageAnchor || link.dataset.servicePage) === activeSection;
           link.classList.toggle('active', active);
           if (active) link.setAttribute('aria-current', 'page');
           else link.removeAttribute('aria-current');

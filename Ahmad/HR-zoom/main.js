@@ -2,8 +2,6 @@ const storageKey = 'ahmadHrZoomDashboardV1';
 try { document.body.classList.toggle('dark-mode', localStorage.getItem('mysta_theme') === 'dark'); }
 catch (error) { console.warn('Theme preference could not be loaded.', error); }
 const pageSize = 6;
-const today = new Date();
-const localToday = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
 function loadState() {
   let result;
@@ -52,12 +50,17 @@ const extractZoomLink = (text) => {
   }
   return '';
 };
+const inviteLine = (text, label) => {
+  const line = String(text).split(/\r?\n/).find((item) => new RegExp(`^\\s*${label}:`, 'i').test(item));
+  return line ? line.replace(new RegExp(`^\\s*${label}:\\s*`, 'i'), '').trim().slice(0, 180) : '';
+};
 const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
 const icon = (name) => `<svg aria-hidden="true"><use href="#i-${name}"/></svg>`;
 const initials = (name) => name.split(' ').map((part) => part[0]).slice(0, 2).join('').toUpperCase();
 const avatar = (name, tone) => `<span class="avatar ${escapeHtml(tone || '')}" aria-hidden="true">${escapeHtml(initials(name))}</span>`;
 const formatDate = (value) => new Date(`${value}T12:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 const formatTime = (value) => new Date(`2000-01-01T${value}:00`).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+const meetingWhen = (meeting) => meeting.whenLabel || (meeting.date && meeting.time ? `${formatDate(meeting.date)}, ${formatTime(meeting.time)}` : 'See Zoom for time');
 
 function saveState() {
   try {
@@ -68,7 +71,7 @@ function saveState() {
       if (match) {
         request.status = match.status;
         const meeting = state.meetings.find((item) => item.requestId === match.id);
-        request.meeting = meeting ? { date: meeting.date, time: meeting.time, duration: meeting.duration, topic: meeting.topic, link: meeting.link, notes: meeting.notes } : null;
+        request.meeting = meeting ? { date: meeting.date, time: meeting.time, duration: meeting.duration, whenLabel: meeting.whenLabel, topic: meeting.topic, link: meeting.link, notes: meeting.notes } : null;
       }
     }
     localStorage.setItem('ahmadMeetingRequests', JSON.stringify(employeeRequests));
@@ -90,7 +93,10 @@ function showDetails(request) {
     ['Employee', request.name], ['Email', request.email || 'Not provided'],
     ['Purpose', request.purpose], ['Message', request.message], ['Status', request.status]
   ];
-  if (meeting) rows.push(['Scheduled time', `${formatDate(meeting.date)}, ${formatTime(meeting.time)}`], ['Topic', meeting.topic], ['Duration', `${meeting.duration} minutes`], ['HR notes', meeting.notes || 'None']);
+  if (meeting) {
+    rows.push(['Zoom time', meetingWhen(meeting)], ['Topic', meeting.topic], ['HR notes', meeting.notes || 'None']);
+    if (meeting.duration) rows.push(['Duration', `${meeting.duration} minutes`]);
+  }
   document.querySelector('#detailsList').innerHTML = rows.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value || '')}</dd></div>`).join('');
   const join = document.querySelector('#detailsJoin');
   join.hidden = !meeting || !zoomUrl(meeting.link);
@@ -102,7 +108,7 @@ function renderStats() {
   document.querySelector('#totalCount').textContent = state.requests.length;
   document.querySelector('#pendingCount').textContent = state.requests.filter((item) => item.status === 'Pending').length;
   document.querySelector('#approvedCount').textContent = state.requests.filter((item) => item.status === 'Approved').length;
-  document.querySelector('#todayCount').textContent = state.meetings.filter((item) => item.date === localToday).length;
+  document.querySelector('#todayCount').textContent = state.meetings.filter((item) => zoomUrl(item.link)).length;
 }
 
 function filteredRequests() {
@@ -122,7 +128,7 @@ function renderRequests() {
   body.innerHTML = page.length ? page.map((item) => {
     let actions = '';
     if (item.status === 'Pending') actions = `<button class="primary-action" data-action="accept" data-id="${escapeHtml(item.id)}">Accept</button><button class="reject-action" data-action="reject" data-id="${escapeHtml(item.id)}">Reject</button>`;
-    else if (item.status === 'Approved') actions = `<button data-action="schedule" data-id="${escapeHtml(item.id)}">Schedule</button>`;
+    else if (item.status === 'Approved') actions = `<button data-action="schedule" data-id="${escapeHtml(item.id)}">Link Zoom</button>`;
     else actions = `<button data-action="view" data-id="${escapeHtml(item.id)}">View</button>`;
     return `<tr><td><div class="employee-cell">${avatar(item.name, item.avatar)}<span><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.employeeId)}</small></span></div></td><td>${escapeHtml(item.email || 'Not provided')}</td><td>${escapeHtml(item.department)}</td><td>${escapeHtml(item.purpose)}</td><td><span class="truncate" title="${escapeHtml(item.message)}">${escapeHtml(item.message)}</span></td><td><span class="status-pill ${item.status.toLowerCase()}">${escapeHtml(item.status)}</span></td><td class="action-cell">${actions}<button class="more-action" data-action="view" data-id="${escapeHtml(item.id)}" aria-label="View ${escapeHtml(item.name)} request">${icon('more')}</button></td></tr>`;
   }).join('') : '<tr><td class="empty-row" colspan="7">No meeting requests to show.</td></tr>';
@@ -142,9 +148,9 @@ function renderEmployees() {
 
 function renderMeetings() {
   const list = document.querySelector('#upcomingList');
-  const meetings = [...state.meetings].sort((a, b) => `${a.date}T${a.time}`.localeCompare(`${b.date}T${b.time}`));
+  const meetings = [...state.meetings].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
   const shown = showAllMeetings ? meetings : meetings.slice(0, 3);
-  list.innerHTML = shown.length ? shown.map((item) => `<div class="upcoming-item"><div class="upcoming-person">${avatar(item.name, item.avatar)}<span><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.topic)}</small></span></div><div class="upcoming-time"><span>${item.date === localToday ? 'Today' : formatDate(item.date)}, ${formatTime(item.time)}</span><span>${icon('clock')} ${escapeHtml(item.duration)} min</span></div>${zoomUrl(item.link) ? `<a class="join-link" href="${escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer">Join now</a>` : '<span class="status-pill pending">No link</span>'}</div>`).join('') : '<div class="meeting-empty"><span class="meeting-empty-icon">📹</span><strong>No meeting right now</strong><p>Scheduled Zoom meetings and the Join now link will appear here.</p></div>';
+  list.innerHTML = shown.length ? shown.map((item) => `<div class="upcoming-item"><div class="upcoming-person">${avatar(item.name, item.avatar)}<span><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.topic)}</small></span></div><div class="upcoming-time" title="${escapeHtml(meetingWhen(item))}">${escapeHtml(meetingWhen(item))}</div>${zoomUrl(item.link) ? `<a class="join-link" href="${escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer">Join now</a>` : '<span class="status-pill pending">No link</span>'}</div>`).join('') : '<div class="meeting-empty"><span class="meeting-empty-icon">📹</span><strong>No meeting right now</strong><p>Linked Zoom meetings and the Join now link will appear here.</p></div>';
   document.querySelector('#viewAllMeetings').hidden = meetings.length <= 3;
   document.querySelector('#viewAllMeetings').textContent = showAllMeetings ? 'Show Less' : 'View All';
 }
@@ -163,8 +169,8 @@ function renderActivity() {
   const activities = [...state.activity].sort((a, b) => b.at - a.at);
   const shown = showAllActivity ? activities : activities.slice(0, 2);
   list.innerHTML = shown.length ? shown.map((item) => {
-    const label = item.action === 'scheduled' ? 'scheduled a Zoom meeting with' : `${item.action} a meeting request from`;
-    const symbol = item.action === 'scheduled' ? 'calendar' : 'check';
+    const label = item.action === 'linked' ? 'linked a Zoom meeting for' : item.action === 'scheduled' ? 'scheduled a Zoom meeting with' : `${item.action} a meeting request from`;
+    const symbol = item.action === 'scheduled' || item.action === 'linked' ? 'calendar' : 'check';
     return `<div class="activity-item"><span class="activity-symbol ${escapeHtml(item.action)}">${icon(symbol)}</span><div><p>You <strong>${escapeHtml(label)}</strong> <strong>${escapeHtml(item.name)}</strong></p><small>${relativeTime(item.at)}</small></div></div>`;
   }).join('') : '<p class="empty-mini">No recent activity.</p>';
   document.querySelector('#viewAllActivity').textContent = showAllActivity ? 'Show Less' : 'View All';
@@ -181,11 +187,8 @@ document.querySelector('#requestsBody').addEventListener('click', (event) => {
   if (action === 'view') { showDetails(item); return; }
   if (action === 'schedule') {
     document.querySelector('#employeeSelect').value = String(item.id);
-    document.querySelector('#meetingTopic').value = item.purpose;
-    document.querySelector('#meetingDate').value = '';
-    document.querySelector('#meetingTime').value = '';
     document.querySelector('#scheduleForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    document.querySelector('#meetingTopic').focus();
+    document.querySelector('#zoomInvitation').focus();
     return;
   }
   item.status = action === 'accept' ? 'Approved' : 'Rejected';
@@ -206,7 +209,7 @@ const invitation = document.querySelector('#zoomInvitation');
 function updateInvitation() {
   const link = extractZoomLink(invitation.value.trim());
   document.querySelector('#zoomLink').value = link;
-  document.querySelector('#invitationFeedback').textContent = link ? 'Zoom join link found. You can schedule this meeting.' : invitation.value.trim() ? 'No Zoom join link found in this text.' : '';
+  document.querySelector('#invitationFeedback').textContent = link ? 'Zoom join link found. You can link this request.' : invitation.value.trim() ? 'No Zoom join link found in this text.' : '';
 }
 invitation.addEventListener('input', updateInvitation);
 document.querySelector('#pasteInvitation').addEventListener('click', async () => {
@@ -222,28 +225,27 @@ document.querySelector('#pasteInvitation').addEventListener('click', async () =>
 document.querySelector('#scheduleForm').addEventListener('submit', (event) => {
   event.preventDefault();
   const employee = state.requests.find((item) => String(item.id) === document.querySelector('#employeeSelect').value);
-  const date = document.querySelector('#meetingDate').value;
-  const time = document.querySelector('#meetingTime').value;
   const feedback = document.querySelector('#scheduleFeedback');
-  if (!employee || !date || !time) return;
-  if (employee.status === 'Rejected') { feedback.textContent = 'A rejected request cannot be scheduled.'; return; }
-  if (state.meetings.some((item) => item.requestId === employee.id)) { feedback.textContent = 'This request already has a scheduled meeting.'; return; }
-  if (date < localToday) { feedback.textContent = 'Choose today or a future date.'; return; }
+  if (!employee) { feedback.textContent = 'Select an employee request first.'; return; }
+  if (employee.status === 'Rejected') { feedback.textContent = 'A rejected request cannot be linked.'; return; }
+  if (state.meetings.some((item) => item.requestId === employee.id)) { feedback.textContent = 'This request already has a linked meeting.'; return; }
+  const invitationText = invitation.value.trim();
   const meeting = {
-    id: crypto.randomUUID(), requestId: employee.id, name: employee.name, topic: document.querySelector('#meetingTopic').value.trim(), date, time,
-    duration: Number(document.querySelector('#meetingDuration').value), status: 'Scheduled', avatar: employee.avatar,
-    link: extractZoomLink(invitation.value.trim()), notes: document.querySelector('#hrNotes').value.trim()
+    id: crypto.randomUUID(), requestId: employee.id, name: employee.name,
+    topic: inviteLine(invitationText, 'Topic') || employee.purpose,
+    whenLabel: inviteLine(invitationText, 'Time') || inviteLine(invitationText, 'When'),
+    createdAt: Date.now(), status: 'Scheduled', avatar: employee.avatar,
+    link: extractZoomLink(invitationText), notes: document.querySelector('#hrNotes').value.trim()
   };
-  if (!meeting.topic) { feedback.textContent = 'Add a meeting topic.'; return; }
-  if (!meeting.link) { feedback.textContent = 'Create the meeting in Zoom and paste its invitation or join link first.'; invitation.focus(); return; }
+  if (!meeting.link) { feedback.textContent = 'Schedule the meeting in Zoom and paste its invitation or join link first.'; invitation.focus(); return; }
   state.meetings.push(meeting);
   employee.status = 'Scheduled';
-  state.activity.unshift({ action: 'scheduled', name: employee.name, at: Date.now() });
+  state.activity.unshift({ action: 'linked', name: employee.name, at: Date.now() });
   saveState(); renderAll();
   event.target.reset();
   updateInvitation();
-  feedback.textContent = 'Meeting scheduled. The Zoom link is available to the employee on this device and browser.';
-  showToast(`Meeting scheduled with ${employee.name}.`);
+  feedback.textContent = 'Zoom invitation linked. Join now is available to the employee on this device and browser.';
+  showToast(`Zoom meeting linked to ${employee.name}.`);
 });
 
 document.querySelector('#viewAllMeetings').addEventListener('click', () => { showAllMeetings = !showAllMeetings; renderMeetings(); });
@@ -256,5 +258,4 @@ document.querySelector('#viewAllActivity').addEventListener('click', () => { sho
 document.querySelector('.profile-button').addEventListener('click', () => showToast('HR Admin'));
 document.querySelectorAll('[data-placeholder]').forEach((link) => link.addEventListener('click', (event) => { event.preventDefault(); showToast('This section is coming soon.'); }));
 
-document.querySelector('#meetingDate').min = localToday;
 renderAll();

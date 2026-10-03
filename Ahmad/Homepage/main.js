@@ -118,14 +118,18 @@ function renderNextMeeting() {
   const now = Date.now();
   const nextMeeting = meetings
     .filter(item => item?.status === 'Scheduled' && item.link && (() => { try { const url = new URL(item.link); return url.protocol === 'https:' && (url.hostname === 'zoom.us' || url.hostname.endsWith('.zoom.us')); } catch { return false; } })())
-    .map(item => ({ ...item, startsAt: new Date(`${item.date}T${item.time}`).getTime() }))
-    .filter(item => Number.isFinite(item.startsAt) && item.startsAt >= now)
-    .sort((a, b) => a.startsAt - b.startsAt)[0];
+    .map(item => ({ ...item, startsAt: item.date && item.time ? new Date(`${item.date}T${item.time}`).getTime() : NaN }))
+    .filter(item => !Number.isFinite(item.startsAt) || item.startsAt >= now)
+    .sort((a, b) => (Number.isFinite(a.startsAt) ? a.startsAt : Infinity) - (Number.isFinite(b.startsAt) ? b.startsAt : Infinity))[0];
 
   document.querySelector('#meetingNotice').hidden = !nextMeeting;
   document.querySelector('#meetingEmpty').hidden = Boolean(nextMeeting);
   if (!nextMeeting) return;
 
+  if (!Number.isFinite(nextMeeting.startsAt)) {
+    document.querySelector('#meetingWhen').textContent = nextMeeting.whenLabel || 'Zoom link ready';
+    return;
+  }
   const date = new Date(nextMeeting.startsAt);
   const today = new Date();
   const sameDay = date.toDateString() === today.toDateString();
