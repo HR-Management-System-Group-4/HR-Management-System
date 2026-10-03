@@ -11,7 +11,7 @@ section { scroll-margin-top: 92px; }
 /* The hero follows the supplied Vimeo landing page. */
 .hero { position: relative; height: 100svh; min-height: 720px; overflow: hidden; isolation: isolate; background: var(--color-background); color: #fff; }
 .hero-media { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
-.hero-poster { position: absolute; inset: 0; background: url("assets/problems-workspace.png") center/cover no-repeat; }
+.hero-poster { position: absolute; inset: 0; background: radial-gradient(circle at 72% 40%, rgba(17,138,178,.4), transparent 48%), linear-gradient(135deg, #101a30, #23243b); }
 .hero-video-frame { position: absolute; top: 50%; left: 50%; width: 100vw; aspect-ratio: 16 / 9; transform: translate(-50%,-50%); }
 .hero-vimeo { position: absolute; inset: 0; display: block; width: 100% !important; height: 100% !important; border: 0; pointer-events: none; opacity: 0; mix-blend-mode: screen; transition: opacity .5s; }
 .hero-media.video-ready .hero-vimeo { opacity: .78; }

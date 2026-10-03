@@ -17,7 +17,7 @@ function readRequests() {
 function zoomUrl(value) {
   try {
     const url = new URL(value);
-    return url.protocol === 'https:' && (url.hostname === 'zoom.us' || url.hostname.endsWith('.zoom.us'));
+    return url.protocol === 'https:' && (url.hostname === 'zoom.us' || url.hostname.endsWith('.zoom.us')) && /^\/(?:j\/\d+|my\/[a-z0-9._-]+|wc\/join\/\d+)\/?$/i.test(url.pathname);
   } catch { return false; }
 }
 
@@ -42,8 +42,8 @@ function showLastRequest() {
   if (request.status !== 'Scheduled' || !meeting || !zoomUrl(meeting.link)) return;
   meetingBox.hidden = false;
   meetingEmpty.hidden = true;
-  const startsAt = new Date(`${meeting.date}T${meeting.time}`);
-  document.querySelector('#meetingWhen').textContent = startsAt.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
+  const startsAt = meeting.date && meeting.time ? new Date(`${meeting.date}T${meeting.time}`) : null;
+  document.querySelector('#meetingWhen').textContent = meeting.whenLabel || (startsAt && !Number.isNaN(startsAt.getTime()) ? startsAt.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'See Zoom for meeting time');
   document.querySelector('#meetingTopic').textContent = meeting.topic || request.purpose;
   document.querySelector('#meetingNote').textContent = meeting.notes || 'Your Zoom invitation is ready.';
   document.querySelector('#employeeJoinLink').href = meeting.link;

@@ -38,8 +38,7 @@ resolveButton.addEventListener('click', () => {
     statusTag.className = `status-badge ${feedback.status.toLowerCase()}`;
     row.className = feedback.status.toLowerCase();
 
-    resolveButton.textContent =
-        feedback.status === 'Reviewed' ? '✓ Resolved' : 'Resolve';
+    resolveButton.textContent =feedback.status === 'Reviewed' ? '✓ Resolved' : 'Resolve';
 
     localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
     updateCounts();

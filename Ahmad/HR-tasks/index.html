@@ -2,6 +2,7 @@
 
 <html lang="en">
   <head>
+    <link rel="icon" type="image/png" href="../../assets/Logo-cropped.png">
     <meta charset="UTF-8" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -98,7 +99,7 @@
           TASK MANAGEMENT
         </p>
 
-        <h1>Team Tasks<span class="title-dot">.</span></h1>
+        <h1>Team Tasks</h1>
 
         <p>
           Create and assign tasks, follow progress, and review submitted work.
@@ -125,11 +126,6 @@
             <p>All assigned tasks</p>
           </div>
 
-          <span class="stat-bars">
-            <i></i>
-            <i></i>
-            <i></i>
-          </span>
         </div>
 
         <!-- In Progress -->
@@ -147,11 +143,6 @@
             <p>Work underway</p>
           </div>
 
-          <span class="stat-bars">
-            <i></i>
-            <i></i>
-            <i></i>
-          </span>
         </div>
 
         <!-- Submitted -->
@@ -169,11 +160,6 @@
             <p>Solutions submitted</p>
           </div>
 
-          <span class="stat-bars">
-            <i></i>
-            <i></i>
-            <i></i>
-          </span>
         </div>
 
         <!-- Completed -->
@@ -191,11 +177,6 @@
             <p>Approved work</p>
           </div>
 
-          <span class="stat-bars">
-            <i></i>
-            <i></i>
-            <i></i>
-          </span>
         </div>
       </div>
 
@@ -208,23 +189,9 @@
 
         <div class="section-heading">
           <div class="section-title-tools">
-            <div>
-              <p class="section-kicker">YOUR WORKSPACE</p>
+            <p class="section-kicker">YOUR WORKSPACE</p>
 
-              <h2>Tasks overview</h2>
-            </div>
-
-            <!-- Search -->
-
-            <div class="search-field">
-              <i class="bi bi-search"></i>
-
-              <input
-                id="taskSearch"
-                type="search"
-                placeholder="Search tasks or employees..."
-              />
-            </div>
+            <h2>Tasks overview</h2>
           </div>
 
           <button class="add-button" id="addTaskButton" type="button">
@@ -240,30 +207,22 @@
 
         <div class="filters">
           <button type="button" class="filter active" data-filter="All">
-            <i class="bi bi-grid-fill"></i>
-
             All Tasks
 
             <span id="allBadge"></span>
           </button>
 
           <button type="button" class="filter" data-filter="In Progress">
-            <i class="bi bi-arrow-repeat"></i>
-
             In Progress
           </button>
 
           <button type="button" class="filter" data-filter="Submitted">
-            <i class="bi bi-inbox"></i>
-
             To Review
 
             <span id="reviewBadge"></span>
           </button>
 
           <button type="button" class="filter" data-filter="Completed">
-            <i class="bi bi-check2"></i>
-
             Completed
           </button>
         </div>
@@ -465,7 +424,7 @@
 
             <!-- Status -->
 
-            <div class="option-field">
+            <div class="option-field status-field">
               <label class="task-field-label" for="taskStatus">
                 <i class="bi bi-record-circle"></i>
 
@@ -476,6 +435,7 @@
                 <span class="select-indicator"></span>
 
                 <select id="taskStatus" required>
+                  <option value="Pending">Pending</option>
                   <option value="In Progress" selected>In Progress</option>
 
                   <option value="Submitted">Submitted</option>

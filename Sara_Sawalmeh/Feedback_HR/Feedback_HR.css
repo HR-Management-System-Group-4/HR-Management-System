@@ -6,13 +6,11 @@
     box-sizing: border-box;
     font-family: Arial, sans-serif;
 }
-
 body {
     margin: 0;
     display: flex;
     background-color: var(--color-background, #f8fafc);
 }
-
 .sidebar-frame {
     width: 260px;
     height: 100vh;
@@ -21,7 +19,6 @@ body {
     top: 0;
     left: 0;
 }
-
 .main-content {
     margin-left: 260px;
     padding: 30px;
@@ -34,7 +31,6 @@ body {
     align-items: flex-start;
     margin-bottom: 25px;
 }
-
 .header-title h1 {
     font-size: 24px;
     color: #1e293b;

@@ -1,6 +1,5 @@
-// ========================================
+
 // Main Elements
-// ========================================
 
 let btn = document.getElementById("addTaskButton");
 
@@ -20,9 +19,8 @@ let saveTaskButton = document.getElementById("saveTaskButton");
 
 let toast = document.getElementById("toast");
 
-// ========================================
 // Variables
-// ========================================
+
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
@@ -36,9 +34,8 @@ let activeFilter = "All";
 
 let toastTimer;
 
-// ========================================
 // Toast
-// ========================================
+
 
 function showToast(message) {
   toast.textContent = message;
@@ -52,13 +49,13 @@ function showToast(message) {
   }, 3500);
 }
 
-// ========================================
+
 // Open Add Task Popup
-// ========================================
+
 
 btn.onclick = function () {
-  // Clear old form values
   taskForm.reset();
+  taskForm.classList.add("is-creating");
 
   document.getElementById("taskId").value = "";
 
@@ -78,16 +75,7 @@ btn.onclick = function () {
   // Default values
   document.getElementById("taskPriority").value = "Medium";
 
-  // If Pending exists in HTML use Pending
-  let statusSelect = document.getElementById("taskStatus");
-
-  let pendingOption = statusSelect.querySelector('option[value="Pending"]');
-
-  if (pendingOption) {
-    statusSelect.value = "Pending";
-  } else {
-    statusSelect.value = "In Progress";
-  }
+  document.getElementById("taskStatus").value = "Pending";
 
   updateDecorations();
 
@@ -405,7 +393,7 @@ taskForm.onsubmit = function (event) {
 
       dueDate: dueDate,
 
-      status: status,
+      status: "Pending",
 
       notes: notes,
 
@@ -504,36 +492,12 @@ function getEmployeesText(task) {
 function displayTasks() {
   taskList.innerHTML = "";
 
-  let searchInput = document.getElementById("taskSearch");
-
-  let search = "";
-
-  if (searchInput) {
-    search = searchInput.value.toLowerCase();
-  }
-
   for (let i = 0; i < tasks.length; i++) {
     // =================================
     // Filter
     // =================================
 
     if (activeFilter != "All" && tasks[i].status != activeFilter) {
-      continue;
-    }
-
-    // =================================
-    // Search
-    // =================================
-
-    let taskText = (
-      tasks[i].title +
-      " " +
-      tasks[i].description +
-      " " +
-      getEmployeesText(tasks[i])
-    ).toLowerCase();
-
-    if (!taskText.includes(search)) {
       continue;
     }
 
@@ -604,8 +568,6 @@ function displayTasks() {
                                 class="chip priority-${tasks[i].priority.toLowerCase()}"
                             >
 
-                                <i class="bi bi-bar-chart-fill"></i>
-
                                 ${tasks[i].priority}
 
                             </span>
@@ -614,8 +576,6 @@ function displayTasks() {
                             <span
                                 class="chip status-${statusClass}"
                             >
-
-                                <i class="bi bi-record-circle"></i>
 
                                 ${tasks[i].status}
 
@@ -771,6 +731,7 @@ closeViewButton.onclick = function () {
 function editTask(id) {
   for (let i = 0; i < tasks.length; i++) {
     if (tasks[i].id == id) {
+      taskForm.classList.remove("is-creating");
       // Store ID
       document.getElementById("taskId").value = tasks[i].id;
 
@@ -996,16 +957,6 @@ function updateCounters() {
     }
   }
 }
-
-// ========================================
-// Search Tasks
-// ========================================
-
-let taskSearch = document.getElementById("taskSearch");
-
-taskSearch.oninput = function () {
-  displayTasks();
-};
 
 // ========================================
 // Task Filters

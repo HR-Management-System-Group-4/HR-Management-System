@@ -36,9 +36,6 @@ submit.form.addEventListener("submit", function(event){
             event.target.reset();
             }
 
-    
+
 })
-
-
-
 

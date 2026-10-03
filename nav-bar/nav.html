@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/png" href="../assets/Logo-cropped.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -29,7 +30,7 @@
         <div class="container-fluid">
 
             <!-- Logo -->
-            <a class="navbar-brand d-flex align-items-center gap-3" href="#">
+            <a class="navbar-brand d-flex align-items-center gap-3" href="../Ahmad/Homepage/index.html">
 
                 <div class="logo-box">
                     <div class="logo-bars">
@@ -67,23 +68,19 @@
                     <ul class="navbar-nav">
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Home</a>
+                            <a class="nav-link" href="../Sara_Dolat/log in/index.html" data-service-page="profile">Profile</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Services</a>
+                            <a class="nav-link" href="../Sara_Dolat/log in/index.html" data-service-page="home">Services</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Team</a>
+                            <a class="nav-link" href="../Yasmeen_Telfah/aboutUs.html">About</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contact</a>
+                            <a class="nav-link" href="../Ahmad/Homepage/index.html#contact">Contact Us</a>
                         </li>
 
                     </ul>
@@ -119,6 +116,14 @@
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
  </script>
+    <script src="../layout/header.js"></script>
+    <script>
+        document.querySelectorAll('[data-service-page]').forEach((link) => {
+            link.href = link.dataset.servicePage === 'profile'
+                ? window.MystaServiceRouting.profileUrl()
+                : window.MystaServiceRouting.pageUrl(link.dataset.servicePage);
+        });
+    </script>
 
 </body>
 </html>

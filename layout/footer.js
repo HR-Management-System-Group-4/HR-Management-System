@@ -27,6 +27,9 @@ if (footerContainer) {
           : isHomepage ? anchor : `${homepageUrl.href}${anchor}`;
       });
       footerContainer.replaceChildren(footer);
+      if (window.location.hash === '#contact') {
+        requestAnimationFrame(() => footer.scrollIntoView());
+      }
       initializeFooterMap(footer, footerUrl);
     })
     .catch((error) => console.error('Footer could not be loaded:', error));
