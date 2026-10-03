@@ -86,7 +86,7 @@ employees.forEach(employee => {
     row.innerHTML = `
         <td>
             <div class="employeeProfile">
-                <img class="employeeImage" src="${employee.profileImage}" alt="${employee.name}">
+                <img class="employeeImage" src="../${employee.profileImage}" alt="${employee.name}">
                 <div class="employeeInfo">
                     <p class="employeeName">${employee.name}</p>
                     <p class="employeeEmail">${employee.email}</p>
