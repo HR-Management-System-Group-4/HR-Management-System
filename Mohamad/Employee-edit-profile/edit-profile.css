@@ -390,3 +390,20 @@ body {
         padding: 20px !important;
     }
 }
+
+.back-link {
+    color: var(--color-text-primary);
+    text-decoration: none;
+    font-weight: 600;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.back-link:hover {
+    color: var(--color-accent);
+}
