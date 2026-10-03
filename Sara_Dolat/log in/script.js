@@ -54,6 +54,10 @@ document.getElementById('loginForm').onsubmit = function(e) {
                     JSON.stringify(user)
                 );
 
+                // Shared navigation and feedback pages still read these keys.
+                localStorage.setItem('user', JSON.stringify(user));
+                localStorage.setItem('loggedInUserId', String(user.id));
+
                 localStorage.setItem('email', email);
                 localStorage.setItem('password', password);
 
