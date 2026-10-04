@@ -485,6 +485,7 @@ body {
     height: 38px;
 
     display: grid;
+    /* justify-items + align-items: = center; */
     place-items: center;
 
     border-radius: 50%;

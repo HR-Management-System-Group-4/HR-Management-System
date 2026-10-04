@@ -1,3 +1,62 @@
+function showError(inputId, message) {
+    let input = document.querySelector("#" + inputId);
+    let error = document.querySelector("#" + inputId + "Error");
+
+    if (!error) {
+        error = document.createElement("p");
+        error.id = inputId + "Error";
+        error.className = "fieldError";
+        error.setAttribute("aria-live", "polite");
+        input.insertAdjacentElement("afterend", error);
+
+        input.addEventListener("input", function () {
+            error.textContent = "";
+            input.removeAttribute("aria-invalid");
+        });
+
+        input.setAttribute("aria-describedby", error.id);
+    }
+
+    error.textContent = message;
+    input.setAttribute("aria-invalid", "true");
+}
+
+let blockDialog = document.querySelector("#blockDialog");
+let confirmBlockButton = document.querySelector("#confirmBlockButton");
+let pendingStatusChange = null;
+
+function closeBlockDialog() {
+    blockDialog.close();
+}
+
+document.querySelector("#closeBlockButton")
+    .addEventListener("click", closeBlockDialog);
+
+document.querySelector("#cancelBlockButton")
+    .addEventListener("click", closeBlockDialog);
+
+blockDialog.addEventListener("close", function () {
+    pendingStatusChange = null;
+});
+
+confirmBlockButton.addEventListener("click", function () {
+    const accountState = pendingStatusChange?.();
+    closeBlockDialog();
+    if (accountState) {
+        showAlert("success", accountState === "Active" ? "Employee Activated" : "Employee Deactivated", `The employee account is now ${accountState.toLowerCase()}.`);
+    }
+});
+
+function clearErrors() {
+    document.querySelectorAll(".fieldError").forEach(function (error) {
+        error.textContent = "";
+    });
+
+    document.querySelectorAll('[aria-invalid="true"]').forEach(function (input) {
+        input.removeAttribute("aria-invalid");
+    });
+}
+
 fetch("../../employee.json")
     .then(response => response.json())
     .then(data => {
@@ -6,18 +65,32 @@ fetch("../../employee.json")
 
 const savedEmployees = localStorage.getItem("employees");
 if(savedEmployees != null){
-    const saved = JSON.parse(savedEmployees);
-    employees = Array.isArray(saved) ? saved : saved.employees;
+    try {
+        const saved = JSON.parse(savedEmployees);
+        const parsed = Array.isArray(saved) ? saved : saved?.employees;
+        if (Array.isArray(parsed)) employees = parsed;
+    } catch (_) {
+        // Keep the original employee list if saved data is malformed.
+    }
 }
 else{
     localStorage.setItem("employees", JSON.stringify(employees));
 }
 
+let nextEmployeeId = Math.max(0, ...employees.map(employee => Number(employee.id) || 0)) + 1;
+let normalizedEmployees = false;
+employees.forEach(employee => {
+    if (employee.id == null) { employee.id = nextEmployeeId++; normalizedEmployees = true; }
+    if (!employee.role) { employee.role = "Employee"; normalizedEmployees = true; }
+    if (!employee.accountState) { employee.accountState = "Active"; normalizedEmployees = true; }
+});
+if (normalizedEmployees) localStorage.setItem("employees", JSON.stringify(employees));
+
 let addEmployee = document.querySelector(".addEmployee button");
 let cancelEmployee = document.querySelector("#cancelNewEmployee");
 let saveEmployee = document.querySelector("#saveNewEmployee");
 let nameRegex = /^[A-Za-z]+(?: [A-Za-z]+)+$/;
-let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+let emailRegex = /^[^\s@]+@mysta\.com$/i;
 let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
 
 addEmployee.addEventListener("click", function(event){
@@ -31,20 +104,28 @@ addEmployee.addEventListener("click", function(event){
         let email = document.querySelector("#workEmailNew").value;
         let password = document.querySelector("#passwordNew").value;
 
-        if (!nameRegex.test(name)) {
-            showAlert("error", "Invalid Name", "Please enter a valid full name.");
-            return;
+        clearErrors();
+        let hasError = false;
+
+        if (!nameRegex.test(name.trim())) {
+            showError("fullNameNew", "Enter a valid full name.");
+            hasError = true;
         }
 
-        if (!emailRegex.test(email)) {
-            showAlert("error", "Invalid Email", "Please enter a valid email address.");
-            return;
+        if (!emailRegex.test(email.trim())) {
+            showError("workEmailNew", "Email must end with @mysta.com.");
+            hasError = true;
         }
 
         if (!passwordRegex.test(password)) {
-            showAlert("error", "Invalid Password", "Password must be at least 8 characters and contain a letter and a number.");
-            return;
+            showError(
+                "passwordNew",
+                "Password must be at least 8 characters and contain a letter and a number."
+            );
+            hasError = true;
         }
+
+        if (hasError) return;
 
         const newEmployee = {};
         newEmployee.name = document.querySelector("#fullNameNew").value;
@@ -52,7 +133,9 @@ addEmployee.addEventListener("click", function(event){
         newEmployee.password = document.querySelector("#passwordNew").value;
         newEmployee.position = document.querySelector("#positionNew").value;
         newEmployee.department = document.querySelector("#departmentNew").value;
-        newEmployee.accountState = document.querySelector("#accountStatusNew").value;
+        newEmployee.id = Math.max(0, ...employees.map(employee => Number(employee.id) || 0)) + 1;
+        newEmployee.role = "Employee";
+        newEmployee.accountState = "Active";
 
         employees.unshift(newEmployee);
         localStorage.setItem("employees", JSON.stringify(employees));
@@ -95,7 +178,7 @@ employees.forEach(employee => {
         <td>
             <div class="employeeActions">
                 <button type="button" class="edit">Edit</button>
-                <button type="button" class="blockEmployee">${employee.accountState.toLowerCase()=="active" ? "block":"Unblock"}</button>
+                <button type="button" class="blockEmployee">${employee.accountState.toLowerCase()=="active" ? "Deactivate":"Activate"}</button>
             </div>
         </td>
     `;
@@ -120,8 +203,7 @@ employees.forEach(employee => {
         editForm.querySelector("#workEmail").value = employee.email;
         editForm.querySelector("#position").value = employee.position;
         editForm.querySelector("#department").value = employee.department;
-        editForm.querySelector("#accountStatus").value =
-            employee.accountState.toLowerCase();
+
 
         saveButton.onclick = function (event) {
             event.preventDefault();
@@ -142,7 +224,6 @@ employees.forEach(employee => {
             employee.email = email;
             employee.position = editForm.querySelector("#position").value;
             employee.department = editForm.querySelector("#department").value;
-            employee.accountState = editForm.querySelector("#accountStatus").value;
 
             row.querySelector(".employeeName").textContent = employee.name;
             row.querySelector(".employeeEmail").textContent = employee.email;
@@ -167,24 +248,39 @@ employees.forEach(employee => {
     let status = row.querySelector(".employeeStatus");
     let block = row.querySelector(".blockEmployee");
 
-    block.addEventListener("click", function(){
-        if(employee.accountState.toLowerCase() == "active"){
-            employee.accountState = "Inactive";
-            status.className = "employeeStatus inactive";
-            row.classList.add("disabled");
-            block.textContent = "Unblock";
-            status.textContent = "Inactive";
-        }
-        else{
-            employee.accountState = "Active";
-            status.className = "employeeStatus active";
-            row.classList.remove("disabled");
-            block.textContent = "Block";
-            status.textContent = "Active";
-        }
-        localStorage.setItem("employees", JSON.stringify(employees));
-        showAlert("success", employee.accountState === "Active" ? "Employee Unblocked!" : "Employee Blocked!", `The employee account is now ${employee.accountState.toLowerCase()}.`);
-    })
+    block.addEventListener("click", function () {
+        let isActive = employee.accountState.toLowerCase() === "active";
+        let action = isActive ? "Deactivate" : "Activate";
+
+        document.querySelector("#blockKicker").textContent =
+            action.toUpperCase() + " EMPLOYEE";
+
+        document.querySelector("#blockTitle").textContent =
+            action + " this employee?";
+
+        document.querySelector("#blockMessage").textContent =
+            "Are you sure you want to " +
+            action.toLowerCase() + " " + employee.name + "?";
+
+        confirmBlockButton.textContent = action + " Employee";
+
+        pendingStatusChange = function () {
+            employee.accountState = isActive ? "Inactive" : "Active";
+
+            status.textContent = employee.accountState;
+            status.className = isActive
+                ? "employeeStatus inactive"
+                : "employeeStatus active";
+
+            row.classList.toggle("disabled", isActive);
+            block.textContent = isActive ? "Activate" : "Deactivate";
+
+            localStorage.setItem("employees", JSON.stringify(employees));
+            return employee.accountState;
+        };
+
+        blockDialog.showModal();
+    });
 
     let cancel = document.querySelector("#cancel");
     cancel.addEventListener("click", function(){
@@ -270,4 +366,3 @@ darkModeButton.addEventListener("click", function () {
         localStorage.setItem("darkMode", "false");
     }
 });
-
