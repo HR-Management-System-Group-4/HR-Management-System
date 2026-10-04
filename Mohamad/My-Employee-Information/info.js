@@ -62,13 +62,7 @@ function displayEmployee(employee) {
     showValue("employeeName", employee.name);
     showValue("employeePosition", employee.position);
     showValue("employeeCode", "EMP" + employee.id);
-    showValue("employeeStatus", employee.accountState);
-    const status = document.getElementById("employeeStatus");
 
-    status.classList.toggle(
-    "active",
-    status.textContent.trim().toLowerCase() === "active"
-    );
     showValue("employeeType", employee.employmentType);
 
     document.getElementById("employeeImage").src =
@@ -88,8 +82,6 @@ function displayEmployee(employee) {
     showValue("position", employee.position);
     showValue("employmentType", employee.employmentType);
     showValue("workLocation", employee.workLocation);
-    showValue("accountState", employee.accountState);
-
 
     // Additional Work Details
     showValue("startDate", employee.startDate);
