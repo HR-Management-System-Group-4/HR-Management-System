@@ -247,7 +247,11 @@ function addOpenEvents() {
                 deadlineMsg.textContent = "";
                 if (taskSolution) {
                     userSolution.value = taskSolution.solution;
-                    fileName.textContent = taskSolution.fileName ? "File: " + taskSolution.fileName : "";
+                    fileName.textContent = taskSolution.fileName
+                        ? taskSolution.fileData
+                            ? "File: " + taskSolution.fileName
+                            : taskSolution.fileName + " needs to be attached again so HR can download it."
+                        : "";
                     userSolution.setAttribute("readonly", true);
                     solutionFile.setAttribute("disabled", true);
                     btn_Edit_solution.style.display = task.status === "Completed" ? "none" : "block";
@@ -328,7 +332,8 @@ btn_submit_solution.addEventListener("click", async function () {
         btn_submit_solution.disabled = false;
         return;
     }
-    const fileNameToSave = attachment ? attachment.name : previous && previous.fileName || "";
+    const fileNameToSave = attachment ? attachment.name
+        : fileData && previous ? previous.fileName : "";
     let solutionData = {
 
         taskId: task.id,

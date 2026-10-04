@@ -837,6 +837,7 @@ function renderCurrentSubmission() {
     ? submission.solution : (task.solution || "No solution has been submitted yet.");
   let fileElement = document.getElementById("viewFileName");
   fileElement.replaceChildren();
+  fileElement.classList.remove("attachment-unavailable");
   if (submission && submission.fileName) {
     if (/^data:[^,]+;base64,/.test(submission.fileData || "")) {
       let link = document.createElement("a");
@@ -845,7 +846,9 @@ function renderCurrentSubmission() {
       link.textContent = "Download attachment: " + submission.fileName;
       fileElement.append(link);
     } else {
-      fileElement.textContent = "Attached file: " + submission.fileName;
+      fileElement.classList.add("attachment-unavailable");
+      fileElement.textContent = submission.fileName +
+        " was submitted before file contents were saved. Ask the employee to open the task, select Edit, attach the file again, and submit it.";
     }
   }
   document.getElementById("reviewFeedback").value = submission

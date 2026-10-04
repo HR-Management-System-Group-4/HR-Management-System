@@ -1436,6 +1436,9 @@ body.dark .delete-message {
   font-size: 13px;
   font-weight: 700;
 }
+.solution #viewFileName.attachment-unavailable {
+  color: #9b4d19;
+}
 .employee-option {
   display: flex;
   align-items: center;
