@@ -719,7 +719,7 @@ renderMyRequests();
 
 
 
-showAlert("success", "Leave Request Submitted!", "Your leave application has been submitted successfully.");
+document.getElementById("successDialog").showModal();
 
 
 
@@ -928,3 +928,7 @@ ${item.status}
 
 
 renderMyRequests();
+
+document.getElementById("successOk").addEventListener("click", function(){
+    document.getElementById("successDialog").close();
+});

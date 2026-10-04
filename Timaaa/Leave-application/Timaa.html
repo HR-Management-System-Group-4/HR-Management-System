@@ -19,7 +19,7 @@
 
 <link rel="stylesheet" href="../../layout/footer.css">
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=success-dialog-1">
 
   <link rel="stylesheet" href="../../layout/page-transition.css">
   <script src="../../layout/page-transition.js"></script>
@@ -428,6 +428,15 @@ My leave requests
 
 
 
+<dialog id="successDialog" class="success-dialog" aria-labelledby="successDialogTitle">
+  <div class="success-card">
+    <div class="success-icon"><i class="bi bi-check-lg"></i></div>
+    <h2 id="successDialogTitle">Changes Saved!</h2>
+    <p>Your leave application has been submitted successfully.</p>
+    <button id="successOk" type="button">OK</button>
+  </div>
+</dialog>
+
 <div class="footer"></div>
 
 
@@ -438,7 +447,7 @@ My leave requests
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../../layout/alerts.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js?v=success-dialog-1"></script>
 
 
 <script src="../../demo/flow.js"></script>
