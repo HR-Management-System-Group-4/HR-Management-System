@@ -47,6 +47,13 @@ let activeFilter = "All";
 
 let toastTimer;
 
+function showAllTasks() {
+  activeFilter = "All";
+  document.querySelectorAll(".filter").forEach(function (button) {
+    button.classList.toggle("active", button.dataset.filter === "All");
+  });
+}
+
 // Toast
 
 
@@ -404,14 +411,19 @@ taskForm.onsubmit = function (event) {
   let status = document.getElementById("taskStatus").value;
 
   let notes = document.getElementById("taskNotes").value;
+  let isCreating = taskId === "";
+  // A second tab may have changed the list since this page was opened.
+  let nextTasks = readTasks();
 
   // ====================================
   // Create New Task
   // ====================================
 
-  if (taskId == "") {
+  if (isCreating) {
     let task = {
-      id: Date.now(),
+      id: nextTasks.reduce(function (latest, item) {
+        return Math.max(latest, Number(item.id) || 0);
+      }, Date.now()) + 1,
 
       title: taskTitle,
 
@@ -436,44 +448,51 @@ taskForm.onsubmit = function (event) {
       reviewNote: "",
     };
 
-    tasks.push(task);
-
-    showToast("Task added successfully.");
+    nextTasks.push(task);
   }
 
   // ====================================
   // Edit Existing Task
   // ====================================
   else {
-    for (let i = 0; i < tasks.length; i++) {
-      if (tasks[i].id == taskId) {
-        tasks[i].title = taskTitle;
-
-        tasks[i].description = taskDescription;
-
-        tasks[i].assignTo = assignTo;
-
-        tasks[i].assigneeIds = assigneeIds;
-
-        tasks[i].priority = priority;
-
-        tasks[i].dueDate = dueDate;
-
-        tasks[i].status = status;
-
-        tasks[i].notes = notes;
-
-        showToast("Task updated successfully.");
-
-        break;
-      }
+    let existingTask = nextTasks.find(function (item) {
+      return String(item.id) === taskId;
+    });
+    if (!existingTask) {
+      showToast("This task no longer exists. Refresh the page and try again.");
+      return;
     }
+    existingTask.title = taskTitle;
+
+    existingTask.description = taskDescription;
+
+    existingTask.assignTo = assignTo;
+
+    existingTask.assigneeIds = assigneeIds;
+
+    existingTask.priority = priority;
+
+    existingTask.dueDate = dueDate;
+
+    existingTask.status = status;
+
+    existingTask.notes = notes;
+
   }
 
-  // Save
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+  try {
+    localStorage.setItem("tasks", JSON.stringify(nextTasks));
+  } catch (_) {
+    showToast("Could not save the task in this browser. Check available storage and try again.");
+    return;
+  }
+  tasks = nextTasks;
+  if (isCreating) {
+    showAllTasks();
+  }
 
   displayTasks();
+  showToast(isCreating ? "Task added successfully." : "Task updated successfully.");
 
   taskForm.reset();
 
@@ -508,6 +527,9 @@ function getTaskEmployees(task) {
     return [task.assignTo];
   }
 
+  if (Array.isArray(task.assignedTo)) return task.assignedTo;
+  if (task.assignedTo) return [task.assignedTo];
+
   return [];
 }
 
@@ -532,7 +554,11 @@ function readSolutions() {
 
 function belongsToTask(solution, task) {
   let assigned = getTaskEmployees(task);
-  let employeeMatches = assigned.includes(solution.employeeName);
+  let hasIds = Array.isArray(task.assigneeIds) && task.assigneeIds.length > 0;
+  let employeeMatches = solution.employeeId != null && hasIds
+    ? task.assigneeIds.some(function (id) {
+      return String(id) === String(solution.employeeId);
+    }) : assigned.includes(solution.employeeName);
   if (!employeeMatches) return false;
   // Older submissions were saved with a title instead of a task ID.
   return solution.taskId != null
@@ -770,23 +796,8 @@ function viewTask(id) {
       document.getElementById("viewNotes").innerHTML =
         tasks[i].notes || "No notes";
 
-      let submissions = getTaskSubmissions(tasks[i]);
-      let picker = document.getElementById("viewSubmission");
-      picker.replaceChildren();
-      submissions.forEach(function (submission, index) {
-        let option = document.createElement("option");
-        option.value = String(index);
-        option.textContent = submission.employeeName + " — " +
-          getSubmissionStatus(submission, tasks[i]);
-        picker.append(option);
-      });
-      document.getElementById("submissionPicker").hidden = submissions.length < 2;
-      currentSubmissionIndex = submissions.findIndex(function (submission) {
-        return getSubmissionStatus(submission, tasks[i]) === "Submitted";
-      });
-      if (currentSubmissionIndex < 0) currentSubmissionIndex = 0;
-      picker.value = String(currentSubmissionIndex);
-      renderCurrentSubmission();
+      currentSubmissionIndex = -1;
+      refreshSubmissionPicker(tasks[i]);
 
       viewDialog.showModal();
 
@@ -795,14 +806,48 @@ function viewTask(id) {
   }
 }
 
+function refreshSubmissionPicker(task) {
+  let submissions = getTaskSubmissions(task);
+  let picker = document.getElementById("viewSubmission");
+  picker.replaceChildren();
+  submissions.forEach(function (submission, index) {
+    let option = document.createElement("option");
+    option.value = String(index);
+    option.textContent = submission.employeeName + " — " +
+      getSubmissionStatus(submission, task);
+    picker.append(option);
+  });
+  document.getElementById("submissionPicker").hidden = submissions.length < 2;
+  let pendingIndex = submissions.findIndex(function (submission) {
+    return getSubmissionStatus(submission, task) === "Submitted";
+  });
+  if (pendingIndex >= 0) currentSubmissionIndex = pendingIndex;
+  else if (currentSubmissionIndex < 0 || currentSubmissionIndex >= submissions.length) {
+    currentSubmissionIndex = 0;
+  }
+  picker.value = String(currentSubmissionIndex);
+  renderCurrentSubmission();
+}
+
 function renderCurrentSubmission() {
   let task = tasks.find(function (item) { return item.id == currentViewTaskId; });
   if (!task) return;
   let submission = getTaskSubmissions(task)[currentSubmissionIndex];
   document.getElementById("viewSolution").textContent = submission
     ? submission.solution : (task.solution || "No solution has been submitted yet.");
-  document.getElementById("viewFileName").textContent = submission && submission.fileName
-    ? "Attached file: " + submission.fileName : "";
+  let fileElement = document.getElementById("viewFileName");
+  fileElement.replaceChildren();
+  if (submission && submission.fileName) {
+    if (/^data:[^,]+;base64,/.test(submission.fileData || "")) {
+      let link = document.createElement("a");
+      link.href = submission.fileData;
+      link.download = submission.fileName;
+      link.textContent = "Download attachment: " + submission.fileName;
+      fileElement.append(link);
+    } else {
+      fileElement.textContent = "Attached file: " + submission.fileName;
+    }
+  }
   document.getElementById("reviewFeedback").value = submission
     ? (submission.reviewNote || "") : (task.reviewNote || "");
   document.getElementById("reviewPanel").hidden = !submission ||
@@ -961,12 +1006,15 @@ function reviewCurrentSubmission(status) {
   task.employeeStatuses[key] = status;
   task.employeeStatuses[solution.employeeName] = status;
   let assigned = getTaskEmployees(task);
-  let statuses = assigned.map(function (name) {
+  let statuses = assigned.map(function (name, index) {
+    let employee = availableEmployees.find(function (item) { return item.name === name; });
+    let assigneeId = Array.isArray(task.assigneeIds) ? task.assigneeIds[index]
+      : employee && employee.id;
     let submission = solutions.find(function (item) {
-      return belongsToTask(item, task) && item.employeeName === name;
+      return belongsToTask(item, task) && (item.employeeId != null && assigneeId != null
+        ? String(item.employeeId) === String(assigneeId) : item.employeeName === name);
     });
     if (submission) return getSubmissionStatus(submission, task);
-    let employee = availableEmployees.find(function (item) { return item.name === name; });
     return task.employeeStatuses[name] ||
       task.employeeStatuses[String(employee ? employee.id : name)] || "Pending";
   });
@@ -1164,12 +1212,16 @@ function refreshTasks() {
   tasks = readTasks();
   displayTasks();
   if (document.getElementById("viewDialog").open) {
-    renderCurrentSubmission();
+    let task = tasks.find(function (item) { return item.id == currentViewTaskId; });
+    if (task) refreshSubmissionPicker(task);
   }
 }
 
 window.addEventListener("storage", function (event) {
-  if (!event.key || event.key === "tasks" || event.key === "solutions") refreshTasks();
+  if (!event.key || event.key === "tasks" || event.key === "solutions") {
+    showAllTasks();
+    refreshTasks();
+  }
 });
 window.addEventListener("focus", refreshTasks);
 window.addEventListener("pageshow", refreshTasks);

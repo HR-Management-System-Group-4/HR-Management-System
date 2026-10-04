@@ -37,8 +37,20 @@ function readSolutions() {
         return [];
     }
 }
+function readTasks() {
+    try {
+        const saved = JSON.parse(localStorage.getItem("tasks") || "[]");
+        return Array.isArray(saved) ? saved : [];
+    } catch (_) {
+        return [];
+    }
+}
 function isMySolution(solution, task) {
-    if (!loggedInUser || solution.employeeName !== loggedInUser.name) return false;
+    if (!loggedInUser) return false;
+    const sameEmployee = solution.employeeId != null
+        ? String(solution.employeeId) === String(loggedInUser.id)
+        : solution.employeeName === loggedInUser.name;
+    if (!sameEmployee) return false;
     return solution.taskId != null ? String(solution.taskId) === String(task.id)
         : solution.taskName === task.title;
 }
@@ -55,8 +67,8 @@ function getMyStatus(task) {
             ? "Completed" : "Submitted");
     const statuses = task.employeeStatuses || {};
     const key = String(loggedInUser.id);
-    if (statuses[loggedInUser.name] || statuses[key]) {
-        return statuses[loggedInUser.name] || statuses[key];
+    if (statuses[key] || statuses[loggedInUser.name]) {
+        return statuses[key] || statuses[loggedInUser.name];
     }
     return assignees.length <= 1 ? task.status : "Pending";
 }
@@ -65,7 +77,11 @@ function updateOverallStatus(task) {
     const solutions = readSolutions();
     const statuses = assignees.map(function (name) {
         const solution = solutions.find(function (item) {
-            return item.employeeName === name && (item.taskId != null
+            const index = assignees.indexOf(name);
+            const id = Array.isArray(task.assigneeIds) ? task.assigneeIds[index] : null;
+            const sameEmployee = item.employeeId != null && id != null
+                ? String(item.employeeId) === String(id) : item.employeeName === name;
+            return sameEmployee && (item.taskId != null
                 ? String(item.taskId) === String(task.id) : item.taskName === task.title);
         });
         if (solution) return solution.status || "Submitted";
@@ -100,9 +116,22 @@ let col;
 function findStoredTaskIndex(task) {
     return tasks.findIndex(function (item) {
         if (task.id !== undefined) {
-            return item.id === task.id;
+            return String(item.id) === String(task.id);
         }
         return item.title === task.title && isAssignedToEmployee(item, loggedInUser);
+    });
+}
+function isPastDue(dateString) {
+    if (!dateString) return false;
+    const deadline = new Date(dateString + "T23:59:59.999");
+    return !Number.isNaN(deadline.getTime()) && Date.now() > deadline.getTime();
+}
+function readAttachment(file) {
+    return new Promise(function (resolve, reject) {
+        const reader = new FileReader();
+        reader.onload = function () { resolve(reader.result); };
+        reader.onerror = function () { reject(reader.error); };
+        reader.readAsDataURL(file);
     });
 }
 function displayTasks() {
@@ -139,9 +168,9 @@ function displayTasks() {
             </div>
         `;
     });
-    open_link = document.getElementsByClassName("open-link");
-    state = document.getElementsByClassName("state");
-    col = document.getElementsByClassName("col");
+    open_link = tasksContainer.getElementsByClassName("open-link");
+    state = tasksContainer.getElementsByClassName("state");
+    col = tasksContainer.getElementsByClassName("col");
     addOpenEvents();
     updateCounters();
 }
@@ -153,10 +182,10 @@ function updateCounters() {
     let progressCount = document.getElementById("progressCount");
     let SubmittedCount = document.getElementById("SubmittedCount");
 
-    let completed = document.getElementsByClassName("completed").length;
-    let pending = document.getElementsByClassName("pending").length;
-    let in_progress = document.getElementsByClassName("in-progress").length;
-    let submitted = document.getElementsByClassName("submitted").length;
+    let completed = myTasks.filter(function (task) { return task.status === "Completed"; }).length;
+    let pending = myTasks.filter(function (task) { return task.status === "Pending"; }).length;
+    let in_progress = myTasks.filter(function (task) { return task.status === "In Progress"; }).length;
+    let submitted = myTasks.filter(function (task) { return task.status === "Submitted"; }).length;
 
     completedCount.textContent = completed;
     PendingCount.textContent = pending;
@@ -173,21 +202,30 @@ function addOpenEvents() {
             if (!task) {
                 return;
             }
+            errorMsg.style.display = "none";
             currentTaskName = task.title;
             if (task.status === "Pending") {
-                task.status = "In Progress";
+                tasks = readTasks();
                 let taskIndex = findStoredTaskIndex(task);
                 if (taskIndex !== -1) {
                     tasks[taskIndex].employeeStatuses = tasks[taskIndex].employeeStatuses || {};
                     tasks[taskIndex].employeeStatuses[String(loggedInUser.id)] = "In Progress";
                     tasks[taskIndex].employeeStatuses[loggedInUser.name] = "In Progress";
                     updateOverallStatus(tasks[taskIndex]);
-                    localStorage.setItem("tasks", JSON.stringify(tasks));
+                    try {
+                        localStorage.setItem("tasks", JSON.stringify(tasks));
+                        task.status = "In Progress";
+                    } catch (_) {
+                        errorMsg.textContent = "Could not save progress in this browser.";
+                        errorMsg.style.display = "block";
+                    }
                 }
-                state[i].textContent = "In Progress";
-                state[i].classList.remove("pending");
-                state[i].classList.add("in-progress");
-                state[i].style.color = "#f0ad4e";
+                if (task.status === "In Progress") {
+                    state[i].textContent = "In Progress";
+                    state[i].classList.remove("pending");
+                    state[i].classList.add("in-progress");
+                    state[i].style.color = "#f0ad4e";
+                }
             }
             document.getElementById("modalTaskTitle").textContent = task.title;
             document.getElementById("modalTaskDescription").textContent = task.description;
@@ -199,9 +237,7 @@ function addOpenEvents() {
             document.getElementById("modalHrNotes").textContent = taskSolution && taskSolution.reviewNote
                 ? (task.notes ? task.notes + "\n\n" : "") + "HR feedback: " + taskSolution.reviewNote
                 : task.hrNotes || task.notes || "No HR notes.";
-            let deadline = new Date(task.dueDate);
-            let now = new Date();
-            if (now > deadline) {
+            if (isPastDue(task.dueDate)) {
                 deadlineMsg.textContent = "The deadline has passed. You can no longer edit or submit this task.";
                 userSolution.setAttribute("readonly", true);
                 solutionFile.setAttribute("disabled", true);
@@ -211,7 +247,7 @@ function addOpenEvents() {
                 deadlineMsg.textContent = "";
                 if (taskSolution) {
                     userSolution.value = taskSolution.solution;
-                    fileName.textContent = "File: " + taskSolution.fileName;
+                    fileName.textContent = taskSolution.fileName ? "File: " + taskSolution.fileName : "";
                     userSolution.setAttribute("readonly", true);
                     solutionFile.setAttribute("disabled", true);
                     btn_Edit_solution.style.display = task.status === "Completed" ? "none" : "block";
@@ -226,7 +262,6 @@ function addOpenEvents() {
                     btn_submit_solution.style.display = "block";
                 }
             }
-            errorMsg.style.display = "none";
             taskModal.style.display = "flex";
             updateCounters();
         });
@@ -237,9 +272,7 @@ btn_Edit_solution.addEventListener("click", function () {
     if (!task) {
         return;
     }
-    let deadline = new Date(task.dueDate);
-    let now = new Date();
-    if (now > deadline) {
+    if (isPastDue(task.dueDate)) {
         deadlineMsg.textContent ="The deadline has passed. You can no longer edit or submit this task.";
         return;
     }
@@ -249,14 +282,12 @@ btn_Edit_solution.addEventListener("click", function () {
     btn_Edit_solution.style.display = "none";
 });
 
-btn_submit_solution.addEventListener("click", function () {
+btn_submit_solution.addEventListener("click", async function () {
     let task = myTasks[currentTaskIndex];
     if (!task) {
         return;
     }
-    let deadline = new Date(task.dueDate);
-    let now = new Date();
-    if (now > deadline) {
+    if (isPastDue(task.dueDate)) {
         deadlineMsg.textContent = "The deadline has passed. You can no longer submit this task.";
         return;
     }
@@ -271,7 +302,8 @@ btn_submit_solution.addEventListener("click", function () {
         gdriveRegex.test(solutionText) ||
         urlRegex.test(solutionText) ||
         textRegex.test(solutionText);
-    if (!validText) {
+    const attachment = input_File.files[0];
+    if (solutionText && !validText || !solutionText && !attachment) {
         errorMsg.textContent ="Please enter a valid solution, GitHub link, Google Drive link, or URL.";
         errorMsg.style.display = "block";
         return;
@@ -280,17 +312,23 @@ btn_submit_solution.addEventListener("click", function () {
     let existingIndex = solutions.findIndex(function (solution) {
         return isMySolution(solution, task);
     });
-    let fileNameToSave = "";
-    if (input_File.files.length > 0) {
-        fileNameToSave = input_File.files[0].name;
-    } else if (existingIndex !== -1) {
-        fileNameToSave = solutions[existingIndex].fileName;
-
-    } else {
-        errorMsg.textContent = "Please upload a file.";
+    if (attachment && attachment.size > 1024 * 1024) {
+        errorMsg.textContent = "The attachment must be 1 MB or smaller to save in this browser.";
         errorMsg.style.display = "block";
         return;
     }
+    const previous = existingIndex !== -1 ? solutions[existingIndex] : null;
+    btn_submit_solution.disabled = true;
+    let fileData = previous && previous.fileData || "";
+    try {
+        if (attachment) fileData = await readAttachment(attachment);
+    } catch (_) {
+        errorMsg.textContent = "Could not read the attachment. Please try again.";
+        errorMsg.style.display = "block";
+        btn_submit_solution.disabled = false;
+        return;
+    }
+    const fileNameToSave = attachment ? attachment.name : previous && previous.fileName || "";
     let solutionData = {
 
         taskId: task.id,
@@ -298,7 +336,8 @@ btn_submit_solution.addEventListener("click", function () {
         employeeName: loggedInUser.name,
         taskName: currentTaskName,
         fileName: fileNameToSave,
-        solution: solutionText,
+        fileData: fileData,
+        solution: solutionText || "See attached file.",
         status: "Submitted",
         reviewNote: ""
     };
@@ -307,15 +346,25 @@ btn_submit_solution.addEventListener("click", function () {
     } else {
         solutions.push(solutionData);
     }
-    localStorage.setItem("solutions", JSON.stringify(solutions));
+    try {
+        localStorage.setItem("solutions", JSON.stringify(solutions));
+    } catch (_) {
+        errorMsg.textContent = "Could not save the submission in this browser. Try a smaller attachment.";
+        errorMsg.style.display = "block";
+        btn_submit_solution.disabled = false;
+        return;
+    }
     task.status = "Submitted";
+    tasks = readTasks();
     let taskIndex = findStoredTaskIndex(task);
     if (taskIndex !== -1) {
         tasks[taskIndex].employeeStatuses = tasks[taskIndex].employeeStatuses || {};
         tasks[taskIndex].employeeStatuses[String(loggedInUser.id)] = "Submitted";
         tasks[taskIndex].employeeStatuses[loggedInUser.name] = "Submitted";
         updateOverallStatus(tasks[taskIndex]);
-        localStorage.setItem("tasks", JSON.stringify(tasks));
+        try {
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+        } catch (_) { /* HR can still read the saved solution. */ }
     }
     if (currentTaskIndex !== -1) {
         state[currentTaskIndex].textContent = "Submitted";
@@ -326,6 +375,7 @@ btn_submit_solution.addEventListener("click", function () {
     }
 
     updateCounters();
+    btn_submit_solution.disabled = false;
     errorMsg.style.display = "none";
     taskModal.style.display = "none";
 });
@@ -418,12 +468,7 @@ filter_btn_progress.addEventListener("click", function () {
 
 function refreshTasks() {
     loggedInUser = getLoggedInEmployee();
-    try {
-        const storedTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
-        tasks = Array.isArray(storedTasks) ? storedTasks : [];
-    } catch (_) {
-        tasks = [];
-    }
+    tasks = readTasks();
     myTasks = tasks.filter(function (task) {
         return isAssignedToEmployee(task, loggedInUser);
     }).map(function (task) {
@@ -432,7 +477,7 @@ function refreshTasks() {
     displayTasks();
 }
 window.addEventListener("storage", function (event) {
-    if (!event.key || ["tasks", "currentUser", "user", "loggedInUserId"].includes(event.key)) {
+    if (!event.key || ["tasks", "solutions", "currentUser", "user", "loggedInUserId"].includes(event.key)) {
         refreshTasks();
     }
 });
