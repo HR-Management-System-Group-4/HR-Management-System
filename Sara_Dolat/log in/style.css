@@ -13,7 +13,21 @@ body {
     background: var(--color-background);
     color: var(--color-text-primary);
 }
+.back-link {
+    color: var(--color-text-primary);
+    text-decoration: none;
+    font-weight: 600;
 
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+.back-link:hover {
+    color: var(--color-accent);
+}
 /* LEFT */
 .left {
     width: 50%;

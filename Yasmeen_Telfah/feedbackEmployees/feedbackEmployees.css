@@ -7,12 +7,8 @@
 body {
     margin: 0;
 
-    background:
-        radial-gradient(
-            circle at 85% 15%,
-            var(--color-surface-mint),
-            transparent 28%
-        ),
+    background:var(--color-background);
+       
         var(--color-background);
 
     color: var(--color-text-primary);

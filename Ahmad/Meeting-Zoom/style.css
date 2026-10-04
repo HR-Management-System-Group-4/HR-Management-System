@@ -92,3 +92,18 @@ body { color: var(--color-text-primary); background: var(--color-background); fo
 .dark-mode .scheduled-banner, .dark-mode .meeting-empty { background: var(--color-surface-blue); }
 .dark-mode .brand-name, .dark-mode .nav-links-box .nav-link, .dark-mode h1, .dark-mode h2, .dark-mode h3 { color: var(--color-text-primary); }
 @media (max-width: 600px) { .meeting-page { width: 94%; margin-top: 30px; } .page-heading p br { display: none; } .meeting-form-card, .upcoming-card, .status-card { padding: 20px; } .scheduled-banner, .status-line { flex-wrap: wrap; } .scheduled-pill { margin-left: 64px; } .details-list > div { grid-template-columns: 45% 1fr; } .status-pill { padding: 8px 10px; } .form-actions { flex-wrap: wrap; } }
+.back-link {
+    color: var(--color-text-primary);
+    text-decoration: none;
+    font-weight: 600;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+.back-link:hover {
+    color: var(--color-accent);
+}

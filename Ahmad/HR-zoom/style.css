@@ -21,6 +21,12 @@ body {
     radial-gradient(circle at 47% 0%, #dff5f8 0, transparent 45%),
     linear-gradient(135deg, #e9f5ff 0%, #edfaff 52%, #e7f7f6 100%);
 }
+body.hr-page .hr-intro > p:first-child {
+    margin: 0 0 12px;
+    color: var(--color-accent) !important;
+    font: 600 11px / 1.5 var(--font-mono);
+    letter-spacing: 2px;
+}
 button,
 input,
 select,

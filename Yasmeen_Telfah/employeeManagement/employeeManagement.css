@@ -67,7 +67,7 @@ aside {
 /* same as max-width: var(--app-content-max); */
 main {
     max-width: var(--app-content-max);
-    margin: 0 auto;
+    margin:0 auto;
     padding: var(--hr-content-top, 24px) 36px 40px;
 }
 
@@ -78,6 +78,7 @@ main > div:first-child > p:first-child {
     font-weight: 600;
     letter-spacing: 2px;
     color: var(--color-accent);
+   
 }
 
 main > div:first-child h1 {
@@ -92,6 +93,7 @@ main > div:first-child > p:last-child {
     font-size: 15px;
     font-weight: 500;
     line-height: 1.6;
+    
 }
 
 .addEmployee {
@@ -441,7 +443,12 @@ main > div:first-child > p:last-child {
 .editEmployeeForm select:focus {
     border-color: var(--color-mint-strong);
 }
-
+body.hr-page .hr-intro > p:first-child {
+    margin: 0 0 12px;
+    color: var(--color-accent) !important;
+    font: 600 11px / 1.5 var(--font-mono);
+    letter-spacing: 2px;
+}
 #saveEmployee {
     padding: 12px 20px;
     background-color: var(--color-mint);
