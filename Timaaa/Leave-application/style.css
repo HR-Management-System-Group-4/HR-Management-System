@@ -19,7 +19,21 @@ iframe {
 
 }
 
+.back-link {
+    color: var(--color-text-primary);
+    text-decoration: none;
+    font-weight: 600;
 
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+.back-link:hover {
+    color: var(--color-accent);
+}
 
 
 /* =========================
@@ -74,14 +88,11 @@ PAGE
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    color: #64748b;
+    color: var(--color-text-primary);
     font-size: 13px;
     text-decoration: none;
 }
 
-.back-service a:hover {
-    color: #173d6d;
-}
 
 /* =========================
 HEADER
