@@ -19,24 +19,21 @@ body.hr-page .hr-intro > p:last-child {
   font: 500 15px/1.6 var(--font-sans);
 }
 
-/* Keep the utility header's space without displaying its controls. */
+/* Hidden utility bars should not leave an empty row above the page heading. */
 body.hr-page .content-wrapper > header,
 body.hr-page .workspace > .topbar,
 body.hr-page .dashboard > .top-row {
-  visibility: hidden;
+  display: none;
 }
 
-body.hr-page .content-wrapper > header {
-  height: 72px;
-  border-bottom: 0;
-}
+body.hr-page .workspace .page-intro { padding-top: 0; }
 
-body.hr-page .dashboard > .top-row {
-  min-height: 72px;
+@media (max-width: 800px) {
+  body.hr-page .content-wrapper main { padding-top: max(64px, env(safe-area-inset-top)); }
+  body.hr-page .dashboard { margin-top: 0; }
+  body.hr-page .dashboard .intro { margin-top: 0; }
 }
 
 @media (max-width: 700px) {
   body.hr-page .hr-intro h1 { font-size: 32px; }
-  body.hr-page .dashboard > .top-row { min-height: 0; height: 0; overflow: hidden; }
-  body.hr-page .workspace > .topbar { height: 0; margin: 0; overflow: hidden; }
 }

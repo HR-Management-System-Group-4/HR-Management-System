@@ -90,7 +90,7 @@ body {
 .hr-profile-main {
     width: min(100%, var(--container-max));
     margin: 0 auto;
-    padding: 28px;
+    padding: var(--hr-content-top, 24px) 28px 28px;
 }
 
 /* ================= PROFILE HEADER ================= */
@@ -101,7 +101,7 @@ body {
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 20px;
-    margin-top: 20px;
+    margin-top: 0;
     margin-left: 20px;
 
     padding: 26px;

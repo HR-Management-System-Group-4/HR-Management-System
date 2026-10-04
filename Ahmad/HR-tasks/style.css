@@ -194,7 +194,7 @@ a {
 }
 .dashboard {
   width: min(1224px, calc(100% - 48px));
-  margin: 34px auto 80px;
+  margin: var(--hr-content-top, 24px) auto 80px;
 }
 .top-row {
   display: flex;
@@ -234,7 +234,7 @@ a {
   font-size: 21px;
 }
 .intro {
-  margin: 7px 0 26px;
+  margin: 0 0 26px;
 }
 .eyebrow,
 .section-kicker {

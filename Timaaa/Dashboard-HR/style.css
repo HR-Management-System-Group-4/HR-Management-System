@@ -83,7 +83,7 @@ min-height:100vh;
 
 flex:1;
 
-padding:35px 45px;
+padding:var(--hr-content-top, 24px) 45px 35px;
 
 }
 
@@ -948,4 +948,3 @@ grid-template-columns:1fr;
 
 
 }
-

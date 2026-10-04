@@ -68,7 +68,7 @@ aside {
 main {
     max-width: var(--app-content-max);
     margin: 0 auto;
-    padding: 40px 36px;
+    padding: var(--hr-content-top, 24px) 36px 40px;
 }
 
 main > div:first-child > p:first-child {

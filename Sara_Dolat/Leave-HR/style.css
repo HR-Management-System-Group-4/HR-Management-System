@@ -34,7 +34,11 @@ iframe {
 }
 
 header {
-    padding: 40px;
+    padding: var(--hr-content-top, 24px) 40px 40px;
+}
+
+@media (max-width: 800px) {
+    body.hr-page .leave header { padding-top: 0; }
 }
 
 header p {

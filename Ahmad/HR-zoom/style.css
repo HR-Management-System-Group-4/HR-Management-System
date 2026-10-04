@@ -1250,7 +1250,7 @@ body.hr-page {
   padding-left: 276px;
 }
 body.hr-page .app-shell {
-  padding: 24px 40px;
+  padding: 0 40px 24px;
 }
 .workspace,
 .panel,
@@ -1262,7 +1262,7 @@ body.hr-page .app-shell {
   color: var(--color-text-primary);
 }
 .workspace {
-  padding: 18px 22px 24px;
+  padding: var(--hr-content-top, 24px) 22px 24px;
 }
 .topbar {
   justify-content: flex-end;
@@ -1448,7 +1448,7 @@ body.hr-page .workspace {
     padding-left: 0;
   }
   body.hr-page .app-shell {
-    padding: 72px 14px 18px;
+    padding: 0 14px 18px;
   }
 }
 @media (max-width: 620px) {

@@ -1,5 +1,5 @@
 /* Shared HR navigation on pages outside the dashboard. */
-body.hr-page { padding-left: 260px; }
+body.hr-page { padding-left: 260px; --hr-content-top: 24px; }
 
 .hr-navigation {
     position: fixed;
@@ -67,9 +67,11 @@ body.hr-page.employee-view .page { margin-inline: auto; }
     body.hr-page .workspace,
     body.hr-page .dashboard,
     body.hr-page .page { padding-top: max(64px, env(safe-area-inset-top)); }
+    body.hr-page .dashboard .main,
+    body.hr-page .hr-profile-main { padding-top: 0; }
     body.hr-page.employee-view .page { padding-top: 24px; }
     body.hr-page.employee-view .hr-nav-toggle { display: none; }
-    body.hr-page .leave .page { padding-top: 0; }
+    body.hr-page .leave .page { padding-top: max(64px, env(safe-area-inset-top)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
