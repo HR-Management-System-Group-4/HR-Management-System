@@ -77,7 +77,7 @@ document.getElementById('loginForm').onsubmit = function(e) {
                     ? '../../Timaaa/Dashboard-HR/index.html'
                     : '../../Ahmad/Homepage/index.html';
             } else {
-                message.textContent = 'Wrong email, password or role';
+                message.textContent = 'Invalid email or password . Please try again';
             }
         })
         .catch(() => {
