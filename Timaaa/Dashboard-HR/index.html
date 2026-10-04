@@ -15,16 +15,12 @@
 
 <link rel="stylesheet" href="../../Side_Bar/embed.css">
 
-
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-
 </head>
 
-
 <body class="hr-page">
-
 
 <button class="hr-nav-toggle"
 type="button"
@@ -36,17 +32,12 @@ aria-label="Open HR menu">
 
 </button>
 
-
-
 <button class="hr-nav-backdrop"
 type="button"
 aria-label="Close HR menu"
 hidden>
 
 </button>
-
-
-
 
 <iframe 
 id="hrNavigation"
@@ -56,27 +47,15 @@ title="HR navigation">
 
 </iframe>
 
-
-
-
-
 <div class="dashboard">
-
 
 <main class="main">
 
-
-
-
-
 <!-- ================= HEADER ================= -->
-
 
 <section class="hero-header">
 
-
 <div>
-
 
 <h1 id="dashboardWelcome">
 
@@ -84,24 +63,15 @@ Welcome back!
 
 </h1>
 
-
-
 <p>
 
 Here's what's happening at Mysta HR today.
 
 </p>
 
-
 </div>
 
-
-
-
-
 <div class="profile-area">
-
-
 
 <a id="profileLink"
 href="#">
@@ -112,10 +82,7 @@ src="../../Json-Images/images.jpg"
 alt="Profile">
 </a>
 
-
-
 <div>
-
 
 <h4 id="dashboardName">
 
@@ -123,34 +90,19 @@ User
 
 </h4>
 
-
 <span id="userRole">
 
 Employee
 
 </span>
 
-
 </div>
 
-
 </div>
-
-
 
 </section>
 
-
-
-
-
-
-
-
-
 <!-- ================= STAT CARDS ================= -->
-
-
 <section class="stats">
 
 
@@ -162,79 +114,52 @@ Employee
 TOTAL EMPLOYEES
 </span>
 
-
 <h2 id="totalEmployees">
 0
 </h2>
 
-
 <p>
-+2 this month
+Total of employees
 </p>
-
 
 <i class="fa-solid fa-users"></i>
 
-
 </div>
 
-
-
-
-
 <div class="stat-card green">
-
 
 <span>
 PENDING LEAVES
 </span>
 
-
 <h2 id="pendingLeaves">
 0
 </h2>
 
-
 <p>
 Awaiting review
 </p>
-
-
 <i class="fa-solid fa-calendar"></i>
 
-
 </div>
-
-
-
-
 
 <div class="stat-card purple">
 
-
 <span>
-ACTIVE TASKS
+TOTAL TASKS
 </span>
 
-
-<h2 id="activeTasks">
+<h2 id="totalTasks">
 0
 </h2>
 
-
 <p>
-Across all teams
+All tasks
 </p>
 
-
-<i class="fa-solid fa-check"></i>
-
+<i class="fa-solid fa-list-check"></i>
 
 </div>
-
-
-
-
 
 <div class="stat-card mint">
 
@@ -242,291 +167,139 @@ Across all teams
 <span>
 COMPLETED
 </span>
-
-
 <h2 id="completedTasks">
 0
 </h2>
-
-
 <p>
-This quarter
+Completed tasks
 </p>
 
-
 <i class="fa-solid fa-circle-check"></i>
-
-
 </div>
-
-
-
-
-
 
 <!-- changed violet to turquoise -->
 
 <div class="stat-card turquoise">
 
-
 <span>
 NEW FEEDBACK
 </span>
-
 
 <h2 id="feedback">
 0
 </h2>
 
-
 <p>
 Needs review
 </p>
 
-
 <i class="fa-solid fa-comment"></i>
-
-
 </div>
 
-
-
 </section>
-
-
-
-
-
-
-
 
 <!-- ================= ANALYTICS ================= -->
 
 
 <section class="analytics">
 
-
-
-
-
 <!-- DEPARTMENT -->
 
 
 <div class="box">
 
-
 <h3>
 Employees by Department
 </h3>
 
-
-
 <div id="department"
 class="department">
-
-
 </div>
 
-
-
 </div>
-
-
-
-
-
-
-
-
 
 <!-- LEAVE OVERVIEW -->
-
-
 <div class="box leave-box">
-
-
 <h3>
 Leave Overview
 </h3>
 
-
-
 <div class="leave-chart-container">
-
-
 
 <div class="donut-chart"
 id="leaveChart">
-
-
 <div class="donut-center">
-
 
 <h2 id="totalRequests">
 0
 </h2>
 
-
 <span>
 Total Requests
 </span>
 
-
 </div>
 
-
 </div>
-
-
-
-
 
 <div class="leave-details"
 id="leaveOverview">
 
+</div>
 
 </div>
 
-
-
 </div>
-
-
-
-</div>
-
-
-
-
 </section>
 
 <!-- ================= BOTTOM SECTION ================= -->
-
-
 <section class="bottom">
-
-
-
 <!-- PENDING REQUESTS -->
 
-
 <div class="box">
-
-
 <h3>
 Pending Leave Requests
 </h3>
-
-
-
 <div id="pendingRequests">
-
-
 </div>
-
-
-
 </div>
-
-
-
-
-
-
 
 <!-- RECENT ACTIVITY -->
-
-
 <div class="box">
-
-
 <h3>
 Recent Activity
 </h3>
-
-
-
 <div class="timeline"
 id="activity">
 
-
 </div>
-
-
-
 </div>
-
-
-
-
 </section>
 
-
-
-
-
-
-
-
-
 <!-- ================= QUICK ACTIONS ================= -->
-
-
 <section class="quick-section">
-
-
 <h3>
 Quick Actions
 </h3>
-
-
-
-
 <div class="quick-actions">
-
-
-
-
 
 <a href="../../Sara_Dolat/Leave-HR/index.html"
 class="quick-card">
 
-
 <i class="fa-solid fa-calendar"></i>
-
-
 <h4>
 Review Leave Requests
 </h4>
-
-
 </a>
-
-
-
-
-
-
 
 <a href="../../Ahmad/HR-tasks/index.html"
 class="quick-card">
-
-
 <i class="fa-solid fa-list-check"></i>
-
-
 <h4>
 Manage Tasks
 </h4>
 
-
 </a>
-
-
-
-
-
-
 
 <a href="../../Mohamad/Hr-profile/hr.html"
 class="quick-card">
@@ -534,19 +307,11 @@ class="quick-card">
 
 <i class="fa-solid fa-user"></i>
 
-
 <h4>
 my Profile
 </h4>
 
-
 </a>
-
-
-
-
-
-
 
 <a href="../../Sara_Sawalmeh/Policies/Policies_HR.Html"
 class="quick-card">
@@ -556,50 +321,13 @@ class="quick-card">
 <h4>
 Company Policies
 </h4>
-
 </a>
-
-
-
-
 </div>
-
-
-
-
 </section>
-
-
-
-
-
-
-
 </main>
-
-
 </div>
-
-
-
-
-
-
-
-
-
 <script src="script.js"></script>
-
-
 <script src="../../Side_Bar/embed.js"></script>
-
-
-
 <script src="../../demo/flow.js"></script>
-
-
-
 </body>
-
-
 </html>
