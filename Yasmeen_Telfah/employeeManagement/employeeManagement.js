@@ -1,16 +1,61 @@
+function showError(inputId, message) {
+    let input = document.querySelector("#" + inputId);
+    let error = document.querySelector("#" + inputId + "Error");
 
-let customAlert = document.querySelector("#customAlert");
-let alertMessage = document.querySelector("#alertMessage");
-let closeAlert = document.querySelector("#closeAlert");
+    if (!error) {
+        error = document.createElement("p");
+        error.id = inputId + "Error";
+        error.className = "fieldError";
+        error.setAttribute("aria-live", "polite");
+        input.insertAdjacentElement("afterend", error);
 
-function showAlert(message){
-    alertMessage.textContent = message;
-    customAlert.classList.add("show");
+        input.addEventListener("input", function () {
+            error.textContent = "";
+            input.removeAttribute("aria-invalid");
+        });
+
+        input.setAttribute("aria-describedby", error.id);
+    }
+
+    error.textContent = message;
+    input.setAttribute("aria-invalid", "true");
 }
 
-closeAlert.addEventListener("click", function(){
-    customAlert.classList.remove("show");
+let blockDialog = document.querySelector("#blockDialog");
+let confirmBlockButton = document.querySelector("#confirmBlockButton");
+let pendingStatusChange = null;
+
+function closeBlockDialog() {
+    blockDialog.close();
+}
+
+document.querySelector("#closeBlockButton")
+    .addEventListener("click", closeBlockDialog);
+
+document.querySelector("#cancelBlockButton")
+    .addEventListener("click", closeBlockDialog);
+
+blockDialog.addEventListener("close", function () {
+    pendingStatusChange = null;
 });
+
+confirmBlockButton.addEventListener("click", function () {
+    if (pendingStatusChange) {
+        pendingStatusChange();
+    }
+
+    closeBlockDialog();
+});
+
+function clearErrors() {
+    document.querySelectorAll(".fieldError").forEach(function (error) {
+        error.textContent = "";
+    });
+
+    document.querySelectorAll('[aria-invalid="true"]').forEach(function (input) {
+        input.removeAttribute("aria-invalid");
+    });
+}
 
 
 fetch("../../employee.json")
@@ -32,7 +77,7 @@ let addEmployee = document.querySelector(".addEmployee button");
 let cancelEmployee = document.querySelector("#cancelNewEmployee");
 let saveEmployee = document.querySelector("#saveNewEmployee");
 let nameRegex = /^[A-Za-z]+(?: [A-Za-z]+)+$/;
-let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+let emailRegex = /^[^\s@]+@mysta\.com$/i;
 let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
 
 addEmployee.addEventListener("click", function(event){
@@ -46,20 +91,28 @@ addEmployee.addEventListener("click", function(event){
         let email = document.querySelector("#workEmailNew").value;
         let password = document.querySelector("#passwordNew").value;
 
-        if (!nameRegex.test(name)) {
-            showAlert("Enter a valid full name");
-            return;
+        clearErrors();
+        let hasError = false;
+
+        if (!nameRegex.test(name.trim())) {
+            showError("fullNameNew", "Enter a valid full name.");
+            hasError = true;
         }
 
-        if (!emailRegex.test(email)) {
-            showAlert("Enter a valid email");
-            return;
+        if (!emailRegex.test(email.trim())) {
+            showError("workEmailNew", "Email must end with @mysta.com.");
+            hasError = true;
         }
 
         if (!passwordRegex.test(password)) {
-            showAlert("Password must be at least 8 characters and contain a letter and number");
-            return;
+            showError(
+                "passwordNew",
+                "Password must be at least 8 characters and contain a letter and a number."
+            );
+            hasError = true;
         }
+
+        if (hasError) return;
 
         const newEmployee = {};
         newEmployee.name = document.querySelector("#fullNameNew").value;
@@ -67,7 +120,6 @@ addEmployee.addEventListener("click", function(event){
         newEmployee.password = document.querySelector("#passwordNew").value;
         newEmployee.position = document.querySelector("#positionNew").value;
         newEmployee.department = document.querySelector("#departmentNew").value;
-        newEmployee.accountState = document.querySelector("#accountStatusNew").value;
 
         employees.unshift(newEmployee);
         localStorage.setItem("employees", JSON.stringify(employees));
@@ -110,7 +162,7 @@ employees.forEach(employee => {
         <td>
             <div class="employeeActions">
                 <button type="button" class="edit">Edit</button>
-                <button type="button" class="blockEmployee">${employee.accountState.toLowerCase()=="active" ? "block":"Unblock"}</button>
+                <button type="button" class="blockEmployee">${employee.accountState.toLowerCase()=="active" ? "Deactivate":"Activate"}</button>
             </div>
         </td>
     `;
@@ -135,8 +187,7 @@ employees.forEach(employee => {
         editForm.querySelector("#workEmail").value = employee.email;
         editForm.querySelector("#position").value = employee.position;
         editForm.querySelector("#department").value = employee.department;
-        editForm.querySelector("#accountStatus").value =
-            employee.accountState.toLowerCase();
+
 
         saveButton.onclick = function (event) {
             event.preventDefault();
@@ -157,7 +208,6 @@ employees.forEach(employee => {
             employee.email = email;
             employee.position = editForm.querySelector("#position").value;
             employee.department = editForm.querySelector("#department").value;
-            employee.accountState = editForm.querySelector("#accountStatus").value;
 
             row.querySelector(".employeeName").textContent = employee.name;
             row.querySelector(".employeeEmail").textContent = employee.email;
@@ -181,23 +231,38 @@ employees.forEach(employee => {
     let status = row.querySelector(".employeeStatus");
     let block = row.querySelector(".blockEmployee");
 
-    block.addEventListener("click", function(){
-        if(employee.accountState.toLowerCase() == "active"){
-            employee.accountState = "Inactive";
-            status.className = "employeeStatus inactive";
-            row.classList.add("disabled");
-            block.textContent = "Unblock";
-            status.textContent = "Inactive";
-        }
-        else{
-            employee.accountState = "Active";
-            status.className = "employeeStatus active";
-            row.classList.remove("disabled");
-            block.textContent = "Block";
-            status.textContent = "Active";
-        }
-        localStorage.setItem("employees", JSON.stringify(employees));
-    })
+    block.addEventListener("click", function () {
+        let isActive = employee.accountState.toLowerCase() === "active";
+        let action = isActive ? "Deactivate" : "Activate";
+
+        document.querySelector("#blockKicker").textContent =
+            action.toUpperCase() + " EMPLOYEE";
+
+        document.querySelector("#blockTitle").textContent =
+            action + " this employee?";
+
+        document.querySelector("#blockMessage").textContent =
+            "Are you sure you want to " +
+            action.toLowerCase() + " " + employee.name + "?";
+
+        confirmBlockButton.textContent = action + " Employee";
+
+        pendingStatusChange = function () {
+            employee.accountState = isActive ? "Inactive" : "Active";
+
+            status.textContent = employee.accountState;
+            status.className = isActive
+                ? "employeeStatus inactive"
+                : "employeeStatus active";
+
+            row.classList.toggle("disabled", isActive);
+            block.textContent = isActive ? "Activate" : "Deactivate";
+
+            localStorage.setItem("employees", JSON.stringify(employees));
+        };
+
+        blockDialog.showModal();
+    });
 
     let cancel = document.querySelector("#cancel");
     cancel.addEventListener("click", function(){

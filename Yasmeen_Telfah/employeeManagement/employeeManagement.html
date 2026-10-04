@@ -91,11 +91,6 @@
                         <option value="Operations">Operations</option>
                     </select>
 
-                    <label for="accountStatusNew">ACCOUNT STATUS</label>
-                    <select id="accountStatusNew" name="accountState">
-                        <option value="Active">Active</option>
-                        <option value="Inactive">Inactive</option>
-                    </select>
 
                     <button type="submit" id="saveNewEmployee">Save employee</button>
                     <button type="button" id="cancelNewEmployee">Cancel</button>
@@ -141,11 +136,6 @@
                         <option value="Operations">Operations</option>
                     </select>
 
-                    <label for="accountStatus">Account Status</label>
-                    <select id="accountStatus">
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                    </select>
 
                     <button id="saveEmployee">Save employee</button>
                     <button id="cancel">Cancel</button>
@@ -164,6 +154,34 @@
         </div>
         <button type="button" id="closeAlert">×</button>
     </div>
+
+    <dialog id="blockDialog" class="delete-dialog">
+        <div class="modal-card">
+            <div class="modal-head">
+            <div>
+                <p id="blockKicker" class="section-kicker"></p>
+                <h2 id="blockTitle"></h2>
+            </div>
+
+            <button id="closeBlockButton" class="close-button"
+                    type="button" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+
+            <p id="blockMessage" class="delete-message"></p>
+            <p class="form-hint">You can change this status again later.</p>
+
+            <div class="modal-actions">
+            <button id="cancelBlockButton" class="secondary-button"
+                    type="button">Cancel</button>
+            <button id="confirmBlockButton" class="danger-button"
+                    type="button"></button>
+            </div>
+        </div>
+        </dialog>
+
+
     <script src="employeeManagement.js"></script>
     <script src="../../Side_Bar/embed.js"></script>
   <script src="../../demo/flow.js"></script>
