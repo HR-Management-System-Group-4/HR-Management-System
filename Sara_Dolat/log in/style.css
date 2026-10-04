@@ -14,21 +14,18 @@ body {
     color: var(--color-text-primary);
 }
 
-/* ================= LEFT ================= */
-
+/* LEFT */
 .left {
     width: 50%;
+    padding: 50px;
     background: var(--color-accent-contrast);
     color: var(--color-surface);
-    padding: 50px;
     position: relative;
     overflow: hidden;
 }
 
 .space {
     position: absolute;
-    width: 100%;
-    height: 100%;
     inset: 0;
 }
 
@@ -40,8 +37,7 @@ body {
     z-index: 5;
 }
 
-/* ================= ORBITS ================= */
-
+/* ORBITS */
 .orbit {
     position: absolute;
     left: 50%;
@@ -76,39 +72,26 @@ body {
     left: 50%;
     top: -9px;
     border-radius: 50%;
-
     background: radial-gradient(
         circle at 30% 30%,
         var(--color-surface),
         var(--color-accent),
         var(--color-accent-contrast)
     );
-
     box-shadow: 0 0 12px var(--color-accent);
 }
 
 @keyframes orbit1 {
-    from {
-        transform: translate(-50%, -50%) rotate(0);
-    }
-
-    to {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
+    from { transform: translate(-50%, -50%) rotate(0); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 @keyframes orbit2 {
-    from {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
-
-    to {
-        transform: translate(-50%, -50%) rotate(0);
-    }
+    from { transform: translate(-50%, -50%) rotate(360deg); }
+    to { transform: translate(-50%, -50%) rotate(0); }
 }
 
-/* ================= STARS ================= */
-
+/* STARS */
 .star {
     position: absolute;
     width: 3px;
@@ -137,73 +120,19 @@ body {
         opacity: .2;
         transform: scale(.6);
     }
-
     to {
         opacity: 1;
         transform: scale(1.5);
     }
 }
 
-/* ================= MOUSE LIGHT ================= */
-
-.mouse-light {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: var(--color-surface);
-    border-radius: 50%;
-
-    box-shadow:
-        0 0 7px var(--color-surface),
-        0 0 12px var(--color-accent);
-
-    pointer-events: none;
-    animation: light .4s ease-out forwards;
-}
-
-@keyframes light {
-    to {
-        opacity: 0;
-        transform: scale(.2);
-    }
-}
-
-/* ================= LEFT TEXT ================= */
-
-.left h1 {
-    position: absolute;
-    left: 50px;
-    bottom: 150px;
-    font-size: clamp(36px, 4vw, 55px);
-    z-index: 10;
-}
-
-.description {
-    position: absolute;
-    left: 50px;
-    bottom: 100px;
-    color: var(--color-text-secondary);
-    font-size: 17px;
-    z-index: 10;
-}
-
-.bottom {
-    position: absolute;
-    left: 50px;
-    bottom: 40px;
-    color: var(--color-text-muted);
-    font-size: 9px;
-    z-index: 10;
-}
-
-/* ================= RIGHT ================= */
-
+/* RIGHT */
 .right {
     width: 50%;
-    background: var(--color-background);
     display: flex;
     justify-content: center;
     align-items: center;
+    background: var(--color-background);
 }
 
 .login-box {
@@ -212,7 +141,6 @@ body {
 
 .login-box h2 {
     font-size: 45px;
-    color: var(--color-text-primary);
     margin-bottom: 10px;
 }
 
@@ -220,8 +148,20 @@ body {
     color: var(--color-text-secondary);
 }
 
-/* ================= ROLE ================= */
+.back-link {
+    display: inline-flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    color: var(--color-accent-contrast);
+    text-decoration: none;
+    font-weight: 600;
+}
 
+.back-link:hover {
+    color: var(--color-accent);
+}
+
+/* ROLE */
 .role {
     display: flex;
     gap: 10px;
@@ -238,13 +178,17 @@ body {
     cursor: pointer;
 }
 
-.role button.active {
-    background:#343560;
+.role button.active,
+#login {
+    background: #343560;
     color: var(--color-surface);
 }
 
-/* ================= INPUT ================= */
+.role button.active {
+    border-color: #343560;
+}
 
+/* INPUT */
 label {
     display: block;
     margin: 15px 0 7px;
@@ -261,16 +205,13 @@ input {
     font-size: 15px;
 }
 
-/* ================= LOGIN ================= */
-
+/* LOGIN */
 #login {
     width: 100%;
     padding: 17px;
-    margin-top: 25px;
+    margin-top: 5px;
     border: 0;
     border-radius: 30px;
-    background: #343560;
-    color: var(--color-surface);
     font-size: 16px;
     cursor: pointer;
 }
@@ -280,24 +221,12 @@ input {
 }
 
 #message {
-    color: var(--color-accent);
+    color: red;
+    padding: 10px;
 }
 
-/* ================= BACK ================= */
-
-.back-link {
-    color: var(--color-accent-contrast);
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.back-link:hover {
-    text-decoration: underline;
-}
-
-/* ================= RESPONSIVE ================= */
-
-@media (max-width: 760px) {
+/* RESPONSIVE */
+@media (max-width: 1200px) {
 
     body {
         flex-direction: column;
@@ -309,24 +238,8 @@ input {
     }
 
     .left {
-        padding: 28px;
         min-height: 400px;
-    }
-
-    .left h1 {
-        left: 28px;
-        bottom: 100px;
-        font-size: 30px;
-    }
-
-    .description {
-        left: 28px;
-        bottom: 55px;
-        font-size: 14px;
-    }
-
-    .bottom {
-        display: none;
+        padding: 28px;
     }
 
     .right {
