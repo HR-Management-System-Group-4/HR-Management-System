@@ -38,12 +38,13 @@ let tasks = JSON.parse(
 localStorage.getItem("tasks")
 ) || [];
 // ===============================
-// FEEDBACK
 // ===============================
-const feedback=[
-"New feedback received",
-"Employee satisfaction survey"
-];
+// LOAD FEEDBACK FROM LOCAL STORAGE
+// ===============================
+
+let feedback = JSON.parse(
+    localStorage.getItem("feedbacks")
+) || [];
 // ===============================
 // UPDATE STATISTICS
 // ===============================
