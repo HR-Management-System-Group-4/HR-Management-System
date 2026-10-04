@@ -27,8 +27,9 @@ document.getElementById('loginForm').onsubmit = function(e) {
 
     e.preventDefault();
 
-    let email = document.getElementById('email').value;
+    let email = document.getElementById('email').value.trim();
     let password = document.getElementById('password').value;
+    message.textContent = '';
 
     if (password.length < 6) {
     message.textContent = "Password must be at least 6 characters";
@@ -40,12 +41,33 @@ document.getElementById('loginForm').onsubmit = function(e) {
         .then(response => response.json())
 
         .then(data => {
-
+            // Keep the original login credentials. HR's saved list is used
+            // only to check whether this employee has been blocked.
             let user = data.employees.find(user =>
                 user.email === email &&
                 user.password === password &&
                 user.role === selectedRole
             );
+
+            if (user && user.role === 'Employee') {
+                let savedEmployees;
+                try {
+                    const saved = JSON.parse(localStorage.getItem('employees'));
+                    savedEmployees = Array.isArray(saved) ? saved : saved?.employees;
+                } catch (_) {
+                    // Invalid saved data must not break the original login flow.
+                }
+
+                const savedUser = Array.isArray(savedEmployees) && savedEmployees.find(employee =>
+                    String(employee.id) === String(user.id) || employee.email === user.email
+                );
+                const accountState = savedUser?.accountState ?? user.accountState;
+
+                if (accountState?.toLowerCase() !== 'active') {
+                    message.textContent = 'This account is inactive. Contact HR.';
+                    return;
+                }
+            }
 
             if (user) {
 
@@ -80,6 +102,9 @@ document.getElementById('loginForm').onsubmit = function(e) {
 
             }
 
+        })
+        .catch(() => {
+            message.textContent = 'Unable to check your account. Please try again.';
         });
 
 };

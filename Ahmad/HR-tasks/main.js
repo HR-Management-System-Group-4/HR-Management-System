@@ -1,4 +1,3 @@
-
 // Main Elements
 
 let btn = document.getElementById("addTaskButton");
@@ -20,7 +19,6 @@ let saveTaskButton = document.getElementById("saveTaskButton");
 let toast = document.getElementById("toast");
 
 // Variables
-
 
 function readTasks() {
   try {
@@ -47,30 +45,19 @@ let activeFilter = "All";
 
 let toastTimer;
 
-function showAllTasks() {
-  activeFilter = "All";
-  document.querySelectorAll(".filter").forEach(function (button) {
-    button.classList.toggle("active", button.dataset.filter === "All");
-  });
-}
-
 // Toast
-
 
 function showToast(message) {
   toast.textContent = message;
 
   toast.classList.add("show");
 
-
   toastTimer = setTimeout(function () {
     toast.classList.remove("show");
   }, 3500);
 }
 
-
 // Open Add Task Popup
-
 
 btn.onclick = function () {
   taskForm.reset();
@@ -81,7 +68,6 @@ btn.onclick = function () {
   filterEmployeeOptions();
 
   document.getElementById("taskId").value = "";
-
 
   displaySelectedEmployees();
 
@@ -104,9 +90,7 @@ btn.onclick = function () {
   taskDialog.showModal();
 };
 
-// ========================================
 // Close Add / Edit Popup
-// ========================================
 
 closeTaskButton.onclick = function () {
   taskDialog.close();
@@ -116,9 +100,7 @@ cancelTaskButton.onclick = function () {
   taskDialog.close();
 };
 
-// ========================================
 // Employee Dropdown
-// ========================================
 
 let assigneeToggle = document.getElementById("assigneeToggle");
 
@@ -140,9 +122,7 @@ assigneeToggle.onclick = function () {
   }
 };
 
-// ========================================
 // Load Employees From JSON
-// ========================================
 
 function displayEmployees() {
   let employeeOptions = document.getElementById("employeeOptions");
@@ -153,14 +133,7 @@ function displayEmployees() {
     })
 
     .then(function (data) {
-      let employees;
-
-
-      if (Array.isArray(data)) {
-        employees = data;
-      } else {
-        employees = data.employees;
-      }
+      let employees = data.employees;
 
       availableEmployees = employees;
 
@@ -193,7 +166,7 @@ function displayEmployees() {
                                 class="employee-avatar avatar-${i % 6}"
                             >
 
-                                ${initials}
+                                ${initials} 
 
                             </span>
 
@@ -213,9 +186,7 @@ function displayEmployees() {
     });
 }
 
-// ========================================
 // Get Employee Initials
-// ========================================
 
 function getInitials(name) {
   let words = name.split(" ");
@@ -225,29 +196,25 @@ function getInitials(name) {
   return initials.toUpperCase();
 }
 
-// ========================================
 // Select Employee
-// ========================================
 
-  function selectEmployee(checkbox) {
-    if (checkbox.checked) {
-      if (!selectedEmployees.includes(checkbox.value)) {
-        selectedEmployees.push(checkbox.value);
-      }
-    } else {
-      let index = selectedEmployees.indexOf(checkbox.value);
-
-      if (index != -1) {
-        selectedEmployees.splice(index, 1);
-      }
+function selectEmployee(checkbox) {
+  if (checkbox.checked) {
+    if (!selectedEmployees.includes(checkbox.value)) {
+      selectedEmployees.push(checkbox.value);
     }
+  } else {
+    let index = selectedEmployees.indexOf(checkbox.value);
 
-    displaySelectedEmployees();
+    if (index != -1) {
+      selectedEmployees.splice(index, 1);
+    }
   }
 
-// ========================================
+  displaySelectedEmployees();
+}
+
 // Display Selected Employees
-// ========================================
 
 function displaySelectedEmployees() {
   let box = document.getElementById("selectedEmployees");
@@ -308,9 +275,7 @@ function displaySelectedEmployees() {
   }
 }
 
-// ========================================
 // Remove Selected Employee
-// ========================================
 
 function removeEmployee(name) {
   let index = selectedEmployees.indexOf(name);
@@ -324,9 +289,7 @@ function removeEmployee(name) {
   displaySelectedEmployees();
 }
 
-// ========================================
 // Sync Checkboxes
-// ========================================
 
 function syncEmployeeCheckboxes() {
   let checkboxes = document.querySelectorAll("#employeeOptions input");
@@ -346,14 +309,14 @@ document.getElementById("selectAllEmployees").onclick = function () {
     .filter(function (employee) {
       return employee.role === "Employee" && employee.accountState === "Active";
     })
-    .map(function (employee) { return employee.name; });
+    .map(function (employee) {
+      return employee.name;
+    });
   syncEmployeeCheckboxes();
   displaySelectedEmployees();
 };
 
-// ========================================
 // Search Employees
-// ========================================
 
 let employeeSearch = document.getElementById("employeeSearch");
 
@@ -375,9 +338,7 @@ function filterEmployeeOptions() {
 
 employeeSearch.oninput = filterEmployeeOptions;
 
-// ========================================
 // Create / Edit Task
-// ========================================
 
 taskForm.onsubmit = function (event) {
   event.preventDefault();
@@ -411,19 +372,12 @@ taskForm.onsubmit = function (event) {
   let status = document.getElementById("taskStatus").value;
 
   let notes = document.getElementById("taskNotes").value;
-  let isCreating = taskId === "";
-  // A second tab may have changed the list since this page was opened.
-  let nextTasks = readTasks();
 
-  // ====================================
   // Create New Task
-  // ====================================
 
-  if (isCreating) {
+  if (taskId == "") {
     let task = {
-      id: nextTasks.reduce(function (latest, item) {
-        return Math.max(latest, Number(item.id) || 0);
-      }, Date.now()) + 1,
+      id: Date.now(),
 
       title: taskTitle,
 
@@ -448,51 +402,42 @@ taskForm.onsubmit = function (event) {
       reviewNote: "",
     };
 
-    nextTasks.push(task);
+    tasks.push(task);
+
+    showAlert("success", "Task Added!", "The task has been added successfully.");
   }
 
-  // ====================================
   // Edit Existing Task
-  // ====================================
   else {
-    let existingTask = nextTasks.find(function (item) {
-      return String(item.id) === taskId;
-    });
-    if (!existingTask) {
-      showAlert("error", "Task Not Found", "This task no longer exists. Refresh the page and try again.");
-      return;
+    for (let i = 0; i < tasks.length; i++) {
+      if (tasks[i].id == taskId) {
+        tasks[i].title = taskTitle;
+
+        tasks[i].description = taskDescription;
+
+        tasks[i].assignTo = assignTo;
+
+        tasks[i].assigneeIds = assigneeIds;
+
+        tasks[i].priority = priority;
+
+        tasks[i].dueDate = dueDate;
+
+        tasks[i].status = status;
+
+        tasks[i].notes = notes;
+
+        showAlert("success", "Task Updated!", "The task has been updated successfully.");
+
+        break;
+      }
     }
-    existingTask.title = taskTitle;
-
-    existingTask.description = taskDescription;
-
-    existingTask.assignTo = assignTo;
-
-    existingTask.assigneeIds = assigneeIds;
-
-    existingTask.priority = priority;
-
-    existingTask.dueDate = dueDate;
-
-    existingTask.status = status;
-
-    existingTask.notes = notes;
-
   }
 
-  try {
-    localStorage.setItem("tasks", JSON.stringify(nextTasks));
-  } catch (_) {
-    showAlert("error", "Save Failed", "Could not save the task in this browser. Check available storage and try again.");
-    return;
-  }
-  tasks = nextTasks;
-  if (isCreating) {
-    showAllTasks();
-  }
+  // Save
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 
   displayTasks();
-  showAlert("success", isCreating ? "Task Added!" : "Task Updated!", isCreating ? "The task has been added successfully." : "The task has been updated successfully.");
 
   taskForm.reset();
 
@@ -509,9 +454,7 @@ taskForm.onsubmit = function (event) {
   taskDialog.close();
 };
 
-// ========================================
 // Get Employees From Task
-// ========================================
 
 function getTaskEmployees(task) {
   // New tasks use array
@@ -527,15 +470,10 @@ function getTaskEmployees(task) {
     return [task.assignTo];
   }
 
-  if (Array.isArray(task.assignedTo)) return task.assignedTo;
-  if (task.assignedTo) return [task.assignedTo];
-
   return [];
 }
 
-// ========================================
 // Get Employees As Text
-// ========================================
 
 function getEmployeesText(task) {
   let employees = getTaskEmployees(task);
@@ -554,11 +492,7 @@ function readSolutions() {
 
 function belongsToTask(solution, task) {
   let assigned = getTaskEmployees(task);
-  let hasIds = Array.isArray(task.assigneeIds) && task.assigneeIds.length > 0;
-  let employeeMatches = solution.employeeId != null && hasIds
-    ? task.assigneeIds.some(function (id) {
-      return String(id) === String(solution.employeeId);
-    }) : assigned.includes(solution.employeeName);
+  let employeeMatches = assigned.includes(solution.employeeName);
   if (!employeeMatches) return false;
   // Older submissions were saved with a title instead of a task ID.
   return solution.taskId != null
@@ -575,36 +509,35 @@ function getTaskSubmissions(task) {
 function getSubmissionStatus(solution, task) {
   if (solution.status) return solution.status;
   return getTaskEmployees(task).length === 1 && task.status === "Completed"
-    ? "Completed" : "Submitted";
+    ? "Completed"
+    : "Submitted";
 }
 
 function getDisplayStatus(task) {
-  if (getTaskSubmissions(task).some(function (solution) {
-    return getSubmissionStatus(solution, task) === "Submitted";
-  })) return "Submitted";
+  if (
+    getTaskSubmissions(task).some(function (solution) {
+      return getSubmissionStatus(solution, task) === "Submitted";
+    })
+  )
+    return "Submitted";
   return task.status;
 }
 
-// ========================================
 // Display Tasks
-// ========================================
 
 function displayTasks() {
   taskList.innerHTML = "";
 
   for (let i = 0; i < tasks.length; i++) {
     let displayStatus = getDisplayStatus(tasks[i]);
-    // =================================
+    
     // Filter
-    // =================================
 
     if (activeFilter != "All" && displayStatus != activeFilter) {
       continue;
     }
 
-    // =================================
     // Status Class
-    // =================================
 
     let statusClass = "";
 
@@ -624,9 +557,7 @@ function displayTasks() {
       statusClass = "completed";
     }
 
-    // =================================
     // Card
-    // =================================
 
     taskList.innerHTML += `
 
@@ -788,7 +719,9 @@ function viewTask(id) {
 
       document.getElementById("viewPriority").innerHTML = tasks[i].priority;
 
-      document.getElementById("viewStatus").textContent = getDisplayStatus(tasks[i]);
+      document.getElementById("viewStatus").textContent = getDisplayStatus(
+        tasks[i],
+      );
 
       document.getElementById("viewDescription").innerHTML =
         tasks[i].description;
@@ -796,8 +729,26 @@ function viewTask(id) {
       document.getElementById("viewNotes").innerHTML =
         tasks[i].notes || "No notes";
 
-      currentSubmissionIndex = -1;
-      refreshSubmissionPicker(tasks[i]);
+      let submissions = getTaskSubmissions(tasks[i]);
+      let picker = document.getElementById("viewSubmission");
+      picker.replaceChildren();
+      submissions.forEach(function (submission, index) {
+        let option = document.createElement("option");
+        option.value = String(index);
+        option.textContent =
+          submission.employeeName +
+          " — " +
+          getSubmissionStatus(submission, tasks[i]);
+        picker.append(option);
+      });
+      document.getElementById("submissionPicker").hidden =
+        submissions.length < 2;
+      currentSubmissionIndex = submissions.findIndex(function (submission) {
+        return getSubmissionStatus(submission, tasks[i]) === "Submitted";
+      });
+      if (currentSubmissionIndex < 0) currentSubmissionIndex = 0;
+      picker.value = String(currentSubmissionIndex);
+      renderCurrentSubmission();
 
       viewDialog.showModal();
 
@@ -806,55 +757,24 @@ function viewTask(id) {
   }
 }
 
-function refreshSubmissionPicker(task) {
-  let submissions = getTaskSubmissions(task);
-  let picker = document.getElementById("viewSubmission");
-  picker.replaceChildren();
-  submissions.forEach(function (submission, index) {
-    let option = document.createElement("option");
-    option.value = String(index);
-    option.textContent = submission.employeeName + " — " +
-      getSubmissionStatus(submission, task);
-    picker.append(option);
-  });
-  document.getElementById("submissionPicker").hidden = submissions.length < 2;
-  let pendingIndex = submissions.findIndex(function (submission) {
-    return getSubmissionStatus(submission, task) === "Submitted";
-  });
-  if (pendingIndex >= 0) currentSubmissionIndex = pendingIndex;
-  else if (currentSubmissionIndex < 0 || currentSubmissionIndex >= submissions.length) {
-    currentSubmissionIndex = 0;
-  }
-  picker.value = String(currentSubmissionIndex);
-  renderCurrentSubmission();
-}
-
 function renderCurrentSubmission() {
-  let task = tasks.find(function (item) { return item.id == currentViewTaskId; });
+  let task = tasks.find(function (item) {
+    return item.id == currentViewTaskId;
+  });
   if (!task) return;
   let submission = getTaskSubmissions(task)[currentSubmissionIndex];
   document.getElementById("viewSolution").textContent = submission
-    ? submission.solution : (task.solution || "No solution has been submitted yet.");
-  let fileElement = document.getElementById("viewFileName");
-  fileElement.replaceChildren();
-  fileElement.classList.remove("attachment-unavailable");
-  if (submission && submission.fileName) {
-    if (/^data:[^,]+;base64,/.test(submission.fileData || "")) {
-      let link = document.createElement("a");
-      link.href = submission.fileData;
-      link.download = submission.fileName;
-      link.textContent = "Download attachment: " + submission.fileName;
-      fileElement.append(link);
-    } else {
-      fileElement.classList.add("attachment-unavailable");
-      fileElement.textContent = submission.fileName +
-        " was submitted before file contents were saved. Ask the employee to open the task, select Edit, attach the file again, and submit it.";
-    }
-  }
+    ? submission.solution
+    : task.solution || "No solution has been submitted yet.";
+  document.getElementById("viewFileName").textContent =
+    submission && submission.fileName
+      ? "Attached file: " + submission.fileName
+      : "";
   document.getElementById("reviewFeedback").value = submission
-    ? (submission.reviewNote || "") : (task.reviewNote || "");
-  document.getElementById("reviewPanel").hidden = !submission ||
-    getSubmissionStatus(submission, task) !== "Submitted";
+    ? submission.reviewNote || ""
+    : task.reviewNote || "";
+  document.getElementById("reviewPanel").hidden =
+    !submission || getSubmissionStatus(submission, task) !== "Submitted";
 }
 
 document.getElementById("viewSubmission").onchange = function () {
@@ -989,7 +909,9 @@ confirmDeleteButton.onclick = function () {
 let approveButton = document.getElementById("approveButton");
 
 function reviewCurrentSubmission(status) {
-  let task = tasks.find(function (item) { return item.id == currentViewTaskId; });
+  let task = tasks.find(function (item) {
+    return item.id == currentViewTaskId;
+  });
   if (!task) return false;
   let solutions = readSolutions();
   let matchingIndices = [];
@@ -997,34 +919,44 @@ function reviewCurrentSubmission(status) {
     if (belongsToTask(solution, task)) matchingIndices.push(index);
   });
   let solution = solutions[matchingIndices[currentSubmissionIndex]];
-  if (!solution || getSubmissionStatus(solution, task) !== "Submitted") return false;
+  if (!solution || getSubmissionStatus(solution, task) !== "Submitted")
+    return false;
 
   solution.status = status;
   solution.reviewNote = document.getElementById("reviewFeedback").value.trim();
   localStorage.setItem("solutions", JSON.stringify(solutions));
 
   task.employeeStatuses = task.employeeStatuses || {};
-  let key = solution.employeeId != null ? String(solution.employeeId)
-    : solution.employeeName;
+  let key =
+    solution.employeeId != null
+      ? String(solution.employeeId)
+      : solution.employeeName;
   task.employeeStatuses[key] = status;
   task.employeeStatuses[solution.employeeName] = status;
   let assigned = getTaskEmployees(task);
-  let statuses = assigned.map(function (name, index) {
-    let employee = availableEmployees.find(function (item) { return item.name === name; });
-    let assigneeId = Array.isArray(task.assigneeIds) ? task.assigneeIds[index]
-      : employee && employee.id;
+  let statuses = assigned.map(function (name) {
     let submission = solutions.find(function (item) {
-      return belongsToTask(item, task) && (item.employeeId != null && assigneeId != null
-        ? String(item.employeeId) === String(assigneeId) : item.employeeName === name);
+      return belongsToTask(item, task) && item.employeeName === name;
     });
     if (submission) return getSubmissionStatus(submission, task);
-    return task.employeeStatuses[name] ||
-      task.employeeStatuses[String(employee ? employee.id : name)] || "Pending";
+    let employee = availableEmployees.find(function (item) {
+      return item.name === name;
+    });
+    return (
+      task.employeeStatuses[name] ||
+      task.employeeStatuses[String(employee ? employee.id : name)] ||
+      "Pending"
+    );
   });
-  task.status = statuses.includes("Submitted") ? "Submitted"
-    : statuses.every(function (item) { return item === "Completed"; }) ? "Completed"
-    : statuses.includes("In Progress") || statuses.includes("Completed") ? "In Progress"
-    : "Pending";
+  task.status = statuses.includes("Submitted")
+    ? "Submitted"
+    : statuses.every(function (item) {
+          return item === "Completed";
+        })
+      ? "Completed"
+      : statuses.includes("In Progress") || statuses.includes("Completed")
+        ? "In Progress"
+        : "Pending";
   localStorage.setItem("tasks", JSON.stringify(tasks));
   displayTasks();
   document.getElementById("viewDialog").close();
@@ -1215,16 +1147,13 @@ function refreshTasks() {
   tasks = readTasks();
   displayTasks();
   if (document.getElementById("viewDialog").open) {
-    let task = tasks.find(function (item) { return item.id == currentViewTaskId; });
-    if (task) refreshSubmissionPicker(task);
+    renderCurrentSubmission();
   }
 }
 
 window.addEventListener("storage", function (event) {
-  if (!event.key || event.key === "tasks" || event.key === "solutions") {
-    showAllTasks();
+  if (!event.key || event.key === "tasks" || event.key === "solutions")
     refreshTasks();
-  }
 });
 window.addEventListener("focus", refreshTasks);
 window.addEventListener("pageshow", refreshTasks);
