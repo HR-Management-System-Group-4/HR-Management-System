@@ -29,7 +29,8 @@ document.getElementById('loginForm').onsubmit = function(e) {
     fetch('../../employee.json')
         .then(response => response.json())
         .then(data => {
-
+            // Keep the original login credentials. HR's saved list is used
+            // only to check whether this employee has been blocked.
             let user = data.employees.find(user =>
                 user.email === email &&
                 user.password === password &&

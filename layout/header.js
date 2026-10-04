@@ -34,8 +34,6 @@ function getServiceRole() {
         (currentUser.role === 'HR' || currentUser.role === 'Employee')) return currentUser.role;
     if (loggedInUserId && String(user?.id) === loggedInUserId &&
         (user.role === 'HR' || user.role === 'Employee')) return user.role;
-    if (!loggedInUserId && (currentUser?.role === 'HR' || currentUser?.role === 'Employee')) return currentUser.role;
-    if (!loggedInUserId && (user?.role === 'HR' || user?.role === 'Employee')) return user.role;
   } catch (_) { /* Ignore malformed demo storage. */ }
   return null;
 }
@@ -61,13 +59,6 @@ if (navbarContainer) {
   const aboutUrl = new URL('../Yasmeen_Telfah/aboutUs/aboutUs.html', navbarUrl);
   const feedbackFormUrl = new URL('../Yasmeen_Telfah/feedbackEmployees/feedbackEmployees.html', navbarUrl);
   const isHomepage = window.location.pathname === homepageUrl.pathname;
-  const themeClass = document.body.dataset.themeClass || 'dark-mode';
-  const themeKey = document.body.dataset.themeKey || 'mysta_theme';
-
-  try {
-    if (localStorage.getItem(themeKey) === 'dark') document.body.classList.add(themeClass);
-  } catch (_) { /* Theme persistence is optional. */ }
-
   fetch(navbarUrl)
     .then((response) => {
       if (!response.ok) throw new Error(`Navbar request failed: ${response.status}`);
@@ -78,7 +69,9 @@ if (navbarContainer) {
       if (!nav) throw new Error('Navbar markup was not found.');
 
       nav.querySelector('[data-brand-logo]').src = new URL('../assets/Logo-cropped.png', navbarUrl).href;
-      nav.querySelector('[data-service-page="profile"]').href = getProfileUrl();
+      const profileLink = nav.querySelector('[data-service-page="profile"]');
+      if (getServiceRole()) profileLink.href = getProfileUrl();
+      else profileLink.remove();
 
       nav.querySelectorAll('[data-page-anchor]').forEach((link) => {
         const anchor = `#${link.dataset.pageAnchor}`;
@@ -121,22 +114,6 @@ if (navbarContainer) {
           });
         }
       } catch (_) { /* Keep the login link when demo storage is unavailable. */ }
-
-      const themeButton = nav.querySelector('.theme-btn');
-      const updateThemeButton = () => {
-        const dark = document.body.classList.contains(themeClass);
-        themeButton.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
-        themeButton.querySelector('[data-theme-icon]').innerHTML = dark
-          ? '<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>'
-          : '<path d="M20.5 14.3A8.7 8.7 0 0 1 9.7 3.5 8.8 8.8 0 1 0 20.5 14.3Z"/>';
-      };
-      themeButton.addEventListener('click', () => {
-        document.body.classList.toggle(themeClass);
-        updateThemeButton();
-        try { localStorage.setItem(themeKey, document.body.classList.contains(themeClass) ? 'dark' : 'light'); }
-        catch (_) { /* Theme persistence is optional. */ }
-      });
-      updateThemeButton();
 
       const menuButton = nav.querySelector('.navbar-toggler');
       const menu = nav.querySelector('.navbar-content');

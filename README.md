@@ -2,9 +2,9 @@
 
 # 🏢 HR Management System
 
-### A Modern & Responsive Human Resources Management Platform
+### A modern, responsive Human Resources Management platform
 
-A front-end **HR Management System** designed to simplify employee management, task tracking, leave requests, company policies, feedback, meetings, and internal HR operations.
+A front-end HR Management System designed to simplify employee management, task tracking, leave requests, company policies, feedback, and internal HR operations.
 
 <br>
 
@@ -24,10 +24,9 @@ A front-end **HR Management System** designed to simplify employee management, t
 | Mockups • Wireframes • Prototype | Tasks • Workflow • Team Progress |
 
 <br>
+**🌐 Live Demo:** [View Website](LIVE_DEMO_LINK)
 
-**🌐 Live Demo:** [View Website](https://hr-management-system-group-4.github.io/HR-Management-System/Ahmad/Homepage/index.html)
-
-**📦 Repository:** [GitHub Repository](https://github.com/HR-Management-System-Group-4/HR-Management-System)
+**📦 Repository:** [GitHub Repository](GITHUB_REPOSITORY_LINK)
 
 ---
 
@@ -37,13 +36,9 @@ A front-end **HR Management System** designed to simplify employee management, t
 
 The **HR Management System** is a responsive web application created to organize and simplify common Human Resources operations inside a company.
 
-The system provides different functionality according to the logged-in user's role.
+The system provides different functionality according to the logged-in user's role. HR users can manage employees, tasks, leave requests, feedback, company policies, and meetings, while employees can manage their profiles, review assigned tasks, submit solutions, request leave, send feedback, and access company information.
 
-**HR users** can manage employees, tasks, leave requests, feedback, company policies, and meetings.
-
-**Employees** can manage their profiles, review assigned tasks, submit solutions, request leave, send feedback, view company policies, and access company meetings.
-
-The project was developed using **HTML5, CSS3, Bootstrap, JavaScript, JSON, and LocalStorage**, with a focus on responsive design, clean user experience, form validation, role-based functionality, and collaborative front-end development.
+The project was developed using **HTML5, CSS3, Bootstrap, JavaScript, JSON, and LocalStorage**, with a focus on responsive design, clean user experience, form validation, and role-based functionality.
 
 ---
 
@@ -51,13 +46,13 @@ The project was developed using **HTML5, CSS3, Bootstrap, JavaScript, JSON, and 
 
 ### 🔐 Authentication & Authorization
 
-- Client-side login using employee email and password.
+- Secure-style login flow using employee email and password.
 - JavaScript form validation.
-- Authentication using locally stored application data.
+- User authentication using data stored locally.
 - Automatic identification of the logged-in user's role.
 - Role-based redirection after login.
 - Session management using `LocalStorage`.
-- Dynamic navigation based on authentication state and user role.
+- Dynamic navigation depending on authentication status.
 
 ---
 
@@ -74,7 +69,7 @@ HR users have administrative access to the system and can:
 - Edit employee information.
 - Delete employees.
 - Search and filter employees.
-- Search employees by:
+- Search by:
   - Name
   - Email
   - Department
@@ -85,13 +80,13 @@ HR users have administrative access to the system and can:
 - Review submitted employee solutions.
 - Approve completed tasks.
 - Request changes when necessary.
-- Add notes to task submissions.
+- Add notes to employees' task submissions.
 - View all leave requests.
 - Approve or reject leave requests.
 - Filter leave requests by employee or status.
 - View company policies.
 - View employee feedback.
-- Manage company video meetings.
+- Manage video meetings.
 
 ### 👤 Employee
 
@@ -109,7 +104,7 @@ Employees can:
 - Track leave-request status.
 - View company policies.
 - Send feedback to HR.
-- Access company meetings.
+- Access video meetings.
 
 ---
 
@@ -177,30 +172,26 @@ Submitted
 Completed
 ```
 
-### HR Task Actions
+HR can:
 
-```text
-Create → Assign → Edit → Delete → Review → Approve
-```
+`Create → Assign → Edit → Delete → Review → Approve`
 
-### Employee Task Actions
+Employees can:
 
-```text
-View → Start → Submit Solution → Review Feedback → Resubmit
-```
+`View → Start → Submit Solution → Review Feedback → Resubmit`
 
 ---
 
 ## 🏖️ Leave Management
 
-Employees can submit leave requests containing:
+Employees can submit leave requests containing information such as:
 
 - Leave type
 - Start date
 - End date
 - Reason
 
-Employees can also view previous requests and track their current status.
+Employees can view their previous requests and track their status.
 
 HR can review all leave requests and:
 
@@ -215,13 +206,13 @@ HR can review all leave requests and:
 
 The system includes a dedicated **Company Policies** section.
 
-Policy information is loaded from JSON data and displayed to authenticated users through an accessible interface.
+Policy information is loaded from a JSON file and displayed to authenticated users in a clear and accessible interface.
 
 ---
 
 ## 💬 Feedback System
 
-Employees can send feedback to HR through the Contact / Feedback interface.
+Employees can communicate feedback to HR through the Contact / Feedback form.
 
 Submitted feedback is stored using `LocalStorage` and can later be reviewed from the HR side of the application.
 
@@ -229,13 +220,9 @@ Submitted feedback is stored using `LocalStorage` and can later be reviewed from
 
 ## 🎥 Video Meetings
 
-The platform includes functionality for company video meetings.
+The platform also includes functionality for company meetings.
 
-HR can manage employee meeting requests and create meeting rooms for approved requests.
-
-The current implementation supports **Jitsi meeting rooms**, while existing meeting links can also remain accessible where applicable.
-
-Meeting-related data is handled on the client side using browser storage.
+HR reviews employee requests and creates a unique Jitsi room for each approved request. The **Join now** button opens the room inside the site for HR and the employee. The first person starting a room on the public `meet.jit.si` service may need to sign in to Jitsi. Existing Zoom meeting links remain available through their original URL; HR can create a replacement Jitsi room from the meeting details. Request and room data are stored in browser `localStorage`, so both roles must use the same browser and site origin.
 
 ---
 
@@ -258,66 +245,65 @@ Status
 
 Employees can modify only the information they are permitted to edit.
 
-Changes are handled using JavaScript and persisted locally when required.
+Changes are handled through JavaScript and persisted locally when required.
 
 ---
 
-## 🏠 Main Pages & Modules
+## 🏠 Main Pages
 
-The application contains several connected pages and modules:
+The application is organized into several pages and modules:
 
 | Page / Module | Purpose |
 |---|---|
 | 🏠 Home | Introduction and overview of the platform |
 | 🔐 Login | User authentication |
-| 👤 Profile | Employee and HR profile information |
+| 👤 Profile | Employee information |
 | 👥 Employees | HR employee management |
-| ✅ Tasks | Task creation, assignment, submission and tracking |
-| 🏖️ Leave | Leave request submission and management |
+| ✅ Tasks | Task creation, assignment and tracking |
+| 🏖️ Leave | Leave request management |
 | 📜 Policies | Company policies |
 | 💬 Feedback | Employee-to-HR feedback |
 | 🎥 Meetings | Video meeting management |
 | ℹ️ About Us | Project and team information |
-| 📞 Contact Us | Contact information and feedback |
+| 📞 Contact Us | Contact information and feedback form |
 
 ---
 
 ## 🧭 Dynamic Navigation
 
-The navigation changes according to the authentication state and user role.
+The navigation bar changes according to the current user's authentication state and role.
 
-### Guest
+For example:
 
 ```text
-Home
-About
-Contact
-Login
+Guest
+→ Home
+→ About
+→ Contact
+→ Login
 ```
 
-### Employee
-
 ```text
-Home
-Profile
-Tasks
-Leave Requests
-Policies
-Meetings
-Logout
+Employee
+→ Home
+→ Profile
+→ Tasks
+→ Leave Requests
+→ Policies
+→ Meetings
+→ Logout
 ```
 
-### HR
-
 ```text
-Dashboard
-Employees
-Tasks
-Leave Requests
-Policies
-Feedback
-Meetings
-Logout
+HR
+→ Dashboard
+→ Employees
+→ Tasks
+→ Leave Requests
+→ Policies
+→ Feedback
+→ Meetings
+→ Logout
 ```
 
 ---
@@ -329,8 +315,8 @@ Logout
 | Technology | Usage |
 |---|---|
 | **HTML5** | Semantic page structure |
-| **CSS3** | Custom styling, layouts and animations |
-| **Bootstrap** | Responsive grid and UI components |
+| **CSS3** | Custom styles, animations and layouts |
+| **Bootstrap** | Grid system and responsive UI components |
 | **JavaScript** | Application logic and interactivity |
 
 ### Data & Storage
@@ -346,17 +332,17 @@ Logout
 | Tool | Usage |
 |---|---|
 | **Git** | Version control |
-| **GitHub** | Repository hosting and team collaboration |
+| **GitHub** | Repository and team collaboration |
 | **Figma** | Wireframes, mockups and prototype |
-| **Trello** | Agile workflow and task management |
+| **Trello** | Agile task and workflow management |
 
 ---
 
 ## 🗃️ Data Management
 
-Because the project is implemented as a front-end application, browser storage is used to simulate persistent application data.
+Since the project is implemented as a front-end application, browser storage is used to simulate persistent application data.
 
-`LocalStorage` is used for information such as:
+`LocalStorage` can manage information such as:
 
 ```text
 users
@@ -366,10 +352,9 @@ tasks
 leaveRequests
 feedback
 profileUpdates
-meetingData
 ```
 
-JSON files are also used for predefined application data such as employee information and company policies.
+JSON files are used for predefined data such as employee information and company policies.
 
 ---
 
@@ -409,82 +394,64 @@ It includes:
 - Responsive concepts
 - Interactive prototype
 
-### 👉 [Open Figma Design](https://www.figma.com/design/aWfk1DFm8dUlGnbCTTzprD/HR-Managment-Group4?node-id=0-1&t=DJYxDR35R90X3uMN-1)
+### 👉 [Open Figma Design](FIGMA_LINK)
 
 ---
 
 ## 📋 Project Management
 
-The project follows an **Agile / Scrum-style collaborative workflow**.
+The project follows an **Agile-style collaborative workflow**.
 
-Tasks, responsibilities, project progress, and workflow organization are managed through Trello.
+Tasks, assignments, progress, and project organization are managed through Trello.
 
-### Project Roles
-
-- **Product Owner:** Mohammad Azzam
-- **Scrum Master:** Sara Sawalmeh
-
-### 👉 [Open Trello Board](https://trello.com/invite/b/6abc0ac86c1336877c016551/ATTI3ae98a32a5bc0963957f3bd82ba0ccecCB5F0948/my-trello-board)
+### 👉 [Open Trello Board](TRELLO_LINK)
 
 ---
 
 ## 📁 Project Structure
 
-The repository is organized around the modules developed by the team, together with shared assets and layout components:
+The repository can generally be organized using the following structure:
 
 ```text
 HR-Management-System/
 │
-├── Ahmad/
-│   ├── Homepage/
-│   ├── HR-tasks/
-│   ├── HR-zoom/
-│   ├── Meeting-Zoom/
-│   └── Login/
-│
-├── Mohamad/
-│   ├── Employee-profile/
-│   ├── Employee-edit-profile/
-│   ├── Hr-profile/
-│   └── My-Employee-Information/
-│
-├── Sara_Dolat/
-│   ├── log in/
-│   ├── Leave-HR/
-│   └── company policies/
-│
-├── Sara_Sawalmeh/
-│   ├── Employee_Task/
-│   ├── Feedback_HR/
-│   └── Policies/
-│
-├── Timaaa/
-│   ├── Dashboard-HR/
-│   ├── Leave-application/
-│   ├── services/
-│   └── task_page/
-│
-├── Yasmeen_Telfah/
-│   ├── employeeManagement/
-│   ├── aboutUs/
-│   ├── feedbackEmployees/
-│   ├── feedbackHr/
-│   └── team/
-│
-├── Footer/
-├── Side_Bar/
-├── Json-Images/
-├── assets/
-├── layout/
-├── nav-bar/
-│
-├── employee.json
-├── layout.css
 ├── index.html
+│
+├── pages/
+│   ├── login.html
+│   ├── profile.html
+│   ├── employees.html
+│   ├── tasks.html
+│   ├── leave.html
+│   ├── policies.html
+│   ├── feedback.html
+│   ├── meetings.html
+│   ├── about.html
+│   └── contact.html
+│
+├── assets/
+│   ├── images/
+│   ├── icons/
+│   └── fonts/
+│
+├── css/
+│   └── style.css
+│
+├── js/
+│   ├── auth.js
+│   ├── employees.js
+│   ├── tasks.js
+│   ├── leave.js
+│   └── main.js
+│
+├── data/
+│   ├── employees.json
+│   └── policies.json
+│
 └── README.md
 ```
 
-The root `index.html` acts as the project entry point and routes users into the integrated application.
+> **Note:** Update this structure to match the actual folders and files used in the repository.
 
 ---
 
@@ -492,41 +459,29 @@ The root `index.html` acts as the project entry point and routes users into the 
 
 To run the project locally:
 
-### 1. Clone the Repository
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/HR-Management-System-Group-4/HR-Management-System.git
+git clone GITHUB_REPOSITORY_LINK
 ```
 
-### 2. Open the Project Folder
+### 2. Open the project folder
 
 ```bash
 cd HR-Management-System
 ```
 
-### 3. Run the Application
+### 3. Run the application
 
-Open the project using a local development server such as **Live Server**.
-
-You can start from:
+Open:
 
 ```text
 index.html
 ```
 
-or directly from:
+in your browser. The root page opens the homepage at `Ahmad/Homepage/index.html` while keeping its existing asset paths and page links intact.
 
-```text
-Ahmad/Homepage/index.html
-```
-
-Using a development server is recommended because some pages load JSON files and shared resources using `fetch()`.
-
-### 🌐 Online Version
-
-The deployed application is available through GitHub Pages:
-
-[Open Live Demo](https://hr-management-system-group-4.github.io/HR-Management-System/Ahmad/Homepage/index.html)
+Run the project through a local development server such as **Live Server** so pages that load JSON and shared layout files with `fetch()` work correctly.
 
 ---
 
@@ -534,7 +489,7 @@ The deployed application is available through GitHub Pages:
 
 JavaScript validation is implemented throughout relevant forms to help ensure that user-entered information is valid before being processed.
 
-Validation is used for:
+Validation is used for functionality such as:
 
 ```text
 Login
@@ -549,28 +504,28 @@ Feedback Forms
 
 ## 🔄 Git & GitHub Workflow
 
-The project was developed collaboratively using Git and GitHub.
+The project is developed collaboratively using Git and GitHub.
 
-A typical development workflow is:
+A typical workflow is:
 
 ```bash
 # Update local repository
 git pull origin main
 
-# Create or switch to a feature branch
+# Create or switch to your branch
 git checkout -b feature/feature-name
 
-# Stage changes
+# Add changes
 git add .
 
 # Commit changes
 git commit -m "Add feature description"
 
-# Push the branch
+# Push branch
 git push origin feature/feature-name
 ```
 
-Changes are then reviewed, integrated, and merged into the main project branch.
+Changes can then be reviewed and merged into the main branch.
 
 ---
 
@@ -578,25 +533,14 @@ Changes are then reviewed, integrated, and merged into the main project branch.
 
 This project was built collaboratively by **Group 4**.
 
-### 🧭 Team Roles
-
-| Role | Team Member |
-|---|---|
-| 📌 **Product Owner** | **Mohammad Azzam** |
-| 🔄 **Scrum Master** | **Sara Sawalmeh** |
-
-### 👥 Team Members & Contributions
-
 | Team Member | GitHub | Main Contribution |
 |---|---|---|
-| **Mohammad Azzam** — Product Owner | [@moazzam9444-wq](https://github.com/moazzam9444-wq) | Employee & HR profile pages, profile editing, employee information views, and employee JSON/data updates. |
-| **Sara Sawalmeh** — Scrum Master | [@sarasawalmeh30-debug](https://github.com/sarasawalmeh30-debug) | Company Policies, Employee Task pages, and HR Feedback review interfaces. |
-| **Yasmeen Telfah** | [@yasmeenht](https://github.com/yasmeenht) | Employee Management module, About Us styling, responsive UI refinements, and dark/light mode implementation. |
-| **Ahmad Bani Hamad** | [@ahmadfa100](https://github.com/ahmadfa100) | Homepage and About section, HR Task Management, meeting integration, shared navigation, and project-wide integration fixes. |
-| **Sara Al-Doulat** | [@saraaldoulat2749-art](https://github.com/saraaldoulat2749-art) | Login/authentication interface and logic, plus HR leave-request review and management. |
-| **Taima Afreahat** | [@taimaafreahat4](https://github.com/taimaafreahat4) | HR Dashboard, Leave Application, Services page, and related dashboard functionality. |
+| **[Member Name]** | [@username](GITHUB_PROFILE_LINK) | [Pages / Features / Responsibilities] |
+| **[Member Name]** | [@username](GITHUB_PROFILE_LINK) | [Pages / Features / Responsibilities] |
+| **[Member Name]** | [@username](GITHUB_PROFILE_LINK) | [Pages / Features / Responsibilities] |
+| **[Member Name]** | [@username](GITHUB_PROFILE_LINK) | [Pages / Features / Responsibilities] |
 
-### 🤝 Shared Repository Contributions
+### Repository Contributions
 
 The team collaborated on:
 
@@ -606,36 +550,31 @@ The team collaborated on:
 ⚙️ JavaScript Functionality
 📦 LocalStorage Data Management
 🧑‍💼 HR Dashboard
-👤 Employee Profiles
-👥 Employee Management
+👤 Employee Dashboard
 ✅ Task Management
 🏖️ Leave Management
 💬 Feedback System
 📜 Company Policies
-🎥 Video Meetings
 📱 Responsive Design
 🧪 Testing & Debugging
 🔀 Git / GitHub Collaboration
 ```
 
+> Replace the placeholders above with each team member's real name, GitHub username, and specific contribution.
+
 ---
 
 ## 🤝 Team Collaboration
 
-Development responsibilities were distributed among team members while maintaining a shared visual identity and consistent application behavior.
+Development responsibilities were distributed among team members while maintaining a shared design system and consistent application behavior.
 
-The team used:
-
-- **GitHub** for source control, feature branches, integration, and collaboration.
-- **Trello** for task organization and project progress.
-- **Figma** for UI/UX design, wireframes, mockups, and prototyping.
-- **Agile / Scrum-style practices** to organize responsibilities and teamwork.
+GitHub was used for source control and code collaboration, **Trello** for task organization and progress tracking, and **Figma** for UI/UX design and prototyping.
 
 ---
 
 ## 🎯 Project Goals
 
-The main goals of the project are to demonstrate practical understanding of:
+The main goals of this project are to demonstrate practical understanding of:
 
 ```text
 ✓ Semantic HTML
@@ -664,13 +603,13 @@ The project can later be expanded with technologies and features such as:
 • Real back-end authentication
 • REST API integration
 • SQL / NoSQL database
-• Secure password hashing
+• Password encryption
 • Email notifications
 • Advanced HR analytics
 • Attendance management
 • Payroll management
 • Real-time notifications
-• Cloud database integration
+• Cloud deployment
 ```
 
 ---
@@ -682,13 +621,10 @@ The project can later be expanded with technologies and features such as:
 | **Project** | HR Management System |
 | **Team** | Group 4 |
 | **Type** | Front-End Web Application |
-| **Methodology** | Agile / Scrum-style Team Development |
-| **Product Owner** | Mohammad Azzam |
-| **Scrum Master** | Sara Sawalmeh |
+| **Methodology** | Agile / Team-Based Development |
 | **Design** | Figma |
 | **Project Management** | Trello |
 | **Version Control** | Git & GitHub |
-| **Deployment** | GitHub Pages |
 
 ---
 
@@ -696,13 +632,13 @@ The project can later be expanded with technologies and features such as:
 
 ## 🌟 HR Management System
 
-**Manage People. Organize Work. Simplify HR.**
+**Manage people. Organize work. Simplify HR.**
 
 <br>
 
 ### 🔗 Quick Links
 
-**[Figma](https://www.figma.com/design/aWfk1DFm8dUlGnbCTTzprD/HR-Managment-Group4?node-id=0-1&t=DJYxDR35R90X3uMN-1) • [Trello](https://trello.com/invite/b/6abc0ac86c1336877c016551/ATTI3ae98a32a5bc0963957f3bd82ba0ccecCB5F0948/my-trello-board) • [Live Demo](https://hr-management-system-group-4.github.io/HR-Management-System/Ahmad/Homepage/index.html) • [Repository](https://github.com/HR-Management-System-Group-4/HR-Management-System)**
+**[Figma](FIGMA_LINK) • [Trello](TRELLO_LINK) • [Live Demo](LIVE_DEMO_LINK) • [Repository](GITHUB_REPOSITORY_LINK)**
 
 <br>
 

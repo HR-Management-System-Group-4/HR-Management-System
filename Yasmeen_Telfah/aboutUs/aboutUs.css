@@ -630,6 +630,24 @@ body {
     margin: 0;
 }
 
+.finalMoment {
+    background-color: var(--color-text-primary);
+    border-color: var(--color-text-primary);
+}
+
+.finalMoment h3 {
+    color: var(--color-surface);
+}
+
+.finalMoment > p:last-child {
+    color: var(--color-border);
+}
+
+.finalMoment .storySmallTitle,
+.finalMoment > span {
+    color: var(--color-accent);
+}
+
 .storyStatement {
     margin-top: 14px;
     padding: 65px 55px;
