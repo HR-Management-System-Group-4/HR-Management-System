@@ -1,95 +1,101 @@
-fetch("../../employee.json")
-    .then(response => response.json())
-    .then(data => {
+let policies = JSON.parse(localStorage.getItem("policies")) || [];
 
-        let policies = data.policies;
-        let container = document.getElementById("policies");
+displayPolicies(policies);
 
-        policies.forEach(policy => {
 
-            let div = document.createElement("div");
+// عرض الـ Policies
+function displayPolicies(policies) {
 
-            div.className = "policy";
+    let container = document.getElementById("policies");
 
-            div.innerHTML = `
-                
-                <div class="policy-header-row">
+    container.innerHTML = "";
 
-                    <div>
+    // فقط الـ Policies المنشورة تظهر للـEmployee
+    let publishedPolicies = policies.filter(
+        policy => policy.status === "PUBLISHED"
+    );
 
-                        <div class="policy-title">
+    publishedPolicies.forEach(policy => {
 
-                            <i class="${policy.icon}"></i>
+        let div = document.createElement("div");
 
-                            <span class="policy-name">
-                                ${policy.name}
-                            </span>
+        div.className = "policy";
 
-                        </div>
+        div.innerHTML = `
+            
+            <div class="policy-header-row">
 
-                        <div class="policy-date">
-                            Last updated: ${policy.lastUpdated}
-                        </div>
+                <div>
+
+                    <div class="policy-title">
+
+                        <i class="fa-solid fa-file-lines"></i>
+
+                        <span class="policy-name">
+                            ${policy.title}
+                        </span>
 
                     </div>
 
-                    <button class="policy-button">
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </button>
+                    <div class="policy-date">
+                        Category: ${policy.category}
+                    </div>
 
                 </div>
 
+                <button class="policy-button">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
 
-                <div class="policy-details">
+            </div>
 
-                    <p>
-                        ${policy.shortDescription}
-                    </p>
 
-                    ${showDetails(policy.details)}
+            <div class="policy-details">
 
-                </div>
-            `;
+                <p>
+                    ${policy.description}
+                </p>
 
-            container.appendChild(div);
+                <p>
+                    <strong>Status:</strong>
+                    ${policy.status}
+                </p>
 
-            let header = div.querySelector(".policy-header-row");
+            </div>
+        `;
 
-            header.addEventListener("click", function () {
+        container.appendChild(div);
 
-                // إغلاق باقي الـ Policies
-                document.querySelectorAll(".policy").forEach(item => {
-                    if (item !== div) {
-                        item.classList.remove("active");
-                    }
-                });
 
-                // فتح أو إغلاق الحالية
-                div.classList.toggle("active");
+        let header = div.querySelector(".policy-header-row");
+
+        header.addEventListener("click", function () {
+
+            document.querySelectorAll(".policy").forEach(item => {
+
+                if (item !== div) {
+                    item.classList.remove("active");
+                }
 
             });
 
+            div.classList.toggle("active");
+
         });
 
-    })
-    .catch(error => {
-        console.log("Error:", error);
     });
+}
 
 
-function showDetails(details) {
+// تحديث الصفحة إذا الـHR عمل تعديل
+window.addEventListener("storage", function (event) {
 
-    let result = "";
+    if (event.key === "policies") {
 
-    for (let key in details) {
+        let policies = JSON.parse(event.newValue) || [];
 
-        result += `
-            <p>
-                <strong>${key}:</strong>
-                ${details[key]}
-            </p>
-        `;
+        displayPolicies(policies);
+
     }
 
-    return result;
-}
+});

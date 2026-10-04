@@ -33,6 +33,8 @@ iframe {
     overflow-y: auto;
 }
 
+/* HEADER */
+
 header {
     padding: 100px 40px 30px;
 }
@@ -55,8 +57,7 @@ header span {
 }
 
 main {
-    width: 100%;
-    padding: 12px 40px ;
+    padding: 12px 40px;
 }
 
 /* SUMMARY */
@@ -138,7 +139,7 @@ main {
 
 #filter button.active,
 #filter button:hover {
-    background: var(--color-accent); 
+    background: var(--color-accent);
     color: var(--color-surface);
 }
 
@@ -222,7 +223,7 @@ button {
     line-height: 1.6;
 }
 
-/* RESPONSIVE */
+/* ================= RESPONSIVE ================= */
 
 @media (max-width: 1200px) {
 
@@ -230,12 +231,17 @@ button {
         width: 250px;
     }
 
+    header {
+        padding: 70px 25px 25px;
+    }
+
     main {
-        padding: 0 8px 30px;
+        padding: 10px 25px 30px;
     }
 
     .summary {
         grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
     }
 
     .card {
@@ -244,7 +250,7 @@ button {
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
 
     body {
         overflow: auto;
@@ -262,24 +268,24 @@ button {
 
     .page {
         width: 100%;
-        height: calc(100vh - 70px);
+        height: auto;
+        overflow: visible;
     }
 
     header {
-        padding: 25px 15px;
+        padding: 30px 20px 20px;
     }
 
     header h1 {
-        font-size: 30px;
+        font-size: 32px;
     }
 
     header span {
-        font-size: 14px;
+        font-size: 15px;
     }
 
     main {
-        width: 100%;
-        padding: 0 15px 30px;
+        padding: 10px 20px 30px;
     }
 
     .summary {
@@ -288,11 +294,12 @@ button {
     }
 
     .summary-card {
-        min-height: 100px;
+        min-height: 110px;
+        padding: 20px;
     }
 
     .summary-card h2 {
-        font-size: 27px;
+        font-size: 28px;
     }
 
     .card {
@@ -312,8 +319,9 @@ button {
     }
 
     #filter {
-        padding: 10px;
+        width: 100%;
         gap: 8px;
+        padding: 10px;
     }
 
     #filter button {

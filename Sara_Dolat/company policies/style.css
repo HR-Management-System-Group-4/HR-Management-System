@@ -11,26 +11,6 @@ body {
     background: var(--color-background);
     color: var(--color-text-primary);
 }
-.back-link {
-    color: var(--color-text-primary);
-    text-decoration: none;
-    font-weight: 600;
-
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-
-    margin-bottom: 20px;
-    font-size: 0.9rem;
-}
-
-.back-link:hover {
-    color: var(--color-accent);
-}
-.page {
-    min-height: 100vh;
-    padding: 55px 5%;
-}
 
 /* BACK */
 .back-link {
@@ -42,6 +22,16 @@ body {
     font-weight: 600;
     font-size: 15px;
     text-decoration: none;
+}
+
+.back-link:hover {
+    color: var(--color-accent);
+}
+
+/* PAGE */
+.page {
+    min-height: 100vh;
+    padding: 55px 5%;
 }
 
 /* HEADER */
@@ -90,11 +80,13 @@ body {
     box-shadow: 0 8px 25px var(--color-border);
 }
 
+/* POLICY HEADER */
 .policy-header-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 24px;
+    cursor: pointer;
 }
 
 .policy-title {
@@ -103,7 +95,6 @@ body {
     gap: 14px;
 }
 
-/* ICON */
 .policy-title i {
     display: flex;
     align-items: center;
@@ -125,8 +116,9 @@ body {
     font-weight: 700;
 }
 
+/* CATEGORY */
 .policy-date {
-    margin: 9px 0 0 60px;
+    margin: 3px 0 0 60px;
     font-size: 13px;
     color: var(--color-text-muted);
 }
@@ -160,11 +152,17 @@ body {
     margin-bottom: 8px;
 }
 
+.policy-details strong {
+    color: var(--color-text-primary);
+}
+
 .policy.active .policy-details {
     display: block;
 }
 
-/* RESPONSIVE */
+
+/* ================= RESPONSIVE ================= */
+
 @media (max-width: 1200px) {
 
     .page {
@@ -203,7 +201,7 @@ body {
     }
 
     .policy-date {
-        margin-left: 56px;
+        margin: 3px 0 0 56px;
         font-size: 12px;
     }
 

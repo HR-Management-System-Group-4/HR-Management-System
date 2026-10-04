@@ -1,8 +1,4 @@
-let requests = JSON.parse(localStorage.getItem("leaveApplications")) || [
-  { id: 1, name: "Ahmad Saleh", leaveType: "Annual Leave", date: "12 - 16 Oct 2026", reason: "Family holiday planned in advance.", status: "Pending" },
-  { id: 2, name: "Dana Rimawi", leaveType: "Annual Leave", date: "4 - 5 Oct 2026", reason: "Personal commitments.", status: "Approved" },
-  { id: 3, name: "Tariq Hijazi", leaveType: "Sick Leave", date: "27 Sep 2026", reason: "Medical appointment.", status: "Rejected" }
-];
+let requests = JSON.parse(localStorage.getItem("leaveApplications")) || [];
 
 let box = document.getElementById("requests");
 
