@@ -86,6 +86,7 @@ element.textContent = message;
 }
 
 }
+//قبل كل submit لازم امسح كل الايرورز
 function clearErrors(){
 
 document
@@ -169,8 +170,8 @@ function(event){
 event.preventDefault();
 clearErrors();
 let valid = true;
-// Leave type
 
+// Leave type
 if(leaveType.value===""){
 
 invalid(leaveType);
@@ -319,9 +320,7 @@ localStorage.setItem(
 JSON.stringify(requests)
 );
 renderMyRequests();
-alert(
-"Leave application submitted successfully!"
-);
+document.getElementById("successDialog").showModal();
 leaveForm.reset();
 hoursGroup.style.display="none";
 otherLeaveBox.style.display="none";
@@ -359,6 +358,7 @@ requests.filter(item=>{
 return !currentUser ||
 item.employee === currentUser.name;
 });
+//min ==>الطلبات بتاعت الموظف الحالي
 if(mine.length===0){
 list.innerHTML =
 `
@@ -400,3 +400,12 @@ ${item.status}
 }
 
 renderMyRequests();
+document
+.getElementById("successOk")
+.addEventListener("click",function(){
+
+document
+.getElementById("successDialog")
+.close();
+
+});
