@@ -1,4 +1,3 @@
-
 // ==========================
 // 1. Settings
 // ==========================
@@ -20,8 +19,7 @@ const fields = [
 
 const selects = [
     "employmentType",
-    "workLocation",
-    "accountState"
+    "workLocation"
 ];
 
 let profile = null;
@@ -101,15 +99,6 @@ function displayProfile() {
         `${profile.position || ""} • ${profile.department || ""}`;
 
     el("headerId").textContent = id;
-
-    const status = profile.accountState || "Not provided";
-    const statusBadge = el("headerStatus");
-
-    statusBadge.textContent = status;
-    statusBadge.classList.toggle(
-        "is-active",
-        status.toLowerCase() === "active"
-    );
 
     el("employeeId").textContent = id;
 
@@ -446,8 +435,7 @@ el("hrForm").addEventListener(
                 emergencyContactPhone: value("contactPhone"),
                 startDate: value("startDate"),
                 employmentType: value("employmentType"),
-                workLocation: value("workLocation"),
-                accountState: value("accountState")
+                workLocation: value("workLocation")
             };
 
             if (newImage) {

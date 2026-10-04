@@ -46,7 +46,6 @@ function displayProfile(employee) {
     setText("employeeName", employee.name);
     setText("employeePosition", employee.position);
     setText("employeeIdBadge", employeeId);
-    setText("employeeStatusBadge", employee.accountState);
     setText("employeeTypeBadge", employee.employmentType);
 
     // Personal information
@@ -60,7 +59,6 @@ function displayProfile(employee) {
     // Employment information
     setText("employmentType", employee.employmentType);
     setText("employmentLocation", employee.workLocation);
-    setText("employmentStatus", employee.accountState);
     setText("employmentStart", employee.startDate);
 
     // Profile image
