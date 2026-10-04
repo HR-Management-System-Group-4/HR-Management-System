@@ -54,13 +54,13 @@ const services = {
     number: '01', name: 'EMPLOYEE PROFILE', title: 'Your details,<br>always in one place.',
     description: 'Access and manage personal and employment information.',
     pill: 'EMP-1042 · Active',
-    items: ['View your employment details', 'Keep contact information current', 'Store your emergency contact', 'View and download your CV'],
+    items: ['View your employment details', 'Keep contact information current', 'Store your emergency contact'],
     action: 'Open your profile', hrAction: 'Open your HR profile'
   },
   tasks: {
     number: '02', name: 'TASK MANAGEMENT', title: 'Stay on top of<br>every task.',
     description: 'View assigned work, send solutions, and follow progress.',
-    pill: '3 tasks · In progress',
+    pill: null,
     items: ['See tasks assigned to you', 'Check priorities and due dates', 'Submit your work to HR', 'Track review and completion'],
     action: 'View your tasks', hrAction: 'Manage tasks'
   },
@@ -161,7 +161,9 @@ function renderService(key) {
 
   document.querySelector('#previewNumber').textContent = service.number;
   document.querySelector('#previewTitle').textContent = service.name;
-  document.querySelector('#previewPill').innerHTML = `<span></span> ${service.pill}`;
+  const previewPill = document.querySelector('#previewPill');
+  previewPill.hidden = !service.pill;
+  if (service.pill) previewPill.innerHTML = `<span></span> ${service.pill}`;
   document.querySelector('#previewList').replaceChildren(...service.items.map(item => {
     const li = document.createElement('li');
     li.textContent = item;

@@ -1,16 +1,10 @@
 /* The two storytelling sections use the shared palette in assets/Colors.css. */
-.section-tag { display: inline-flex; align-items: center; gap: 17px; padding: 10px 24px; border: 1px solid var(--color-border); border-radius: 40px; color: var(--color-text-secondary); background: var(--color-surface-blue); font-size: 14px; font-weight: 700; letter-spacing: .08em; }
-.section-tag b { color: var(--color-accent); font-size: 20px; letter-spacing: 0; }
-.section-tag i { width: 26px; height: 1px; background: var(--color-border); }
 .about-section a, .problems-section a { text-decoration: none; }
 
 .about-section { position: relative; min-height: 620px; padding: clamp(72px, 6vw, 98px) max(5%, calc((100% - 1440px)/2)) 92px; isolation: isolate; overflow: hidden; background: var(--color-background); }
 .about-section::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background-image: radial-gradient(var(--color-accent) 1px, transparent 1.7px); background-size: 16px 16px; opacity: .12; mask-image: radial-gradient(circle at 96% 7%, #000 0 11%, transparent 23%), radial-gradient(circle at 6% 90%, #000 0 9%, transparent 19%); }
 .about-inner { position: relative; z-index: 2; width: min(55%, 690px); }
-.about-tag { padding: 0; border: 0; border-radius: 0; color: var(--color-text-secondary); background: transparent; font: 700 15px var(--font-mono); letter-spacing: .19em; }
-.about-tag b { color: var(--color-accent); font-size: 19px; }
-.about-tag i { order: 0; width: 85px; margin: 0 8px; background: var(--color-border); }
-.about-section h2 { margin: clamp(42px, 4vw, 62px) 0 20px; color: var(--color-text-primary); font-size: clamp(54px, 5.1vw, 78px); line-height: .98; font-weight: 800; letter-spacing: -.068em; }
+.about-section h2 { margin: 0 0 20px; color: var(--color-text-primary); font-size: clamp(54px, 5.1vw, 78px); line-height: .98; font-weight: 800; letter-spacing: -.068em; }
 .about-section .title-line { display: block; white-space: nowrap; }
 .about-section .title-gradient { width: fit-content; padding-right: .08em; background: linear-gradient(92deg, var(--color-accent) 0%, var(--color-accent-contrast) 100%); background-size: 200% 100%; background-clip: text; -webkit-text-fill-color: transparent; }
 .about-section.is-energized .title-gradient { animation: aboutShine .7s ease-out; }
@@ -23,14 +17,11 @@
 .about-button:hover i { transform: rotate(-35deg); }
 .about-visual { position: absolute; z-index: 1; inset: 0; pointer-events: none; }
 .about-network { display: block; width: 100%; height: 100%; }
-.story-tag { padding: 0; border: 0; border-radius: 0; background: transparent; font: 700 14px var(--font-mono); letter-spacing: .16em; }
-.story-tag b { font-size: 19px; }
-.story-tag i { width: 70px; background: currentColor; opacity: .35; }
 
 .problems-section { position: relative; min-height: clamp(620px, 46vw, 780px); padding: 40px 5% 80px; isolation: isolate; overflow: hidden; color: #151827; background: #e9f3f7; text-align: center; }
 .problems-background, .problems-light { position: absolute; inset: 0; pointer-events: none; }
-.problems-background { z-index: -3; background: url("assets/From Office Chaos to Calm.png") center center / contain no-repeat; }
-.problems-light { z-index: -2; background: linear-gradient(90deg, rgba(255,255,255,.02) 17%, rgba(255,255,255,.28) 37%, rgba(255,255,255,.4) 56%, rgba(255,255,255,.03) 79%), linear-gradient(180deg, rgba(255,255,255,.15), transparent 58%, rgba(255,255,255,.28)); }
+.problems-background { z-index: -3; background: url("assets/From Office Chaos to Calm.png") center center / cover no-repeat; filter: blur(12px) saturate(.8); transform: scale(1.045); }
+.problems-light { z-index: -2; background: linear-gradient(90deg, rgba(255,255,255,.62), rgba(255,255,255,.72) 48%, rgba(255,255,255,.56)), linear-gradient(180deg, rgba(235,246,249,.2), rgba(235,246,249,.45)); }
 .problems-energy { position: absolute; z-index: -1; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
 .problems-energy path { fill: none; stroke: var(--color-accent); stroke-width: 1.8; opacity: .32; stroke-dasharray: 1900; stroke-dashoffset: 1900; filter: drop-shadow(0 0 9px rgba(124,213,199,.85)); }
 .problems-energy path:nth-child(2) { stroke: var(--color-mint-strong); stroke-width: 2.4; opacity: .55; }
@@ -69,7 +60,7 @@
 @media (max-width: 900px) {
   .about-section { min-height: 0; padding: 65px 5% 50px; }
   .about-inner { width: min(100%, 690px); }
-  .about-section h2 { margin-top: 45px; font-size: clamp(50px, 7.3vw, 66px); }
+  .about-section h2 { margin-top: 0; font-size: clamp(50px, 7.3vw, 66px); }
   .about-visual { position: relative; width: 100%; height: 315px; margin-top: 6px; }
   .problems-section { min-height: 0; padding: 38px 5% 50px; }
   .problems-section h2 { margin-top: 82px; font-size: clamp(55px, 7.4vw, 76px); }
@@ -77,17 +68,12 @@
 }
 @media (max-width: 600px) {
   .about-section { padding: 52px 6% 38px; }
-  .about-tag { font-size: 11px; }
-  .about-tag i { width: 45px; }
-  .about-section h2 { margin: 38px 0 18px; font-size: clamp(40px, 9vw, 54px); }
+  .about-section h2 { margin: 0 0 18px; font-size: clamp(40px, 9vw, 54px); }
   .about-section .title-line { white-space: normal; }
   .about-section p { font-size: 15px; }
   .about-button { min-width: 215px; min-height: 54px; padding-left: 22px; font-size: 14px; }
   .about-button i { width: 40px; height: 40px; }
   .about-visual { width: 100%; height: 255px; margin: 8px auto 0; }
-  .story-tag { font-size: 11px; }
-  .story-tag b { font-size: 16px; }
-  .story-tag i { width: 42px; }
   .problems-section { padding: 28px 5% 35px; }
   .problems-section h2 { margin: 74px 0 19px; font-size: clamp(43px, 10vw, 58px); }
   .problems-section p { font-size: 16px; }
