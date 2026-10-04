@@ -105,7 +105,7 @@ async function loadProfile() {
         displayProfile(profile);
     } catch (error) {
         console.error(error);
-        alert("Unable to load profile");
+        showAlert("error", "Loading Failed", "Unable to load your profile. Please try again.");
     }
 }
 

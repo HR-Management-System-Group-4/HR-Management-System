@@ -26,22 +26,7 @@ let selectedImage = null;
 // 2. Unified Alert Messages
 // =========================
 
-function showMessage(type, title, message) {
-    return Swal.fire({
-        icon: type,
-        title: title,
-        text: message,
-        confirmButtonText: "OK",
-        confirmButtonColor: "#232743",
-        background: "#ffffff",
-        color: "#232743",
-        buttonsStyling: false,
-        customClass: {
-            popup: "mysta-popup",
-            confirmButton: "mysta-confirm"
-        }
-    });
-}
+const showMessage = showAlert;
 
 
 // =========================

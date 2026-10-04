@@ -33,19 +33,7 @@ let imageLoading = false;
 // 2. Unified Messages
 // ==========================
 
-function showMessage(type, title, message) {
-    return Swal.fire({
-        icon: type,
-        title: title,
-        text: message,
-        confirmButtonText: "OK",
-        buttonsStyling: false,
-        customClass: {
-            popup: "mysta-popup",
-            confirmButton: "mysta-confirm"
-        }
-    });
-}
+const showMessage = showAlert;
 
 
 // ==========================

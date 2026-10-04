@@ -383,7 +383,7 @@ taskForm.onsubmit = function (event) {
   event.preventDefault();
 
   if (selectedEmployees.length == 0) {
-    showToast("Please select at least one employee.");
+    showAlert("error", "Employee Required", "Please select at least one employee.");
 
     return;
   }
@@ -459,7 +459,7 @@ taskForm.onsubmit = function (event) {
       return String(item.id) === taskId;
     });
     if (!existingTask) {
-      showToast("This task no longer exists. Refresh the page and try again.");
+      showAlert("error", "Task Not Found", "This task no longer exists. Refresh the page and try again.");
       return;
     }
     existingTask.title = taskTitle;
@@ -483,7 +483,7 @@ taskForm.onsubmit = function (event) {
   try {
     localStorage.setItem("tasks", JSON.stringify(nextTasks));
   } catch (_) {
-    showToast("Could not save the task in this browser. Check available storage and try again.");
+    showAlert("error", "Save Failed", "Could not save the task in this browser. Check available storage and try again.");
     return;
   }
   tasks = nextTasks;
@@ -492,7 +492,7 @@ taskForm.onsubmit = function (event) {
   }
 
   displayTasks();
-  showToast(isCreating ? "Task added successfully." : "Task updated successfully.");
+  showAlert("success", isCreating ? "Task Added!" : "Task Updated!", isCreating ? "The task has been added successfully." : "The task has been updated successfully.");
 
   taskForm.reset();
 
@@ -979,7 +979,7 @@ confirmDeleteButton.onclick = function () {
 
   taskToDelete = "";
 
-  showToast("Task deleted successfully.");
+  showAlert("success", "Task Deleted!", "The task has been deleted successfully.");
 };
 
 // ========================================
@@ -1032,7 +1032,7 @@ function reviewCurrentSubmission(status) {
 }
 
 approveButton.onclick = function () {
-  if (reviewCurrentSubmission("Completed")) showToast("Submission approved.");
+  if (reviewCurrentSubmission("Completed")) showAlert("success", "Submission Approved!", "The submission has been approved successfully.");
 };
 
 // ========================================
@@ -1045,12 +1045,12 @@ requestChangesButton.onclick = function () {
   let feedback = document.getElementById("reviewFeedback").value;
 
   if (feedback.trim() == "") {
-    showToast("Please add feedback first.");
+    showAlert("error", "Feedback Required", "Please add feedback before requesting changes.");
 
     return;
   }
 
-  if (reviewCurrentSubmission("In Progress")) showToast("Changes requested.");
+  if (reviewCurrentSubmission("In Progress")) showAlert("success", "Changes Requested!", "Your feedback has been sent to the employee.");
 };
 
 // ========================================

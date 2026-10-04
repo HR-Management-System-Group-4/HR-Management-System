@@ -41,6 +41,7 @@ resolveButton.addEventListener('click', () => {
     resolveButton.textContent =feedback.status === 'Reviewed' ? '✓ Resolved' : 'Resolve';
 
     localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
+    showAlert('success', feedback.status === 'Reviewed' ? 'Feedback Resolved!' : 'Feedback Reopened!', feedback.status === 'Reviewed' ? 'The feedback has been marked as reviewed.' : 'The feedback has been marked as new.');
     updateCounts();
 });
 

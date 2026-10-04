@@ -383,6 +383,7 @@ btn_submit_solution.addEventListener("click", async function () {
     btn_submit_solution.disabled = false;
     errorMsg.style.display = "none";
     taskModal.style.display = "none";
+    showAlert("success", existingIndex !== -1 ? "Submission Updated!" : "Task Submitted!", existingIndex !== -1 ? "Your submission has been updated successfully." : "Your task has been submitted successfully.");
 });
 // إغلاق صفحه ال popup
 closeModalBtn.addEventListener("click", function () {

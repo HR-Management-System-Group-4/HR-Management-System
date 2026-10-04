@@ -84,12 +84,12 @@ form.addEventListener('submit', (event) => {
     localStorage.setItem(storageKey, JSON.stringify(requests));
     localStorage.setItem(activeRequestKey, request.id);
   } catch (error) {
-    feedback.textContent = 'Your request could not be saved. Please try again.';
+    showAlert('error', 'Save Failed', 'Your meeting request could not be saved. Please try again.');
     return;
   }
   form.reset();
   document.querySelector('#messageCount').textContent = '0';
-  feedback.textContent = 'Your meeting request was saved. HR can review it on this device and browser.';
+  showAlert('success', 'Request Submitted!', 'Your meeting request has been saved and sent to HR.');
   showLastRequest();
 });
 

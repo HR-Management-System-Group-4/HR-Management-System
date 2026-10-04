@@ -63,11 +63,13 @@ function show(data) {
 
 function changeStatus(id, status) {
   let request = requests.find(r => r.id == id);
-  if (request) request.status = status;
+  if (!request) return;
+  request.status = status;
 
   save();
   updateCounts();
   show(requests);
+  showAlert("success", status === "Approved" ? "Request Approved!" : "Request Rejected!", `The leave request has been ${status.toLowerCase()} successfully.`);
 }
 
 function approve(id) {

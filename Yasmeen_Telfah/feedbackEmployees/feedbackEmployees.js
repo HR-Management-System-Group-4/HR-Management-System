@@ -1,41 +1,42 @@
-let feedbackCategory = document.querySelector("#feedbackCategory");
-let feedback = document.querySelector("#feedbackMessage");
-let subject = document.querySelector("#feedbackSubject")
-let submit = document.querySelector("#submitFeedback");
+const feedbackForm = document.querySelector("#submitFeedback").form;
 
-
-submit.form.addEventListener("submit", function(event){
+feedbackForm.addEventListener("submit", function (event) {
     event.preventDefault();
-    let anonymous = document.querySelector("#anonymousFeedback");
-    if(anonymous.checked){
-        let newFeedback = {
-            name: "Anonymous",
-            category: feedbackCategory.value,
-            subject: subject.value,
-            message: feedback.value
+
+    const anonymous = document.querySelector("#anonymousFeedback").checked;
+    let user;
+    if (!anonymous) {
+        try {
+            user = JSON.parse(localStorage.getItem("user"));
+        } catch {
+            user = null;
         }
-        let feedbacks = JSON.parse(localStorage.getItem("feedbacks")) || [];
+        if (!user?.name) {
+            showAlert("error", "Submission Failed", "Please sign in before submitting feedback with your name.");
+            return;
+        }
+    }
+
+    const newFeedback = {
+        name: anonymous ? "Anonymous" : user.name,
+        category: document.querySelector("#feedbackCategory").value,
+        subject: document.querySelector("#feedbackSubject").value,
+        message: document.querySelector("#feedbackMessage").value
+    };
+
+    try {
+        const feedbacks = JSON.parse(localStorage.getItem("feedbacks") || "[]");
+        if (!Array.isArray(feedbacks)) throw new Error("Invalid feedback data");
         feedbacks.push(newFeedback);
         localStorage.setItem("feedbacks", JSON.stringify(feedbacks));
-        document.querySelector("#feedbackResult").textContent = "Feedback submitted anonymously";
-        event.target.reset();
+    } catch (error) {
+        console.error("Feedback could not be saved:", error);
+        showAlert("error", "Submission Failed", "Your feedback could not be saved. Please try again.");
+        return;
     }
-    else{
-        let user = JSON.parse(localStorage.getItem("user"));
-        let newFeedback = {
-                name: user.name,
-                category: feedbackCategory.value,
-                subject: subject.value,
-                message: feedback.value
-            }
 
-            let feedbacks = JSON.parse(localStorage.getItem("feedbacks")) || [];
-            feedbacks.push(newFeedback);
-            localStorage.setItem("feedbacks", JSON.stringify(feedbacks));
-            document.querySelector("#feedbackResult").textContent = "Feedback submitted. HR can now see it in the inbox.";
-            event.target.reset();
-            }
-
-
-})
-
+    event.target.reset();
+    showAlert("success", "Feedback Submitted!", anonymous
+        ? "Your anonymous feedback has been submitted successfully."
+        : "Your feedback has been submitted to HR successfully.");
+});

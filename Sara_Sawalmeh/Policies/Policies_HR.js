@@ -85,7 +85,7 @@ saveBtn.addEventListener("click", function() {
     const description = policyDescription.value.trim();
 
     if ( title === "" ||  category === "" || description === "") {
-        showAlert("error","Error!","Please fill in all fields." );
+        showAlert("error", "Missing Information", "Please fill in all required policy fields.");
         return;
     }
     const newPolicy = {
@@ -115,12 +115,14 @@ saveBtn.addEventListener("click", function() {
 });
 
 function deletePolicy(index) {
-    const confirmDelete = confirm("Are you sure you want to delete this policy?");
-    if (confirmDelete) {
+    confirmAlert("Delete Policy?", "Are you sure you want to delete this policy?").then(confirmed => {
+    if (confirmed) {
         policies.splice(index, 1);
         localStorage.setItem("policies",JSON.stringify(policies) );
         displayPolicies();
+        showAlert("success", "Policy Deleted!", "The policy has been deleted successfully.");
     }
+    });
 }
 
 function closePolicyModal() {
@@ -133,17 +135,3 @@ closeModal.addEventListener("click", function() {
 cancelBtn.addEventListener("click", function() {
     closePolicyModal();
 });
-
-function showAlert(type, title, message) {
-    return Swal.fire({
-        icon: type,
-        title: title,
-        text: message,
-        confirmButtonText: "OK",
-        confirmButtonColor: "#232743",
-        customClass: {
-            popup: "mysta-popup"
-        }
-    });
-
-}

@@ -614,7 +614,7 @@ assigned.push(emp.value);
 if(titleInput.value.trim()===""){
 
 
-alert("Enter task title");
+showAlert("error", "Missing Title", "Please enter a task title.");
 
 return;
 
@@ -676,6 +676,7 @@ tasks[editIndex]=task;
 
 saveData();
 
+showAlert("success", editIndex === null ? "Task Added!" : "Task Updated!", editIndex === null ? "The task has been added successfully." : "The task has been updated successfully.");
 
 renderTasks();
 
@@ -807,32 +808,14 @@ reviewModal.style.display="flex";
 
 
 function deleteTask(index){
-
-
-
-if(confirm("Delete this task?")){
-
-
-tasks.splice(index,1);
-
-
-saveData();
-
-
-renderTasks();
-
-
+  confirmAlert("Delete Task?", "Are you sure you want to delete this task?").then(confirmed => {
+    if (!confirmed) return;
+    tasks.splice(index, 1);
+    saveData();
+    renderTasks();
+    showAlert("success", "Task Deleted!", "The task has been deleted successfully.");
+  });
 }
-
-
-}
-
-
-
-
-
-
-
 
 // ===============================
 // CLOSE MODALS

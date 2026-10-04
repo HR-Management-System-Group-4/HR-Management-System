@@ -1,18 +1,3 @@
-
-let customAlert = document.querySelector("#customAlert");
-let alertMessage = document.querySelector("#alertMessage");
-let closeAlert = document.querySelector("#closeAlert");
-
-function showAlert(message){
-    alertMessage.textContent = message;
-    customAlert.classList.add("show");
-}
-
-closeAlert.addEventListener("click", function(){
-    customAlert.classList.remove("show");
-});
-
-
 fetch("../../employee.json")
     .then(response => response.json())
     .then(data => {
@@ -47,17 +32,17 @@ addEmployee.addEventListener("click", function(event){
         let password = document.querySelector("#passwordNew").value;
 
         if (!nameRegex.test(name)) {
-            showAlert("Enter a valid full name");
+            showAlert("error", "Invalid Name", "Please enter a valid full name.");
             return;
         }
 
         if (!emailRegex.test(email)) {
-            showAlert("Enter a valid email");
+            showAlert("error", "Invalid Email", "Please enter a valid email address.");
             return;
         }
 
         if (!passwordRegex.test(password)) {
-            showAlert("Password must be at least 8 characters and contain a letter and number");
+            showAlert("error", "Invalid Password", "Password must be at least 8 characters and contain a letter and a number.");
             return;
         }
 
@@ -73,7 +58,7 @@ addEmployee.addEventListener("click", function(event){
         localStorage.setItem("employees", JSON.stringify(employees));
         document.querySelector(".addEmployeeForm").style.display = "none";
 
-        location.reload();
+        showAlert("success", "Employee Added!", "The employee has been added successfully.").then(() => location.reload());
     })
 
     cancelEmployee.addEventListener("click", function(){
@@ -144,12 +129,12 @@ employees.forEach(employee => {
             let email = editForm.querySelector("#workEmail").value;
 
             if (!nameRegex.test(name)) {
-                showAlert("Enter a valid full name");
+                showAlert("error", "Invalid Name", "Please enter a valid full name.");
                 return;
             }
 
             if (!emailRegex.test(email)) {
-                showAlert("Enter a valid email");
+                showAlert("error", "Invalid Email", "Please enter a valid email address.");
                 return;
             }
 
@@ -175,6 +160,7 @@ employees.forEach(employee => {
 
             localStorage.setItem("employees", JSON.stringify(employees));
             editForm.style.display = "none";
+            showAlert("success", "Employee Updated!", "The employee has been updated successfully.");
         };
     })
 
@@ -197,6 +183,7 @@ employees.forEach(employee => {
             status.textContent = "Active";
         }
         localStorage.setItem("employees", JSON.stringify(employees));
+        showAlert("success", employee.accountState === "Active" ? "Employee Unblocked!" : "Employee Blocked!", `The employee account is now ${employee.accountState.toLowerCase()}.`);
     })
 
     let cancel = document.querySelector("#cancel");

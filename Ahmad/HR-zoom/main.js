@@ -73,8 +73,12 @@ function saveState() {
       }
     }
     localStorage.setItem('ahmadMeetingRequests', JSON.stringify(employeeRequests));
+    return true;
   }
-  catch (error) { console.warn('Meeting data could not be saved on this device.', error); }
+  catch (error) {
+    console.warn('Meeting data could not be saved on this device.', error);
+    return false;
+  }
 }
 
 function showToast(message) {
@@ -194,7 +198,9 @@ document.querySelector('#requestsBody').addEventListener('click', (event) => {
   }
   item.status = action === 'accept' ? 'Approved' : 'Rejected';
   state.activity.unshift({ action: action === 'accept' ? 'approved' : 'rejected', name: item.name, at: Date.now() });
-  saveState(); renderAll(); showToast(`${item.name}'s request ${item.status.toLowerCase()}.`);
+  const saved = saveState();
+  renderAll();
+  showAlert(saved ? "success" : "error", saved ? "Request Updated!" : "Save Failed", saved ? `${item.name}'s meeting request was ${item.status.toLowerCase()} successfully.` : "The meeting request could not be saved. Please try again.");
 });
 
 document.querySelector('#pagination').addEventListener('click', (event) => {

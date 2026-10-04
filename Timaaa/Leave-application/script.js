@@ -719,9 +719,7 @@ renderMyRequests();
 
 
 
-alert(
-"Leave application submitted successfully!"
-);
+showAlert("success", "Leave Request Submitted!", "Your leave application has been submitted successfully.");
 
 
 
