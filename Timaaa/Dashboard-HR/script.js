@@ -30,24 +30,13 @@ error
 // ===============================
 // TASK DATA
 // ===============================
-const tasks=[
-{
-title:"Employee Handbook",
-status:"Active"
-},
-{
-title:"Performance Review",
-status:"Active"
-},
-{
-title:"System Update",
-status:"Completed"
-},
-{
-title:"Database Backup",
-status:"Completed"
-}
-];
+// ===============================
+// LOAD TASKS FROM LOCAL STORAGE
+// ===============================
+
+let tasks = JSON.parse(
+localStorage.getItem("tasks")
+) || [];
 // ===============================
 // FEEDBACK
 // ===============================
@@ -65,13 +54,17 @@ document.getElementById("pendingLeaves").innerHTML =
 leaves.filter(
 x=>x.status==="Pending"
 ).length;
-document.getElementById("activeTasks").innerHTML =
-tasks.filter(
-x=>x.status==="Active"
-).length;
+// TOTAL TASKS
+
+document.getElementById("totalTasks").innerHTML =
+tasks.length;
+
+
+// COMPLETED TASKS
+
 document.getElementById("completedTasks").innerHTML =
 tasks.filter(
-x=>x.status==="Completed"
+task => task.status === "Completed"
 ).length;
 document.getElementById("feedback").innerHTML =
 feedback.length;
