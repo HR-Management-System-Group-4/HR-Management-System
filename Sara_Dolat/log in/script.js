@@ -17,7 +17,7 @@ selectRole(selectedRole);
 document.getElementById('loginForm').onsubmit = function(e) {
     e.preventDefault();
 
-    let email = document.getElementById('email').value.trim();
+    let email = document.getElementById('email').value.trim().toLowerCase();
     let password = document.getElementById('password').value;
     message.textContent = '';
 
@@ -32,9 +32,8 @@ document.getElementById('loginForm').onsubmit = function(e) {
             // Keep the original login credentials. HR's saved list is used
             // only to check whether this employee has been blocked.
             let user = data.employees.find(user =>
-                user.email === email &&
-                user.password === password &&
-                user.role === selectedRole
+                user.email?.trim().toLowerCase() === email &&
+                user.password === password
             );
 
             let savedEmployees = [];
@@ -45,18 +44,26 @@ document.getElementById('loginForm').onsubmit = function(e) {
                 // Invalid saved data must not block the original account list.
             }
 
-            if (!user && selectedRole === 'Employee') {
+            if (!user) {
                 const localEmployee = savedEmployees.find(employee =>
-                    employee.email === email &&
-                    employee.password === password &&
-                    (!employee.role || employee.role === selectedRole)
+                    employee.email?.trim().toLowerCase() === email &&
+                    employee.password === password
                 );
-                if (localEmployee) user = { ...localEmployee, role: 'Employee' };
+                if (localEmployee) {
+                    user = { ...localEmployee, role: localEmployee.role || 'Employee' };
+                    if (user.id == null) {
+                        user.id = Math.max(0, ...savedEmployees.map(employee => Number(employee.id) || 0)) + 1;
+                        localEmployee.id = user.id;
+                        localEmployee.role = user.role;
+                        localStorage.setItem('employees', JSON.stringify(savedEmployees));
+                    }
+                }
             }
 
-            if (user?.role === 'Employee') {
+            if (user) {
                 const savedUser = savedEmployees.find(employee =>
-                    String(employee.id) === String(user.id) || employee.email === user.email
+                    (user.id != null && employee.id != null && String(employee.id) === String(user.id)) ||
+                    employee.email?.trim().toLowerCase() === user.email?.trim().toLowerCase()
                 );
                 const accountState = savedUser?.accountState ?? user.accountState;
                 if (accountState?.toLowerCase() !== 'active') {
@@ -66,6 +73,7 @@ document.getElementById('loginForm').onsubmit = function(e) {
             }
 
             if (user) {
+                selectRole(user.role);
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 localStorage.setItem('user', JSON.stringify(user));
                 if (user.id != null) localStorage.setItem('loggedInUserId', String(user.id));

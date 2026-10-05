@@ -20,7 +20,7 @@
 
 .problems-section { position: relative; min-height: clamp(620px, 46vw, 780px); padding: 40px 5% 80px; isolation: isolate; overflow: hidden; color: #151827; background: #e9f3f7; text-align: center; }
 .problems-background, .problems-light { position: absolute; inset: 0; pointer-events: none; }
-.problems-background { z-index: -3; background: url("assets/From Office Chaos to Calm.png") center center / cover no-repeat; filter: blur(12px) saturate(.8); transform: scale(1.045); }
+.problems-background { z-index: -3; background: url("assets/From Office Chaos to Calm.png") center center / cover no-repeat; filter: blur(5px) saturate(.8); transform: scale(1.045); }
 .problems-light { z-index: -2; background: linear-gradient(90deg, rgba(255,255,255,.62), rgba(255,255,255,.72) 48%, rgba(255,255,255,.56)), linear-gradient(180deg, rgba(235,246,249,.2), rgba(235,246,249,.45)); }
 .problems-energy { position: absolute; z-index: -1; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
 .problems-energy path { fill: none; stroke: var(--color-accent); stroke-width: 1.8; opacity: .32; stroke-dasharray: 1900; stroke-dashoffset: 1900; filter: drop-shadow(0 0 9px rgba(124,213,199,.85)); }

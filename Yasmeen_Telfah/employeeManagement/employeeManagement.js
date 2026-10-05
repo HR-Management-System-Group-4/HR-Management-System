@@ -88,7 +88,7 @@ if (normalizedEmployees) localStorage.setItem("employees", JSON.stringify(employ
 
 let addEmployee = document.querySelector(".addEmployee button");
 let cancelEmployee = document.querySelector("#cancelNewEmployee");
-let saveEmployee = document.querySelector("#saveNewEmployee");
+let newEmployeeForm = document.querySelector("#newEmployeeForm");
 let nameRegex = /^[A-Za-z]+(?: [A-Za-z]+)+$/;
 let emailRegex = /^[^\s@]+@mysta\.com$/i;
 let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
@@ -96,24 +96,27 @@ let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
 addEmployee.addEventListener("click", function(event){
     event.preventDefault();
     document.querySelector(".addEmployeeForm").style.display = "block";
+})
 
-    
-    saveEmployee.addEventListener("click", function(event){
+newEmployeeForm.addEventListener("submit", function(event){
         event.preventDefault();
-        let name = document.querySelector("#fullNameNew").value;
-        let email = document.querySelector("#workEmailNew").value;
+        let name = document.querySelector("#fullNameNew").value.trim();
+        let email = document.querySelector("#workEmailNew").value.trim().toLowerCase();
         let password = document.querySelector("#passwordNew").value;
 
         clearErrors();
         let hasError = false;
 
-        if (!nameRegex.test(name.trim())) {
+        if (!nameRegex.test(name)) {
             showError("fullNameNew", "Enter a valid full name.");
             hasError = true;
         }
 
-        if (!emailRegex.test(email.trim())) {
+        if (!emailRegex.test(email)) {
             showError("workEmailNew", "Email must end with @mysta.com.");
+            hasError = true;
+        } else if (employees.some(employee => employee.email?.trim().toLowerCase() === email)) {
+            showError("workEmailNew", "An employee already uses this email address.");
             hasError = true;
         }
 
@@ -128,9 +131,9 @@ addEmployee.addEventListener("click", function(event){
         if (hasError) return;
 
         const newEmployee = {};
-        newEmployee.name = document.querySelector("#fullNameNew").value;
-        newEmployee.email = document.querySelector("#workEmailNew").value;
-        newEmployee.password = document.querySelector("#passwordNew").value;
+        newEmployee.name = name;
+        newEmployee.email = email;
+        newEmployee.password = password;
         newEmployee.position = document.querySelector("#positionNew").value;
         newEmployee.department = document.querySelector("#departmentNew").value;
         newEmployee.id = Math.max(0, ...employees.map(employee => Number(employee.id) || 0)) + 1;
@@ -142,12 +145,10 @@ addEmployee.addEventListener("click", function(event){
         document.querySelector(".addEmployeeForm").style.display = "none";
 
         showAlert("success", "Employee Added!", "The employee has been added successfully.").then(() => location.reload());
-    })
+})
 
-    cancelEmployee.addEventListener("click", function(){
+cancelEmployee.addEventListener("click", function(){
         document.querySelector(".addEmployeeForm").style.display = "none";
-    })
-
 })
 
 let table = document.querySelector("#employeesBody");
