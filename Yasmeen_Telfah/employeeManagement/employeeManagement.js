@@ -88,67 +88,85 @@ if (normalizedEmployees) localStorage.setItem("employees", JSON.stringify(employ
 
 let addEmployee = document.querySelector(".addEmployee button");
 let cancelEmployee = document.querySelector("#cancelNewEmployee");
-let saveEmployee = document.querySelector("#saveNewEmployee");
 let nameRegex = /^[A-Za-z]+(?: [A-Za-z]+)+$/;
 let emailRegex = /^[^\s@]+@mysta\.com$/i;
 let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+const normalizeEmail = email => String(email || "").trim().toLowerCase();
+const emailIsTaken = (email, currentEmployee = null) => {
+    const saved = localStorage.getItem("employees");
+    let currentEmployees = employees;
+    if (saved) {
+        try {
+            const parsed = JSON.parse(saved);
+            const list = Array.isArray(parsed) ? parsed : parsed?.employees;
+            if (Array.isArray(list)) currentEmployees = list;
+        } catch (_) {
+            // Use the list already loaded on this page.
+        }
+    }
+    return currentEmployees.some(employee =>
+        (currentEmployee === null || String(employee.id) !== String(currentEmployee.id)) &&
+        normalizeEmail(employee.email) === normalizeEmail(email)
+    );
+};
 
 addEmployee.addEventListener("click", function(event){
     event.preventDefault();
     document.querySelector(".addEmployeeForm").style.display = "block";
+});
 
-    
-    saveEmployee.addEventListener("click", function(event){
-        event.preventDefault();
-        let name = document.querySelector("#fullNameNew").value;
-        let email = document.querySelector("#workEmailNew").value;
-        let password = document.querySelector("#passwordNew").value;
+document.querySelector("#newEmployeeForm").addEventListener("submit", function(event){
+    event.preventDefault();
+    let name = document.querySelector("#fullNameNew").value.trim();
+    let email = normalizeEmail(document.querySelector("#workEmailNew").value);
+    let password = document.querySelector("#passwordNew").value;
 
-        clearErrors();
-        let hasError = false;
+    clearErrors();
+    let hasError = false;
 
-        if (!nameRegex.test(name.trim())) {
-            showError("fullNameNew", "Enter a valid full name.");
-            hasError = true;
-        }
+    if (!nameRegex.test(name)) {
+        showError("fullNameNew", "Enter a valid full name.");
+        hasError = true;
+    }
 
-        if (!emailRegex.test(email.trim())) {
-            showError("workEmailNew", "Email must end with @mysta.com.");
-            hasError = true;
-        }
+    if (!emailRegex.test(email)) {
+        showError("workEmailNew", "Email must end with @mysta.com.");
+        hasError = true;
+    } else if (emailIsTaken(email)) {
+        showError("workEmailNew", "This email is already used by another employee.");
+        hasError = true;
+    }
 
-        if (!passwordRegex.test(password)) {
-            showError(
-                "passwordNew",
-                "Password must be at least 8 characters and contain a letter and a number."
-            );
-            hasError = true;
-        }
+    if (!passwordRegex.test(password)) {
+        showError(
+            "passwordNew",
+            "Password must be at least 8 characters and contain a letter and a number."
+        );
+        hasError = true;
+    }
 
-        if (hasError) return;
+    if (hasError) return;
 
-        const newEmployee = {};
-        newEmployee.name = document.querySelector("#fullNameNew").value;
-        newEmployee.email = document.querySelector("#workEmailNew").value;
-        newEmployee.password = document.querySelector("#passwordNew").value;
-        newEmployee.position = document.querySelector("#positionNew").value;
-        newEmployee.department = document.querySelector("#departmentNew").value;
-        newEmployee.id = Math.max(0, ...employees.map(employee => Number(employee.id) || 0)) + 1;
-        newEmployee.role = "Employee";
-        newEmployee.accountState = "Active";
+    const newEmployee = {};
+    newEmployee.name = name;
+    newEmployee.email = email;
+    newEmployee.password = password;
+    newEmployee.position = document.querySelector("#positionNew").value;
+    newEmployee.department = document.querySelector("#departmentNew").value;
+    newEmployee.id = Math.max(0, ...employees.map(employee => Number(employee.id) || 0)) + 1;
+    newEmployee.role = "Employee";
+    newEmployee.accountState = "Active";
 
-        employees.unshift(newEmployee);
-        localStorage.setItem("employees", JSON.stringify(employees));
-        document.querySelector(".addEmployeeForm").style.display = "none";
+    employees.unshift(newEmployee);
+    localStorage.setItem("employees", JSON.stringify(employees));
+    document.querySelector(".addEmployeeForm").style.display = "none";
 
-        showAlert("success", "Employee Added!", "The employee has been added successfully.").then(() => location.reload());
-    })
+    showAlert("success", "Employee Added!", "The employee has been added successfully.").then(() => location.reload());
+});
 
-    cancelEmployee.addEventListener("click", function(){
-        document.querySelector(".addEmployeeForm").style.display = "none";
-    })
-
-})
+cancelEmployee.addEventListener("click", function(){
+    document.querySelector(".addEmployeeForm").style.display = "none";
+});
 
 let table = document.querySelector("#employeesBody");
 
@@ -207,8 +225,8 @@ employees.forEach(employee => {
 
         saveButton.onclick = function (event) {
             event.preventDefault();
-            let name = editForm.querySelector("#fullName").value;
-            let email = editForm.querySelector("#workEmail").value;
+            let name = editForm.querySelector("#fullName").value.trim();
+            let email = normalizeEmail(editForm.querySelector("#workEmail").value);
 
             if (!nameRegex.test(name)) {
                 showAlert("error", "Invalid Name", "Please enter a valid full name.");
@@ -217,6 +235,11 @@ employees.forEach(employee => {
 
             if (!emailRegex.test(email)) {
                 showAlert("error", "Invalid Email", "Please enter a valid email address.");
+                return;
+            }
+
+            if (emailIsTaken(email, employee)) {
+                showError("workEmail", "This email is already used by another employee.");
                 return;
             }
 

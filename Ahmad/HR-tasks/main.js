@@ -166,7 +166,7 @@ function displayEmployees() {
                                 class="employee-avatar avatar-${i % 6}"
                             >
 
-                                ${initials} 
+                                ${initials}
 
                             </span>
 
@@ -530,7 +530,7 @@ function displayTasks() {
 
   for (let i = 0; i < tasks.length; i++) {
     let displayStatus = getDisplayStatus(tasks[i]);
-    
+
     // Filter
 
     if (activeFilter != "All" && displayStatus != activeFilter) {
@@ -698,9 +698,7 @@ function displayTasks() {
   updateCounters();
 }
 
-// ========================================
 // View Task
-// ========================================
 
 function viewTask(id) {
   let viewDialog = document.getElementById("viewDialog");
@@ -782,17 +780,13 @@ document.getElementById("viewSubmission").onchange = function () {
   renderCurrentSubmission();
 };
 
-// ========================================
 // Close View
-// ========================================
 
 closeViewButton.onclick = function () {
   document.getElementById("viewDialog").close();
 };
 
-// ========================================
 // Edit Task
-// ========================================
 
 function editTask(id) {
   for (let i = 0; i < tasks.length; i++) {
@@ -841,9 +835,7 @@ function editTask(id) {
   }
 }
 
-// ========================================
 // Delete Task
-// ========================================
 
 function deleteTask(id) {
   taskToDelete = id;
@@ -860,9 +852,7 @@ function deleteTask(id) {
   document.getElementById("deleteDialog").showModal();
 }
 
-// ========================================
 // Delete Dialog Buttons
-// ========================================
 
 let closeDeleteButton = document.getElementById("closeDeleteButton");
 
@@ -878,9 +868,7 @@ cancelDeleteButton.onclick = function () {
   document.getElementById("deleteDialog").close();
 };
 
-// ========================================
 // Confirm Delete
-// ========================================
 
 confirmDeleteButton.onclick = function () {
   for (let i = 0; i < tasks.length; i++) {
@@ -902,9 +890,7 @@ confirmDeleteButton.onclick = function () {
   showAlert("success", "Task Deleted!", "The task has been deleted successfully.");
 };
 
-// ========================================
 // Approve Submitted Task
-// ========================================
 
 let approveButton = document.getElementById("approveButton");
 
@@ -1157,3 +1143,18 @@ window.addEventListener("storage", function (event) {
 });
 window.addEventListener("focus", refreshTasks);
 window.addEventListener("pageshow", refreshTasks);
+
+
+
+
+arr = ["Orange", "Apple" , "Banana"];
+
+for (const key in arr) {
+
+
+  if(arr[key] == "Apple")
+    continue;
+  console.log(arr[key])
+
+
+}
