@@ -1,87 +1,9 @@
-function readStoredUser(key) {
-    try {
-        return JSON.parse(localStorage.getItem(key) || "null");
-    } catch (_) {
-        return null;
-    }
-}
-function getLoggedInEmployee() {
-    const storedId = localStorage.getItem("loggedInUserId");
-    const users = [readStoredUser("currentUser"), readStoredUser("user")];
-    return users.find(function (user) {
-        return user && user.role === "Employee" &&
-            (!storedId || String(user.id) === storedId);
-    }) || null;
-}
-function isAssignedToEmployee(task, employee) {
-    if (!employee) return false;
-    if (Array.isArray(task.assigneeIds) && task.assigneeIds.length) {
-        return task.assigneeIds.some(function (id) {
-            return String(id) === String(employee.id);
-        });
-    }
-    // Tasks saved before assignee IDs were added still contain employee names.
-    const names = Array.isArray(task.assignTo) ? task.assignTo
-        : Array.isArray(task.assignedTo) ? task.assignedTo
-        : [task.assignTo || task.assignedTo].filter(Boolean);
-    return names.some(function (name) {
-        return String(name).trim().toLocaleLowerCase() ===
-            String(employee.name).trim().toLocaleLowerCase();
-    });
-}
-function readSolutions() {
-    try {
-        const saved = JSON.parse(localStorage.getItem("solutions") || "[]");
-        return Array.isArray(saved) ? saved : [];
-    } catch (_) {
-        return [];
-    }
-}
-function isMySolution(solution, task) {
-    if (!loggedInUser || solution.employeeName !== loggedInUser.name) return false;
-    return solution.taskId != null ? String(solution.taskId) === String(task.id)
-        : solution.taskName === task.title;
-}
-function getMySolution(task) {
-    return readSolutions().find(function (solution) {
-        return isMySolution(solution, task);
-    });
-}
-function getMyStatus(task) {
-    const solution = getMySolution(task);
-    const assignees = Array.isArray(task.assignTo) ? task.assignTo : [task.assignTo];
-    if (solution) return solution.status ||
-        (task.status === "Completed" && assignees.length <= 1
-            ? "Completed" : "Submitted");
-    const statuses = task.employeeStatuses || {};
-    const key = String(loggedInUser.id);
-    if (statuses[loggedInUser.name] || statuses[key]) {
-        return statuses[loggedInUser.name] || statuses[key];
-    }
-    return assignees.length <= 1 ? task.status : "Pending";
-}
-function updateOverallStatus(task) {
-    const assignees = Array.isArray(task.assignTo) ? task.assignTo : [task.assignTo];
-    const solutions = readSolutions();
-    const statuses = assignees.map(function (name) {
-        const solution = solutions.find(function (item) {
-            return item.employeeName === name && (item.taskId != null
-                ? String(item.taskId) === String(task.id) : item.taskName === task.title);
-        });
-        if (solution) return solution.status || "Submitted";
-        const index = assignees.indexOf(name);
-        const id = Array.isArray(task.assigneeIds) ? task.assigneeIds[index] : null;
-        return (task.employeeStatuses || {})[name] ||
-            (task.employeeStatuses || {})[String(id)] || "Pending";
-    });
-    task.status = statuses.includes("Submitted") ? "Submitted"
-        : statuses.every(function (status) { return status === "Completed"; }) ? "Completed"
-        : statuses.includes("In Progress") || statuses.includes("Completed") ? "In Progress"
-        : "Pending";
-}
-let loggedInUser = getLoggedInEmployee();
-let tasks = [];
-let myTasks = [];
+let loggedInUser = JSON.parse(localStorage.getItem("currentUser"));
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let myTasks = tasks.filter(function (task) {
+    return task.assignTo &&task.assignTo.includes(loggedInUser.name);
+});
+
 let tasksContainer = document.getElementById("tasksContainer");
 let taskModal = document.getElementById("taskModal");
 let closeModalBtn = document.getElementById("closeModalBtn");
@@ -102,16 +24,12 @@ function findStoredTaskIndex(task) {
         if (task.id !== undefined) {
             return item.id === task.id;
         }
-        return item.title === task.title && isAssignedToEmployee(item, loggedInUser);
+        return item.title === task.title &&
+            item.assignTo && item.assignTo.includes(loggedInUser.name);
     });
 }
 function displayTasks() {
     tasksContainer.innerHTML = "";
-    if (myTasks.length === 0) {
-        tasksContainer.innerHTML = `<div class="col-12"><p class="text-center text-muted py-5">${loggedInUser ?
-            "No tasks are assigned to you yet." :
-            "Sign in as an employee to view your assigned tasks."}</p></div>`;
-    }
     myTasks.forEach(function (task) {
         let priorityClass = task.priority.toLowerCase();
         let statusClass = task.status.toLowerCase().replace(" ", "-");
@@ -178,10 +96,7 @@ function addOpenEvents() {
                 task.status = "In Progress";
                 let taskIndex = findStoredTaskIndex(task);
                 if (taskIndex !== -1) {
-                    tasks[taskIndex].employeeStatuses = tasks[taskIndex].employeeStatuses || {};
-                    tasks[taskIndex].employeeStatuses[String(loggedInUser.id)] = "In Progress";
-                    tasks[taskIndex].employeeStatuses[loggedInUser.name] = "In Progress";
-                    updateOverallStatus(tasks[taskIndex]);
+                    tasks[taskIndex].status = "In Progress";
                     localStorage.setItem("tasks", JSON.stringify(tasks));
                 }
                 state[i].textContent = "In Progress";
@@ -195,10 +110,7 @@ function addOpenEvents() {
             document.getElementById("modalStatus").textContent = task.status;
             document.getElementById("modalAssignedDate").textContent =task.assignedDate || "Not specified";
             document.getElementById("modalDueDate").textContent = task.dueDate;
-            let taskSolution = getMySolution(task);
-            document.getElementById("modalHrNotes").textContent = taskSolution && taskSolution.reviewNote
-                ? (task.notes ? task.notes + "\n\n" : "") + "HR feedback: " + taskSolution.reviewNote
-                : task.hrNotes || task.notes || "No HR notes.";
+            document.getElementById("modalHrNotes").textContent =task.hrNotes || "No HR notes.";
             let deadline = new Date(task.dueDate);
             let now = new Date();
             if (now > deadline) {
@@ -209,12 +121,16 @@ function addOpenEvents() {
                 btn_Edit_solution.style.display = "none";
             } else {
                 deadlineMsg.textContent = "";
+                let solutions = JSON.parse(localStorage.getItem("solutions")) || [];
+                let taskSolution = solutions.find(function (solution) {
+                    return solution.employeeName === loggedInUser.name && solution.taskName === currentTaskName;
+                });
                 if (taskSolution) {
                     userSolution.value = taskSolution.solution;
                     fileName.textContent = "File: " + taskSolution.fileName;
                     userSolution.setAttribute("readonly", true);
                     solutionFile.setAttribute("disabled", true);
-                    btn_Edit_solution.style.display = task.status === "Completed" ? "none" : "block";
+                    btn_Edit_solution.style.display = "block";
                     btn_submit_solution.style.display = "none";
 
                 } else {
@@ -276,9 +192,11 @@ btn_submit_solution.addEventListener("click", function () {
         errorMsg.style.display = "block";
         return;
     }
-    let solutions = readSolutions();
+    let solutions =
+        JSON.parse(localStorage.getItem("solutions")) || [];
     let existingIndex = solutions.findIndex(function (solution) {
-        return isMySolution(solution, task);
+        return solution.employeeName === loggedInUser.name &&
+            solution.taskName === currentTaskName;
     });
     let fileNameToSave = "";
     if (input_File.files.length > 0) {
@@ -293,14 +211,10 @@ btn_submit_solution.addEventListener("click", function () {
     }
     let solutionData = {
 
-        taskId: task.id,
-        employeeId: loggedInUser.id,
         employeeName: loggedInUser.name,
         taskName: currentTaskName,
         fileName: fileNameToSave,
-        solution: solutionText,
-        status: "Submitted",
-        reviewNote: ""
+        solution: solutionText
     };
     if (existingIndex !== -1) {
         solutions[existingIndex] = solutionData;
@@ -311,10 +225,7 @@ btn_submit_solution.addEventListener("click", function () {
     task.status = "Submitted";
     let taskIndex = findStoredTaskIndex(task);
     if (taskIndex !== -1) {
-        tasks[taskIndex].employeeStatuses = tasks[taskIndex].employeeStatuses || {};
-        tasks[taskIndex].employeeStatuses[String(loggedInUser.id)] = "Submitted";
-        tasks[taskIndex].employeeStatuses[loggedInUser.name] = "Submitted";
-        updateOverallStatus(tasks[taskIndex]);
+        tasks[taskIndex].status = "Submitted";
         localStorage.setItem("tasks", JSON.stringify(tasks));
     }
     if (currentTaskIndex !== -1) {
@@ -328,7 +239,6 @@ btn_submit_solution.addEventListener("click", function () {
     updateCounters();
     errorMsg.style.display = "none";
     taskModal.style.display = "none";
-    showAlert("success", existingIndex !== -1 ? "Submission Updated!" : "Task Submitted!", existingIndex !== -1 ? "Your submission has been updated successfully." : "Your task has been submitted successfully.");
 });
 // إغلاق صفحه ال popup
 closeModalBtn.addEventListener("click", function () {
@@ -417,26 +327,4 @@ filter_btn_progress.addEventListener("click", function () {
     setActiveFilter(filter_btn_progress);
 });
 
-function refreshTasks() {
-    loggedInUser = getLoggedInEmployee();
-    try {
-        const storedTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
-        tasks = Array.isArray(storedTasks) ? storedTasks : [];
-    } catch (_) {
-        tasks = [];
-    }
-    myTasks = tasks.filter(function (task) {
-        return isAssignedToEmployee(task, loggedInUser);
-    }).map(function (task) {
-        return Object.assign({}, task, {status: getMyStatus(task)});
-    });
-    displayTasks();
-}
-window.addEventListener("storage", function (event) {
-    if (!event.key || ["tasks", "currentUser", "user", "loggedInUserId"].includes(event.key)) {
-        refreshTasks();
-    }
-});
-window.addEventListener("focus", refreshTasks);
-window.addEventListener("pageshow", refreshTasks);
-refreshTasks();
+displayTasks();
