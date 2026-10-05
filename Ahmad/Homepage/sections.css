@@ -18,22 +18,24 @@
 .about-visual { position: absolute; z-index: 1; inset: 0; pointer-events: none; }
 .about-network { display: block; width: 100%; height: 100%; }
 
-.problems-section { position: relative; padding: 40px 5% 80px; isolation: isolate; overflow: hidden; color: #151827; background: #edf4f4; text-align: center; }
-.problems-background { position: relative; width: min(100%, 1460px); margin: clamp(36px, 4vw, 54px) auto 0; overflow: hidden; border-radius: 28px; background: #d6e4e5; box-shadow: 0 24px 68px rgba(20,45,58,.16); }
-.problems-background img { display: block; width: 100%; height: auto; filter: brightness(.78) saturate(.9) blur(1px); }
-.problems-energy { position: absolute; z-index: -1; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.problems-section { position: relative; display: grid; place-items: center; min-height: clamp(440px, 43vw, 780px); padding: 64px 5%; isolation: isolate; overflow: hidden; color: #f5f9fc; background: var(--color-background); text-align: center; }
+.problems-background { position: absolute; z-index: -2; inset: 24px 3%; overflow: hidden; border-radius: 30px; pointer-events: none; box-shadow: 0 20px 55px rgba(20, 38, 50, .18); }
+.problems-background::before { position: absolute; inset: -8%; content: ""; background: url("assets/From Office Chaos to Calm.png") center / cover no-repeat; filter: brightness(.62) blur(9px); }
+.problems-background img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; filter: brightness(.72) saturate(.85) blur(1px); mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent); }
+.problems-background::after { position: absolute; inset: 0; content: ""; background: radial-gradient(ellipse 58% 76% at 50% 49%, rgba(3, 12, 24, .62), rgba(3, 12, 24, .29) 78%), linear-gradient(180deg, rgba(5, 15, 27, .28), rgba(5, 15, 27, .42)); }
+.problems-energy { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; opacity: .5; }
 .problems-energy path { fill: none; stroke: var(--color-accent); stroke-width: 1.8; opacity: .32; stroke-dasharray: 1900; stroke-dashoffset: 1900; filter: drop-shadow(0 0 9px rgba(124,213,199,.85)); }
 .problems-energy path:nth-child(2) { stroke: var(--color-mint-strong); stroke-width: 2.4; opacity: .55; }
-.problems-content { position: relative; z-index: 2; max-width: 980px; margin: auto; }
-.problems-section h2 { margin: clamp(75px, 7vw, 115px) 0 20px; color: #111621; font: 500 clamp(64px, 5.4vw, 91px)/1.04 Georgia, "Times New Roman", serif; letter-spacing: -.055em; }
+.problems-content { position: relative; z-index: 1; max-width: 980px; margin: auto; }
+.problems-section h2 { margin: 0 0 20px; color: #f7fbff; font: 500 clamp(64px, 5.4vw, 91px)/1.04 Georgia, "Times New Roman", serif; letter-spacing: -.055em; text-shadow: 0 3px 32px rgba(0, 0, 0, .75), 0 0 35px rgba(138, 223, 243, .22); }
 .problems-section h2 span { display: block; }
-.problems-section h2 em { color: var(--color-accent); font-weight: 400; }
-.problems-section p { max-width: 700px; margin: 0 auto; color: #303b4b; font: 400 clamp(17px, 1.2vw, 21px)/1.42 Georgia, "Times New Roman", serif; }
+.problems-section h2 em { color: #79d9ed; font-weight: 400; text-shadow: 0 0 30px rgba(76, 202, 236, .44); }
+.problems-section p { max-width: 700px; margin: 0 auto; color: #edf5f9; font: 400 clamp(17px, 1.2vw, 21px)/1.42 Georgia, "Times New Roman", serif; text-shadow: 0 2px 18px rgba(0, 0, 0, .8); }
 .problems-actions { display: flex; justify-content: center; align-items: center; gap: 40px; margin-top: 34px; }
 .problems-primary, .problems-video { display: inline-flex; align-items: center; justify-content: center; gap: 22px; min-height: 55px; padding: 0 35px; border-radius: 99px; font: 700 16px Georgia, "Times New Roman", serif; transition: transform .3s ease, box-shadow .3s ease; }
-.problems-primary { color: #fff; background: var(--color-accent); box-shadow: 0 16px 34px rgba(17,138,178,.25); }
+.problems-primary { color: #fff; background: linear-gradient(105deg, #0b83aa, #19a5c2); box-shadow: 0 14px 36px rgba(0, 0, 0, .28), 0 0 28px rgba(60, 201, 226, .2); }
 .problems-primary:hover { transform: translateY(-4px); color: #fff; box-shadow: 0 22px 40px rgba(17,138,178,.35); }
-.problems-video { padding: 0 4px; color: #182032; }
+.problems-video { padding: 0 4px; color: #f0f8fa; text-shadow: 0 2px 16px rgba(0, 0, 0, .7); }
 .problems-video i { font-size: 28px; }
 .problems-video:hover { transform: translateY(-4px); color: var(--color-accent); }
 
@@ -49,8 +51,6 @@
 
 @keyframes energyTrace { from { stroke-dashoffset: 1900; } to { stroke-dashoffset: 0; } }
 
-.dark-mode .problems-section { background: #14212d; }
-.dark-mode .problems-section h2, .dark-mode .problems-section p, .dark-mode .problems-video { color: #f0f5f6; }
 
 @media (max-width: 1200px) {
   .about-section { min-height: 590px; }
@@ -61,9 +61,8 @@
   .about-inner { width: min(100%, 690px); }
   .about-section h2 { margin-top: 0; font-size: clamp(50px, 7.3vw, 66px); }
   .about-visual { position: relative; width: 100%; height: 315px; margin-top: 6px; }
-  .problems-section { min-height: 0; padding: 38px 5% 50px; }
-  .problems-section h2 { margin-top: 82px; font-size: clamp(55px, 7.4vw, 76px); }
-  .problems-background { margin-top: 30px; border-radius: 22px; }
+  .problems-section { min-height: clamp(440px, 54vw, 600px); padding: 60px 5%; }
+  .problems-section h2 { font-size: clamp(55px, 7.4vw, 76px); }
 }
 @media (max-width: 600px) {
   .about-section { padding: 52px 6% 38px; }
@@ -73,10 +72,10 @@
   .about-button { min-width: 215px; min-height: 54px; padding-left: 22px; font-size: 14px; }
   .about-button i { width: 40px; height: 40px; }
   .about-visual { width: 100%; height: 255px; margin: 8px auto 0; }
-  .problems-section { padding: 28px 5% 35px; }
-  .problems-section h2 { margin: 74px 0 19px; font-size: clamp(43px, 10vw, 58px); }
+  .problems-section { min-height: 520px; padding: 45px 5%; }
+  .problems-background { inset: 12px 4%; border-radius: 22px; }
+  .problems-section h2 { margin-bottom: 19px; font-size: clamp(43px, 10vw, 58px); }
   .problems-section p { font-size: 16px; }
-  .problems-background { border-radius: 16px; }
   .problems-actions { gap: 14px; flex-wrap: wrap; margin-top: 28px; }
   .problems-primary, .problems-video { min-height: 50px; padding: 0 22px; font-size: 14px; }
 }
