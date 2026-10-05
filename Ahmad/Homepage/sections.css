@@ -18,10 +18,9 @@
 .about-visual { position: absolute; z-index: 1; inset: 0; pointer-events: none; }
 .about-network { display: block; width: 100%; height: 100%; }
 
-.problems-section { position: relative; min-height: clamp(620px, 46vw, 780px); padding: 40px 5% 80px; isolation: isolate; overflow: hidden; color: #151827; background: #e9f3f7; text-align: center; }
-.problems-background, .problems-light { position: absolute; inset: 0; pointer-events: none; }
-.problems-background { z-index: -3; background: url("assets/From Office Chaos to Calm.png") center center / cover no-repeat; filter: blur(2px) saturate(.8); transform: scale(1.045); }
-.problems-light { z-index: -2; background: linear-gradient(90deg, rgba(255,255,255,.62), rgba(255,255,255,.72) 48%, rgba(255,255,255,.56)), linear-gradient(180deg, rgba(235,246,249,.2), rgba(235,246,249,.45)); }
+.problems-section { position: relative; padding: 40px 5% 80px; isolation: isolate; overflow: hidden; color: #151827; background: #edf4f4; text-align: center; }
+.problems-background { position: relative; width: min(100%, 1460px); margin: clamp(36px, 4vw, 54px) auto 0; overflow: hidden; border-radius: 28px; background: #d6e4e5; box-shadow: 0 24px 68px rgba(20,45,58,.16); }
+.problems-background img { display: block; width: 100%; height: auto; filter: brightness(.78) saturate(.9) blur(1px); }
 .problems-energy { position: absolute; z-index: -1; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
 .problems-energy path { fill: none; stroke: var(--color-accent); stroke-width: 1.8; opacity: .32; stroke-dasharray: 1900; stroke-dashoffset: 1900; filter: drop-shadow(0 0 9px rgba(124,213,199,.85)); }
 .problems-energy path:nth-child(2) { stroke: var(--color-mint-strong); stroke-width: 2.4; opacity: .55; }
@@ -50,7 +49,7 @@
 
 @keyframes energyTrace { from { stroke-dashoffset: 1900; } to { stroke-dashoffset: 0; } }
 
-.dark-mode .problems-light { background: rgba(12, 19, 33, .71); }
+.dark-mode .problems-section { background: #14212d; }
 .dark-mode .problems-section h2, .dark-mode .problems-section p, .dark-mode .problems-video { color: #f0f5f6; }
 
 @media (max-width: 1200px) {
@@ -64,7 +63,7 @@
   .about-visual { position: relative; width: 100%; height: 315px; margin-top: 6px; }
   .problems-section { min-height: 0; padding: 38px 5% 50px; }
   .problems-section h2 { margin-top: 82px; font-size: clamp(55px, 7.4vw, 76px); }
-  .problems-background { position: relative; z-index: 0; inset: auto; width: 100%; aspect-ratio: 2022 / 778; margin-top: 30px; }
+  .problems-background { margin-top: 30px; border-radius: 22px; }
 }
 @media (max-width: 600px) {
   .about-section { padding: 52px 6% 38px; }
@@ -77,6 +76,7 @@
   .problems-section { padding: 28px 5% 35px; }
   .problems-section h2 { margin: 74px 0 19px; font-size: clamp(43px, 10vw, 58px); }
   .problems-section p { font-size: 16px; }
+  .problems-background { border-radius: 16px; }
   .problems-actions { gap: 14px; flex-wrap: wrap; margin-top: 28px; }
   .problems-primary, .problems-video { min-height: 50px; padding: 0 22px; font-size: 14px; }
 }
